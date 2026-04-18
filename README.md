@@ -3,7 +3,7 @@
 ![alt text](logo.png)
 - Software para gerenciamento de gastos através da análise de comprovantes de pagamentos utilizando a câmera do dispositivo para escaneamento das informações para cadastramento na plataforma. Uma exibição claro de gastos por mês/ano.
 
-[...Em desenvolvimento]
+> 🚧 **Status:** Em desenvolvimento
 
 ## Estrutura do Repositório
 - **API**: Armazena o código backend da aplicação;
@@ -11,19 +11,30 @@
 - **WEB**: Armazena a interface mobile do cliente.
 
 ## Stack Ferramental
-- **NODEJS**: Fastify, PrismaORM, Docker, PostgreSQL, Zod Validation, dotenv, tsup, tsx, Typescript, ESLint, Prettier.
-- **REACT**:
-- **REACT-NATIVE**:
+- **Backend:** Node.js (Fastify), PrismaORM v7, PostgreSQL, Docker, Zod, tsup, tsx.
+- **Frontend:** React.js.
+- **Mobile:** React Native.
+- **Tooling:** TypeScript, ESLint, Prettier.
 
-## Requisitos Funcionais
+## Documentação de Negócio
 
-## Requisitos Não-Funcionais
+### Requisitos Funcionais (RF)
+*   [ ] (Exemplo: O usuário deve poder escanear um comprovante)
 
-## Regra de Negócio
+### Requisitos Não-Funcionais (RNF)
+*   [ ] (Exemplo: O banco de dados deve utilizar UUID v7 para performance)
+
+### Regras de Negócio (RN)
+*   [ ] (Exemplo: Não é possível deletar uma categoria com gastos vinculados)
 
 ## Fluxograma de Desenvolvimento
+![alt text](fluxograma.png)
 
 ## Estrutura do Banco de Dados
+
+- [x] Users
+- [x] Expenses
+- [x] Categories 
 
 ## Comandos para Iniciar o Projeto
 
