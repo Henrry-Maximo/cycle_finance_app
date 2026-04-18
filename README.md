@@ -1,6 +1,6 @@
 
 # Cycle Finance App
-
+![alt text](logo.png)
 - Software para gerenciamento de gastos através da análise de comprovantes de pagamentos utilizando a câmera do dispositivo para escaneamento das informações para cadastramento na plataforma. Uma exibição claro de gastos por mês/ano.
 
 [...Em desenvolvimento]
@@ -11,7 +11,7 @@
 - **WEB**: Armazena a interface mobile do cliente.
 
 ## Stack Ferramental
-- **NODEJS**:
+- **NODEJS**: Fastify, PrismaORM, Docker, PostgreSQL, Zod Validation, dotenv, tsup, tsx, Typescript, ESLint, Prettier.
 - **REACT**:
 - **REACT-NATIVE**:
 
@@ -63,3 +63,51 @@
 
 - adicionar "baseUrl" e "paths" no "tsconfig.json"
 [configura o alias "@" para importações absolutas a partir da pasta "src", evitando caminhos relativos longos como "../../"]
+
+- pnpm install prisma -D
+[instala o Prisma CLI como dependência de desenvolvimento]
+
+- npx prisma -h
+[exibe todos os comandos disponíveis do Prisma CLI]
+
+- npx prisma init
+[inicializa o Prisma no projeto, criando a pasta "prisma/" com o "schema.prisma", o ".env" com a variável "DATABASE_URL" e o "prisma.config.ts"]
+
+- pnpm install @prisma/client
+[instala o Prisma Client para acesso ao banco de dados com tipagem]
+
+- npx prisma generate
+[gera o Prisma Client a partir do schema. No Prisma 7, gera na pasta "generated/prisma" ao invés da "node_modules"]
+
+- npx prisma --version
+[exibe a versão atual do Prisma instalada no projeto]
+
+- pnpm install @prisma/adapter-pg
+[instala o adaptador do PostgreSQL para o Prisma 7. A partir da v7, o Prisma separou o core do driver de banco, exigindo um adaptador explícito na instanciação do PrismaClient]
+
+- docker -v
+[verifica se o Docker está instalado e exibe a versão]
+
+- docker ps
+[lista os containers em execução]
+
+- docker ps -a
+[lista todos os containers, incluindo os parados]
+
+- docker run
+[cria e inicia um container]
+
+- docker rm <nome-do-container>
+[remove um container parado]
+
+- docker run --name api-cycle-finance-pg -e POSTGRESQL_USERNAME=docker -e POSTGRESQL_PASSWORD=docker -e POSTGRESQL_DATABASE=apicyclefinance -p 5432:5432 bitnami/postgresql
+[cria e inicia o container do PostgreSQL com usuário "docker", senha "docker" e banco "apicyclefinance" na porta 5432. A imagem utilizada é a "bitnami/postgresql"]
+
+- configurar DATABASE_URL no ".env"
+[após criar o container, atualizar a variável no ".env" com a string de conexão: postgresql://docker:docker@localhost:5432/apicyclefinance]
+
+- criar "docker-compose.yml" na raiz do projeto
+[arquivo para orquestrar os containers do projeto. Define o serviço do PostgreSQL com a imagem "bitnami/postgresql", usuário "docker", senha "docker", banco "apicyclefinance" e porta 5432]
+
+- docker compose up -d
+[sobe os containers definidos no "docker-compose.yml" em segundo plano]
