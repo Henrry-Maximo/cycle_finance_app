@@ -1,14 +1,9 @@
 import fastify, { FastifyReply, FastifyRequest } from "fastify";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "../generated/prisma/client";
-import { env } from "./env";
 import z, { ZodError } from "zod";
 import { hash } from 'bcryptjs';
+import { prisma } from "./lib/prisma";
 
 export const app = fastify();
-
-const adapter = new PrismaPg({ connectionString: env.DATABASE_URL! });
-export const prisma = new PrismaClient({ adapter });
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {

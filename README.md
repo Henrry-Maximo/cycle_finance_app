@@ -21,9 +21,11 @@
 ### Requisitos Funcionais (RF)
 *   [x] O usuário deve poder se cadastrar
 *   [ ] O usuário deve poder se logar
-*   [ ] O usuário deve poder escanear um comprovante
 *   [x] O usuário deve poder registrar um comprovante
 *   [x] O usuário deve poder registrar uma categoria
+*   [] O usuário deve poder visualizar todas as suas despesas
+*   [] O usuário deve poder visualizar todos as suas categorias
+*   [] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
 *   [x] O banco de dados deve utilizar UUID v7 para performance
