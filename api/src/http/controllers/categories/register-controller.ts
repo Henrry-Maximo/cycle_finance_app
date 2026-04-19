@@ -10,13 +10,13 @@ export async function registerCategories(req: FastifyRequest, reply: FastifyRepl
 
   const { title, description } = registerCategoriesSchema.parse(req.body);
 
-  const category = await prisma.category.findFirst({
+  const categoryWithSameEmail = await prisma.category.findFirst({
     where: {
       title
     },
   });
 
-  if (category) {
+  if (categoryWithSameEmail) {
     console.error("Category already exists.");
     throw new Error("Category already exists.");
   };
