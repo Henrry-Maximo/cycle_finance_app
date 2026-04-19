@@ -19,14 +19,15 @@
 ## Documentação de Negócio
 
 ### Requisitos Funcionais (RF)
-*   [ ] O usuário deve poder se cadastrar
+*   [x] O usuário deve poder se cadastrar
 *   [ ] O usuário deve poder se logar
 *   [ ] O usuário deve poder escanear um comprovante
-*   [ ] O usuário deve poder registrar um comprovante
-*   [ ] O usuário deve poder registrar uma categoria
+*   [x] O usuário deve poder registrar um comprovante
+*   [x] O usuário deve poder registrar uma categoria
 
 ### Requisitos Não-Funcionais (RNF)
-*   [ ] (Exemplo: O banco de dados deve utilizar UUID v7 para performance)
+*   [x] O banco de dados deve utilizar UUID v7 para performance
+*   [x] A senha do usuário deve estar em formato hash
 
 ### Regras de Negócio (RN)
 *   [ ] (Exemplo: Não é possível deletar uma categoria com gastos vinculados)
@@ -126,3 +127,6 @@
 
 - docker compose up -d
 [sobe os containers definidos no "docker-compose.yml" em segundo plano]
+
+- pnpm add bcryptjs
+[responsável pelo hash da senha do usuário que está se cadastrando]
