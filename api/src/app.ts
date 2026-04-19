@@ -4,7 +4,6 @@ import { PrismaClient } from "../generated/prisma/client";
 import { env } from "./env";
 import z, { ZodError } from "zod";
 import { hash } from 'bcryptjs';
-import { title } from "node:process";
 
 export const app = fastify();
 
@@ -20,6 +19,90 @@ app.setErrorHandler((error, _, reply) => {
 
   return reply.status(500).send({ message: "Iternal Server Error." });
 });
+
+app.get("/users", (async (req: FastifyRequest, reply: FastifyReply) => {
+  const searchUsersSchema = z.object({
+    name: z.string().optional(),
+  });
+
+  const { name } = searchUsersSchema.parse(req.query);
+
+  let filter = {} as {
+    contains?: string;
+    mode?: 'insensitive' | 'default';
+  };
+
+  if (name) {
+    filter = {
+      contains: name,
+      mode: 'insensitive'
+    };
+  };
+
+  const users = await prisma.user.findMany({
+    where: {
+      name: filter
+    },
+  });
+
+  return reply.status(200).send({ users });
+}));
+
+app.get("/categories", (async (req: FastifyRequest, reply: FastifyReply) => {
+  const searchUsersSchema = z.object({
+    name: z.string().optional(),
+  });
+
+  const { name } = searchUsersSchema.parse(req.query);
+
+  let filter = {} as {
+    contains?: string;
+    mode?: 'insensitive' | 'default';
+  };
+
+  if (name) {
+    filter = {
+      contains: name,
+      mode: 'insensitive'
+    };
+  };
+
+  const categories = await prisma.category.findMany({
+    where: {
+      title: filter
+    },
+  });
+
+  return reply.status(200).send({ categories });
+}));
+
+app.get("/expenses", (async (req: FastifyRequest, reply: FastifyReply) => {
+  const searchUsersSchema = z.object({
+    name: z.string().optional(),
+  });
+
+  const { name } = searchUsersSchema.parse(req.query);
+
+  let filter = {} as {
+    contains?: string;
+    mode?: 'insensitive' | 'default';
+  };
+
+  if (name) {
+    filter = {
+      contains: name,
+      mode: 'insensitive'
+    };
+  };
+
+  const expenses = await prisma.expense.findMany({
+    where: {
+      title: filter
+    },
+  });
+
+  return reply.status(200).send({ expenses });
+}));
 
 app.post("/users", (async (req: FastifyRequest, reply: FastifyReply) => {
   const registerUsersSchema = z.object({
