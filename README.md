@@ -19,7 +19,11 @@
 ## Documentação de Negócio
 
 ### Requisitos Funcionais (RF)
-*   [ ] (Exemplo: O usuário deve poder escanear um comprovante)
+*   [ ] O usuário deve poder se cadastrar
+*   [ ] O usuário deve poder se logar
+*   [ ] O usuário deve poder escanear um comprovante
+*   [ ] O usuário deve poder registrar um comprovante
+*   [ ] O usuário deve poder registrar uma categoria
 
 ### Requisitos Não-Funcionais (RNF)
 *   [ ] (Exemplo: O banco de dados deve utilizar UUID v7 para performance)
