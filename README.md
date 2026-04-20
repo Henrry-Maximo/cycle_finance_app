@@ -46,6 +46,8 @@
 ## Comandos para Iniciar o Projeto
 
 ## Comandos de Desenvolvimento
+
+### Backend
 - pnpm init -y
 [criar package json para construir o backend em nodejs]
 
@@ -132,3 +134,13 @@
 
 - pnpm add bcryptjs
 [responsável pelo hash da senha do usuário que está se cadastrando]
+
+### Frontend
+- pnpm add tailwindcss @tailwindcss/vite
+[instalação do tailwindcss no projeto, sendo necessário realizar modificações em vite.config.ts para aceitar "@" como raiz]
+
+- pnpm i @types/node -D
+[para que o vite consiga trabalhar com aliases de importação no momento de build]
+
+- pnpm dlx shadcn-ui@latest init  
+- npx shadcn@latest init

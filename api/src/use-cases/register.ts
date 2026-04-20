@@ -13,7 +13,7 @@ export async function registerUseCase({ name, email, password }: RegisterUseCase
     where: {
       email
     },
-  });
+  }); 
 
   if (userWithSameEmail) {
     throw new UsersWithSameEmail();
