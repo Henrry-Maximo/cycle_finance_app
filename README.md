@@ -144,3 +144,7 @@
 
 - pnpm dlx shadcn-ui@latest init  
 - npx shadcn@latest init
+[instalação da biblioteca de componentes shadcn-ui e uso do cli para iniciar arquivo de configurações]
+
+- pnpm install localforage match-sorter sort-by
+[instalação do react router dom mais dependencias de desenvolvimento]
