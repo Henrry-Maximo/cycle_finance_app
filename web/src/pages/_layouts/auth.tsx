@@ -1,0 +1,47 @@
+import { Outlet } from "react-router-dom";
+
+import logo from "@/assets/logo.png";
+
+export function AuthLayout() {
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-2 h-screen bg-zinc-50">
+      <div className="hidden lg:flex flex-col items-center justify-center bg-zinc-950 relative overflow-hidden">
+        {/* <div className="absolute h-80 w-80 bg-blue-600/4- blur-[120px] rounded-full -top-10 -left-10" /> */}
+
+        <div className="relative z-10 flex flex-col gap-6 h-full w-full py-2 px-4 border-r-2 border-blue-600">
+          <header>
+            <p className="text-zinc-600 text-sm">Cycle Finance Web.</p>
+          </header>
+          <main className="flex flex-col gap-6 items-center z-10 flex-1 justify-center">
+            <img
+              src={logo}
+              alt="Logo Cycle Finance"
+              className="w-52 h-auto drop-shadow-2xl"
+            />
+            <div className="text-center">
+              <h2 className="text-zinc-200 text-4xl font-medium tracking-tight">
+                <span className="text-blue-400">C</span>ycle{" "}
+                <span className="text-blue-400">F</span>inance
+              </h2>
+              <p className="text-zinc-500 text-md">
+                Sua plataforma de acompanhamento de gastos.
+              </p>
+            </div>
+          </main>
+          <footer className="flex justify-between">
+            <p className="text-zinc-600 text-sm">
+              © {new Date().getFullYear()} Cycle Finance.
+            </p>
+            <p className="text-zinc-600 text-sm">
+              Todos os direitos reservados.
+            </p>
+          </footer>
+        </div>
+      </div>
+
+      <div className="flex flex-col flex-1">
+        <Outlet />
+      </div>
+    </div>
+  );
+}
