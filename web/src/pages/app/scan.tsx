@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Field, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { UploadSimpleIcon } from "@phosphor-icons/react";
 import { Helmet } from "react-helmet-async";
 
