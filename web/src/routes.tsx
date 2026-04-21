@@ -9,7 +9,7 @@ import { Update } from './pages/auth/reset/update';
 
 export const router = createBrowserRouter([
   {
-    path: '/dash',
+    path: '/',
     element: <AppLayout />,
     children: [
       {
@@ -23,7 +23,7 @@ export const router = createBrowserRouter([
     element: <AuthLayout />,
     children: [
       {
-        path: '/',
+        path: '/sign-in',
         element: <SignIn />
       },
       {
