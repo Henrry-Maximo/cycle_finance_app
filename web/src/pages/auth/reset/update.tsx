@@ -50,7 +50,7 @@ export function Update() {
               </Field>
             </div>
 
-            <Button className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer text-white transition-all shadow-sm active:scale-[0.98]">
+            <Button className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer hover:text-blue-400 text-white transition-all shadow-sm active:scale-[0.98]">
               Confirmar
             </Button>
           </form>
