@@ -39,9 +39,9 @@ export function SignIn() {
                   <FieldLabel className="text-zinc-700 font-medium">
                     Senha
                   </FieldLabel>
-                  <a href="#" className="text-xs text-blue-600 hover:underline">
+                  <Link to="/request" className="text-xs text-blue-600 hover:underline">
                     Esqueceu a senha?
-                  </a>
+                  </Link>
                 </div>
                 <Input
                   type="password"
