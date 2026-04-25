@@ -1,8 +1,4 @@
-import {
-  FileSearchIcon,
-  MagnifyingGlassIcon,
-  TrashIcon,
-} from '@phosphor-icons/react';
+import { MagnifyingGlassIcon, TrashIcon } from '@phosphor-icons/react';
 import { Helmet } from 'react-helmet-async';
 
 import { Button } from '@/components/ui/button';
