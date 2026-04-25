@@ -3,7 +3,9 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from './pages/_layouts/app';
 import { AuthLayout } from './pages/_layouts/auth';
 import { Dashboard } from './pages/app/dashboard';
+import { Expenses } from './pages/app/expenses';
 import { Scan } from './pages/app/scan';
+import { Settings } from './pages/app/settings';
 import { Request } from './pages/auth/reset/request';
 import { Update } from './pages/auth/reset/update';
 import { SignIn } from './pages/auth/sign-in';
@@ -19,8 +21,16 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
       },
       {
+        path: '/expenses',
+        element: <Expenses />,
+      },
+      {
         path: '/scan',
         element: <Scan />,
+      },
+      {
+        path: '/settings',
+        element: <Settings />,
       },
     ],
   },

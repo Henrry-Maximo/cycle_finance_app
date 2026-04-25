@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="flex justify-between bg-black px-24 py-4">
+    <footer className="flex justify-between border-t px-24 py-4">
       <p className="text-sm text-zinc-600">
         © {new Date().getFullYear()} Cycle Finance.
       </p>

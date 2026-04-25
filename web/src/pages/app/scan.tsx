@@ -7,13 +7,14 @@ import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
 export function Scan() {
-  const [isSubmitFileUpload] = useState(false);
+  const [isSubmitFileUpload] = useState(true);
 
   return (
     <>
       <Helmet title="Scan" />
+
       {isSubmitFileUpload ? (
-        <div className="flex h-screen w-full items-center justify-center bg-black">
+        <div className="flex items-center justify-center">
           <form
             action=""
             className="flex flex-col items-center justify-center gap-8 px-16 py-12 text-white"
@@ -121,7 +122,7 @@ export function Scan() {
           </form>
         </div>
       ) : (
-        <div className="flex h-screen w-full flex-col items-center justify-center gap-8 bg-black">
+        <div className="flex flex-col items-center justify-center gap-8">
           <header className="flex flex-col gap-2 text-center">
             <h1 className="text-3xl font-semibold tracking-tight text-gray-200">
               Faça o upload!

@@ -3,6 +3,7 @@ import {
   GearIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
+import { Link } from 'react-router-dom';
 
 import { Button } from './ui/button';
 import {
@@ -37,9 +38,11 @@ export function AccountMenu() {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="cursor-pointer">
-          <GearIcon className="mr-2 h-4 w-4" />
-          <span>Configurações</span>
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link to="/settings">
+            <GearIcon className="mr-2 h-4 w-4" />
+            <span>Configurações</span>
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem className="cursor-pointer text-rose-500 dark:text-rose-400">
           <SignOutIcon className="mr-2 h-4 w-4" />

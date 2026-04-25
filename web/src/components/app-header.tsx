@@ -1,4 +1,4 @@
-import { LaptopIcon, ScanIcon } from '@phosphor-icons/react';
+import { LaptopIcon, ScanIcon, TableIcon } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
@@ -20,10 +20,16 @@ export function Header() {
       </div>
 
       <nav className="flex items-center space-x-4 lg:space-x-6">
-        <NavLink to="/" title="Navega para a página ">
+        <NavLink to="/" title="Navega para a página dashboard">
           <LaptopIcon className="h-5 w-5 transition-colors duration-300 group-hover:text-blue-600" />
           <span className="hidden text-sm font-medium transition-colors duration-300 group-hover:text-blue-600 md:block">
             Dashboard
+          </span>
+        </NavLink>
+        <NavLink to="/expenses" title="Navega para a página planilha">
+          <TableIcon className="h-5 w-5 transition-colors duration-300 group-hover:text-blue-600" />
+          <span className="hidden text-sm font-medium transition-colors duration-300 group-hover:text-blue-600 md:block">
+            Despesas
           </span>
         </NavLink>
         <NavLink to="/scan" title="Navega para a página escanear">

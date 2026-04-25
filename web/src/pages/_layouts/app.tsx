@@ -2,18 +2,15 @@ import { Outlet } from 'react-router-dom';
 
 import { Footer } from '@/components/app-footer';
 import { Header } from '@/components/app-header';
-import { SidebarProvider } from '@/components/ui/sidebar';
 
 export function AppLayout() {
   return (
     <div className="flex min-h-screen flex-col antialiased">
       <Header />
 
-      <SidebarProvider>
-        <div className="flex-1">
-          <Outlet />
-        </div>
-      </SidebarProvider>
+      <div className="flex flex-1 flex-col gap-4 p-8 pt-6">
+        <Outlet />
+      </div>
 
       <Footer />
     </div>
