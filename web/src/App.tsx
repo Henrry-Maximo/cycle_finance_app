@@ -1,8 +1,8 @@
-import "./globals.css";
+import './globals.css';
 
-import { router } from "./routes";
-import { RouterProvider } from "react-router-dom";
-import { Helmet, HelmetProvider } from "react-helmet-async";
+import { router } from './routes';
+import { RouterProvider } from 'react-router-dom';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 export function App() {
   return (

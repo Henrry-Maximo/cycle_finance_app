@@ -1,14 +1,14 @@
-import { Footer } from "@/components/app-footer";
-import { Header } from "@/components/app-header";
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { Outlet } from "react-router-dom";
+import { Footer } from '@/components/app-footer';
+import { Header } from '@/components/app-header';
+import { SidebarProvider } from '@/components/ui/sidebar';
+import { Outlet } from 'react-router-dom';
 
 export function AppLayout() {
   return (
     <SidebarProvider>
       {/* <AppSidebar /> */}
 
-      <div className="flex flex-col min-h-screen w-full">
+      <div className="flex min-h-screen w-full flex-col">
         <Header />
 
         <main className="flex flex-col">

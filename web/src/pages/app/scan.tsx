@@ -1,23 +1,23 @@
-import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
-import { UploadSimpleIcon } from "@phosphor-icons/react";
-import { useState } from "react";
-import { Helmet } from "react-helmet-async";
+import { Button } from '@/components/ui/button';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
+import { UploadSimpleIcon } from '@phosphor-icons/react';
+import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 export function Scan() {
-  const [isSubmitFileUpload, setIsSubmitFileUpload] = useState(false);
+  const [isSubmitFileUpload] = useState(false);
 
   return (
     <>
       <Helmet title="Scan" />
       {isSubmitFileUpload ? (
-        <div className="flex h-screen w-full justify-center items-center bg-black">
+        <div className="flex h-screen w-full items-center justify-center bg-black">
           <form
             action=""
-            className="flex flex-col gap-8 justify-center items-center px-16 py-12 text-white"
+            className="flex flex-col items-center justify-center gap-8 px-16 py-12 text-white"
           >
-            <div className="grid grid-cols-2 w-full gap-8">
+            <div className="grid w-full grid-cols-2 gap-8">
               <Field>
                 <FieldLabel htmlFor="">Título</FieldLabel>
                 <Input
@@ -37,7 +37,7 @@ export function Scan() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-2 w-full gap-8">
+            <div className="grid w-full grid-cols-2 gap-8">
               <Field>
                 <FieldLabel htmlFor="">Empresa</FieldLabel>
                 <Input id="" type="text" value="Mercado Ceifa" disabled />
@@ -55,7 +55,7 @@ export function Scan() {
               </Field>
             </div>
 
-            <div className="grid grid-cols-3 w-full gap-8">
+            <div className="grid w-full grid-cols-3 gap-8">
               <Field>
                 <FieldLabel htmlFor="">Estado/Município</FieldLabel>
                 <Input
@@ -95,19 +95,19 @@ export function Scan() {
                 placeholder="Escolha uma categoria"
               />
               <FieldDescription>
-                Escolha uma categoria.{" "}
+                Escolha uma categoria.{' '}
                 <span className="text-red-600">
                   (é necessário realizar o cadastro com antecedência)
                 </span>
               </FieldDescription>
             </Field>
 
-            <div className="flex flex-col gap-2 mt-8 items-center justify-center">
-              <div className="flex gap-2 items-center justify-center">
-                <Button className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer hover:text-blue-400 text-white transition-all shadow-sm active:scale-[0.98]">
+            <div className="mt-8 flex flex-col items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-2">
+                <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]">
                   Cadastrar Despesa
                 </Button>
-                <Button className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer hover:text-blue-400 text-white transition-all shadow-sm active:scale-[0.98]">
+                <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]">
                   Analisar Comprovante Novamente
                 </Button>
               </div>
@@ -120,7 +120,7 @@ export function Scan() {
           </form>
         </div>
       ) : (
-        <div className="flex flex-col gap-8 w-full  bg-black justify-center items-center h-screen">
+        <div className="flex h-screen w-full flex-col items-center justify-center gap-8 bg-black">
           <header className="flex flex-col gap-2 text-center">
             <h1 className="text-3xl font-semibold tracking-tight text-gray-200">
               Faça o upload!
@@ -131,14 +131,14 @@ export function Scan() {
           </header>
 
           <form className="flex flex-col gap-6">
-            <div className="flex space-y-4 justify-center items-center">
-              <Button className="flex flex-col gap-2 h-full bg-zinc-900 border-dashed border-2 border-slate-400 rounded-sm hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer hover:text-blue-400 text-white transition-all active:scale-[0.98] px-8 py-8 active:scale-95 shadow-lg">
+            <div className="flex items-center justify-center space-y-4">
+              <Button className="flex h-full flex-col gap-2 rounded-sm border-2 border-dashed border-slate-400 bg-zinc-900 px-8 py-8 text-white shadow-lg transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-95 active:scale-[0.98]">
                 <UploadSimpleIcon className="h-16 w-16" />
                 <span>UPLOAD</span>
               </Button>
             </div>
 
-            <Button className="w-full h-11 bg-zinc-900 hover:bg-zinc-800 hover:border-2 hover:border-blue-600 hover:cursor-pointer hover:text-blue-400 text-white transition-all shadow-sm active:scale-[0.98]">
+            <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]">
               Enviar para Análise
             </Button>
           </form>
