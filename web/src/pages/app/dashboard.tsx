@@ -1,7 +1,8 @@
-import { Button } from '@/components/ui/button';
-import { FieldLabel } from '@/components/ui/field';
 import { Helmet } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
+
+import { Button } from '@/components/ui/button';
+import { FieldLabel } from '@/components/ui/field';
 
 export function Dashboard() {
   return (

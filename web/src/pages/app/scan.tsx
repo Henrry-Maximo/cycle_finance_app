@@ -1,9 +1,10 @@
-import { Button } from '@/components/ui/button';
-import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
-import { Input } from '@/components/ui/input';
 import { UploadSimpleIcon } from '@phosphor-icons/react';
 import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+
+import { Button } from '@/components/ui/button';
+import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
+import { Input } from '@/components/ui/input';
 
 export function Scan() {
   const [isSubmitFileUpload] = useState(false);

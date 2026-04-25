@@ -1,12 +1,13 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { Dashboard } from './pages/app/dashboard';
-import { SignIn } from './pages/auth/sign-in';
+
 import { AppLayout } from './pages/_layouts/app';
 import { AuthLayout } from './pages/_layouts/auth';
-import { SignUp } from './pages/auth/sign-up';
+import { Dashboard } from './pages/app/dashboard';
+import { Scan } from './pages/app/scan';
 import { Request } from './pages/auth/reset/request';
 import { Update } from './pages/auth/reset/update';
-import { Scan } from './pages/app/scan';
+import { SignIn } from './pages/auth/sign-in';
+import { SignUp } from './pages/auth/sign-up';
 
 export const router = createBrowserRouter([
   {
@@ -15,13 +16,13 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Dashboard />
+        element: <Dashboard />,
       },
       {
         path: '/scan',
-        element: <Scan />
+        element: <Scan />,
       },
-    ]
+    ],
   },
   {
     path: '/',
@@ -29,20 +30,20 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/sign-in',
-        element: <SignIn />
+        element: <SignIn />,
       },
       {
         path: '/sign-up',
-        element: <SignUp />
+        element: <SignUp />,
       },
       {
         path: '/request',
-        element: <Request />
+        element: <Request />,
       },
       {
         path: '/update',
-        element: <Update />
+        element: <Update />,
       },
-    ]
-  }
-])
+    ],
+  },
+]);

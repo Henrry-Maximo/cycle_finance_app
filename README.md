@@ -281,3 +281,19 @@ export default defineConfig({
   },
 }
 ```
+
+- pnpm i -D eslint-plugin-simple-import-sort
+  [organiza importações dos arquivos no projeto]
+
+```Typescript
+  plugins: {
+    react: pluginReact,
+    "react-hooks": reactHooks,
+    "react-refresh": reactRefresh,
+    "simple-import-sort": simpleImportSort,
+  },
+  rules: {
+      "simple-import-sort/imports": "error",
+      "simple-import-sort/exports": "error",
+    },
+```

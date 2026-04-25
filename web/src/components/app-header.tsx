@@ -1,6 +1,7 @@
-import logo from '@/assets/logo.png';
 import { LaptopIcon, ScanIcon } from '@phosphor-icons/react';
 import { Link } from 'react-router-dom';
+
+import logo from '@/assets/logo.png';
 
 export function Header() {
   return (

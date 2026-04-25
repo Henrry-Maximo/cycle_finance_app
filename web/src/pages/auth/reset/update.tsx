@@ -1,9 +1,9 @@
+import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
+
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-
-import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
 
 export function Update() {
   return (
