@@ -4,7 +4,7 @@ import logo from '@/assets/logo.png';
 
 export function AuthLayout() {
   return (
-    <div className="grid h-screen grid-cols-1 bg-zinc-50 lg:grid-cols-2">
+    <div className="grid h-screen grid-cols-1 bg-zinc-50 antialiased lg:grid-cols-2">
       <div className="relative hidden flex-col items-center justify-center overflow-hidden bg-zinc-950 lg:flex">
         {/* <div className="absolute h-80 w-80 bg-blue-600/4- blur-[120px] rounded-full -top-10 -left-10" /> */}
 

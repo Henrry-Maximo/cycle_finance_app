@@ -9,7 +9,7 @@ export function Dashboard() {
     <>
       <Helmet title="Dashboard" />
 
-      <div className="flex h-screen flex-col items-center justify-center bg-black">
+      <div className="flex h-screen w-full items-center justify-center bg-black">
         <Link to="/sign-in" className="flex flex-col items-center gap-4">
           <Button>Login</Button>
           <FieldLabel className="text-white">Em desenvolvimento.</FieldLabel>

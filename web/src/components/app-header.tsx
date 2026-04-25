@@ -3,32 +3,33 @@ import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
 
+import { NavLink } from './app-nav-link';
+import { Separator } from './ui/separator';
+
 export function Header() {
   return (
-    <header className="flex h-28 flex-row items-center justify-between bg-black px-12 py-2">
-      <Link to="/">
-        <img src={logo} className="h-24 w-24" alt="logo cycle finance app" />
-      </Link>
+    <header className="flex h-28 flex-row items-center justify-between border-b bg-black px-12">
+      <div className="flex h-full items-center justify-center gap-12">
+        <Link to="/">
+          <img src={logo} className="h-24 w-24" alt="logo cycle finance app" />
+        </Link>
 
-      <nav className="flex gap-4 text-white">
-        <Link
-          to="/"
-          className="group flex flex-row items-center gap-3 rounded-lg border-2 border-slate-200 px-4 py-3 transition-all duration-300 hover:border-blue-600 active:scale-95"
-        >
-          <LaptopIcon className="h-5 w-5 text-slate-200 transition-colors duration-300 group-hover:text-blue-600" />
-          <span className="text-sm font-medium text-slate-200 transition-colors duration-300 group-hover:text-blue-600">
+        <Separator orientation="vertical" className="h-auto" />
+      </div>
+
+      <nav className="flex items-center space-x-4 lg:space-x-6">
+        <NavLink to="/" title="Navega para a página ">
+          <LaptopIcon className="h-5 w-5 transition-colors duration-300 group-hover:text-blue-600" />
+          <span className="hidden text-sm font-medium transition-colors duration-300 group-hover:text-blue-600 md:block">
             Dashboard
           </span>
-        </Link>
-        <Link
-          to="/scan"
-          className="group flex flex-row items-center gap-3 rounded-lg border-2 border-slate-200 px-4 py-3 transition-all duration-300 hover:border-blue-600 active:scale-95"
-        >
-          <ScanIcon className="h-5 w-5 text-slate-200 transition-colors duration-300 group-hover:text-blue-600" />
-          <span className="text-sm font-medium text-slate-200 transition-colors duration-300 group-hover:text-blue-600">
+        </NavLink>
+        <NavLink to="/scan" title="Navega para a página escanear">
+          <ScanIcon className="h-5 w-5 transition-colors duration-300 group-hover:text-blue-600" />
+          <span className="hidden text-sm font-medium transition-colors duration-300 group-hover:text-blue-600 md:block">
             Escanear
           </span>
-        </Link>
+        </NavLink>
       </nav>
     </header>
   );

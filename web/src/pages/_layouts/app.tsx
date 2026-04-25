@@ -6,24 +6,16 @@ import { SidebarProvider } from '@/components/ui/sidebar';
 
 export function AppLayout() {
   return (
-    <SidebarProvider>
-      {/* <AppSidebar /> */}
+    <div className="flex min-h-screen flex-col antialiased">
+      <Header />
 
-      <div className="flex min-h-screen w-full flex-col">
-        <Header />
+      <SidebarProvider>
+        <div className="flex-1">
+          <Outlet />
+        </div>
+      </SidebarProvider>
 
-        <main className="flex flex-col">
-          {/* <div className="flex items-center gap-2 mb-4">
-            <SidebarTrigger />
-          </div> */}
-
-          <div className="flex-1">
-            <Outlet />
-          </div>
-        </main>
-
-        <Footer />
-      </div>
-    </SidebarProvider>
+      <Footer />
+    </div>
   );
 }
