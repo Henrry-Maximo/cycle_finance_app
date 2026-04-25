@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 import logo from '@/assets/logo.png';
 
+import { AccountMenu } from './app-account-menu';
 import { NavLink } from './app-nav-link';
 import { ThemeToggle } from './theme/theme-toggle';
 import { Separator } from './ui/separator';
@@ -31,11 +32,12 @@ export function Header() {
             Escanear
           </span>
         </NavLink>
-
-        <div className="flex items-center gap-2">
-          <ThemeToggle />
-        </div>
       </nav>
+
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <AccountMenu />
+      </div>
     </header>
   );
 }
