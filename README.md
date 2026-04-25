@@ -297,3 +297,6 @@ export default defineConfig({
       "simple-import-sort/exports": "error",
     },
 ```
+
+- pnpm i react-hook-form zod @hookform/resolvers
+  [lidar com formulário no react utilizando validação com o zod e habilitando integração entre as ferramentas com resolvers]

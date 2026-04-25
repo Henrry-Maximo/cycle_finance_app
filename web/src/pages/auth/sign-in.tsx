@@ -1,11 +1,33 @@
 import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { z } from 'zod';
 
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const signInForm = z.object({
+  email: z.email(),
+  password: z.string().min(6),
+});
+
+type SignInForm = z.infer<typeof signInForm>;
+
 export function SignIn() {
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting },
+  } = useForm<SignInForm>();
+
+  async function handleSignIn(data: SignInForm) {
+    console.log(data);
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+  }
+
   return (
     <>
       <Helmet title="Login" />
@@ -21,13 +43,17 @@ export function SignIn() {
             </p>
           </header>
 
-          <form className="flex flex-col gap-6">
+          <form
+            className="flex flex-col gap-6"
+            onSubmit={handleSubmit(handleSignIn)}
+          >
             <div className="space-y-4">
               <Field className="space-y-2">
                 <FieldLabel className="font-medium text-zinc-700">
                   E-mail
                 </FieldLabel>
                 <Input
+                  {...register('email')}
                   type="email"
                   placeholder="exemplo@email.com"
                   className="h-11 border-zinc-200 transition-all focus:ring-blue-600"
@@ -48,13 +74,18 @@ export function SignIn() {
                 </div>
                 <Input
                   type="password"
+                  {...register('password')}
                   placeholder="••••••••"
                   className="h-11 border-zinc-200"
                 />
               </Field>
             </div>
 
-            <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]">
+            <Button
+              type="submit"
+              disabled={isSubmitting}
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]"
+            >
               Acessar plataforma
             </Button>
           </form>
