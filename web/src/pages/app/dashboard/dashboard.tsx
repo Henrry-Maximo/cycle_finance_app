@@ -8,12 +8,26 @@ import { PopularSpentsChart } from './popular-spents-chart';
 import { SpentChart } from './spent-chart';
 
 export function Dashboard() {
+  const greeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Bom dia';
+    if (hour < 18) return 'Boa tarde';
+    return 'Boa noite';
+  };
+
   return (
     <>
       <Helmet title="Dashboard" />
 
       <div className="flex flex-col gap-4">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">
+            {greeting()}, <span className="text-primary">Henrique Maximo</span>
+          </h1>
+          <p className="text-muted-foreground text-sm">
+            Dashboard: resumo das suas finanças.
+          </p>
+        </div>
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
           <MonthSpentCard />
