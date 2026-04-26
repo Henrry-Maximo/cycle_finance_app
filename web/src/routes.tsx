@@ -3,7 +3,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import { AppLayout } from './pages/_layouts/app';
 import { AuthLayout } from './pages/_layouts/auth';
 import { Dashboard } from './pages/app/dashboard';
-import { Expenses } from './pages/app/expenses';
+import { Expenses } from './pages/app/expenses/expenses';
 import { Scan } from './pages/app/scan';
 import { Settings } from './pages/app/settings';
 import { Request } from './pages/auth/reset/request';
