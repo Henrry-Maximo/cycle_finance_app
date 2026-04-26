@@ -13,7 +13,7 @@ export function Update() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
+            <h1 className="text-muted text-3xl font-semibold tracking-tight">
               Confirme sua nova senha abaixo!
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -26,27 +26,27 @@ export function Update() {
             <div className="space-y-4">
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <FieldLabel className="font-medium text-zinc-700">
+                  <FieldLabel className="text-muted font-medium">
                     Senha
                   </FieldLabel>
                 </div>
                 <Input
                   type="password"
                   placeholder="••••••••"
-                  className="h-11 border-zinc-200"
+                  className="text-muted h-11 border-zinc-200"
                 />
               </Field>
 
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <FieldLabel className="font-medium text-zinc-700">
+                  <FieldLabel className="text-muted font-medium">
                     Digite a senha novamente
                   </FieldLabel>
                 </div>
                 <Input
                   type="password"
                   placeholder="••••••••"
-                  className="h-11 border-zinc-200"
+                  className="text-muted h-11 border-zinc-200"
                 />
               </Field>
             </div>

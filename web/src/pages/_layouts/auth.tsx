@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
 
-import logo from '@/assets/logo.png';
+import logoDark from '@/assets/logo_dark.png';
 
 export function AuthLayout() {
   return (
@@ -14,9 +14,9 @@ export function AuthLayout() {
           </header>
           <main className="z-10 flex flex-1 flex-col items-center justify-center gap-6">
             <img
-              src={logo}
-              alt="Logo Cycle Finance"
-              className="h-auto w-52 drop-shadow-2xl"
+              src={logoDark}
+              className="h-24 w-24"
+              alt="logo cycle finance app"
             />
             <div className="text-center">
               <h2 className="text-4xl font-medium tracking-tight text-zinc-200">

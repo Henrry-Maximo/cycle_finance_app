@@ -13,7 +13,7 @@ export function Request() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
+            <h1 className="text-muted text-3xl font-semibold tracking-tight">
               Recupere o acesso a sua conta!
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -24,13 +24,11 @@ export function Request() {
 
           <form className="flex flex-col gap-6">
             <Field className="space-y-2">
-              <FieldLabel className="font-medium text-zinc-700">
-                E-mail
-              </FieldLabel>
+              <FieldLabel className="text-muted font-medium">E-mail</FieldLabel>
               <Input
                 type="email"
                 placeholder="exemplo@email.com"
-                className="h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                className="text-muted h-11 border-zinc-200 transition-all focus:ring-blue-600"
               />
             </Field>
 

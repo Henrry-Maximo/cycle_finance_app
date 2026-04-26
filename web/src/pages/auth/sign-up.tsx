@@ -48,7 +48,7 @@ export function SignUp() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-3xl font-semibold tracking-tight text-zinc-900">
+            <h1 className="text-muted text-3xl font-semibold tracking-tight">
               Cadastre sua conta
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -63,32 +63,32 @@ export function SignUp() {
           >
             <div className="space-y-4">
               <Field className="space-y-2">
-                <FieldLabel className="font-medium text-zinc-700">
+                <FieldLabel className="text-muted font-medium">
                   Username
                 </FieldLabel>
                 <Input
                   {...register('username')}
                   type="text"
                   placeholder="Henrry"
-                  className="h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                  className="text-muted h-11 border-zinc-200 transition-all focus:ring-blue-600"
                 />
               </Field>
 
               <Field className="space-y-2">
-                <FieldLabel className="font-medium text-zinc-700">
+                <FieldLabel className="text-muted font-medium">
                   E-mail
                 </FieldLabel>
                 <Input
                   {...register('email')}
                   type="email"
                   placeholder="exemplo@email.com"
-                  className="h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                  className="text-muted h-11 border-zinc-200 transition-all focus:ring-blue-600"
                 />
               </Field>
 
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <FieldLabel className="font-medium text-zinc-700">
+                  <FieldLabel className="text-muted font-medium">
                     Senha
                   </FieldLabel>
                 </div>
@@ -96,7 +96,7 @@ export function SignUp() {
                   {...register('password')}
                   type="password"
                   placeholder="••••••••"
-                  className="h-11 border-zinc-200"
+                  className="text-muted h-11 border-zinc-200"
                 />
               </Field>
             </div>
@@ -110,6 +110,7 @@ export function SignUp() {
 
             <Field orientation="horizontal">
               <Checkbox
+                className="dark:border-2 dark:border-gray-300"
                 id="terms-checkbox"
                 name="terms-checkbox"
                 required
