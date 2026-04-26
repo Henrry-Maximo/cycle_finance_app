@@ -44,9 +44,14 @@ export function AccountMenu() {
             <span>Configurações</span>
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem className="cursor-pointer text-rose-500 dark:text-rose-400">
-          <SignOutIcon className="mr-2 h-4 w-4" />
-          <span>Sair</span>
+        <DropdownMenuItem
+          asChild
+          className="cursor-pointer text-rose-500 dark:text-rose-400"
+        >
+          <Link to="sign-in">
+            <SignOutIcon className="mr-2 h-4 w-4" />
+            <span>Sair</span>
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
