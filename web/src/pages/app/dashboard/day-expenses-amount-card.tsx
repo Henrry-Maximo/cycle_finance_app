@@ -1,4 +1,4 @@
-import { CurrencyDollarIcon } from '@phosphor-icons/react';
+import { BasketIcon } from '@phosphor-icons/react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
@@ -9,7 +9,7 @@ export function DayExpensesAmountCard() {
         <CardTitle className="text-base font-semibold">
           Transações total (dia)
         </CardTitle>
-        <CurrencyDollarIcon className="text-muted-foreground h-4 w-4" />
+        <BasketIcon className="text-muted-foreground h-4 w-4" />
       </CardHeader>
 
       <CardContent className="space-y-1">

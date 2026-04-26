@@ -303,3 +303,6 @@ export default defineConfig({
 
 - pnpm install sonner
   [biblioteca de componente toast já estilizado e pronto para uso]
+
+- pnpm i recharts
+  [biblioteca para construção de gráficos do dashboard]
