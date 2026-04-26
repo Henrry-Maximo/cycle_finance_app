@@ -48,7 +48,7 @@ export function SignUp() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-muted text-3xl font-semibold tracking-tight">
+            <h1 className="text-accent-foreground text-3xl font-semibold tracking-tight">
               Cadastre sua conta
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -63,32 +63,32 @@ export function SignUp() {
           >
             <div className="space-y-4">
               <Field className="space-y-2">
-                <FieldLabel className="text-muted font-medium">
+                <FieldLabel className="text-accent-foreground font-medium">
                   Username
                 </FieldLabel>
                 <Input
                   {...register('username')}
                   type="text"
                   placeholder="Henrry"
-                  className="text-muted h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                  className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
 
               <Field className="space-y-2">
-                <FieldLabel className="text-muted font-medium">
+                <FieldLabel className="text-accent-foreground font-medium">
                   E-mail
                 </FieldLabel>
                 <Input
                   {...register('email')}
                   type="email"
                   placeholder="exemplo@email.com"
-                  className="text-muted h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                  className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
 
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <FieldLabel className="text-muted font-medium">
+                  <FieldLabel className="text-accent-foreground font-medium">
                     Senha
                   </FieldLabel>
                 </div>
@@ -96,13 +96,13 @@ export function SignUp() {
                   {...register('password')}
                   type="password"
                   placeholder="••••••••"
-                  className="text-muted h-11 border-zinc-200"
+                  className="text-accent-foreground h-11"
                 />
               </Field>
             </div>
 
             <Button
-              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]"
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
               disabled={isSubmitting}
             >
               Cadastrar conta
@@ -110,7 +110,7 @@ export function SignUp() {
 
             <Field orientation="horizontal">
               <Checkbox
-                className="dark:border-2 dark:border-gray-300"
+                className="dark:border-accent dark:border-2"
                 id="terms-checkbox"
                 name="terms-checkbox"
                 required
@@ -118,7 +118,7 @@ export function SignUp() {
               />
               <Label
                 htmlFor="terms-checkbox"
-                className="text-muted-foreground ml-2 text-xs leading-relaxed"
+                className="text-accent-foreground ml-2 text-xs leading-relaxed"
               >
                 Ao continuar, você concorda com nossos termos de serviços e
                 política de privacidade.
@@ -127,7 +127,7 @@ export function SignUp() {
           </form>
 
           <footer className="text-center">
-            <p className="text-sm text-zinc-500">
+            <p className="text-accent-foreground text-sm">
               Já tem uma conta?{' '}
               <Link
                 to="/sign-in"

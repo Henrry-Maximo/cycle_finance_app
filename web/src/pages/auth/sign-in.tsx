@@ -45,7 +45,7 @@ export function SignIn() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-muted-foreground p-4 text-3xl font-semibold tracking-tight">
+            <h1 className="text-accent-foreground p-4 text-3xl font-semibold tracking-tight">
               Entrar na conta
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -59,20 +59,20 @@ export function SignIn() {
           >
             <div className="space-y-4">
               <Field className="space-y-2">
-                <FieldLabel className="text-muted-foreground font-medium">
+                <FieldLabel className="text-accent-foreground font-medium">
                   E-mail
                 </FieldLabel>
                 <Input
                   {...register('email')}
                   type="email"
                   placeholder="exemplo@email.com"
-                  className="text-muted-foreground h-11 border-zinc-200 transition-all focus:ring-blue-600"
+                  className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
 
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <FieldLabel className="text-muted-foreground font-medium">
+                  <FieldLabel className="text-accent-foreground font-medium">
                     Senha
                   </FieldLabel>
                   <Link
@@ -86,7 +86,7 @@ export function SignIn() {
                   type="password"
                   {...register('password')}
                   placeholder="••••••••"
-                  className="text-muted-foreground h-11 border-zinc-200"
+                  className="text-accent-foreground h-11"
                 />
               </Field>
             </div>
@@ -94,14 +94,14 @@ export function SignIn() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98]"
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
             >
               Acessar plataforma
             </Button>
           </form>
 
           <footer className="text-center">
-            <p className="text-sm text-zinc-500">
+            <p className="text-accent-foreground text-sm">
               Não tem uma conta?{' '}
               <Link
                 className="font-medium text-blue-600 hover:underline"

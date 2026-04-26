@@ -5,7 +5,7 @@ import { AuthLayout } from './pages/_layouts/auth';
 import { NotFound } from './pages/404';
 import { Dashboard } from './pages/app/dashboard/dashboard';
 import { Expenses } from './pages/app/expenses/expenses';
-import { Scan } from './pages/app/scan';
+import { Scan } from './pages/app/scan/scan';
 import { Settings } from './pages/app/settings';
 import { Request } from './pages/auth/reset/request';
 import { Update } from './pages/auth/reset/update';

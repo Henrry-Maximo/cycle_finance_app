@@ -46,7 +46,7 @@ const data = [
 
 export function SpentChart() {
   return (
-    <Card className="col-span-6">
+    <Card className="md:col-span-6">
       <CardHeader className="flex flex-row items-center justify-between pb-8">
         <div className="space-y-1">
           <CardTitle className="text-base font-medium">
