@@ -1,4 +1,8 @@
-import { MagnifyingGlassIcon, TrashIcon } from '@phosphor-icons/react';
+import {
+  MagnifyingGlassIcon,
+  PencilIcon,
+  TrashIcon,
+} from '@phosphor-icons/react';
 import { Helmet } from 'react-helmet-async';
 
 import { Button } from '@/components/ui/button';
@@ -31,56 +35,84 @@ export function Expenses() {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead></TableHead>
+                <TableHead className="w-16"></TableHead>
 
-                <TableHead>ID</TableHead>
+                <TableHead className="w-10.5">ID</TableHead>
                 <TableHead>Título</TableHead>
-                <TableHead>Categoria</TableHead>
+                <TableHead className="w-48">Categoria</TableHead>
 
-                <TableHead>Preço</TableHead>
-                <TableHead>Cartão</TableHead>
+                <TableHead className="w-35">Preço</TableHead>
+                {/* <TableHead className="w-4">Cartão</TableHead> */}
 
                 <TableHead>Fornecedor</TableHead>
-                <TableHead>CNPJ</TableHead>
+                {/* <TableHead>CNPJ</TableHead> */}
 
-                <TableHead>Estado/Município</TableHead>
-                <TableHead>Criado há</TableHead>
+                {/* <TableHead>Estado/Município</TableHead> */}
+                <TableHead className="w-45">Criado há</TableHead>
 
-                <TableHead></TableHead>
-                <TableHead></TableHead>
+                <TableHead className="w-41"></TableHead>
+                <TableHead className="w-33"></TableHead>
               </TableRow>
             </TableHeader>
 
             <TableBody>
-              <TableRow>
-                <TableCell>
-                  <Button variant="outline" size="default">
-                    <MagnifyingGlassIcon className="h-3 w-3" />
-                    <span className="sr-only">Detalhes da despesa</span>
-                  </Button>
-                </TableCell>
-                <TableCell className="font-mono text-xs font-medium">
-                  1
-                </TableCell>
-                <TableCell>Gasolina</TableCell>
-                <TableCell>Transporte</TableCell>
+              {Array.from({ length: 10 }).map((_, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>
+                      <Button variant="outline" size="default">
+                        <MagnifyingGlassIcon className="h-3 w-3" />
+                        <span className="sr-only">Detalhes da despesa</span>
+                      </Button>
+                    </TableCell>
+                    <TableCell className="font-mono text-xs font-medium">
+                      1
+                    </TableCell>
+                    <TableCell className="font-medium">Gasolina</TableCell>
+                    <TableCell>
+                      <div className="flex items-center gap-2">
+                        <span className="h-2 w-2 rounded-full bg-slate-400" />
+                        <span className="text-muted-foreground font-medium">
+                          Transporte
+                        </span>
+                      </div>
+                    </TableCell>
 
-                <TableCell>R$ 250.00</TableCell>
-                <TableCell>4567</TableCell>
+                    <TableCell className="font-medium">R$ 250.00</TableCell>
+                    {/* <TableCell>456</TableCell> */}
 
-                <TableCell>Posto Ipiranga</TableCell>
-                <TableCell>00.000.000/0001-00</TableCell>
+                    <TableCell>Posto Ipiranga</TableCell>
+                    {/* <TableCell>00.000.000/0001-00</TableCell> */}
 
-                <TableCell>São Paulo/Embu das Artes</TableCell>
-                <TableCell className="text-muted-foreground">2 dias</TableCell>
+                    {/* <TableCell>São Paulo/Embu das Artes</TableCell> */}
+                    <TableCell className="text-muted-foreground flex flex-col">
+                      <span className="font-light">25/04/2026</span>
+                      <span className="font-semibold">2 dias</span>
+                    </TableCell>
 
-                <TableCell>
-                  <Button variant="outline" size="default">
-                    <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-                    <span className="sr-only">Excluir</span>
-                  </Button>
-                </TableCell>
-              </TableRow>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="default"
+                        className="cursor-pointer"
+                      >
+                        <PencilIcon className="h-3 w-3" />
+                        <span className="sr-only">Editar</span>
+                      </Button>
+                    </TableCell>
+                    <TableCell>
+                      <Button
+                        variant="ghost"
+                        size="default"
+                        className="cursor-pointer"
+                      >
+                        <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+                        <span className="sr-only">Excluir</span>
+                      </Button>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
