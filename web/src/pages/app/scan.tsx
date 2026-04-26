@@ -17,7 +17,7 @@ export function Scan() {
         <div className="flex items-center justify-center">
           <form
             action=""
-            className="flex flex-col items-center justify-center gap-8 px-16 py-12 text-white"
+            className="flex flex-col items-center justify-center gap-8 px-16 py-12"
           >
             <div className="grid w-full grid-cols-2 gap-8">
               <Field>
