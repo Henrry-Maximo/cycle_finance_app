@@ -14,6 +14,8 @@
     "@hookform/resolvers": "5.2.2",
     "@phosphor-icons/react": "^2.1.10",
     "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-query": "5.100.5",
+    "axios": "1.15.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "localforage": "1.10.0",

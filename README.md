@@ -306,3 +306,12 @@ export default defineConfig({
 
 - pnpm i recharts
   [biblioteca para construção de gráficos do dashboard]
+
+- pnpm install axios
+  []
+
+- pnpm install zod
+  []
+
+- pnpm install @tanstack/react-query
+  []
