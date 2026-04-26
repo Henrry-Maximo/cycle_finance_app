@@ -5,7 +5,10 @@ import {
 } from '@phosphor-icons/react';
 
 import { Button } from '@/components/ui/button';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TableCell, TableRow } from '@/components/ui/table';
+
+import { ExpenseDetails } from './expense-details';
 
 // export interface ExpenseTableRowProps {}
 
@@ -13,10 +16,16 @@ export function ExpenseTableRow() {
   return (
     <TableRow>
       <TableCell>
-        <Button variant="outline" size="default">
-          <MagnifyingGlassIcon className="h-3 w-3" />
-          <span className="sr-only">Detalhes da despesa</span>
-        </Button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button variant="outline" size="default">
+              <MagnifyingGlassIcon className="h-3 w-3" />
+              <span className="sr-only">Detalhes da despesa</span>
+            </Button>
+          </DialogTrigger>
+
+          <ExpenseDetails />
+        </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">1</TableCell>
       <TableCell className="font-medium">Gasolina</TableCell>
