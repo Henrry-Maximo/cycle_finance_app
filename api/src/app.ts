@@ -1,8 +1,15 @@
 import fastify from "fastify";
 import { ZodError } from "zod";
 import { appRoutes } from "./http/routes";
+import cors from '@fastify/cors'
 
 export const app = fastify();
+
+app.register(cors, {
+  origin: '*'
+});
+
+app.register(appRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
@@ -13,5 +20,3 @@ app.setErrorHandler((error, _, reply) => {
 
   return reply.status(500).send({ message: "Iternal Server Error." });
 });
-
-app.register(appRoutes);

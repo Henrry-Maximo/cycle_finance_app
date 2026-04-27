@@ -8,6 +8,8 @@ import { getExpenses } from "./controllers/expenses/get-controller";
 import { getCategories } from "./controllers/categories/get-controller";
 
 export async function appRoutes(app: FastifyInstance) {
+  // app.post("/session", authenticante)
+
   app.get("/users", getUsers);
   app.get("/expenses", getExpenses);
   app.get("/categories", getCategories);

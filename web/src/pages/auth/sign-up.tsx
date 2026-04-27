@@ -1,9 +1,11 @@
+import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import z from 'zod';
 
+import { registerUser } from '@/api/register-user';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldLabel } from '@/components/ui/field';
@@ -27,15 +29,30 @@ export function SignUp() {
     formState: { isSubmitting },
   } = useForm<SignUpForm>();
 
+  const { mutateAsync: registerUserFn } = useMutation({
+    mutationFn: registerUser,
+  });
+
   async function handleSignIn(data: SignUpForm) {
     try {
-      console.log(data);
+      const { message } = await registerUserFn({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+
+      // console.log(data);
       // throw new Error('');
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      toast.success('Usuário cadastrado com sucesso.');
+      toast.success(message, {
+        // action: {
+        //   label: 'Register',
+        //   onClick: () => navigate(`sign-in?email=${data.email}`),
+        // },
+      });
 
-      navigate('/sign-in');
+      navigate(`/sign-in?email=${data.email}`);
     } catch {
       toast.error('Error ao cadastrar usuário.');
     }
