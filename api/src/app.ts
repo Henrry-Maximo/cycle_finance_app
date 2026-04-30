@@ -2,6 +2,7 @@ import fastify from "fastify";
 import { ZodError } from "zod";
 import { appRoutes } from "./http/routes";
 import cors from '@fastify/cors'
+import { env } from "./env";
 
 export const app = fastify();
 
@@ -18,5 +19,12 @@ app.setErrorHandler((error, _, reply) => {
       .send({ message: "Validation error.", issues: error.format() });
   };
 
-  return reply.status(500).send({ message: "Iternal Server Error." });
+  if (env.NODE_ENV !== "production") {
+    console.log(error);
+  } else {
+    // TODO: Here we should log to on external tool like DataDog/NewRelic/Sentry
+  };
+
+  // erro desconhecido
+  return reply.status(500).send({ message: "Internal server error." });
 });
