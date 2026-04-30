@@ -1,5 +1,4 @@
-import { prisma } from "@/lib/prisma";
-import { UsersWithSameEmail } from "./errors/users-with-same-email";
+import { UserAlreadyExistsError } from "./errors/users-with-same-email";
 import { hash } from "bcryptjs";
 import { UsersRepository } from "@/repositories/users-repository";
 
@@ -18,7 +17,7 @@ export class RegisterUseCase {
 
 
     if (userWithSameEmail) {
-      throw new UsersWithSameEmail();
+      throw new UserAlreadyExistsError();
     };
 
     // const prismaUsersRepository = new PrismaUsersRepository();
