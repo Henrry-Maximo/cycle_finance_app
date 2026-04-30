@@ -6,7 +6,9 @@
   "scripts": {
     "start:dev": "tsx --watch src/server.ts",
     "start": "node build/server.cjs",
-    "build": "tsup src --out-dir build"
+    "build": "tsup src --out-dir build",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "keywords": [],
   "author": "Henrry-maximo",
@@ -31,6 +33,8 @@
     "tsup": "8.5.1",
     "tsx": "4.21.0",
     "typescript": "6.0.3",
-    "typescript-eslint": "8.58.2"
+    "typescript-eslint": "8.58.2",
+    "vite-tsconfig-paths": "6.1.1",
+    "vitest": "4.1.5"
   }
 }

@@ -143,6 +143,9 @@
 - pnpm add bcryptjs
   [responsável pelo hash da senha do usuário que está se cadastrando]
 
+- pnpm install vitest vite-tsconfig-paths -D
+  [biblioteca para escrever testes unitários, integração e end to end]
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite

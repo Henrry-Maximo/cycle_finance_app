@@ -1,5 +1,5 @@
 import fastify from "fastify";
-import { ZodError } from "zod";
+import z, { ZodError } from "zod";
 import { appRoutes } from "./http/routes";
 import cors from '@fastify/cors'
 import { env } from "./env";
@@ -16,7 +16,7 @@ app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
     return reply
       .status(400)
-      .send({ message: "Validation error.", issues: error.format() });
+      .send({ message: "Validation error.", issues: z.treeifyError(error) });
   };
 
   if (env.NODE_ENV !== "production") {
