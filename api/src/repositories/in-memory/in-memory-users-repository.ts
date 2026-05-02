@@ -1,8 +1,30 @@
+import { User } from "generated/prisma/client";
+import { UserCreateInput } from "generated/prisma/models";
+import { UsersRepository } from "../users-repository";
+import { email } from "zod";
 
-export class InMemoryUsersRepository {
-  public users: any = [];
+export class InMemoryUsersRepository implements UsersRepository {
+  public items: User[] = [];
 
-  async create(data: any) {
-    this.users.push(data);
+  async create(data: UserCreateInput) {
+    const user = {
+      id: 'user-1',
+      name: data.name,
+      email: data.email,
+      password_hash: data.password_hash,
+      terms_accepted_at: new Date(),
+      terms_version: '1.0.0'
+    };
+
+    this.items.push(user);
+
+    return user;
+  }
+  async findByEmail(email: string) {
+    const user = this.items.find((item) => item.email === email);
+
+    if (!user) return null;
+
+    return user;
   }
 }

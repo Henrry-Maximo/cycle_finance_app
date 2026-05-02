@@ -1,29 +1,29 @@
-import { expect, test, describe, it } from 'vitest';
+import { expect, describe, it } from 'vitest';
 import { RegisterUseCase } from './register';
-import { PrismaUsersRepository } from '@/repositories/prisma/prisma-users-repository';
 import { compare } from 'bcryptjs';
-import { id } from 'zod/v4/locales';
+import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
+import { UserAlreadyExistsError } from './errors/user-already-exists-error';
 
 // Test Unit
 describe('Register Use Case', () => {
+  it('should be able to register', async () => {
+    // const prismaUsersRepository = new PrismaUsersRepository();
+    const usersRepository = new InMemoryUsersRepository();
+    const registerUseCase = new RegisterUseCase(usersRepository);
+
+    const { user } = await registerUseCase.execute({
+      username: 'Henrry',
+      email: 'Henrrylimadasilva@gmail.com',
+      password: '123456'
+    });
+
+    expect(user.id).toEqual(expect.any(String));
+  });
+
   it('should hash user password upon registration', async () => {
     // const prismaUsersRepository = new PrismaUsersRepository();
-    const registerUseCase = new RegisterUseCase({
-      async findByEmail(data) {
-        return null;
-      },
-
-      async create(data) {
-        return {
-          id: 'user-1',
-          name: data.name,
-          email: data.email,
-          password_hash: data.password_hash,
-          terms_accepted_at: new Date(),
-          terms_version: '1.0.0'
-        }
-      },
-    });
+    const usersRepository = new InMemoryUsersRepository();
+    const registerUseCase = new RegisterUseCase(usersRepository);
 
     const { user } = await registerUseCase.execute({
       username: 'Henrry',
@@ -35,6 +35,26 @@ describe('Register Use Case', () => {
     const isPasswordCorrectlyHashed = await compare('123456', user.password_hash);
 
     expect(isPasswordCorrectlyHashed).toBe(true);
+  });
+
+  it('should not be able to register with same email twice', async () => {
+    // const prismaUsersRepository = new PrismaUsersRepository();
+    const usersRepository = new InMemoryUsersRepository();
+    const registerUseCase = new RegisterUseCase(usersRepository);
+
+    const email = "johndoe@example.com";
+
+    await registerUseCase.execute({
+      username: 'johndoe',
+      email,
+      password: '123456'
+    });
+
+    expect(() => registerUseCase.execute({
+      username: 'johndoe',
+      email,
+      password: '123456'
+    })).rejects.toBeInstanceOf(UserAlreadyExistsError);
   });
 });
 
