@@ -9,7 +9,8 @@
     "build": "tsup src --out-dir build",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
   },
   "keywords": [],
   "author": "Henrry-maximo",
@@ -27,6 +28,7 @@
     "@eslint/js": "10.0.1",
     "@types/node": "25.6.0",
     "@vitest/coverage-v8": "4.1.5",
+    "@vitest/ui": "4.1.5",
     "eslint": "10.2.1",
     "eslint-config-prettier": "10.1.8",
     "globals": "17.5.0",

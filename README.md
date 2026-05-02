@@ -149,6 +149,9 @@
 - pnpm install @vitest/coverage-v8
   [biblioteca para exibir cobertura de testes nos casos de uso, validar se algum item não foi testado, deve utilizar no package: "test:coverage": "vitest run --coverage"]
 
+- pnpm install -D @vitest/ui
+  [uma inteface visual que destaca o relacionamento dos testes com os módulos da aplicação, deve utilizar no package: "test:ui": "vitest --ui"]
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite
