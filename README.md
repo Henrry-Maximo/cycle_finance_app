@@ -146,6 +146,9 @@
 - pnpm install vitest vite-tsconfig-paths -D
   [biblioteca para escrever testes unitários, integração e end to end]
 
+- pnpm install @vitest/coverage-v8
+  [biblioteca para exibir cobertura de testes nos casos de uso, validar se algum item não foi testado, deve utilizar no package: "test:coverage": "vitest run --coverage"]
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite
