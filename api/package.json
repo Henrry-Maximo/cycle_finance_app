@@ -8,7 +8,8 @@
     "start": "node build/server.cjs",
     "build": "tsup src --out-dir build",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "author": "Henrry-maximo",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "@types/node": "25.6.0",
+    "@vitest/coverage-v8": "4.1.5",
     "eslint": "10.2.1",
     "eslint-config-prettier": "10.1.8",
     "globals": "17.5.0",
