@@ -30,6 +30,12 @@ export class PrismaUsersRepository implements UsersRepository {
 
     return user;
   }
+  allUsers(): Promise<User[]> {
+    throw new Error('Method not implemented.');
+  }
+  findByName(name?: string): Promise<User[] | null> {
+    throw new Error('Method not implemented.');
+  }
 }
 
 // new PrismaUsersRepository().create({  })

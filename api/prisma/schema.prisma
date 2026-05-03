@@ -27,11 +27,11 @@ model Expense {
   title            String
   enterprise       String
   description      String?
-  CNPJ             String?
+  cnpj             String?
   source           String?
   price            Int
   card_last_digits String   @db.Char(4)
-  createdAt        DateTime @default(now())
+  created_at        DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @db.Uuid // CORREÇÃO: Deve ser @db.Uuid para casar com User.id
@@ -46,12 +46,13 @@ model Category {
   id          Int      @id @default(autoincrement())
   title       String
   description String?
-  createdAt   DateTime @default(now())
+  created_at   DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @db.Uuid
 
   expenses Expense[]
 
+  @@unique([user_id, title])
   @@map("categories")
 }

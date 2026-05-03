@@ -1,7 +1,6 @@
 import { User } from "generated/prisma/client";
 import { UserCreateInput } from "generated/prisma/models";
 import { UsersRepository } from "../users-repository";
-import { email } from "zod";
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = [];
@@ -28,11 +27,23 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user;
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string) {
     const user = this.items.find((item) => item.id === id);
 
     if (!user) return null;
 
     return user;
+  }
+
+  async allUsers(): Promise<User[]> {
+    throw new Error("Method not implemented.");
+  }
+
+  async findByName(name?: string): Promise<User[] | null> {
+    const user = this.items.find((item) => item.name === name);
+
+    if (!user) return null;
+
+    return [user];
   }
 }
