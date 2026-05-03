@@ -24,7 +24,7 @@
 ### Requisitos Funcionais (RF)
 
 - [x] O usuário deve poder se cadastrar
-- [ ] O usuário deve poder se logar
+- [x] O usuário deve poder se logar
 - [x] O usuário deve poder registrar um comprovante
 - [x] O usuário deve poder registrar uma categoria
 - [] O usuário deve poder visualizar todas as suas despesas
