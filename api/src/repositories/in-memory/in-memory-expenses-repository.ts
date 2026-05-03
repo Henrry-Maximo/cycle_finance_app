@@ -10,18 +10,19 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
       id: "expense-1",
       title: data.title,
       enterprise: data.enterprise,
-      description: data.description,
-      CNPJ: data.CNPJ,
-      source: data.source,
+      description: data.description ?? null,
+      cnpj: data.cnpj ?? null,
+      source: data.source ?? null,
       price: data.price,
       card_last_digits: data.card_last_digits,
-      createdAt: new Date(),
-      user_id: data.user,
-      category_id: data.category
+      created_at: new Date(),
+      user_id: data.user.connect?.id!,
+      category_id: data.category.connect?.id!
     };
 
     this.items.push(expense);
 
     return expense;
   }
+
 }

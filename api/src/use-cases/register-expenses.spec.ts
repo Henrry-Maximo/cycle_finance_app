@@ -1,63 +1,59 @@
-import { expect, describe, it, beforeEach } from 'vitest';
-import { RegisterUseCase } from './register';
-import { compare } from 'bcryptjs';
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
-import { UserAlreadyExistsError } from './errors/user-already-exists-error';
+import { expect, describe, it, beforeEach } from "vitest";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { RegisterExpensesUseCase } from "./register-expenses";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { hash } from "bcryptjs";
 
 let usersRepository: InMemoryUsersRepository;
-let sut: RegisterUseCase;
+let expensesRepository: InMemoryExpensesRepository;
+let categoriesRepository: InMemoryCategoriesRepository;
+let sut: RegisterExpensesUseCase;
 
-describe('Register Expenses Use Case', () => {
+describe("Register Expenses Use Case", () => {
   beforeEach(() => {
-    usersRepository = new InMemoryExpenses();
-    sut = new RegisterUseCase(usersRepository);
+    usersRepository = new InMemoryUsersRepository();
+    expensesRepository = new InMemoryExpensesRepository();
+    categoriesRepository = new InMemoryCategoriesRepository();
+
+    sut = new RegisterExpensesUseCase(
+      expensesRepository,
+      usersRepository,
+      categoriesRepository,
+    );
   });
 
-  it('should be able to register', async () => {
-    // const prismaUsersRepository = new PrismaUsersRepository();
-    // const usersRepository = new InMemoryUsersRepository();
-    // const sut = new RegisterUseCase(usersRepository);
-
-    const { user } = await sut.execute({
-      username: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456'
+  it("should be able to register expenses", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
     });
 
-    expect(user.id).toEqual(expect.any(String));
-  });
-
-  it('should hash user password upon registration', async () => {
-    const { user } = await sut.execute({
-      username: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456'
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      description: "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
+      user: {
+        connect: {
+          id: userCreated.id
+        }
+      }
     });
 
-    // console.log(user.password_hash);
-    const isPasswordCorrectlyHashed = await compare('123456', user.password_hash);
-
-    expect(isPasswordCorrectlyHashed).toBe(true);
-  });
-
-  it('should not be able to register with same email twice', async () => {
-    const email = "johndoe@example.com";
-
-    await sut.execute({
-      username: 'johndoe',
-      email,
-      password: '123456'
+    const { expense } = await sut.execute({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 10,
+      card_last_digits: "2343",
+      createdAt: new Date(),
+      user_id: userCreated.id,
+      category_id: categoryCreated.id
     });
 
-    await expect(() => sut.execute({
-      username: 'johndoe',
-      email,
-      password: '123456'
-    })).rejects.toBeInstanceOf(UserAlreadyExistsError);
+    expect(expense.id).toEqual(expect.any(String));
+    expect(expense).toEqual(expect.objectContaining({ title: "Pães" }));
   });
 });
-
-
-// test('check if it works', () => {
-//   expect(2 + 2).toBe(4);
-// });
