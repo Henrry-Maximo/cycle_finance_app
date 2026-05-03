@@ -3,14 +3,14 @@ import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-cas
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function registerUsers(req: FastifyRequest, reply: FastifyReply) {
-  const registerUsersSchema = z.object({
+export async function registerExpenses(req: FastifyRequest, reply: FastifyReply) {
+  const registerExpensesSchema = z.object({
     username: z.string().max(38),
     email: z.email(),
     password: z.string().min(6).max(22)
   });
 
-  const { username, email, password } = registerUsersSchema.parse(req.body);
+  const { username, email, password } = registerExpensesSchema.parse(req.body);
 
   try {
     // const usersRepository = new PrismaUsersRepository();

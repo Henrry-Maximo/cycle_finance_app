@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { getUsers } from "./get-controller";
+import { getUsers } from "./get-users-controller";
 import { registerUsers } from "./register-controller";
 import { getUserProfile } from "./get-user-profile";
 import { authenticate } from "./authenticate-controller";
