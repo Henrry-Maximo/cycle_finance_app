@@ -48,13 +48,14 @@ export class RegisterExpensesUseCase {
       throw new ResourceNotFoundError();
     };
 
+    const priceConvertInteger = price * 100;
     const expense = await this.expensesRepository.create({
       title,
       description,
       enterprise,
       cnpj,
       source,
-      price,
+      price: priceConvertInteger,
       card_last_digits,
       user: {
         connect: {

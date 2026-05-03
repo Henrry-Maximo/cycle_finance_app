@@ -24,9 +24,8 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message });
     }
-
-    // return reply.status(500).send(); // TODO: fix me
-    throw err; // se não for um erro conhecido, joga pra camada cima
+    
+    throw err;
   }
 
   return reply.status(200).send();

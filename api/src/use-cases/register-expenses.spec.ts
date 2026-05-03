@@ -46,14 +46,17 @@ describe("Register Expenses Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10,
+      price: 10.60,
       card_last_digits: "2343",
       createdAt: new Date(),
       user_id: userCreated.id,
       category_id: categoryCreated.id
     });
 
+    console.log("preço convertido: ", expense.price * 100);
+    console.log("preço original: ", expense.price / 100);
     expect(expense.id).toEqual(expect.any(String));
     expect(expense).toEqual(expect.objectContaining({ title: "Pães" }));
+    expect(expense).toEqual(expect.objectContaining({ price: 1060 }));
   });
 });
