@@ -2,11 +2,11 @@ import { UsersRepository } from "@/repositories/users-repository";
 import { User } from "generated/prisma/client";
 
 interface GetUsersUseCaseRequest {
-  name?: string,
+  name?: string | null,
 }
 
 interface GetUsersUseCaseResponse {
-  users: User[]
+  users: User[];
 }
 
 export class GetUsersUseCase {
@@ -18,6 +18,8 @@ export class GetUsersUseCase {
     const users = name
       ? await this.usersRepository.findByName(name)
       : await this.usersRepository.allUsers();
+
+    // if (!users) return throw err;;
 
     return { users };
   }

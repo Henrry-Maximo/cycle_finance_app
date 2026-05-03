@@ -31,12 +31,20 @@ export class PrismaUsersRepository implements UsersRepository {
     return user;
   }
 
-  allUsers(): Promise<User[]> {
-    throw new Error('Method not implemented.');
+  async allUsers() {
+    const users = await prisma.user.findMany();
+
+    return users;
   }
 
-  findByName(name?: string): Promise<User[] | null> {
-    throw new Error('Method not implemented.');
+  async findByName(name: string) {
+    const users = await prisma.user.findMany({
+      where: {
+        name: { contains: name }
+      },
+    });
+
+    return users;
   }
 
 }

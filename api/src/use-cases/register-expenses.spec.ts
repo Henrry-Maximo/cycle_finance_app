@@ -53,8 +53,8 @@ describe("Register Expenses Use Case", () => {
       category_id: categoryCreated.id
     });
 
-    console.log("preço convertido: ", expense.price * 100);
-    console.log("preço original: ", expense.price / 100);
+    // console.log("preço convertido: ", expense.price * 100);
+    // console.log("preço original: ", expense.price / 100);
     expect(expense.id).toEqual(expect.any(String));
     expect(expense).toEqual(expect.objectContaining({ title: "Pães" }));
     expect(expense).toEqual(expect.objectContaining({ price: 1060 }));

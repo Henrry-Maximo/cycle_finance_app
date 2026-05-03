@@ -19,7 +19,7 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return user;
   }
-  
+
   async findByEmail(email: string) {
     const user = this.items.find((item) => item.email === email);
 
@@ -36,15 +36,17 @@ export class InMemoryUsersRepository implements UsersRepository {
     return user;
   }
 
-  async findByName(name?: string) {
+  async findByName(name: string) {
     const user = this.items.find((item) => item.name === name);
 
-    if (!user) return null;
+    if (!user) return [];
 
     return [user];
   }
 
   async allUsers(): Promise<User[]> {
-    throw new Error("Method not implemented.");
+    const users = this.items;
+
+    return users;
   }
 }
