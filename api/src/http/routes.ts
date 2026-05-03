@@ -7,9 +7,11 @@ import { getUsers } from "./controllers/users/get-controller";
 import { getExpenses } from "./controllers/expenses/get-controller";
 import { getCategories } from "./controllers/categories/get-controller";
 import { authenticate } from "./controllers/users/authenticate-controller";
+import { getUserProfile } from "./controllers/users/get-user-profile";
 
 export async function appRoutes(app: FastifyInstance) {
-  app.post("/sessions", authenticate)
+  app.post("/sessions", authenticate);
+  app.post("/user/profile", getUserProfile);
 
   app.get("/users", getUsers);
   app.get("/expenses", getExpenses);
