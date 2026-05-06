@@ -3,6 +3,7 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { hash } from "bcryptjs";
 import { RegisterCategoriesUseCase } from "./register-categories";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -34,5 +35,13 @@ describe("Register Categories Use Case", () => {
 
     expect(category.title).toEqual(expect.any(String));
     expect(category).toEqual(expect.objectContaining({ title: "Alimentação" }));
+  });
+
+  it("should not be able to register category if user not exists", async () => {
+    expect(async () => sut.execute({
+      title: "Alimentação",
+      description: "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
+      user_id: "user-01"
+    })).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
