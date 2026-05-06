@@ -76,6 +76,30 @@ describe("Register Expenses Use Case", () => {
           category_id: 1
         }
       )
-    ).rejects.toBeInstanceOf(ResourceNotFoundError)
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to register expense if category not exists or category no belong of user", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    await expect(() =>
+      sut.execute(
+        {
+          title: "Pães",
+          enterprise: "Mercado Ceifa",
+          description: "Café da manhã",
+          cnpj: "123.242.324.23/24",
+          source: "Embu das Artes / São Paulo",
+          price: 10.60,
+          card_last_digits: "2343",
+          user_id: userCreated.id,
+          category_id: 1
+        }
+      )
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
