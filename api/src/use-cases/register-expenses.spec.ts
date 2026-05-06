@@ -104,26 +104,26 @@ describe("Register Expenses Use Case", () => {
   });
 
   it("should not be able to register expense if category no belong of user", async () => {
-    const userCreated = await usersRepository.create({
+    const unauthorizedUser = await usersRepository.create({
       id: "user-1",
       name: "John Doe",
       email: "johndoe@example.com",
       password_hash: await hash("123456", 6),
     });
 
-    const userSecondCreated = await usersRepository.create({
+    const categoryOwner = await usersRepository.create({
       id: "user-2",
       name: "Rick Grimes",
       email: "rickgrimes@example.com",
       password_hash: await hash("1234567", 6),
     });
 
-    const categoryCreated = await categoriesRepository.create({
+    const targetCategory = await categoriesRepository.create({
       title: "Alimentação",
       description: "Categoria alimentação criada para compra de produtos.",
       user: {
         connect: {
-          id: userSecondCreated.id
+          id: categoryOwner.id
         }
       }
     });
@@ -138,8 +138,8 @@ describe("Register Expenses Use Case", () => {
           source: "Embu das Artes / São Paulo",
           price: 10.60,
           card_last_digits: "2343",
-          user_id: userCreated.id,
-          category_id: categoryCreated.id
+          user_id: unauthorizedUser.id,
+          category_id: targetCategory.id
         }
       )
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
