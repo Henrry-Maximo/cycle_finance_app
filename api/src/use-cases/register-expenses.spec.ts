@@ -79,7 +79,7 @@ describe("Register Expenses Use Case", () => {
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 
-  it("should not be able to register expense if category not exists or category no belong of user", async () => {
+  it("should not be able to register expense if category not exists", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -98,6 +98,48 @@ describe("Register Expenses Use Case", () => {
           card_last_digits: "2343",
           user_id: userCreated.id,
           category_id: 1
+        }
+      )
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to register expense if category no belong of user", async () => {
+    const userCreated = await usersRepository.create({
+      id: "user-1",
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const userSecondCreated = await usersRepository.create({
+      id: "user-2",
+      name: "Rick Grimes",
+      email: "rickgrimes@example.com",
+      password_hash: await hash("1234567", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      description: "Categoria alimentação criada para compra de produtos.",
+      user: {
+        connect: {
+          id: userSecondCreated.id
+        }
+      }
+    });
+
+    await expect(() =>
+      sut.execute(
+        {
+          title: "Pães",
+          enterprise: "Mercado Ceifa",
+          description: "Café da manhã",
+          cnpj: "123.242.324.23/24",
+          source: "Embu das Artes / São Paulo",
+          price: 10.60,
+          card_last_digits: "2343",
+          user_id: userCreated.id,
+          category_id: categoryCreated.id
         }
       )
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
