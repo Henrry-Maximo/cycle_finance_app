@@ -4,6 +4,7 @@ import { RegisterExpensesUseCase } from "./register-expenses";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { hash } from "bcryptjs";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let usersRepository: InMemoryUsersRepository;
 let expensesRepository: InMemoryExpensesRepository;
@@ -58,5 +59,23 @@ describe("Register Expenses Use Case", () => {
     expect(expense.id).toEqual(expect.any(String));
     expect(expense).toEqual(expect.objectContaining({ title: "Pães" }));
     expect(expense).toEqual(expect.objectContaining({ price: 1060 }));
+  });
+
+  it("should not be able to register expense if user doesn't sign-in", async () => {
+    await expect(() =>
+      sut.execute(
+        {
+          title: "Pães",
+          enterprise: "Mercado Ceifa",
+          description: "Café da manhã",
+          cnpj: "123.242.324.23/24",
+          source: "Embu das Artes / São Paulo",
+          price: 10.60,
+          card_last_digits: "2343",
+          user_id: "user-id",
+          category_id: 1
+        }
+      )
+    ).rejects.toBeInstanceOf(ResourceNotFoundError)
   });
 });
