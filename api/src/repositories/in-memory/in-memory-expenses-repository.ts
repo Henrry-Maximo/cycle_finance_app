@@ -25,4 +25,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
+  findMany(contains?: string, mode?: string): Promise<Expense[]> {
+    throw new Error("Method not implemented.");
+  }
 }
