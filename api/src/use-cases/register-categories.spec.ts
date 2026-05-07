@@ -38,7 +38,7 @@ describe("Register Categories Use Case", () => {
   });
 
   it("should not be able to register category if user not exists", async () => {
-    expect(async () => sut.execute({
+    await expect(async () => sut.execute({
       title: "Alimentação",
       description: "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
       user_id: "user-01"

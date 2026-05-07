@@ -25,11 +25,12 @@
 
 - [x] O usuário deve poder se cadastrar
 - [x] O usuário deve poder se logar
-- [x] O usuário deve poder registrar um comprovante
 - [x] O usuário deve poder registrar uma categoria
+- [x] O usuário deve poder registrar um comprovante
 - [x] O usuário deve poder visualizar suas informações
 - [] O usuário deve poder visualizar todas as suas despesas
 - [] O usuário deve poder visualizar todos as suas categorias
+
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
