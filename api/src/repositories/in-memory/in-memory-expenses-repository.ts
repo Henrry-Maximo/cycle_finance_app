@@ -1,6 +1,7 @@
 import { Expense } from "generated/prisma/client";
 import { ExpensesRepository } from "../expenses-repository";
 import { ExpenseCreateInput } from "generated/prisma/models";
+import { QueryMode } from "generated/prisma/internal/prismaNamespace";
 
 export class InMemoryExpensesRepository implements ExpensesRepository {
   public items: Expense[] = [];
@@ -25,7 +26,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  findMany(contains?: string, mode?: string): Promise<Expense[]> {
+  findMany(contains: string, mode: QueryMode): Promise<Expense[]> {
     throw new Error("Method not implemented.");
   }
 }

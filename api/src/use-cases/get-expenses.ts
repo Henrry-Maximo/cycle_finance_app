@@ -1,9 +1,9 @@
 import { ExpensesRepository } from "@/repositories/expenses-repository";
-import { Expense } from "generated/prisma/client";
+import { Expense, Prisma } from "generated/prisma/client";
 
 interface GetExpensesUseCaseRequest {
-  contains?: string;
-  mode?: string;
+  contains: string;
+  mode: Prisma.QueryMode;
 }
 
 interface GetExpensesUseCaseResponse {
@@ -17,6 +17,7 @@ export class GetExpensesUseCase {
 
   async execute({ contains, mode }: GetExpensesUseCaseRequest): Promise<GetExpensesUseCaseResponse> {
     const expenses = await this.expensesRepository.findMany(contains, mode);
+    console.log(expenses);
 
     return { expenses };
   }

@@ -1,31 +1,24 @@
-import { prisma } from "@/lib/prisma";
+import { makeGetExpensesUseCase } from "@/use-cases/factories/make-get-expenses-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { Prisma } from "generated/prisma/client";
 import z from "zod";
 
 export async function getExpenses(req: FastifyRequest, reply: FastifyReply) {
   const searchUsersSchema = z.object({
-    name: z.string().optional(),
+    contains: z.string().optional().nullable(),
+    mode: z.string().optional().nullable(),
   });
 
-  const { name } = searchUsersSchema.parse(req.query);
+  const { contains, mode } = searchUsersSchema.parse(req.query);
 
-  let filter = {} as {
-    contains?: string;
-    mode?: 'insensitive' | 'default';
-  };
+  try {
+    const getExpensesUseCase = makeGetExpensesUseCase();
+    const expenses = await getExpensesUseCase.execute(
+      { contains: contains ?? "", mode: mode as Prisma.QueryMode }
+    );
 
-  if (name) {
-    filter = {
-      contains: name,
-      mode: 'insensitive'
-    };
-  };
-
-  const expenses = await prisma.expense.findMany({
-    where: {
-      title: filter
-    },
-  });
-
-  return reply.status(200).send({ expenses });
+    return reply.status(200).send({ expenses });
+  } catch (err) {
+    throw err;
+  }
 }  
