@@ -9,7 +9,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
   async create(data: ExpenseCreateInput) {
     const expense = {
-      id: String(randomUUID()),
+      id: data.id ?? String(randomUUID()),
       title: data.title,
       enterprise: data.enterprise,
       description: data.description ?? null,
@@ -27,7 +27,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  async findManyByUserId(userId: string, contains: string, mode: QueryMode): Promise<Expense[]> {
+  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number): Promise<Expense[]> {
     const expenses = this.items.filter((item) => {
       if (item.user_id === userId) {
         if (mode === "insensitive") {
@@ -36,7 +36,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
         return item.title.includes(contains);
       }
-    })
+    }).slice((page - 1) * 20, page * 20);
 
     return expenses;
   }

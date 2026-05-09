@@ -7,6 +7,7 @@ interface FetchExpensesUseCaseRequest {
   userId: string;
   contains?: string;
   mode?: Prisma.QueryMode;
+  page: number;
 }
 
 interface FetchExpensesUseCaseResponse {
@@ -19,14 +20,14 @@ export class FetchExpensesUseCase {
     private expensesRepository: ExpensesRepository,
   ) { };
 
-  async execute({ userId, contains = "", mode = "default" }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
+  async execute({ userId, contains = "", mode = "default", page }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new ResourceNotFoundError();
     }
 
-    const expenses = await this.expensesRepository.findManyByUserId(userId, contains, mode);
+    const expenses = await this.expensesRepository.findManyByUserId(userId, contains, mode, page);
 
     return {
       expenses

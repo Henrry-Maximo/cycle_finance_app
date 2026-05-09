@@ -77,15 +77,68 @@ describe('Fetch User Expenses History Use Case', () => {
     });
 
     const { expenses } = await sut.execute({
-      userId: userCreated.id
+      userId: userCreated.id,
+      page: 1
     });
 
     expect(expenses).toHaveLength(2);
   });
 
+  it('should be able to fetch paginated expenses history', async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      description: "Categoria criada para fiscalizar as compras de alimentos",
+      user: {
+        connect: { id: userCreated.id }
+      }
+    });
+
+    for (let i = 1; i <= 22; i++) {
+      await expensesRepository.create({
+        id: `expense-${i}`,
+        title: "Pães",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.60,
+        card_last_digits: "2343",
+        created_at: new Date(),
+        user: {
+          connect: {
+            id: userCreated.id
+          }
+        },
+        category: {
+          connect: {
+            id: categoryCreated.id
+          }
+        }
+      });
+    }
+
+    const { expenses } = await sut.execute({
+      userId: userCreated.id,
+      page: 2
+    });
+
+    expect(expenses).toHaveLength(2);
+    expect(expenses).toEqual([
+      expect.objectContaining({ id: 'expense-21' }),
+      expect.objectContaining({ id: 'expense-22' })
+    ]);
+  });
+
   it('should not be able to fetch expenses history if user id not exists', async () => {
     await expect(() => sut.execute({
-      userId: "non-existing-id"
+      userId: "non-existing-id",
+      page: 1
     })).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
