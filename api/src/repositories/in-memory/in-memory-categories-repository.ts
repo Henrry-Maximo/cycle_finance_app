@@ -9,7 +9,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
 
   async create(data: CategoryCreateInput) {
     const category = {
-      id: String(randomUUID()),
+      id: data.id ?? String(randomUUID()),
       title: data.title,
       description: data.description ?? null,
       created_at: new Date(),
@@ -29,7 +29,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     return category;
   };
 
-  async findManyByUserId(userId: string, contains: string, mode: QueryMode): Promise<Category[]> {
+  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number): Promise<Category[]> {
     const categories = this.items.filter((item) => {
       if (item.user_id === userId) {
         if (mode === "insensitive") {
@@ -38,7 +38,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
 
         return item.title.includes(contains);
       }
-    });
+    }).slice((page - 1) * 20, page * 20);
 
     return categories;
   };

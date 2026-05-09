@@ -15,7 +15,7 @@ describe('Get User Categories History Use Case', () => {
     sut = new FetchCategoriesUseCase(usersRepository, categoriesRepository);
   });
 
-  it('should be able to fetch user categories history', async () => {
+  it('should be able to fetch categories history', async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -39,7 +39,8 @@ describe('Get User Categories History Use Case', () => {
     });
 
     const { categories } = await sut.execute({
-      userId: userCreated.id
+      userId: userCreated.id,
+      page: 1
     });
 
     expect(categories).toHaveLength(2);
@@ -49,4 +50,33 @@ describe('Get User Categories History Use Case', () => {
     ]);
   });
 
+  it('should be able to fetch paginated categories history', async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    for (let i = 1; i <= 22; i++) {
+      await categoriesRepository.create({
+        id: `category-${i}`,
+        title: "Alimentação",
+        description: "Categoria criada para fiscalizar as compras de alimentos",
+        user: {
+          connect: { id: userCreated.id }
+        }
+      });
+    };
+
+    const { categories } = await sut.execute({
+      userId: userCreated.id,
+      page: 2
+    });
+
+    expect(categories).toHaveLength(2);
+    expect(categories).toEqual([
+      expect.objectContaining({ id: "category-21" }),
+      expect.objectContaining({ id: "category-22" }),
+    ]);
+  });
 });
