@@ -15,7 +15,7 @@ interface RegisterExpensesUseCaseRequest {
   card_last_digits: string;
   createdAt?: Date | string;
   user_id: string;
-  category_id: number;
+  category_id: string;
 }
 
 interface RegisterExpensesUseCaseResponse {

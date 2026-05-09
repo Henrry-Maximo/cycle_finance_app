@@ -37,13 +37,13 @@ model Expense {
   user_id String @db.Uuid // CORREÇÃO: Deve ser @db.Uuid para casar com User.id
 
   category    Category @relation(fields: [category_id], references: [id])
-  category_id Int
+  category_id String @db.Uuid
 
   @@map("expenses")
 }
 
 model Category {
-  id          Int      @id @default(autoincrement())
+  id          String   @id @default(uuid(7)) @db.Uuid
   title       String
   description String?
   created_at   DateTime @default(now())

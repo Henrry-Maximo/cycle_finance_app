@@ -2,13 +2,14 @@ import { Expense } from "generated/prisma/client";
 import { ExpensesRepository } from "../expenses-repository";
 import { ExpenseCreateInput } from "generated/prisma/models";
 import { QueryMode } from "generated/prisma/internal/prismaNamespace";
+import { randomUUID } from "node:crypto";
 
 export class InMemoryExpensesRepository implements ExpensesRepository {
   public items: Expense[] = [];
 
   async create(data: ExpenseCreateInput) {
     const expense = {
-      id: "expense-1",
+      id: String(randomUUID()),
       title: data.title,
       enterprise: data.enterprise,
       description: data.description ?? null,

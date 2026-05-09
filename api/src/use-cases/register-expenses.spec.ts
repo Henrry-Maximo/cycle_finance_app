@@ -73,7 +73,7 @@ describe("Register Expenses Use Case", () => {
           price: 10.60,
           card_last_digits: "2343",
           user_id: "user-id",
-          category_id: 1
+          category_id: "category-id"
         }
       )
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
@@ -97,7 +97,7 @@ describe("Register Expenses Use Case", () => {
           price: 10.60,
           card_last_digits: "2343",
           user_id: userCreated.id,
-          category_id: 1
+          category_id: "category-id"
         }
       )
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
