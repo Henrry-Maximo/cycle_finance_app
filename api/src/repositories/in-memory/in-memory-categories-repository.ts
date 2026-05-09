@@ -29,13 +29,15 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     return category;
   };
 
-  async findMany(contains: string, mode: QueryMode): Promise<Category[]> {
+  async findManyByUserId(userId: string, contains: string, mode: QueryMode): Promise<Category[]> {
     const categories = this.items.filter((item) => {
-      if (mode === "insensitive") {
-        return item.title.toLowerCase().includes(contains.toLowerCase())
-      }
+      if (item.user_id === userId) {
+        if (mode === "insensitive") {
+          return item.title.toLowerCase().includes(contains.toLowerCase())
+        }
 
-      return item.title.includes(contains);
+        return item.title.includes(contains);
+      }
     });
 
     return categories;

@@ -12,7 +12,7 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     return category;
   };
 
-  async findById(id: number) {
+  async findById(id: string) {
     const category = await prisma.category.findUnique({
       where: {
         id,
@@ -22,9 +22,12 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     return category;
   };
 
-  async findMany(contains: string, mode: Prisma.QueryMode) {
+  async findManyByUserId(userId: string, contains: string, mode: Prisma.QueryMode) {
     const categories = await prisma.category.findMany({
       where: {
+        user_id: {
+          equals: userId
+        },
         title: {
           contains,
           mode
