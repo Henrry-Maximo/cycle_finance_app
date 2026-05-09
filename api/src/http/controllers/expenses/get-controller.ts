@@ -13,9 +13,9 @@ export async function getExpenses(req: FastifyRequest, reply: FastifyReply) {
 
   try {
     const getExpensesUseCase = makeGetExpensesUseCase();
-    const { expenses } = await getExpensesUseCase.execute(
-      { contains: contains ?? "", mode: mode as Prisma.QueryMode }
-    );
+    const { expenses } = await getExpensesUseCase.execute({
+      contains: contains ?? "", mode: mode as Prisma.QueryMode
+    });
 
     return reply.status(200).send({ expenses });
   } catch (err) {

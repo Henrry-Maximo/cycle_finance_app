@@ -1,31 +1,25 @@
-import { prisma } from "@/lib/prisma";
+import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-get-categories-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
+import { Prisma } from "generated/prisma/client";
 import z from "zod";
 
 export async function getCategories(req: FastifyRequest, reply: FastifyReply) {
   const searchUsersSchema = z.object({
-      name: z.string().optional(),
+    contains: z.string().optional().nullable(),
+    mode: z.string().optional().nullable(),
+  });
+
+  const { contains, mode } = searchUsersSchema.parse(req.query);
+
+  try {
+    const getCategoriesUseCase = makeGetCategoriesUseCase();
+    const { categories } = await getCategoriesUseCase.execute({
+      contains: contains ?? "", mode: mode as Prisma.QueryMode
     });
-  
-    const { name } = searchUsersSchema.parse(req.query);
-  
-    let filter = {} as {
-      contains?: string;
-      mode?: 'insensitive' | 'default';
-    };
-  
-    if (name) {
-      filter = {
-        contains: name,
-        mode: 'insensitive'
-      };
-    };
-  
-    const categories = await prisma.category.findMany({
-      where: {
-        title: filter
-      },
-    });
-  
+
     return reply.status(200).send({ categories });
+  } catch (err) {
+    throw err;
+  }
+
 }
