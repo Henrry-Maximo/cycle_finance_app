@@ -27,7 +27,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number): Promise<Expense[]> {
+  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number) {
     const expenses = this.items.filter((item) => {
       if (item.user_id === userId) {
         if (mode === "insensitive") {
@@ -39,5 +39,9 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     }).slice((page - 1) * 20, page * 20);
 
     return expenses;
+  }
+
+  async countByUserId(userId: string) {
+    return this.items.filter((item) => item.user_id === userId).length;
   }
 }
