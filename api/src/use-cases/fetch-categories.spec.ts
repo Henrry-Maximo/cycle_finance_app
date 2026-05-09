@@ -2,7 +2,7 @@ import { expect, describe, it, beforeEach } from 'vitest';
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
 import { hash } from 'bcryptjs';
 import { InMemoryCategoriesRepository } from '@/repositories/in-memory/in-memory-categories-repository';
-import { GetCategoriesUseCase } from './get-categories';
+import { GetCategoriesUseCase } from './fetch-categories';
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;

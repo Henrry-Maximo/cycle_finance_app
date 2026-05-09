@@ -17,7 +17,7 @@ export async function registerExpenses(
     card_last_digits: z.string().min(1).max(4),
 
     user_id: z.string(),
-    category_id: z.coerce.number(),
+    category_id: z.string(),
   });
 
   const {

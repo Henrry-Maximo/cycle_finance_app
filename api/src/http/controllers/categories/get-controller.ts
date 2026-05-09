@@ -1,4 +1,4 @@
-import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-get-categories-use-case";
+import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-fetch-categories-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import { Prisma } from "generated/prisma/client";
 import z from "zod";

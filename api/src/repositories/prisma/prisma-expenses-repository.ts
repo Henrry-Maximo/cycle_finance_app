@@ -12,9 +12,12 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     return expense
   }
 
-  async findMany(contains: string, mode: Prisma.QueryMode) {
+  async findManyByUserId(user_id: string, contains: string, mode: Prisma.QueryMode) {
     const expenses = await prisma.expense.findMany({
       where: {
+        user_id: {
+          equals: user_id
+        },
         title: {
           contains,
           mode

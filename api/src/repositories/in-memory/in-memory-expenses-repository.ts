@@ -27,13 +27,15 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  async findMany(contains: string, mode: QueryMode): Promise<Expense[]> {
+  async findManyByUserId(userId: string, contains: string, mode: QueryMode): Promise<Expense[]> {
     const expenses = this.items.filter((item) => {
-      if (mode === "insensitive") {
-        return item.title.toLowerCase().includes(contains.toLowerCase())
-      }
+      if (item.user_id === userId) {
+        if (mode === "insensitive") {
+          return item.title.toLowerCase().includes(contains.toLowerCase())
+        }
 
-      return item.title.includes(contains);
+        return item.title.includes(contains);
+      }
     })
 
     return expenses;
