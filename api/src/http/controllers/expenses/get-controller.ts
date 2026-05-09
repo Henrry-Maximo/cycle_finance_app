@@ -13,7 +13,7 @@ export async function getExpenses(req: FastifyRequest, reply: FastifyReply) {
 
   try {
     const getExpensesUseCase = makeGetExpensesUseCase();
-    const expenses = await getExpensesUseCase.execute(
+    const { expenses } = await getExpensesUseCase.execute(
       { contains: contains ?? "", mode: mode as Prisma.QueryMode }
     );
 

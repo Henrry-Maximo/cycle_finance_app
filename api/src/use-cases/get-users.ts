@@ -19,8 +19,6 @@ export class GetUsersUseCase {
       ? await this.usersRepository.findByName(name)
       : await this.usersRepository.allUsers();
 
-    // if (!users) return throw err;;
-
     return { users };
   }
 }

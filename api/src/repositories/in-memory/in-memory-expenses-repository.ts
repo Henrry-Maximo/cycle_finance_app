@@ -26,7 +26,15 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  findMany(contains: string, mode: QueryMode): Promise<Expense[]> {
-    throw new Error("Method not implemented.");
+  async findMany(contains: string, mode: QueryMode): Promise<Expense[]> {
+    const expenses = this.items.filter((item) => {
+      if (mode === "insensitive") {
+        return item.title.toLowerCase().includes(contains.toLowerCase())
+      }
+
+      return item.title.includes(contains);
+    })
+
+    return expenses;
   }
 }
