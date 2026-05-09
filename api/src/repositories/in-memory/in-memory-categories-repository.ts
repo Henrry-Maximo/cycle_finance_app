@@ -1,6 +1,7 @@
 import { Category } from "generated/prisma/client";
 import { CategoriesRepository } from "../categories-repository";
 import { CategoryCreateInput } from "generated/prisma/models";
+import { QueryMode } from "generated/prisma/internal/prismaNamespace";
 
 export class InMemoryCategoriesRepository implements CategoriesRepository {
   public items: Category[] = [];
@@ -25,5 +26,17 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     if (!category) return null;
 
     return category;
+  };
+
+  async findMany(contains: string, mode: QueryMode): Promise<Category[]> {
+    const categories = this.items.filter((item) => {
+      if (mode === "insensitive") {
+        return item.title.toLowerCase().includes(contains.toLowerCase())
+      }
+
+      return item.title.includes(contains);
+    });
+
+    return categories;
   };
 }
