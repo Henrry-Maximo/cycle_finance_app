@@ -39,9 +39,12 @@ describe('Get Expenses Use Case', () => {
     });
 
     const { categories } = await sut.execute();
-    console.log(categories);
 
     expect(categories).toHaveLength(2);
+    expect(categories).toEqual([
+      expect.objectContaining({ title: "Alimentação" }),
+      expect.objectContaining({ title: "Entretenimento" }),
+    ]);
   });
 
 });

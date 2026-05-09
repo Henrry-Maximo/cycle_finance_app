@@ -30,7 +30,6 @@
 - [x] O usuário deve poder visualizar suas informações
 - [x] O usuário deve poder visualizar todas as suas despesas
 - [x] O usuário deve poder visualizar todos as suas categorias
-
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
