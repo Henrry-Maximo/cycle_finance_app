@@ -3,7 +3,7 @@ import { makeRegisterExpensesUseCase } from "@/use-cases/factories/make-register
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function registerExpenses(
+export async function register(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {

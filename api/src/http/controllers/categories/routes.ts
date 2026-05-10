@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
-import { fetchUserCategoriesHistory } from "./fetch-controller";
-import { registerCategories } from "./register-controller";
+import { fetchCategories } from "./fetch-controller";
+import { register } from "./register-controller";
 
 export async function categoriesRoutes(app: FastifyInstance) {
-  app.get("/categories", fetchUserCategoriesHistory);
-
-  app.post("/categories", registerCategories);
+  /* Authenticated */
+  app.get("/categories", fetchCategories);
+  app.post("/categories", register);
 }

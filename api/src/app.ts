@@ -3,8 +3,13 @@ import z, { ZodError } from "zod";
 import { appRoutes } from "./http/routes";
 import cors from '@fastify/cors'
 import { env } from "./env";
+import fastifyJwt from "@fastify/jwt";
 
 export const app = fastify();
+
+app.register(fastifyJwt, {
+  secret: env.JWT_SECRET,
+});
 
 app.register(cors, {
   origin: '*'

@@ -3,7 +3,7 @@ import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-cas
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function registerUsers(req: FastifyRequest, reply: FastifyReply) {
+export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerUsersSchema = z.object({
     username: z.string().max(38),
     email: z.email(),

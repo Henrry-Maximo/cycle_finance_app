@@ -4,21 +4,23 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { Prisma } from "generated/prisma/client";
 import z from "zod";
 
-export async function fetchUserCategoriesHistory(req: FastifyRequest, reply: FastifyReply) {
+export async function fetchCategories(req: FastifyRequest, reply: FastifyReply) {
   const searchCategoriesSchema = z.object({
     id: z.string(),
     contains: z.string().optional().nullable(),
     mode: z.string().optional().nullable(),
+    page: z.number().default(1),
   });
 
-  const { id, contains, mode } = searchCategoriesSchema.parse(req.query);
+  const { id, contains, mode, page } = searchCategoriesSchema.parse(req.query);
 
   try {
     const fetchCategoriesUseCase = makeGetCategoriesUseCase();
     const { categories } = await fetchCategoriesUseCase.execute({
       userId: id,
       contains: contains ?? "",
-      mode: mode as Prisma.QueryMode
+      mode: mode as Prisma.QueryMode,
+      page
     });
 
     return reply.status(200).send({ categories });

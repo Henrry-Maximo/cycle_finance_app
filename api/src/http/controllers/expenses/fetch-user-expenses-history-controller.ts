@@ -4,21 +4,23 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { Prisma } from "generated/prisma/client";
 import z from "zod";
 
-export async function fetchUserExpensesHistory(req: FastifyRequest, reply: FastifyReply) {
+export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
   const searchExpensesSchema = z.object({
     id: z.string(),
     contains: z.string().optional().nullable(),
     mode: z.string().optional().nullable(),
+    page: z.number().default(1),
   });
 
-  const { id, contains, mode } = searchExpensesSchema.parse(req.query);
+  const { id, contains, mode, page } = searchExpensesSchema.parse(req.query);
 
   try {
     const fetchExpensesUseCase = makeFetchExpensesUseCase();
     const { expenses } = await fetchExpensesUseCase.execute({
       userId: id,
       contains: contains ?? "",
-      mode: mode as Prisma.QueryMode
+      mode: mode as Prisma.QueryMode,
+      page
     });
 
     return reply.status(200).send({ expenses });

@@ -2,7 +2,7 @@ import { makeGetUsersUseCase } from "@/use-cases/factories/make-get-users-use-ca
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function getUsers(req: FastifyRequest, reply: FastifyReply) {
+export async function fetchUsers(req: FastifyRequest, reply: FastifyReply) {
   const searchUsersSchema = z.object({
     name: z.string().nullable().optional().default(""),
   });

@@ -4,7 +4,7 @@ import { makeRegisterCategoriesUseCase } from "@/use-cases/factories/make-regist
 import { FastifyRequest, FastifyReply } from "fastify";
 import z from "zod";
 
-export async function registerCategories(req: FastifyRequest, reply: FastifyReply) {
+export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerCategoriesSchema = z.object({
     title: z.string(),
     description: z.string(),
