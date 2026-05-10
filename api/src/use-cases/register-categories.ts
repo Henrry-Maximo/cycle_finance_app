@@ -2,6 +2,7 @@ import { Category } from "generated/prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { UsersRepository } from "@/repositories/users-repository";
 import { CategoriesRepository } from "@/repositories/categories-repository";
+import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
 
 interface RegisterCategoriesUseCaseRequest {
   id?: string;
@@ -29,6 +30,12 @@ export class RegisterCategoriesUseCase {
 
     if (!user) {
       throw new ResourceNotFoundError();
+    }
+
+    const categoryAlreadyExists = await this.categoriesRepository.findByName(data.title);
+
+    if (categoryAlreadyExists) {
+      throw new CategoryAlreadyExistsError();
     }
 
     const category = await this.categoriesRepository.create({

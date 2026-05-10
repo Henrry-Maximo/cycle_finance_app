@@ -4,15 +4,15 @@ import z from "zod";
 
 export async function fetchUsers(req: FastifyRequest, reply: FastifyReply) {
   const searchUsersSchema = z.object({
-    name: z.string().nullable().optional().default(""),
+    query: z.string().nullable().default(""),
   });
 
-  const { name } = searchUsersSchema.parse(req.query);
+  const { query } = searchUsersSchema.parse(req.query);
 
   try {
     const getUsersUseCase = makeGetUsersUseCase();
 
-    const { users } = await getUsersUseCase.execute({ name });
+    const { users } = await getUsersUseCase.execute({ query });
 
     return reply.status(200).send({ users });
   } catch (err) {

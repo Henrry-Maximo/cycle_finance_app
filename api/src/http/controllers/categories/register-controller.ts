@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { CategoryAlreadyExistsError } from "@/use-cases/errors/category-already-exists-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeRegisterCategoriesUseCase } from "@/use-cases/factories/make-register-categories-use-case";
 import { FastifyRequest, FastifyReply } from "fastify";
@@ -8,27 +8,29 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerCategoriesSchema = z.object({
     title: z.string(),
     description: z.string(),
-    user_id: z.string(),
   });
 
-  const { title, description, user_id } = registerCategoriesSchema.parse(req.body);
+  const { title, description } = registerCategoriesSchema.parse(req.body);
 
   try {
     const registerCategoriesUseCase = makeRegisterCategoriesUseCase();
 
-    registerCategoriesUseCase.execute({
+    await registerCategoriesUseCase.execute({
       title,
       description,
-      user_id
+      user_id: req.user.sub
     });
 
+    return reply.status(201).send();
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: err.message });
     }
 
+    if (err instanceof CategoryAlreadyExistsError) {
+      return reply.status(409).send({ message: err.message });
+    }
+
     throw err;
   }
-
-  return reply.status(201).send();
 }

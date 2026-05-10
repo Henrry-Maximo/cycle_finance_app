@@ -6,18 +6,18 @@ import z from "zod";
 
 export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
   const searchExpensesSchema = z.object({
-    id: z.string(),
     contains: z.string().optional().nullable(),
     mode: z.string().optional().nullable(),
     page: z.number().default(1),
   });
 
-  const { id, contains, mode, page } = searchExpensesSchema.parse(req.query);
+  const { contains, mode, page } = searchExpensesSchema.parse(req.query);
 
   try {
     const fetchExpensesUseCase = makeFetchExpensesUseCase();
+
     const { expenses } = await fetchExpensesUseCase.execute({
-      userId: id,
+      userId: req.user.sub,
       contains: contains ?? "",
       mode: mode as Prisma.QueryMode,
       page

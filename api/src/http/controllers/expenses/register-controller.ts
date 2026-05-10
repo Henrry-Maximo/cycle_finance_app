@@ -15,8 +15,6 @@ export async function register(
     source: z.string().nullable().optional().default(null),
     price: z.coerce.number(),
     card_last_digits: z.string().min(1).max(4),
-
-    user_id: z.string(),
     category_id: z.string(),
   });
 
@@ -29,7 +27,6 @@ export async function register(
     price,
     card_last_digits,
     category_id,
-    user_id,
   } = registerExpensesSchema.parse(req.body);
 
   try {
@@ -44,7 +41,7 @@ export async function register(
       price,
       card_last_digits,
       category_id,
-      user_id,
+      user_id: req.user.sub,
     });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {

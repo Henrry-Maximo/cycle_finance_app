@@ -42,4 +42,14 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
 
     return categories;
   };
+
+  async findByName(name: string) {
+    const category = this.items.find((item) => item.title === name);
+
+    if (!category) {
+      return null;
+    }
+
+    return category;
+  };
 }

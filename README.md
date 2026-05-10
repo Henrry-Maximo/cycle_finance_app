@@ -38,13 +38,14 @@
 
 - [x] A senha do usuário precisa estar em formato hash;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [X] Toas as listas de dados precisam estar paginadas com 20 itens por página; 
+- [X] Todas as listas de dados precisam estar paginadas com 20 itens por página; 
 - [x] O banco de dados deve utilizar UUID v7 para performance e identificação;
-- [] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
+- [x] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
 
 ### Regras de Negócio (RN)
 
 - [x] O usuário não deve poder se cadastrar com e-mail duplicado;
+- [x] O usuário não deve poder cadastrar categorias com o mesmo título;
 - [ ] O usuário não deve poder deletar uma categoria com gastos vinculados;
 
 ## Fluxograma de Desenvolvimento

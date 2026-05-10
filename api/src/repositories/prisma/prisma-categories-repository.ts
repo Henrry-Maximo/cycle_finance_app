@@ -1,4 +1,4 @@
-import { Prisma } from "generated/prisma/client";
+import { Category, Prisma } from "generated/prisma/client";
 import { CategoryCreateInput } from "generated/prisma/models";
 import { CategoriesRepository } from "../categories-repository";
 import { prisma } from "@/lib/prisma";
@@ -36,5 +36,15 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     });
 
     return categories;
+  }
+
+  async findByName(name: string) {
+    const category = await prisma.category.findFirst({
+      where: {
+        title: name
+      }
+    });
+
+    return category;
   }
 }
