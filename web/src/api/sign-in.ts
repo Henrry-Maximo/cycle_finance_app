@@ -11,7 +11,7 @@ export interface SignInResponse {
 
 export async function signIn({ email, password }: SignInBody): Promise<SignInResponse> {
   try {
-    const response = await api.post('/session', { email, password });
+    const response = await api.post('/sessions', { email, password });
 
     if (!response) {
       throw new Error("Token inválido.");

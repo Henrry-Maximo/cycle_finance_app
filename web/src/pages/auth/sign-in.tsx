@@ -37,11 +37,16 @@ export function SignIn() {
 
   async function handleSignIn(data: SignInForm) {
     try {
-      await authenticate({ email: data.email, password: data.password });
+      const { token } = await authenticate({
+        email: data.email,
+        password: data.password,
+      });
 
-      console.log(data);
+      console.log(token);
+      sessionStorage.setItem('token_api_session', token);
+      // console.log(data);
       // throw new Error('');
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
 
       toast.success('Usuário autenticado com sucesso.');
 
