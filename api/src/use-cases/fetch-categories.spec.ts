@@ -3,6 +3,7 @@ import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-user
 import { hash } from 'bcryptjs';
 import { InMemoryCategoriesRepository } from '@/repositories/in-memory/in-memory-categories-repository';
 import { FetchCategoriesUseCase } from './fetch-categories';
+import { ResourceNotFoundError } from './errors/resource-not-found-error';
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -78,5 +79,12 @@ describe('Get User Categories History Use Case', () => {
       expect.objectContaining({ id: "category-21" }),
       expect.objectContaining({ id: "category-22" }),
     ]);
+  });
+
+  it('should not be able to fetch categories history if user is not exists.', async () => {
+    await expect(() => sut.execute({
+      userId: 'non-existing-id',
+      page: 1,
+    })).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
