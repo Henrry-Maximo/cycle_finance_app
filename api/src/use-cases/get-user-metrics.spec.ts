@@ -1,17 +1,17 @@
-import { expect, describe, it, beforeEach } from 'vitest';
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
-import { hash } from 'bcryptjs';
-import { InMemoryExpensesRepository } from '@/repositories/in-memory/in-memory-expenses-repository';
-import { InMemoryCategoriesRepository } from '@/repositories/in-memory/in-memory-categories-repository';
-import { ResourceNotFoundError } from './errors/resource-not-found-error';
-import { GetUserMetricsUseCase } from './get-user-metrics';
+import { expect, describe, it, beforeEach } from "vitest";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+import { hash } from "bcryptjs";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { GetUserMetricsUseCase } from "./get-user-metrics";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
 let expensesRepository: InMemoryExpensesRepository;
 let sut: GetUserMetricsUseCase;
 
-describe('Get User Metrics Use Case', () => {
+describe("Get User Metrics Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
@@ -19,7 +19,7 @@ describe('Get User Metrics Use Case', () => {
     sut = new GetUserMetricsUseCase(usersRepository, expensesRepository);
   });
 
-  it('should be able to get expenses count from metrics', async () => {
+  it("should be able to get expenses count from metrics", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -30,8 +30,8 @@ describe('Get User Metrics Use Case', () => {
       title: "Alimentação",
       description: "Categoria criada para fiscalizar as compras de alimentos",
       user: {
-        connect: { id: userCreated.id }
-      }
+        connect: { id: userCreated.id },
+      },
     });
 
     await expensesRepository.create({
@@ -40,19 +40,19 @@ describe('Get User Metrics Use Case', () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10.60,
+      price: 10.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
     await expensesRepository.create({
@@ -61,25 +61,33 @@ describe('Get User Metrics Use Case', () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 5.60,
+      price: 5.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
     const { expensesCount } = await sut.execute({
-      userId: userCreated.id
+      userId: userCreated.id,
     });
 
     expect(expensesCount).toEqual(2);
+  });
+
+  it("should be able to get metrics of user if not found", async () => {
+    await expect(async () =>
+      sut.execute({
+        userId: "id-non-existing",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
