@@ -41,7 +41,35 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expenses;
   }
 
-  async countByUserId(userId: string) {
-    return this.items.filter((item) => item.user_id === userId).length;
+  async summaryByUserId(userId: string) {
+    const data = this.items.filter((item) => item.user_id === userId);
+
+    const today = new Date(); // get current date
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // get first day of the month
+    const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // get last day of the month
+
+    let total_expenses_month = 0; // price number on month
+    let count_expenses_month = 0; // total number on month
+    let total_expenses_day = 0; // price number on day
+    let count_expenses_day = 0; // total number on day
+    
+    for (const expense of data) {
+      if (expense.created_at >= startOfMonth && expense.created_at <= endOfMonth) {
+        total_expenses_month += expense.price;
+        count_expenses_month++;
+      };
+
+      if (expense.created_at.toDateString() === today.toDateString()) {
+        total_expenses_day += expense.price;
+        count_expenses_day++;
+      };
+    };
+
+    return {
+      total_expenses_day,
+      count_expenses_day,
+      total_expenses_month,
+      count_expenses_month,
+    };
   }
 }

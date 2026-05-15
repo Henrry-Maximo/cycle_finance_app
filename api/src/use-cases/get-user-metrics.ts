@@ -7,26 +7,39 @@ interface GetUserMetricsUseCaseRequest {
 }
 
 interface GetUserMetricsUseCaseResponse {
-  expensesCount: number;
+  total_expenses_month: number;
+  total_expenses_day: number;
+  count_expenses_month: number;
+  count_expenses_day: number;
 }
 
 export class GetUserMetricsUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private expensesRepository: ExpensesRepository,
-  ) { };
+  ) { }
 
-  async execute({ userId }: GetUserMetricsUseCaseRequest): Promise<GetUserMetricsUseCaseResponse> {
+  async execute({
+    userId,
+  }: GetUserMetricsUseCaseRequest): Promise<GetUserMetricsUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new ResourceNotFoundError();
     }
 
-    const expensesCount = await this.expensesRepository.countByUserId(userId);
+    const {
+      count_expenses_day,
+      count_expenses_month,
+      total_expenses_day,
+      total_expenses_month,
+    } = await this.expensesRepository.summaryByUserId(userId);
 
     return {
-      expensesCount
+      count_expenses_day,
+      count_expenses_month,
+      total_expenses_day,
+      total_expenses_month,
     };
   }
 }

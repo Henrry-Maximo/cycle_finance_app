@@ -76,7 +76,7 @@ describe("Get User Metrics Use Case", () => {
       },
     });
 
-    const { expensesCount } = await sut.execute({
+    const { count_expenses_day, count_expenses_month, total_expenses_day, total_expenses_month } = await sut.execute({
       userId: userCreated.id,
     });
 

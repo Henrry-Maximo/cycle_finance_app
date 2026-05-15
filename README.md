@@ -31,7 +31,7 @@
 - [x] O usuário deve poder visualizar o histórico de todas as suas despesas
 - [x] O usuário deve poder visualizar o histórico de todas as suas categorias
 - [x] O usuário deve poder visualizar a quantidade de despesas registradas
-- [ ] O usuário deve poder visualizar a quantidade de despesas registradas no dia
+- [x] O usuário deve poder visualizar a quantidade de despesas registradas no dia
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)

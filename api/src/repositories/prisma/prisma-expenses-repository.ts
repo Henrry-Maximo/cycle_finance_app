@@ -28,13 +28,23 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     return expenses;
   }
 
-  async countByUserId(userId: string): Promise<number> {
-    const expensesCount = await prisma.expense.count({
+  async summaryByUserId(userId: string) {
+    await prisma.expense.findMany({
       where: {
         user_id: userId
       }
     });
 
-    return expensesCount
+    let total_expenses_month = 0;
+    let total_expenses_day = 0;
+    let count_expenses_month = 0;
+    let count_expenses_day = 0;
+
+    return {
+      total_expenses_month,
+      total_expenses_day,
+      count_expenses_month,
+      count_expenses_day
+    }
   }
 }
