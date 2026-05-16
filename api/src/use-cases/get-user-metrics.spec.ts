@@ -40,7 +40,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10.6,
+      price: 2.5,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -61,7 +61,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 5.6,
+      price: 3.5,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -76,11 +76,80 @@ describe("Get User Metrics Use Case", () => {
       },
     });
 
-    const { count_expenses_day, count_expenses_month, total_expenses_day, total_expenses_month } = await sut.execute({
+    await expensesRepository.create({
+      title: "Leite",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 3.5,
+      card_last_digits: "2343",
+      created_at: new Date(),
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    const date = new Date();
+    date.setDate(date.getDate() - 1);
+    const yesterday = date.toISOString();
+    // let hours = ("0" + (date.getHours() + 21)).slice(-2);
+    // let minutes = ("0" + date.getMinutes()).slice(-2);
+    // let seconds = ("0" + date.getSeconds()).slice(-2);
+    // let milliseconds = date.getMilliseconds();
+
+    // let yesterday = `${date.getFullYear()}-${("0" + (date.getMonth() + 1)).slice(-2)}-${("0" + date.getDate()).slice(-2)}T${hours}:${minutes}:${seconds}.${milliseconds}Z`;
+    // console.log(date);
+    // console.log(yesterday);
+
+    await expensesRepository.create({
+      title: "Leite",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 4.5,
+      card_last_digits: "2343",
+      created_at: yesterday,
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    const {
+      count_expenses_day,
+      count_expenses_month,
+      total_expenses_day,
+      total_expenses_month,
+    } = await sut.execute({
       userId: userCreated.id,
     });
 
-    expect(expensesCount).toEqual(2);
+    // console.log(
+    //   `Quantidade de despesas do dia: ${count_expenses_day}\n`,
+    //   `Quantidade de despesas no mês: ${count_expenses_month}\n`,
+    //   `Total de despesas no dia (preço): ${total_expenses_day}\n`,
+    //   `Total de despeas no mês (preço): ${total_expenses_month}`,
+    // );
+
+    expect(count_expenses_day).toEqual(3);
+    expect(count_expenses_month).toEqual(4);
+    expect(total_expenses_day).toEqual(9.5);
+    expect(total_expenses_month).toEqual(14);
   });
 
   it("should be able to get metrics of user if not found", async () => {

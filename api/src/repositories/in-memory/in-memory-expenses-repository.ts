@@ -17,9 +17,9 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
       source: data.source ?? null,
       price: data.price,
       card_last_digits: data.card_last_digits,
-      created_at: new Date(),
+      created_at: data.created_at ? new Date(data.created_at) : new Date(),
       user_id: data.user.connect?.id!,
-      category_id: data.category.connect?.id!
+      category_id: data.category.connect?.id!,
     };
 
     this.items.push(expense);
@@ -27,16 +27,23 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
-  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number) {
-    const expenses = this.items.filter((item) => {
-      if (item.user_id === userId) {
-        if (mode === "insensitive") {
-          return item.title.toLowerCase().includes(contains.toLowerCase())
-        }
+  async findManyByUserId(
+    userId: string,
+    contains: string,
+    mode: QueryMode,
+    page: number,
+  ) {
+    const expenses = this.items
+      .filter((item) => {
+        if (item.user_id === userId) {
+          if (mode === "insensitive") {
+            return item.title.toLowerCase().includes(contains.toLowerCase());
+          }
 
-        return item.title.includes(contains);
-      }
-    }).slice((page - 1) * 20, page * 20);
+          return item.title.includes(contains);
+        }
+      })
+      .slice((page - 1) * 20, page * 20);
 
     return expenses;
   }
@@ -52,18 +59,21 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     let count_expenses_month = 0; // total number on month
     let total_expenses_day = 0; // price number on day
     let count_expenses_day = 0; // total number on day
-    
+
     for (const expense of data) {
-      if (expense.created_at >= startOfMonth && expense.created_at <= endOfMonth) {
+      if (
+        expense.created_at >= startOfMonth &&
+        expense.created_at <= endOfMonth
+      ) {
         total_expenses_month += expense.price;
         count_expenses_month++;
-      };
+      }
 
       if (expense.created_at.toDateString() === today.toDateString()) {
         total_expenses_day += expense.price;
         count_expenses_day++;
-      };
-    };
+      }
+    }
 
     return {
       total_expenses_day,
