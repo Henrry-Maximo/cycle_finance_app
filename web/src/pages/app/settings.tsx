@@ -62,6 +62,7 @@ export function Settings() {
                   <Input
                     id="email"
                     type="email"
+                    disabled
                     defaultValue={profile?.user.email}
                   />
                 </div>
