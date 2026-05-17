@@ -3,7 +3,6 @@ import {
   GearIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
-import type { ReactEventHandler, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Button } from './ui/button';
