@@ -17,7 +17,7 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     contains: string,
     mode: Prisma.QueryMode,
   ) {
-    const expenses = await prisma.expense.findMany({
+    const expensesUser = await prisma.expense.findMany({
       where: {
         user_id: {
           equals: user_id,
@@ -27,6 +27,13 @@ export class PrismaExpensesRepository implements ExpensesRepository {
           mode,
         },
       },
+    });
+
+    const expenses = expensesUser.map((expense) => {
+      return {
+        ...expense,
+        price: expense.price / 100,
+      };
     });
 
     return expenses;
@@ -51,12 +58,12 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     let count_expenses_day = 0; // total number on day
 
     for (const expense of expenses) {
-      total_expenses_month += expense.price;
+      total_expenses_month += expense.price / 100;
       count_expenses_month += 1;
 
       if (expense.created_at.toDateString() === today.toDateString()) {
-        total_expenses_day += expense.price;
-        total_expenses_month += 1;
+        total_expenses_day += expense.price / 100;
+        count_expenses_day += 1;
       }
     }
 

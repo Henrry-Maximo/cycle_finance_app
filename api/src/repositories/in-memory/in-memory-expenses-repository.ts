@@ -52,7 +52,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     const data = this.items.filter((item) => item.user_id === userId);
 
     const today = new Date(); // get current date
-    const startOfMonth = new Date(today.getFullYear (), today.getMonth(), 1); // get first day of the month
+    const startOfMonth = new Date(today.getFullYear(), today.getMonth(), 1); // get first day of the month
     const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0); // get last day of the month
 
     let total_expenses_month = 0; // price number on month
