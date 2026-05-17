@@ -2,7 +2,11 @@ import { CurrencyDollarIcon } from '@phosphor-icons/react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export function DaySpentCard() {
+interface DaySpentCardProps {
+  amount: number;
+}
+
+export function DaySpentCard({ amount }: DaySpentCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -13,7 +17,7 @@ export function DaySpentCard() {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">R$ 32,60</span>
+        <span className="text-2xl font-bold tracking-tight">R$ {amount}</span>
         <p className="text-muted-foreground text-xs">
           <span className="text-emerald-500 dark:text-emerald-400">-2%</span> em
           relação a ontem

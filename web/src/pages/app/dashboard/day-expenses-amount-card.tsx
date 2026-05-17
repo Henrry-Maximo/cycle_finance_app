@@ -2,7 +2,11 @@ import { BasketIcon } from '@phosphor-icons/react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-export function DayExpensesAmountCard() {
+interface DayExpensesAmountCardProps {
+  amount: number;
+}
+
+export function DayExpensesAmountCard({ amount }: DayExpensesAmountCardProps) {
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -13,7 +17,7 @@ export function DayExpensesAmountCard() {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">2</span>
+        <span className="text-2xl font-bold tracking-tight">{amount}</span>
         <p className="text-muted-foreground text-xs">
           <span className="text-emerald-500 dark:text-emerald-400">-2%</span> em
           relação a ontem
