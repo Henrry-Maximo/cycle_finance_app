@@ -33,7 +33,7 @@
 - [x] O usuário deve poder visualizar a quantidade de despesas registradas
 - [x] O usuário deve poder visualizar a quantidade de despesas registradas no dia
 - [x] O usuário deve poder visualizar o valor gasto do mês
-- [x] O usuário deve poder visualizar o valor gasto do dia
+- [x] O usuário deve poder visualizar o valor gasto do diaxxxxxx
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
