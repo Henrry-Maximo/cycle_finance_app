@@ -13,6 +13,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function Settings() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
@@ -38,27 +39,37 @@ export function Settings() {
                 Gerencie as informações básicas da sua conta.
               </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Nome</Label>
-                <Input
-                  id="name"
-                  placeholder="Seu nome"
-                  defaultValue={profile?.user.name ?? ''}
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">E-mail</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  disabled
-                  placeholder="seu@email.com"
-                  defaultValue={profile?.user.email ?? ''}
-                />
-              </div>
-              <Button className="w-fit">Atualizar perfil</Button>
-            </CardContent>
+            {isLoadingProfile ? (
+              <CardContent className="space-y-4">
+                <div className="grid gap-2">
+                  <Skeleton className="h-4 w-12" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <div className="grid gap-2">
+                  <Skeleton className="h-4 w-14" />
+                  <Skeleton className="h-10 w-full" />
+                </div>
+                <Skeleton className="h-10 w-28.75" />{' '}
+              </CardContent>
+            ) : (
+              <CardContent className="space-y-4">
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Nome</Label>
+                  <Input id="name" defaultValue={profile?.user.name} />
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="email">E-mail</Label>
+                  <Input
+                    id="email"
+                    type="email"
+                    defaultValue={profile?.user.email}
+                  />
+                </div>
+                <Button variant="outline" className="w-fit">
+                  Atualizar perfil
+                </Button>
+              </CardContent>
+            )}
           </Card>
 
           <Card className="md:col-span-2">
