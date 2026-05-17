@@ -1,3 +1,4 @@
+import { WarningCircleIcon } from '@phosphor-icons/react';
 import { Outlet } from 'react-router-dom';
 
 import logoDark from '@/assets/logo_dark.png';
@@ -25,6 +26,17 @@ export function AuthLayout() {
               </h2>
               <p className="text-md text-zinc-500">
                 Sua plataforma de acompanhamento de gastos.
+              </p>
+            </div>
+            <div className="flex w-md flex-col items-center justify-center gap-2">
+              <p className="flex items-center gap-2 font-semibold text-red-700">
+                <WarningCircleIcon className="h-6 w-6" /> Plataforma em
+                Desenvolvimento (Fase Alpha)
+              </p>
+              <p className="text-accent-foreground mt-1 text-xs">
+                Este é um ambiente de testes. Os dados cadastrados aqui podem
+                ser limpos ou apagados a qualquer momento devido a manutenções
+                no banco de dados.
               </p>
             </div>
           </main>

@@ -162,6 +162,9 @@
 - pnpm install -D @vitest/ui
   [uma inteface visual que destaca o relacionamento dos testes com os módulos da aplicação, deve utilizar no package: "test:ui": "vitest --ui"]
 
+- set "DATABASE_URL=" && npx prisma migrate deploy
+  [subir tabelas na hospedagem do banco de dados]
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite
