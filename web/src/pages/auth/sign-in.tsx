@@ -42,8 +42,7 @@ export function SignIn() {
         password: data.password,
       });
 
-      console.log(token);
-      sessionStorage.setItem('token_api_session', token);
+      localStorage.setItem('cycle_finance_api', token);
       // console.log(data);
       // throw new Error('');
       // await new Promise((resolve) => setTimeout(resolve, 2000));
