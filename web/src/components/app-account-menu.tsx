@@ -3,6 +3,7 @@ import {
   GearIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
+import type { ReactEventHandler, ReactNode } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Button } from './ui/button';
@@ -15,7 +16,11 @@ import {
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 
-export function AccountMenu() {
+type AccountMenuProps = {
+  handleLogout: () => Promise<void>;
+};
+
+export function AccountMenu({ handleLogout }: AccountMenuProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">
@@ -48,10 +53,10 @@ export function AccountMenu() {
           asChild
           className="cursor-pointer text-rose-500 dark:text-rose-400"
         >
-          <Link to="sign-in">
+          <Button onClick={handleLogout}>
             <SignOutIcon className="mr-2 h-4 w-4" />
             <span>Sair</span>
-          </Link>
+          </Button>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

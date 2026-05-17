@@ -1,5 +1,6 @@
 import { LaptopIcon, ScanIcon, TableIcon } from '@phosphor-icons/react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import logoDark from '@/assets/logo_dark.png';
 import logoWhite from '@/assets/logo_white.png';
@@ -12,8 +13,21 @@ import { Separator } from './ui/separator';
 
 export function Header() {
   const { theme } = useTheme();
+  const navigate = useNavigate();
 
   const currentLogo = theme === 'dark' ? logoDark : logoWhite;
+
+  async function handleLogout() {
+    try {
+      localStorage.clear();
+
+      toast.success('Sessão encerrada.');
+
+      navigate(`/sign-in`);
+    } catch {
+      toast.error('Error ao encerrar sessão do usuário.');
+    }
+  }
 
   return (
     <header className="flex h-28 flex-row items-center justify-between border-b px-12">
@@ -52,7 +66,7 @@ export function Header() {
 
       <div className="flex items-center gap-2">
         <ThemeToggle />
-        <AccountMenu />
+        <AccountMenu handleLogout={handleLogout} />
       </div>
     </header>
   );
