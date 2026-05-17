@@ -3,7 +3,10 @@ import {
   GearIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
+import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
+
+import { getProfileUser } from '@/api/get-profile-user';
 
 import { Button } from './ui/button';
 import {
@@ -14,12 +17,19 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from './ui/dropdown-menu';
+import { Skeleton } from './ui/skeleton';
 
 type AccountMenuProps = {
   handleLogout: () => Promise<void>;
 };
 
 export function AccountMenu({ handleLogout }: AccountMenuProps) {
+  const { data: profile, isLoading: isLoadingProfile } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfileUser,
+    staleTime: Infinity,
+  });
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className="cursor-pointer">
@@ -34,10 +44,19 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
 
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="flex flex-col">
-          <span className="text-lg font-bold">Henrry Maximo</span>
-          <span className="text-muted-foreground text-xs font-normal">
-            henrry.maximo@gmail.com
-          </span>
+          {isLoadingProfile ? (
+            <div className="space-y-1.5">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-3 w-24" />
+            </div>
+          ) : (
+            <>
+              <span>{profile?.user.name}</span>
+              <span className="text-muted-foreground text-xs font-normal">
+                {profile?.user.email}
+              </span>
+            </>
+          )}
         </DropdownMenuLabel>
 
         <DropdownMenuSeparator />

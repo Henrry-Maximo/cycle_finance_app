@@ -1,5 +1,7 @@
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
+import { getProfileUser } from '@/api/get-profile-user';
 import { Button } from '@/components/ui/button';
 import {
   Card,
@@ -13,6 +15,12 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 
 export function Settings() {
+  const { data: profile, isLoading: isLoadingProfile } = useQuery({
+    queryKey: ['profile'],
+    queryFn: getProfileUser,
+    staleTime: Infinity,
+  });
+
   return (
     <>
       <Helmet title="Settings" />
@@ -36,7 +44,7 @@ export function Settings() {
                 <Input
                   id="name"
                   placeholder="Seu nome"
-                  defaultValue="Henrique Maximo"
+                  defaultValue={profile?.user.name ?? ''}
                 />
               </div>
               <div className="grid gap-2">
@@ -46,7 +54,7 @@ export function Settings() {
                   type="email"
                   disabled
                   placeholder="seu@email.com"
-                  defaultValue="henrique@exemplo.com"
+                  defaultValue={profile?.user.email ?? ''}
                 />
               </div>
               <Button className="w-fit">Atualizar perfil</Button>

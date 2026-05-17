@@ -7,7 +7,7 @@ export interface MetricsUserResponse {
   total_expenses_month: number,
 }
 
-export async function metricsUser(): Promise<MetricsUserResponse> {
+export async function getMetricsUser(): Promise<MetricsUserResponse> {
   try {
     const response = await api.get('/metrics');
 

@@ -11,5 +11,5 @@ export async function usersRoutes(app: FastifyInstance) {
 
   /* Authenticated */
   app.get("/users", { onRequest: [verifyJWT] }, fetchUsers);
-  app.post("/me", { onRequest: [verifyJWT] }, profile);
+  app.get("/me", { onRequest: [verifyJWT] }, profile);
 }
