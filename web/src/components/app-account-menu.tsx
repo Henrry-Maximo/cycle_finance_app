@@ -53,7 +53,11 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
           asChild
           className="cursor-pointer text-rose-500 dark:text-rose-400"
         >
-          <Button onClick={handleLogout}>
+          <Button
+            variant="ghost"
+            className="w-full justify-start"
+            onClick={handleLogout}
+          >
             <SignOutIcon className="mr-2 h-4 w-4" />
             <span>Sair</span>
           </Button>
