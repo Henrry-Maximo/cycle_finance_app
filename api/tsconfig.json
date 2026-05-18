@@ -6,12 +6,10 @@
     // "outDir": "./dist",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-
     "module": "CommonJS",
     "moduleResolution": "Node",
     "target": "esnext",
     // "types": [],
-
     // For nodejs:
     "lib": [
       "esnext"
@@ -20,16 +18,13 @@
       "node"
     ],
     // and npm install -D @types/node
-
     // Other Outputs
     "sourceMap": true,
     "declaration": true,
     "declarationMap": true,
-
     // Stricter Typechecking Options
     "noUncheckedIndexedAccess": true,
     "exactOptionalPropertyTypes": true,
-
     // Style Options
     // "noImplicitReturns": true,
     // "noImplicitOverride": true,
@@ -37,7 +32,6 @@
     // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
-    
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
@@ -45,7 +39,6 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-
     "baseUrl": ".",
     "paths": {
       "@/*": [

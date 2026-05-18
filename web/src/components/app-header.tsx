@@ -30,7 +30,7 @@ export function Header() {
   }
 
   return (
-    <header className="flex h-28 flex-row items-center justify-between border-b px-12">
+    <header className="flex h-28 flex-row items-center justify-between border-b px-4 sm:px-12">
       <div className="hidden h-full items-center justify-center gap-12 lg:flex">
         <Link to="/">
           <img

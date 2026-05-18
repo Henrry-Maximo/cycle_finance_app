@@ -37,7 +37,9 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
           variant="outline"
           className="flex items-center gap-2 select-none"
         >
-          Minha Conta
+          <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
+            Minha Conta
+          </span>
           <ArrowDownLeftIcon className="h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
