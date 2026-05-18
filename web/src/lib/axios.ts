@@ -9,4 +9,20 @@ export const api = axios.create({
     'Authorization': `Bearer ${tokenApi}`,
     'Content-Type': 'application/json'
   }
-})
+});
+
+// interceptar requsição e modificar configurações se token existir
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('cycle_finance_api');
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    };
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  },
+);
