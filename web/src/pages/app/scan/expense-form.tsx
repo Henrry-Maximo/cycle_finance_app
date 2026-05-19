@@ -1,3 +1,10 @@
+import { useMutation } from '@tanstack/react-query';
+import { jwtDecode } from 'jwt-decode';
+import { Controller, useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import z from 'zod';
+
+import { registerExpense } from '@/api/register-expense';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -9,12 +16,72 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const registerExpenseForm = z.object({
+  title: z.string().min(1).max(80),
+  description: z.string().min(1).max(240),
+  enterprise: z.string().min(1).max(48),
+  cnpj: z.string().min(1).max(16),
+  source: z.string().min(1).max(48),
+  price: z.string().min(1).max(16),
+  card_last_digits: z.string().min(1).max(3),
+  category_id: z.string().min(1).max(140),
+});
+
+type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
+
+interface TokenRegisterExpensePayload {
+  sub: string;
+}
+
 export function ExpenseForm() {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { isSubmitting },
+  } = useForm<RegisterExpenseForm>();
+
+  const { mutateAsync: registerExpenseFn } = useMutation({
+    mutationFn: registerExpense,
+  });
+
+  async function handleRegisterExpense(data: RegisterExpenseForm) {
+    try {
+      console.log(data);
+
+      const token = localStorage.getItem('cycle_finance_api');
+
+      if (!token) {
+        throw new Error('Usuário não identificado.');
+      }
+
+      const decodedToken = jwtDecode<TokenRegisterExpensePayload>(token);
+      const userId = decodedToken.sub;
+
+      const { message } = await registerExpenseFn({
+        title: data.title,
+        enterprise: data.enterprise,
+        description: data.description,
+        cnpj: data.cnpj,
+        source: data.source,
+        price: Number(data.price),
+        card_last_digits: data.card_last_digits,
+        user_id: userId,
+        category_id: 'clq1703100000000000000001',
+      });
+
+      toast.success(message);
+    } catch {
+      toast.error('Error ao cadastrar usuário.');
+    }
+  }
+
   return (
     <div className="flex items-center justify-center">
       <form
-        action=""
         className="flex flex-col items-center justify-center gap-8 px-16 py-12"
+        onSubmit={handleSubmit(handleRegisterExpense)}
       >
         <div className="grid w-full grid-cols-2 gap-8">
           <Field>
@@ -25,14 +92,17 @@ export function ExpenseForm() {
               Título
             </FieldLabel>
             <Input
+              {...register('title')}
               id="title"
               type="text"
               placeholder="Digite o nome do produto(s)"
+              disabled={isSubmitting}
             />
           </Field>
 
           <Field>
             <FieldLabel
+              {...register('description')}
               htmlFor="description"
               className="text-foreground px-2 align-middle text-lg font-medium whitespace-break-spaces"
             >
@@ -42,6 +112,7 @@ export function ExpenseForm() {
               id="description"
               type="text"
               placeholder="Digite uma descrição para a despesa"
+              disabled={isSubmitting}
             />
           </Field>
         </div>
@@ -54,7 +125,13 @@ export function ExpenseForm() {
             >
               Empresa
             </FieldLabel>
-            <Input id="enterprise" type="text" value="Mercado Ceifa" disabled />
+            <Input
+              id="enterprise"
+              type="text"
+              value="Mercado Ceifa"
+              {...register('enterprise')}
+              disabled={isSubmitting}
+            />
             <FieldDescription>
               Empresa obtida através do comprovante
             </FieldDescription>
@@ -67,7 +144,13 @@ export function ExpenseForm() {
             >
               CNPJ
             </FieldLabel>
-            <Input id="cnpj" type="text" value="XX.XXX.XXX/0001-XX" disabled />
+            <Input
+              {...register('cnpj')}
+              id="cnpj"
+              type="text"
+              value="XX.XXX.XXX/0001-XX"
+              disabled={isSubmitting}
+            />
             <FieldDescription>
               CNPJ obtido através do comprovante
             </FieldDescription>
@@ -83,10 +166,11 @@ export function ExpenseForm() {
               Estado/Município
             </FieldLabel>
             <Input
+              {...register('source')}
               id="source"
               type="text"
               value="Estado de São Paulo / Embu das Artes"
-              disabled
+              disabled={isSubmitting}
             />
             <FieldDescription>
               Localização obtida através do comprovante
@@ -100,7 +184,13 @@ export function ExpenseForm() {
             >
               Preço
             </FieldLabel>
-            <Input id="price" type="text" value="R$ 34.50" disabled />
+            <Input
+              {...register('price')}
+              id="price"
+              type="text"
+              value="R$ 34.50"
+              disabled={isSubmitting}
+            />
             <FieldDescription>
               Preço obtido através do comprovante
             </FieldDescription>
@@ -113,7 +203,13 @@ export function ExpenseForm() {
             >
               Cartão
             </FieldLabel>
-            <Input id="cart" type="number" value="353" disabled />
+            <Input
+              {...register('card_last_digits')}
+              id="cart"
+              type="number"
+              value="353"
+              disabled={isSubmitting}
+            />
             <FieldDescription>
               Digítos do cartão obtido através do comprovante
             </FieldDescription>
@@ -128,19 +224,33 @@ export function ExpenseForm() {
             Categoria
           </FieldLabel>
 
-          <Select defaultValue="all">
-            <SelectTrigger className="h-8 w-45">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas Categorias</SelectItem>
-              <SelectItem value="transport">Transporte</SelectItem>
-              <SelectItem value="food">Alimentação</SelectItem>
-              <SelectItem value="study">Estudo</SelectItem>
-              <SelectItem value="home">Casa</SelectItem>
-              <SelectItem value="leisure">Lazer</SelectItem>
-            </SelectContent>
-          </Select>
+          <Controller
+            name="category_id"
+            control={control}
+            render={({ field: { name, onChange, value, disabled } }) => {
+              return (
+                <Select
+                  defaultValue="all"
+                  name={name}
+                  onValueChange={onChange}
+                  value={value}
+                  disabled={disabled}
+                >
+                  <SelectTrigger className="h-8 w-45">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas Categorias</SelectItem>
+                    <SelectItem value="transport">Transporte</SelectItem>
+                    <SelectItem value="food">Alimentação</SelectItem>
+                    <SelectItem value="study">Estudo</SelectItem>
+                    <SelectItem value="home">Casa</SelectItem>
+                    <SelectItem value="leisure">Lazer</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }}
+          />
 
           <FieldDescription>
             Escolha uma categoria{' '}
@@ -152,10 +262,16 @@ export function ExpenseForm() {
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center justify-center gap-2 md:grid md:grid-cols-2">
-            <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2">
+            <Button
+              type="submit"
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
+            >
               Cadastrar Despesa
             </Button>
-            <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2">
+            <Button
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
+              disabled
+            >
               Analisar Comprovante Novamente
             </Button>
           </div>
