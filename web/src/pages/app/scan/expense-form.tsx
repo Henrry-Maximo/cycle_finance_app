@@ -1,9 +1,10 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { jwtDecode } from 'jwt-decode';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
+import { getCategoriesUser } from '@/api/get-categories-user';
 import { registerExpense } from '@/api/register-expense';
 import { Button } from '@/components/ui/button';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
@@ -25,7 +26,7 @@ const registerExpenseForm = z.object({
   source: z.string().min(1).max(48),
   price: z.string().min(1).max(16),
   card_last_digits: z.string().min(1).max(3),
-  category_id: z.string().min(1).max(140),
+  category_id: z.string().min(1),
 });
 
 type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
@@ -34,22 +35,41 @@ interface TokenRegisterExpensePayload {
   sub: string;
 }
 
+interface Category {
+  id: string;
+  title: string;
+  description: string;
+  created_at: Date;
+  user_id: string;
+}
+
+export interface GetCategoriesUserForm {
+  categories: Category[];
+}
+
 export function ExpenseForm() {
   const {
     register,
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = useForm<RegisterExpenseForm>();
+  } = useForm<RegisterExpenseForm>({
+    defaultValues: {
+      category_id: '',
+    },
+  });
 
   const { mutateAsync: registerExpenseFn } = useMutation({
     mutationFn: registerExpense,
   });
 
+  const { data: categoriesData, isLoading: isLoadingCategories } = useQuery({
+    queryKey: ['user-categories'],
+    queryFn: getCategoriesUser,
+  });
+
   async function handleRegisterExpense(data: RegisterExpenseForm) {
     try {
-      console.log(data);
-
       const token = localStorage.getItem('cycle_finance_api');
 
       if (!token) {
@@ -68,12 +88,12 @@ export function ExpenseForm() {
         price: Number(data.price),
         card_last_digits: data.card_last_digits,
         user_id: userId,
-        category_id: 'clq1703100000000000000001',
+        category_id: data.category_id,
       });
 
       toast.success(message);
     } catch {
-      toast.error('Error ao cadastrar usuário.');
+      toast.error('Erro ao cadastrar despesa.');
     }
   }
 
@@ -227,25 +247,30 @@ export function ExpenseForm() {
           <Controller
             name="category_id"
             control={control}
-            render={({ field: { name, onChange, value, disabled } }) => {
+            render={({ field: { name, onChange, value } }) => {
               return (
                 <Select
                   defaultValue="all"
                   name={name}
                   onValueChange={onChange}
                   value={value}
-                  disabled={disabled}
+                  disabled={isLoadingCategories || isSubmitting}
                 >
-                  <SelectTrigger className="h-8 w-45">
-                    <SelectValue />
+                  <SelectTrigger id="category" className="h-8 w-45">
+                    <SelectValue
+                      placeholder={
+                        isLoadingCategories
+                          ? 'Carregando categorias...'
+                          : 'Selecione uma categoria'
+                      }
+                    />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">Todas Categorias</SelectItem>
-                    <SelectItem value="transport">Transporte</SelectItem>
-                    <SelectItem value="food">Alimentação</SelectItem>
-                    <SelectItem value="study">Estudo</SelectItem>
-                    <SelectItem value="home">Casa</SelectItem>
-                    <SelectItem value="leisure">Lazer</SelectItem>
+                    {categoriesData?.categories?.map((category) => (
+                      <SelectItem key={category.id} value={category.id}>
+                        {category.title}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
               );
