@@ -20,7 +20,7 @@ export class RegisterCategoriesUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private categoriesRepository: CategoriesRepository,
-  ) { }
+  ) {}
 
   async execute({
     user_id,
@@ -32,7 +32,10 @@ export class RegisterCategoriesUseCase {
       throw new ResourceNotFoundError();
     }
 
-    const categoryAlreadyExists = await this.categoriesRepository.findByName(data.title);
+    const categoryAlreadyExists = await this.categoriesRepository.findByName(
+      data.title,
+      user.id,
+    );
 
     if (categoryAlreadyExists) {
       throw new CategoryAlreadyExistsError();

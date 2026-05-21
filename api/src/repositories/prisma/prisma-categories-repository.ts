@@ -10,7 +10,7 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     });
 
     return category;
-  };
+  }
 
   async findById(id: string) {
     const category = await prisma.category.findUnique({
@@ -20,29 +20,34 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     });
 
     return category;
-  };
+  }
 
-  async findManyByUserId(userId: string, contains: string, mode: Prisma.QueryMode) {
+  async findManyByUserId(
+    userId: string,
+    contains: string,
+    mode: Prisma.QueryMode,
+  ) {
     const categories = await prisma.category.findMany({
       where: {
         user_id: {
-          equals: userId
+          equals: userId,
         },
         title: {
           contains,
-          mode
-        }
+          mode,
+        },
       },
     });
 
     return categories;
   }
 
-  async findByName(name: string) {
+  async findByName(name: string, userId: string) {
     const category = await prisma.category.findFirst({
       where: {
-        title: name
-      }
+        title: name,
+        user_id: userId,
+      },
     });
 
     return category;

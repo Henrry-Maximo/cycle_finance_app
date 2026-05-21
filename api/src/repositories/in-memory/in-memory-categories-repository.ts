@@ -13,13 +13,13 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
       title: data.title,
       description: data.description ?? null,
       created_at: new Date(),
-      user_id: data.user.connect?.id!
+      user_id: data.user.connect?.id!,
     };
 
     this.items.push(category);
 
     return category;
-  };
+  }
 
   async findById(id: string) {
     const category = this.items.find((item) => item.id === id);
@@ -27,29 +27,38 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     if (!category) return null;
 
     return category;
-  };
+  }
 
-  async findManyByUserId(userId: string, contains: string, mode: QueryMode, page: number): Promise<Category[]> {
-    const categories = this.items.filter((item) => {
-      if (item.user_id === userId) {
-        if (mode === "insensitive") {
-          return item.title.toLowerCase().includes(contains.toLowerCase())
+  async findManyByUserId(
+    userId: string,
+    contains: string,
+    mode: QueryMode,
+    page: number,
+  ): Promise<Category[]> {
+    const categories = this.items
+      .filter((item) => {
+        if (item.user_id === userId) {
+          if (mode === "insensitive") {
+            return item.title.toLowerCase().includes(contains.toLowerCase());
+          }
+
+          return item.title.includes(contains);
         }
-
-        return item.title.includes(contains);
-      }
-    }).slice((page - 1) * 20, page * 20);
+      })
+      .slice((page - 1) * 20, page * 20);
 
     return categories;
-  };
+  }
 
-  async findByName(name: string) {
-    const category = this.items.find((item) => item.title === name);
+  async findByName(name: string, userId: string) {
+    const category = this.items.find(
+      (item) => item.title === name && item.user_id === userId,
+    );
 
     if (!category) {
       return null;
     }
 
     return category;
-  };
+  }
 }
