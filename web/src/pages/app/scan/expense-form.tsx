@@ -148,7 +148,7 @@ export function ExpenseForm() {
             <Input
               id="enterprise"
               type="text"
-              value="Mercado Ceifa"
+              placeholder="Digite o nome da empresa"
               {...register('enterprise')}
               disabled={isSubmitting}
             />
@@ -167,8 +167,8 @@ export function ExpenseForm() {
             <Input
               {...register('cnpj')}
               id="cnpj"
+              placeholder="Digite o CNPJ da empresa"
               type="text"
-              value="XX.XXX.XXX/0001-XX"
               disabled={isSubmitting}
             />
             <FieldDescription>
@@ -189,7 +189,7 @@ export function ExpenseForm() {
               {...register('source')}
               id="source"
               type="text"
-              value="Estado de São Paulo / Embu das Artes"
+              placeholder="Digite o estado e a cidade"
               disabled={isSubmitting}
             />
             <FieldDescription>
@@ -208,7 +208,7 @@ export function ExpenseForm() {
               {...register('price')}
               id="price"
               type="text"
-              value="R$ 34.50"
+              placeholder="Digite o valor da despesa"
               disabled={isSubmitting}
             />
             <FieldDescription>
@@ -227,7 +227,7 @@ export function ExpenseForm() {
               {...register('card_last_digits')}
               id="cart"
               type="number"
-              value="353"
+              placeholder="Digite os últimos 3 dígitos"
               disabled={isSubmitting}
             />
             <FieldDescription>
