@@ -7,6 +7,7 @@ import z from 'zod';
 import { getCategoriesUser } from '@/api/get-categories-user';
 import { registerExpense } from '@/api/register-expense';
 import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
 import { Field, FieldDescription, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import {
@@ -100,10 +101,10 @@ export function ExpenseForm() {
   return (
     <div className="flex items-center justify-center">
       <form
-        className="flex flex-col items-center justify-center gap-8 px-16 py-12"
+        className="flex flex-col items-center justify-center px-16 py-4"
         onSubmit={handleSubmit(handleRegisterExpense)}
       >
-        <div className="grid w-full grid-cols-2 gap-8">
+        <Card className="grid w-full grid-cols-2 gap-8 px-4">
           <Field>
             <FieldLabel
               htmlFor="title"
@@ -135,9 +136,11 @@ export function ExpenseForm() {
               disabled={isSubmitting}
             />
           </Field>
-        </div>
+        </Card>
 
-        <div className="grid w-full grid-cols-2 gap-8">
+        {/* <Separator /> */}
+
+        <Card className="grid w-full grid-cols-2 gap-8 px-4">
           <Field>
             <FieldLabel
               htmlFor="enterprise"
@@ -175,9 +178,9 @@ export function ExpenseForm() {
               CNPJ obtido através do comprovante
             </FieldDescription>
           </Field>
-        </div>
+        </Card>
 
-        <div className="flex w-full flex-col gap-8 md:grid md:grid-cols-5">
+        <Card className="flex w-full flex-col gap-8 px-4 md:grid md:grid-cols-5">
           <Field className="md:col-span-2">
             <FieldLabel
               htmlFor="source"
@@ -234,56 +237,58 @@ export function ExpenseForm() {
               Digítos do cartão obtido através do comprovante
             </FieldDescription>
           </Field>
-        </div>
+        </Card>
 
-        <Field>
-          <FieldLabel
-            htmlFor="category"
-            className="text-foreground px-2 align-middle text-lg font-medium whitespace-break-spaces"
-          >
-            Categoria
-          </FieldLabel>
+        <Card className="flex w-full flex-col gap-8 px-4 md:grid md:grid-cols-1">
+          <Field className="flex w-full">
+            <FieldLabel
+              htmlFor="category"
+              className="text-foreground px-2 align-middle text-lg font-medium whitespace-break-spaces"
+            >
+              Categoria
+            </FieldLabel>
 
-          <Controller
-            name="category_id"
-            control={control}
-            render={({ field: { name, onChange, value } }) => {
-              return (
-                <Select
-                  defaultValue="all"
-                  name={name}
-                  onValueChange={onChange}
-                  value={value}
-                  disabled={isLoadingCategories || isSubmitting}
-                >
-                  <SelectTrigger id="category" className="h-8 w-45">
-                    <SelectValue
-                      placeholder={
-                        isLoadingCategories
-                          ? 'Carregando categorias...'
-                          : 'Selecione uma categoria'
-                      }
-                    />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categoriesData?.categories?.map((category) => (
-                      <SelectItem key={category.id} value={category.id}>
-                        {category.title}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              );
-            }}
-          />
+            <Controller
+              name="category_id"
+              control={control}
+              render={({ field: { name, onChange, value } }) => {
+                return (
+                  <Select
+                    defaultValue="all"
+                    name={name}
+                    onValueChange={onChange}
+                    value={value}
+                    disabled={isLoadingCategories || isSubmitting}
+                  >
+                    <SelectTrigger id="category" className="h-8 w-45">
+                      <SelectValue
+                        placeholder={
+                          isLoadingCategories
+                            ? 'Carregando categorias...'
+                            : 'Selecione uma categoria'
+                        }
+                      />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoriesData?.categories?.map((category) => (
+                        <SelectItem key={category.id} value={category.id}>
+                          {category.title}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                );
+              }}
+            />
 
-          <FieldDescription>
-            Escolha uma categoria{' '}
-            <span className="text-rose-500">
-              (é necessário realizar o cadastro com antecedência).
-            </span>
-          </FieldDescription>
-        </Field>
+            <FieldDescription>
+              Escolha uma categoria{' '}
+              <span className="text-rose-500">
+                (é necessário realizar o cadastro com antecedência).
+              </span>
+            </FieldDescription>
+          </Field>
+        </Card>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4">
           <div className="flex flex-col items-center justify-center gap-2 md:grid md:grid-cols-2">
