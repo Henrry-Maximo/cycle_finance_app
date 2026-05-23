@@ -1,14 +1,17 @@
 import {
   ArrowDownLeftIcon,
   GearIcon,
+  ListIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { getProfileUser } from '@/api/get-profile-user';
+import { CategoryDetails } from '@/pages/app/categories/category-details';
 
 import { Button } from './ui/button';
+import { Dialog, DialogTrigger } from './ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -64,11 +67,33 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
         <DropdownMenuSeparator />
 
         <DropdownMenuItem className="cursor-pointer" asChild>
+          <Dialog>
+            <DialogTrigger asChild>
+              <Button
+                variant="ghost"
+                className="w-full cursor-pointer justify-start"
+              >
+                <ListIcon className="mr-2 h-4 w-4" />
+                <span>Categoria</span>
+              </Button>
+            </DialogTrigger>
+
+            <CategoryDetails />
+          </Dialog>
+
+          {/* <Link to="/settings">
+            <GearIcon className="mr-2 h-4 w-4" />
+            <span>Configurações</span>
+          </Link> */}
+        </DropdownMenuItem>
+
+        <DropdownMenuItem className="cursor-pointer" asChild>
           <Link to="/settings">
             <GearIcon className="mr-2 h-4 w-4" />
             <span>Configurações</span>
           </Link>
         </DropdownMenuItem>
+
         <DropdownMenuItem
           asChild
           className="cursor-pointer text-rose-500 dark:text-rose-400"
