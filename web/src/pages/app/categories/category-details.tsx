@@ -60,27 +60,47 @@ export function CategoryDetails() {
           </DialogHeader>
 
           <Table>
-            {/* <TableHeader>
+            <TableHeader>
               <TableRow>
-                <TableHead>Categoria</TableHead>
-                <TableHead className="text-right">Descrição</TableHead>
+                {/* <TableHead className="w-24">ID</TableHead> */}
+                <TableHead className="w-12">Título</TableHead>
+                <TableHead className="w-52">Descrição</TableHead>
+                <TableHead className="w-16">Criado há</TableHead>
+                <TableHead className="w-8"></TableHead>
               </TableRow>
-            </TableHeader> */}
+            </TableHeader>
 
-            {/* <TableBody>
+            <TableBody>
               <TableRow>
-                <TableCell className="font-medium">Gasolina</TableCell>
-                <TableCell className="max-w-md text-right wrap-break-word whitespace-normal">
-                  Despesa realizada para deslocamento até o trabalho não
-                  precisando colocar gasolina durante a semana.
+                {/* <TableCell className="font-medium">
+                  019e3524-7c5a-75cd-b52e-239dad66fa0c
+                </TableCell> */}
+                <TableCell className="font-medium">Alimentação</TableCell>
+                <TableCell className="max-w-md wrap-break-word whitespace-normal">
+                  Categoria criada para monitoramento dos gastos em relação a
+                  comida, alimentação no geral, etc...
+                </TableCell>
+                <TableCell className="text-muted-foreground flex flex-col">
+                  <span className="font-light">25/04/2026</span>
+                  <span className="font-semibold">2 dias</span>
+                </TableCell>
+                <TableCell>
+                  <Button
+                    variant="ghost"
+                    size="default"
+                    className="cursor-pointer"
+                  >
+                    <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+                    <span className="sr-only">Excluir</span>
+                  </Button>
                 </TableCell>
               </TableRow>
-            </TableBody> */}
+            </TableBody>
 
             <TableFooter>
               <TableRow>
                 <TableCell colSpan={3}>Total da Categorias:</TableCell>
-                <TableCell className="text-right font-medium">34</TableCell>
+                <TableCell className="text-right font-medium">1</TableCell>
               </TableRow>
             </TableFooter>
           </Table>
