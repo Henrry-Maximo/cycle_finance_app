@@ -33,12 +33,13 @@ describe("Register Expenses Use Case", () => {
 
     const categoryCreated = await categoriesRepository.create({
       title: "Alimentação",
-      description: "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
+      description:
+        "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
       user: {
         connect: {
-          id: userCreated.id
-        }
-      }
+          id: userCreated.id,
+        },
+      },
     });
 
     const { expense } = await sut.execute({
@@ -47,35 +48,33 @@ describe("Register Expenses Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10.60,
+      price: 9.52,
       card_last_digits: "2343",
       createdAt: new Date(),
       user_id: userCreated.id,
-      category_id: categoryCreated.id
+      category_id: categoryCreated.id,
     });
 
     // console.log("preço convertido: ", expense.price * 100);
     // console.log("preço original: ", expense.price / 100);
     expect(expense.id).toEqual(expect.any(String));
     expect(expense).toEqual(expect.objectContaining({ title: "Pães" }));
-    expect(expense).toEqual(expect.objectContaining({ price: 1060 }));
+    expect(expense).toEqual(expect.objectContaining({ price: 9.52 }));
   });
 
   it("should not be able to register expense if user doesn't sign-in", async () => {
     await expect(() =>
-      sut.execute(
-        {
-          title: "Pães",
-          enterprise: "Mercado Ceifa",
-          description: "Café da manhã",
-          cnpj: "123.242.324.23/24",
-          source: "Embu das Artes / São Paulo",
-          price: 10.60,
-          card_last_digits: "2343",
-          user_id: "user-id",
-          category_id: "category-id"
-        }
-      )
+      sut.execute({
+        title: "Pães",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.6,
+        card_last_digits: "2343",
+        user_id: "user-id",
+        category_id: "category-id",
+      }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 
@@ -87,19 +86,17 @@ describe("Register Expenses Use Case", () => {
     });
 
     await expect(() =>
-      sut.execute(
-        {
-          title: "Pães",
-          enterprise: "Mercado Ceifa",
-          description: "Café da manhã",
-          cnpj: "123.242.324.23/24",
-          source: "Embu das Artes / São Paulo",
-          price: 10.60,
-          card_last_digits: "2343",
-          user_id: userCreated.id,
-          category_id: "category-id"
-        }
-      )
+      sut.execute({
+        title: "Pães",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.6,
+        card_last_digits: "2343",
+        user_id: userCreated.id,
+        category_id: "category-id",
+      }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 
@@ -123,25 +120,23 @@ describe("Register Expenses Use Case", () => {
       description: "Categoria alimentação criada para compra de produtos.",
       user: {
         connect: {
-          id: categoryOwner.id
-        }
-      }
+          id: categoryOwner.id,
+        },
+      },
     });
 
     await expect(() =>
-      sut.execute(
-        {
-          title: "Pães",
-          enterprise: "Mercado Ceifa",
-          description: "Café da manhã",
-          cnpj: "123.242.324.23/24",
-          source: "Embu das Artes / São Paulo",
-          price: 10.60,
-          card_last_digits: "2343",
-          user_id: unauthorizedUser.id,
-          category_id: targetCategory.id
-        }
-      )
+      sut.execute({
+        title: "Pães",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.6,
+        card_last_digits: "2343",
+        user_id: unauthorizedUser.id,
+        category_id: targetCategory.id,
+      }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

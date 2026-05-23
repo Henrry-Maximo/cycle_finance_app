@@ -40,7 +40,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 2.5,
+      price: 2 * 100,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -61,7 +61,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 3.5,
+      price: 3 * 100,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -82,7 +82,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 3.5,
+      price: 2 * 100,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -115,7 +115,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 4.5,
+      price: 2 * 100,
       card_last_digits: "2343",
       created_at: yesterday,
       user: {
@@ -148,8 +148,8 @@ describe("Get User Metrics Use Case", () => {
 
     expect(count_expenses_day).toEqual(3);
     expect(count_expenses_month).toEqual(4);
-    expect(total_expenses_day).toEqual(9.5);
-    expect(total_expenses_month).toEqual(14);
+    expect(total_expenses_day).toEqual(7);
+    expect(total_expenses_month).toEqual(9);
   });
 
   it("should be able to get metrics of user if not found", async () => {
