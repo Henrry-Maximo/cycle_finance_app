@@ -39,39 +39,17 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     return expenses;
   }
 
-  async summaryByUserId(userId: string) {
-    const today = new Date(); // get current date
-
+  async findManyByUserIdInPeriod(userId: string, from: Date, to: Date) {
     const expenses = await prisma.expense.findMany({
       where: {
         user_id: userId,
         created_at: {
-          gte: new Date(today.getFullYear(), today.getMonth(), 1), // get first day of the month
-          lte: new Date(today.getFullYear(), today.getMonth() + 1, 0), // get last day of the month
+          gte: from,
+          lte: to,
         },
       },
     });
 
-    let total_expenses_month = 0; // price number on month
-    let count_expenses_month = 0; // total number on month
-    let total_expenses_day = 0; // price number on day
-    let count_expenses_day = 0; // total number on day
-
-    for (const expense of expenses) {
-      total_expenses_month += expense.price / 100;
-      count_expenses_month += 1;
-
-      if (expense.created_at.toDateString() === today.toDateString()) {
-        total_expenses_day += expense.price / 100;
-        count_expenses_day += 1;
-      }
-    }
-
-    return {
-      total_expenses_month,
-      total_expenses_day,
-      count_expenses_month,
-      count_expenses_day,
-    };
+    return expenses;
   }
 }
