@@ -17,7 +17,9 @@ export function DayExpensesAmountCard({ amount }: DayExpensesAmountCardProps) {
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">{amount}</span>
+        <span className="text-2xl font-bold tracking-tight">
+          {amount.toLocaleString('pt-BR')}
+        </span>
         <p className="text-muted-foreground text-xs">
           <span className="text-emerald-500 dark:text-emerald-400">-2%</span> em
           relação a ontem

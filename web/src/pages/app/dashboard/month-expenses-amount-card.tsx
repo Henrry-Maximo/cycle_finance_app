@@ -19,7 +19,9 @@ export function MonthExpensesAmountCard({
       </CardHeader>
 
       <CardContent className="space-y-1">
-        <span className="text-2xl font-bold tracking-tight">{amount}</span>
+        <span className="text-2xl font-bold tracking-tight">
+          {amount.toLocaleString('pt-BR')}
+        </span>
         <p className="text-muted-foreground text-xs">
           <span className="text-rose-500 dark:text-rose-400">+5%</span> em
           relação ao mês passado
