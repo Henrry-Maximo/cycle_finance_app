@@ -33,7 +33,7 @@ export function AuthLayout() {
                 <WarningCircleIcon className="h-6 w-6" /> Plataforma em
                 Desenvolvimento (Fase Alpha)
               </p>
-              <p className="text-accent-foreground mt-1 text-xs">
+              <p className="text-accent mt-1 text-xs">
                 Este é um ambiente de testes. Os dados cadastrados aqui podem
                 ser limpos ou apagados a qualquer momento devido a manutenções
                 no banco de dados.
