@@ -101,7 +101,7 @@ export function ExpenseForm() {
   return (
     <div className="flex items-center justify-center">
       <form
-        className="flex flex-col items-center justify-center px-16 py-4"
+        className="flex flex-col items-center justify-center py-4"
         onSubmit={handleSubmit(handleRegisterExpense)}
       >
         <Card className="grid w-full grid-cols-2 gap-8 px-4">
