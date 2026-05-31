@@ -3,6 +3,8 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
@@ -10,9 +12,23 @@ import { TableCell, TableRow } from '@/components/ui/table';
 
 import { ExpenseDetails } from './expense-details';
 
-// export interface ExpenseTableRowProps {}
+export interface ExpenseTableRowProps {
+  expense: {
+    id: string;
+    title: string;
+    enterprise: string;
+    description: string | null;
+    cnpj: string | null;
+    source: string | null;
+    price: number;
+    card_last_digits: string;
+    created_at: Date;
+    user_id: string;
+    category_id: string;
+  };
+}
 
-export function ExpenseTableRow() {
+export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   return (
     <TableRow>
       <TableCell>
@@ -28,24 +44,33 @@ export function ExpenseTableRow() {
         </Dialog>
       </TableCell>
       <TableCell className="font-mono text-xs font-medium">1</TableCell>
-      <TableCell className="font-medium">Gasolina</TableCell>
+      <TableCell className="font-medium">{expense.title}</TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-slate-400" />
-          <span className="text-muted-foreground font-medium">Transporte</span>
+          <span className="text-muted-foreground font-medium">
+            {expense.category_id}
+          </span>
         </div>
       </TableCell>
 
-      <TableCell className="font-medium">R$ 250.00</TableCell>
+      <TableCell className="font-medium">R$ {expense.price}</TableCell>
       {/* <TableCell>456</TableCell> */}
 
-      <TableCell>Posto Ipiranga</TableCell>
+      <TableCell>{expense.enterprise}</TableCell>
       {/* <TableCell>00.000.000/0001-00</TableCell> */}
 
       {/* <TableCell>São Paulo/Embu das Artes</TableCell> */}
       <TableCell className="text-muted-foreground flex flex-col">
-        <span className="font-light">25/04/2026</span>
-        <span className="font-semibold">2 dias</span>
+        <span className="font-light">
+          {format(expense.created_at, 'dd/MM/yyyy')}
+        </span>
+        <span className="font-semibold">
+          {formatDistanceToNow(expense.created_at, {
+            locale: ptBR,
+            addSuffix: true,
+          })}
+        </span>
       </TableCell>
 
       <TableCell>

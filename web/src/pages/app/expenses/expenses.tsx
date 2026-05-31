@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import { Pagination } from '@/components/app-pagination';
@@ -9,10 +10,16 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+import { getExpensesUser } from '../../../api/get-expenses-user';
 import { ExpenseTableFilters } from './expense-table-filters';
 import { ExpenseTableRow } from './expense-table-row';
 
 export function Expenses() {
+  const { data: expensesData } = useQuery({
+    queryKey: ['user-expenses'],
+    queryFn: getExpensesUser,
+  });
+
   return (
     <>
       <Helmet title="Despesas" />
@@ -47,9 +54,15 @@ export function Expenses() {
               </TableHeader>
 
               <TableBody>
-                {Array.from({ length: 10 }).map((_, i) => {
+                {expensesData &&
+                  expensesData.expenses.map((expense) => {
+                    return (
+                      <ExpenseTableRow key={expense.id} expense={expense} />
+                    );
+                  })}
+                {/* {Array.from({ length: 10 }).map((_, i) => {
                   return <ExpenseTableRow key={i} />;
-                })}
+                })} */}
               </TableBody>
             </Table>
           </div>
