@@ -27,9 +27,10 @@ type AccountMenuProps = {
 };
 
 export function AccountMenu({ handleLogout }: AccountMenuProps) {
+  // realizar a requisição
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
-    queryKey: ['profile'],
-    queryFn: getProfileUser,
+    queryKey: ['profile'], // chave identificadora da requisição (assim utiliza o cache)
+    queryFn: getProfileUser, // dados
     staleTime: Infinity,
   });
 
@@ -40,10 +41,19 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
           variant="outline"
           className="flex items-center gap-2 select-none"
         >
-          <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
-            Minha Conta
-          </span>
-          <ArrowDownLeftIcon className="h-4 w-4" />
+          {isLoadingProfile ? (
+            <Skeleton className="h-4 w-32" />
+          ) : (
+            <>
+              <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
+                {profile?.user.name
+                  .split('-')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')}
+              </span>
+              <ArrowDownLeftIcon className="h-4 w-4" />
+            </>
+          )}
         </Button>
       </DropdownMenuTrigger>
 
