@@ -12,6 +12,7 @@ import { Button } from '@/components/ui/button';
 import {
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
@@ -27,6 +28,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
+import { Textarea } from './ui/textarea';
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerCategoryForm = z.object({
   title: z.string().min(1).max(28),
@@ -35,7 +38,7 @@ const registerCategoryForm = z.object({
 
 type RegisterCategoryForm = z.infer<typeof registerCategoryForm>;
 
-export function CategoryDetails() {
+export function StoreCategoriesDialog() {
   const {
     register,
     handleSubmit,
@@ -76,51 +79,65 @@ export function CategoryDetails() {
           className="flex flex-col gap-4"
           onSubmit={handleSubmit(handleRegisterCategory)}
         >
-          <div className="grid gap-2">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="title">Nome</Label>
-              <Input
-                id="title"
-                type="text"
-                placeholder="Digite o nome da categoria"
-                {...register('title')}
-                disabled={isSubmitting}
-              />
-              <p className="text-muted-foreground text-xs">
-                Preencha com o nome da categoria que deseja utilizar no cadastro
-                das despesas.
-              </p>
+          <div className="space-y-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="title" className="text-left">
+                Nome
+              </Label>
+              <div className="col-span-3">
+                <Input
+                  id="title"
+                  type="text"
+                  placeholder="Digite o nome da categoria"
+                  {...register('title')}
+                  disabled={isSubmitting}
+                />
+                <p className="text-muted-foreground text-xs">
+                  Preencha com o nome da categoria que deseja utilizar no
+                  cadastro das despesas.
+                </p>
+              </div>
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="description">Descrição</Label>
-              <Input
-                id="description"
-                type="text"
-                placeholder="Digite o nome da categoria"
-                {...register('description')}
-                disabled={isSubmitting}
-              />
-              <p className="text-muted-foreground text-xs">
-                Cadastre a descrição de sua categoria.
-              </p>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="description" className="text-left">
+                Descrição
+              </Label>
+              <div className="col-span-3">
+                <Textarea
+                  id="description"
+                  placeholder="Digite uma descrição para a sua categoria. Ex.: serve para..."
+                  {...register('description')}
+                  disabled={isSubmitting}
+                />
+                <p className="text-muted-foreground text-xs">
+                  Cadastre a descrição de sua categoria.
+                </p>
+              </div>
             </div>
           </div>
-          <div className="flex flex-row justify-end">
+
+          <DialogFooter className="flex flex-row justify-end">
             <Button
-              variant="ghost"
+              variant="success"
               size="default"
               className="cursor-pointer"
               disabled={isSubmitting}
+              type="submit"
             >
               <PencilIcon className="h-3 w-3" />
               <span>Cadastrar</span>
             </Button>
-            <Button variant="ghost" size="default" className="cursor-pointer">
+            <Button
+              variant="ghost"
+              size="default"
+              className="cursor-pointer"
+              type="button"
+            >
               <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
               <span className="text-rose-500 dark:text-rose-400">Cancelar</span>
             </Button>
-          </div>
+          </DialogFooter>
         </form>
 
         <div className="space-y-6">

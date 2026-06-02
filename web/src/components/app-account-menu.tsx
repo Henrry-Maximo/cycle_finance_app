@@ -8,7 +8,9 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { getProfileUser } from '@/api/get-profile-user';
-import { CategoryDetails } from '@/pages/app/categories/category-details';
+import {
+  StoreCategoriesDialog
+} from '@/components/app-store-categories-dialog';
 
 import { Button } from './ui/button';
 import { Dialog, DialogTrigger } from './ui/dialog';
@@ -35,50 +37,50 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
   });
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="cursor-pointer">
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 select-none"
-        >
-          {isLoadingProfile ? (
-            <Skeleton className="h-4 w-32" />
-          ) : (
-            <>
-              <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
-                {profile?.user.name
-                  .split('-')
-                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                  .join(' ')}
-              </span>
-              <ArrowDownLeftIcon className="h-4 w-4" />
-            </>
-          )}
-        </Button>
-      </DropdownMenuTrigger>
-
-      <DropdownMenuContent align="end" className="w-56">
-        <DropdownMenuLabel className="flex flex-col">
-          {isLoadingProfile ? (
-            <div className="space-y-1.5">
+    <Dialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="cursor-pointer">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 select-none"
+          >
+            {isLoadingProfile ? (
               <Skeleton className="h-4 w-32" />
-              <Skeleton className="h-3 w-24" />
-            </div>
-          ) : (
-            <>
-              <span>{profile?.user.name}</span>
-              <span className="text-muted-foreground text-xs font-normal">
-                {profile?.user.email}
-              </span>
-            </>
-          )}
-        </DropdownMenuLabel>
+            ) : (
+              <>
+                <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
+                  {profile?.user.name
+                    .split('-')
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ')}
+                </span>
+                <ArrowDownLeftIcon className="h-4 w-4" />
+              </>
+            )}
+          </Button>
+        </DropdownMenuTrigger>
 
-        <DropdownMenuSeparator />
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuLabel className="flex flex-col">
+            {isLoadingProfile ? (
+              <div className="space-y-1.5">
+                <Skeleton className="h-4 w-32" />
+                <Skeleton className="h-3 w-24" />
+              </div>
+            ) : (
+              <>
+                <span>{profile?.user.name}</span>
+                <span className="text-muted-foreground text-xs font-normal">
+                  {profile?.user.email}
+                </span>
+              </>
+            )}
+          </DropdownMenuLabel>
 
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Dialog>
-            <DialogTrigger asChild>
+          <DropdownMenuSeparator />
+
+          <DialogTrigger asChild>
+            <DropdownMenuItem className="cursor-pointer" asChild>
               <Button
                 variant="ghost"
                 className="w-full cursor-pointer justify-start"
@@ -86,38 +88,38 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
                 <ListIcon className="mr-2 h-4 w-4" />
                 <span>Categoria</span>
               </Button>
-            </DialogTrigger>
 
-            <CategoryDetails />
-          </Dialog>
-
-          {/* <Link to="/settings">
+              {/* <Link to="/settings">
             <GearIcon className="mr-2 h-4 w-4" />
             <span>Configurações</span>
-          </Link> */}
-        </DropdownMenuItem>
+            </Link> */}
+            </DropdownMenuItem>
+          </DialogTrigger>
 
-        <DropdownMenuItem className="cursor-pointer" asChild>
-          <Link to="/settings">
-            <GearIcon className="mr-2 h-4 w-4" />
-            <span>Configurações</span>
-          </Link>
-        </DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer" asChild>
+            <Link to="/settings">
+              <GearIcon className="mr-2 h-4 w-4" />
+              <span>Configurações</span>
+            </Link>
+          </DropdownMenuItem>
 
-        <DropdownMenuItem
-          asChild
-          className="cursor-pointer text-rose-500 dark:text-rose-400"
-        >
-          <Button
-            variant="ghost"
-            className="w-full justify-start"
-            onClick={handleLogout}
+          <DropdownMenuItem
+            asChild
+            className="cursor-pointer text-rose-500 dark:text-rose-400"
           >
-            <SignOutIcon className="mr-2 h-4 w-4" />
-            <span>Sair</span>
-          </Button>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+            <Button
+              variant="ghost"
+              className="w-full justify-start"
+              onClick={handleLogout}
+            >
+              <SignOutIcon className="mr-2 h-4 w-4" />
+              <span>Sair</span>
+            </Button>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <StoreCategoriesDialog />
+    </Dialog>
   );
 }
