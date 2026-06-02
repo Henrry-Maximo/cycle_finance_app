@@ -31,19 +31,19 @@ import {
 import { Textarea } from './ui/textarea';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const registerCategoryForm = z.object({
+const storeCategoriesSchema = z.object({
   title: z.string().min(1).max(28),
   description: z.string().min(1).max(240),
 });
 
-type RegisterCategoryForm = z.infer<typeof registerCategoryForm>;
+type StoreCategoriesSchema = z.infer<typeof storeCategoriesSchema>;
 
 export function StoreCategoriesDialog() {
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<RegisterCategoryForm>();
+  } = useForm<StoreCategoriesSchema>();
 
   const { mutateAsync: registerCategoryFn } = useMutation({
     mutationFn: registerCategory,
@@ -54,7 +54,7 @@ export function StoreCategoriesDialog() {
     queryFn: getCategoriesUser,
   });
 
-  async function handleRegisterCategory(data: RegisterCategoryForm) {
+  async function handleRegisterCategory(data: StoreCategoriesSchema) {
     try {
       await registerCategoryFn({
         title: data.title,
@@ -146,65 +146,67 @@ export function StoreCategoriesDialog() {
             <DialogDescription>Detalhes da categoria</DialogDescription>
           </DialogHeader>
 
-          <Table>
-            <TableHeader>
-              <TableRow>
-                {/* <TableHead className="w-24">ID</TableHead> */}
-                <TableHead className="w-12">Título</TableHead>
-                <TableHead className="w-52">Descrição</TableHead>
-                <TableHead className="w-16">Criado há</TableHead>
-                <TableHead className="w-8"></TableHead>
-              </TableRow>
-            </TableHeader>
+          <div className="max-h-62 overflow-y-auto">
+            <Table>
+              <TableHeader className="bg-popover sticky top-0 z-10">
+                <TableRow>
+                  {/* <TableHead className="w-24">ID</TableHead> */}
+                  <TableHead className="w-12">Título</TableHead>
+                  <TableHead className="w-52">Descrição</TableHead>
+                  <TableHead className="w-16">Criado há</TableHead>
+                  <TableHead className="w-8"></TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {categoriesData?.categories.map((category) => {
-                return (
-                  <TableRow key={category.id}>
-                    {/* <TableCell className="font-medium">
+              <TableBody>
+                {categoriesData?.categories.map((category) => {
+                  return (
+                    <TableRow key={category.id}>
+                      {/* <TableCell className="font-medium">
                   019e3524-7c5a-75cd-b52e-239dad66fa0c
                 </TableCell> */}
-                    <TableCell className="font-medium">
-                      {category.title}
-                    </TableCell>
-                    <TableCell className="max-w-md wrap-break-word whitespace-normal">
-                      {category.description}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground flex flex-col">
-                      <span className="font-light">
-                        {format(category.created_at, 'dd/MM/yyyy')}
-                      </span>
-                      <span className="font-semibold">
-                        {formatDistanceToNow(category.created_at, {
-                          locale: ptBR,
-                          addSuffix: true,
-                        })}
-                      </span>
-                    </TableCell>
-                    <TableCell>
-                      <Button
-                        variant="ghost"
-                        size="default"
-                        className="cursor-pointer"
-                      >
-                        <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-                        <span className="sr-only">Excluir</span>
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-            </TableBody>
+                      <TableCell className="font-medium">
+                        {category.title}
+                      </TableCell>
+                      <TableCell className="max-w-md wrap-break-word whitespace-normal">
+                        {category.description}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground flex flex-col">
+                        <span className="font-light">
+                          {format(category.created_at, 'dd/MM/yyyy')}
+                        </span>
+                        <span className="font-semibold">
+                          {formatDistanceToNow(category.created_at, {
+                            locale: ptBR,
+                            addSuffix: true,
+                          })}
+                        </span>
+                      </TableCell>
+                      <TableCell>
+                        <Button
+                          variant="ghost"
+                          size="default"
+                          className="cursor-pointer"
+                        >
+                          <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+                          <span className="sr-only">Excluir</span>
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
 
-            <TableFooter>
-              <TableRow>
-                <TableCell colSpan={3}>Total da Categorias:</TableCell>
-                <TableCell className="text-right font-medium">
-                  {categoriesData?.categories.length ?? 0}
-                </TableCell>
-              </TableRow>
-            </TableFooter>
-          </Table>
+              <TableFooter className="bg-popover sticky bottom-0">
+                <TableRow>
+                  <TableCell colSpan={3}>Total da Categorias:</TableCell>
+                  <TableCell className="text-right font-medium">
+                    {categoriesData?.categories.length ?? 0}
+                  </TableCell>
+                </TableRow>
+              </TableFooter>
+            </Table>
+          </div>
         </div>
       </div>
     </DialogContent>
