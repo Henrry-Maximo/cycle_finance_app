@@ -18,7 +18,11 @@ export function MonthSpentCard({ amount }: MonthSpentCardProps) {
 
       <CardContent className="space-y-1">
         <span className="text-2xl font-bold tracking-tight">
-          R$ {amount.toLocaleString('pt-BR')}
+          R${' '}
+          {amount.toLocaleString('pt-BR', {
+            style: 'currency',
+            currency: 'BRL',
+          })}
         </span>
         <p className="text-muted-foreground text-xs">
           <span className="text-rose-500 dark:text-rose-400">+2%</span> em

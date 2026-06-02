@@ -20,27 +20,27 @@ import {
 const data = [
   {
     date: '10/02',
-    spent: 60,
+    spent: 0,
   },
   {
     date: '11/02',
-    spent: 80,
+    spent: 0,
   },
   {
     date: '12/02',
-    spent: 30,
+    spent: 0,
   },
   {
     date: '13/02',
-    spent: 10,
+    spent: 0,
   },
   {
     date: '14/02',
-    spent: 100,
+    spent: 0,
   },
   {
     date: '15/02',
-    spent: 40,
+    spent: 0,
   },
 ];
 

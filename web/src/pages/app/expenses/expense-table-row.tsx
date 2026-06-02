@@ -54,7 +54,12 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </div>
       </TableCell>
 
-      <TableCell className="font-medium">R$ {expense.price}</TableCell>
+      <TableCell className="font-medium">
+        {expense.price.toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+        })}
+      </TableCell>
       {/* <TableCell>456</TableCell> */}
 
       <TableCell>{expense.enterprise}</TableCell>
