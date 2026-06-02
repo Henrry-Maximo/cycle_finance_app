@@ -23,7 +23,7 @@ export function MonthExpensesAmountCard({
           {amount.toLocaleString('pt-BR')}
         </span>
         <p className="text-muted-foreground text-xs">
-          <span className="text-rose-500 dark:text-rose-400">+5%</span> em
+          <span className="text-rose-500 dark:text-rose-400">+0%</span> em
           relação ao mês passado
         </p>
       </CardContent>

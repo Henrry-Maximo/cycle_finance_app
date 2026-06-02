@@ -21,7 +21,7 @@ export function DayExpensesAmountCard({ amount }: DayExpensesAmountCardProps) {
           {amount.toLocaleString('pt-BR')}
         </span>
         <p className="text-muted-foreground text-xs">
-          <span className="text-emerald-500 dark:text-emerald-400">-2%</span> em
+          <span className="text-emerald-500 dark:text-emerald-400">-0%</span> em
           relação a ontem
         </p>
       </CardContent>
