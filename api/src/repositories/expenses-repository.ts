@@ -2,6 +2,7 @@ import { Expense, Prisma } from "generated/prisma/client";
 
 export interface ExpensesRepository {
   create(data: Prisma.ExpenseCreateInput): Promise<Expense>;
+  findById(id: string): Promise<Expense | null>;
   findManyByUserId(
     userId: string,
     contains: string,
@@ -13,6 +14,7 @@ export interface ExpensesRepository {
     from: Date,
     to: Date,
   ): Promise<Expense[]>;
+  delete(id: string): Promise<null>;
 }
 
 // total expense on month R$

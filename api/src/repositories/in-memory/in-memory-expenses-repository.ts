@@ -27,6 +27,14 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
+  async findById(id: string) {
+    const expense = this.items.find((item) => item.id === id);
+
+    if (!expense) return null;
+
+    return expense;
+  }
+
   async findManyByUserId(
     userId: string,
     contains: string,
@@ -57,5 +65,15 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     );
 
     return expenses;
+  }
+
+  async delete(id: string) {
+    const index = this.items.findIndex((item) => item.id === id);
+
+    if (index) {
+      this.items.splice(index, 1);
+    }
+
+    return null;
   }
 }

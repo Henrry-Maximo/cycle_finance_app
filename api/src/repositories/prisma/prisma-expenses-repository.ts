@@ -8,10 +8,20 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     const expense = await prisma.expense.create({
       data,
     });
-
+    
     return expense;
   }
-
+  
+  async findById(id: string) {
+    const expense = await prisma.expense.findUnique({
+      where: {
+        id
+      }
+    });
+    
+    return expense;
+  }
+  
   async findManyByUserId(
     user_id: string,
     contains: string,
@@ -28,17 +38,17 @@ export class PrismaExpensesRepository implements ExpensesRepository {
         },
       },
     });
-
+    
     const expenses = expensesUser.map((expense) => {
       return {
         ...expense,
         price: expense.price / 100,
       };
     });
-
+    
     return expenses;
   }
-
+  
   async findManyByUserIdInPeriod(userId: string, from: Date, to: Date) {
     const expenses = await prisma.expense.findMany({
       where: {
@@ -49,7 +59,17 @@ export class PrismaExpensesRepository implements ExpensesRepository {
         },
       },
     });
-
+    
     return expenses;
+  }
+
+  async delete(id: string) {
+    await prisma.expense.delete({
+      where: {
+        id
+      }
+    });
+
+    return null;
   }
 }
