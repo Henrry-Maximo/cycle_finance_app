@@ -7,17 +7,24 @@ datasource db {
   provider = "postgresql"
 }
 
+enum Role {
+  MEMBER
+  ADMIN
+}
+
 model User {
   id            String @id @default(uuid(7)) @db.Uuid
   name          String
   email         String @unique
   password_hash String
 
+  role Role @default(MEMBER)
+
   terms_accepted_at DateTime @default(now())
   terms_version     String   @default("1.0")
 
   categories Category[]
-  expenses Expense[]
+  expenses   Expense[]
 
   @@map("users")
 }
@@ -31,13 +38,13 @@ model Expense {
   source           String?
   price            Int
   card_last_digits String   @db.Char(4)
-  created_at        DateTime @default(now())
+  created_at       DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @db.Uuid // CORREÇÃO: Deve ser @db.Uuid para casar com User.id
 
   category    Category @relation(fields: [category_id], references: [id])
-  category_id String @db.Uuid
+  category_id String   @db.Uuid
 
   @@map("expenses")
 }
@@ -46,7 +53,7 @@ model Category {
   id          String   @id @default(uuid(7)) @db.Uuid
   title       String
   description String?
-  created_at   DateTime @default(now())
+  created_at  DateTime @default(now())
 
   user    User   @relation(fields: [user_id], references: [id])
   user_id String @db.Uuid
