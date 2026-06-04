@@ -10,4 +10,5 @@ export interface CategoriesRepository {
     mode: Prisma.QueryMode,
     page: number,
   ): Promise<Category[]>;
+  delete(id: string): Promise<null>;
 }

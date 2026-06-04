@@ -8,20 +8,20 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     const category = await prisma.category.create({
       data,
     });
-
+    
     return category;
   }
-
+  
   async findById(id: string) {
     const category = await prisma.category.findUnique({
       where: {
         id,
       },
     });
-
+    
     return category;
   }
-
+  
   async findManyByUserId(
     userId: string,
     contains: string,
@@ -38,10 +38,10 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
         },
       },
     });
-
+    
     return categories;
   }
-
+  
   async findByName(name: string, userId: string) {
     const category = await prisma.category.findFirst({
       where: {
@@ -49,7 +49,17 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
         user_id: userId,
       },
     });
-
+    
     return category;
+  }
+
+  async delete(id: string) {
+    await prisma.category.delete({
+      where: {
+        id
+      }
+    });
+
+    return null;
   }
 }
