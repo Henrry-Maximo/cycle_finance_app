@@ -174,6 +174,23 @@
 - set "DATABASE_URL=" && npx prisma migrate deploy
   [subir tabelas na hospedagem do banco de dados]
 
+- Depreciações no tsconfig.json (TypeScript 5+)
+  - Avisos de funções descontinuadas que deixarão de funcionar no TypeScript 7.0 (como baseUrl e moduleResolution: "node"):
+    - Solução: Removar a propriedade "baseUrl", ajustar os mapeamentos de caminhos (paths) para o formato relativo "./" e atualize a estratégia de resolução de módulos:
+    ```
+    JSON
+    {
+      "compilerOptions": {
+        "module": "NodeNext",
+        moduleResolution": "NodeNext",
+        "paths": {
+          ["./src/*"]
+        }
+      }
+    }
+    ```
+(Nota: Utilizar "moduleResolution": "Bundler", pois o build do projeto seja gerenciado pelo empacotador tsup).
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite

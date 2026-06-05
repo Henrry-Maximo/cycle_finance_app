@@ -6,8 +6,8 @@
     // "outDir": "./dist",
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "CommonJS",
-    "moduleResolution": "Node",
+    "module": "esnext",
+    "moduleResolution": "Bundler",
     "target": "esnext",
     // "types": [],
     // For nodejs:
@@ -39,11 +39,14 @@
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
     "skipLibCheck": true,
-    "baseUrl": ".",
+    // "baseUrl": ".", deprected
     "paths": {
-      "@/*": [
-        "./src/*"
-      ]
+      "@/*": ["./src/*"]
     }
+    // "paths": {
+    //   "@/*": [
+    //     "./src/*"
+    //   ]
+    // }
   }
 }
