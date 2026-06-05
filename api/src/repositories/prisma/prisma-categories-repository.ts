@@ -1,27 +1,28 @@
-import { CategoryCreateInput } from "@/generated/prisma/models";
-import { CategoriesRepository } from "../categories-repository";
-import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
+import { CategoryCreateInput } from "@/generated/prisma/models";
+import { prisma } from "@/lib/prisma";
+
+import { CategoriesRepository } from "../categories-repository";
 
 export class PrismaCategoriesRespository implements CategoriesRepository {
   async create(data: CategoryCreateInput) {
     const category = await prisma.category.create({
       data,
     });
-    
+
     return category;
   }
-  
+
   async findById(id: string) {
     const category = await prisma.category.findUnique({
       where: {
         id,
       },
     });
-    
+
     return category;
   }
-  
+
   async findManyByUserId(
     userId: string,
     contains: string,
@@ -38,10 +39,10 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
         },
       },
     });
-    
+
     return categories;
   }
-  
+
   async findByName(name: string, userId: string) {
     const category = await prisma.category.findFirst({
       where: {
@@ -49,15 +50,15 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
         user_id: userId,
       },
     });
-    
+
     return category;
   }
 
   async delete(id: string) {
     await prisma.category.delete({
       where: {
-        id
-      }
+        id,
+      },
     });
 
     return null;

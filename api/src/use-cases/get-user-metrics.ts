@@ -1,6 +1,7 @@
 import { ExpensesRepository } from "@/repositories/expenses-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { UsersRepository } from "@/repositories/users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface GetUserMetricsUseCaseRequest {
   userId: string;

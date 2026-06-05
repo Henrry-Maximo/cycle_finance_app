@@ -1,7 +1,9 @@
 import { FastifyInstance } from "fastify";
+
+import { verifyJWT } from "@/http/middlewares/verify-jwt";
+
 import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
-import { verifyJWT } from "@/http/middlewares/verify-jwt";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */

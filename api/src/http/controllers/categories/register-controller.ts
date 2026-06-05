@@ -1,8 +1,9 @@
+import { FastifyReply,FastifyRequest } from "fastify";
+import z from "zod";
+
 import { CategoryAlreadyExistsError } from "@/use-cases/errors/category-already-exists-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeRegisterCategoriesUseCase } from "@/use-cases/factories/make-register-categories-use-case";
-import { FastifyRequest, FastifyReply } from "fastify";
-import z from "zod";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerCategoriesSchema = z.object({
@@ -18,7 +19,7 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
     await registerCategoriesUseCase.execute({
       title,
       description,
-      user_id: req.user.sub
+      user_id: req.user.sub,
     });
 
     return reply.status(201).send();

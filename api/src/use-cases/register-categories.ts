@@ -1,8 +1,9 @@
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { UsersRepository } from "@/repositories/users-repository";
-import { CategoriesRepository } from "@/repositories/categories-repository";
-import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
 import { Category } from "@/generated/prisma/client";
+import { CategoriesRepository } from "@/repositories/categories-repository";
+import { UsersRepository } from "@/repositories/users-repository";
+
+import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface RegisterCategoriesUseCaseRequest {
   id?: string;

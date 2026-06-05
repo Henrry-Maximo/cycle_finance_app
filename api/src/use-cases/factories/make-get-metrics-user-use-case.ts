@@ -1,5 +1,6 @@
-import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
 import { PrismaExpensesRepository } from "@/repositories/prisma/prisma-expenses-repository";
+import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
+
 import { GetUserMetricsUseCase } from "../get-user-metrics";
 
 export function makeGetMetricsUserUseCase() {

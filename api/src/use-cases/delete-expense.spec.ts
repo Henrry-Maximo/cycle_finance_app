@@ -1,8 +1,10 @@
+import { hash } from "bcryptjs";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { hash } from "bcryptjs";
-import { beforeEach, describe, expect, it } from "vitest";
+
 import { DeleteExpenseUseCase } from "./delete-expense";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
@@ -18,9 +20,7 @@ describe("Delete Expense Use Case", () => {
     categoriesRepository = new InMemoryCategoriesRepository();
     usersRepository = new InMemoryUsersRepository();
 
-    sut = new DeleteExpenseUseCase(
-      expensesRepository
-    );
+    sut = new DeleteExpenseUseCase(expensesRepository);
   });
 
   it("should be able to delete an expense", async () => {
@@ -51,19 +51,17 @@ describe("Delete Expense Use Case", () => {
       card_last_digits: "2343",
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
-    await expect(
-      sut.execute({ id, userId: user_id })
-    ).resolves.toBeNull();
+    await expect(sut.execute({ id, userId: user_id })).resolves.toBeNull();
   });
 
   it("should not be able to delete an expense if it is not from the same user that attempting", async () => {
@@ -100,18 +98,18 @@ describe("Delete Expense Use Case", () => {
       card_last_digits: "2343",
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
     await expect(
-      sut.execute({ id, userId: userOther.id })
+      sut.execute({ id, userId: userOther.id }),
     ).rejects.toBeInstanceOf(NotAuthorizedError);
   });
 
@@ -123,7 +121,7 @@ describe("Delete Expense Use Case", () => {
     });
 
     await expect(
-      sut.execute({ id: 'non-expense', userId: userCreated.id })
+      sut.execute({ id: "non-expense", userId: userCreated.id }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

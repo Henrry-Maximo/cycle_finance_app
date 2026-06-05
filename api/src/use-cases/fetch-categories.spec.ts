@@ -1,22 +1,24 @@
-import { expect, describe, it, beforeEach } from 'vitest';
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
-import { hash } from 'bcryptjs';
-import { InMemoryCategoriesRepository } from '@/repositories/in-memory/in-memory-categories-repository';
-import { FetchCategoriesUseCase } from './fetch-categories';
-import { ResourceNotFoundError } from './errors/resource-not-found-error';
+import { hash } from "bcryptjs";
+import { beforeEach,describe, expect, it } from "vitest";
+
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { FetchCategoriesUseCase } from "./fetch-categories";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
 let sut: FetchCategoriesUseCase;
 
-describe('Get User Categories History Use Case', () => {
+describe("Get User Categories History Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
     sut = new FetchCategoriesUseCase(usersRepository, categoriesRepository);
   });
 
-  it('should be able to fetch categories history', async () => {
+  it("should be able to fetch categories history", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -27,21 +29,22 @@ describe('Get User Categories History Use Case', () => {
       title: "Alimentação",
       description: "Categoria criada para fiscalizar as compras de alimentos",
       user: {
-        connect: { id: userCreated.id }
-      }
+        connect: { id: userCreated.id },
+      },
     });
 
     await categoriesRepository.create({
       title: "Entretenimento",
-      description: "Categoria criada para fiscalizar as compras em relação a entretenimento",
+      description:
+        "Categoria criada para fiscalizar as compras em relação a entretenimento",
       user: {
-        connect: { id: userCreated.id }
-      }
+        connect: { id: userCreated.id },
+      },
     });
 
     const { categories } = await sut.execute({
       userId: userCreated.id,
-      page: 1
+      page: 1,
     });
 
     expect(categories).toHaveLength(2);
@@ -51,7 +54,7 @@ describe('Get User Categories History Use Case', () => {
     ]);
   });
 
-  it('should be able to fetch paginated categories history', async () => {
+  it("should be able to fetch paginated categories history", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -64,14 +67,14 @@ describe('Get User Categories History Use Case', () => {
         title: "Alimentação",
         description: "Categoria criada para fiscalizar as compras de alimentos",
         user: {
-          connect: { id: userCreated.id }
-        }
+          connect: { id: userCreated.id },
+        },
       });
-    };
+    }
 
     const { categories } = await sut.execute({
       userId: userCreated.id,
-      page: 2
+      page: 2,
     });
 
     expect(categories).toHaveLength(2);
@@ -81,10 +84,12 @@ describe('Get User Categories History Use Case', () => {
     ]);
   });
 
-  it('should not be able to fetch categories history if user is not exists.', async () => {
-    await expect(() => sut.execute({
-      userId: 'non-existing-id',
-      page: 1,
-    })).rejects.toBeInstanceOf(ResourceNotFoundError);
+  it("should not be able to fetch categories history if user is not exists.", async () => {
+    await expect(() =>
+      sut.execute({
+        userId: "non-existing-id",
+        page: 1,
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

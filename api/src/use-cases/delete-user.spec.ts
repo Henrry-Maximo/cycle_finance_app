@@ -1,8 +1,10 @@
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
-import { NotAuthorizedError } from "./errors/not-authorized-error";
+
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
 import { DeleteUserUseCase } from "./delete-user";
+import { NotAuthorizedError } from "./errors/not-authorized-error";
 
 let usersRepository: InMemoryUsersRepository;
 let sut: DeleteUserUseCase;
@@ -11,9 +13,7 @@ describe("Delete User Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
 
-    sut = new DeleteUserUseCase(
-      usersRepository
-    );
+    sut = new DeleteUserUseCase(usersRepository);
   });
 
   it("should be able to delete an user", async () => {
@@ -23,9 +23,7 @@ describe("Delete User Use Case", () => {
       password_hash: await hash("123456", 6),
     });
 
-    await expect(
-      sut.execute({ id, userId: id })
-    ).resolves.toBeNull();
+    await expect(sut.execute({ id, userId: id })).resolves.toBeNull();
   });
 
   it("should not be able to delete an user if it is not from the same user that attempting", async () => {
@@ -42,7 +40,7 @@ describe("Delete User Use Case", () => {
     });
 
     await expect(
-      sut.execute({ id, userId: userOther.id })
+      sut.execute({ id, userId: userOther.id }),
     ).rejects.toBeInstanceOf(NotAuthorizedError);
   });
 });

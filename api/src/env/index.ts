@@ -1,4 +1,5 @@
 import "dotenv/config"; // variáveis carregadas
+
 import { z } from "zod";
 
 const envSchema = z.object({
@@ -6,7 +7,7 @@ const envSchema = z.object({
   PORT: z.coerce.number().default(3333),
   JWT_SECRET: z.string(),
   DATABASE_URL: z.string(),
-  APP_URL: z.string()
+  APP_URL: z.string(),
 });
 
 // [safeParse]: efetua validação dos dados

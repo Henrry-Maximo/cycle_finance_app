@@ -1,10 +1,14 @@
-import { Prisma } from "@/generated/prisma/client";
-import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-fetch-categories-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function fetchCategories(req: FastifyRequest, reply: FastifyReply) {
+import { Prisma } from "@/generated/prisma/client";
+import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-fetch-categories-use-case";
+
+export async function fetchCategories(
+  req: FastifyRequest,
+  reply: FastifyReply,
+) {
   const searchCategoriesSchema = z.object({
     contains: z.string().optional().nullable(),
     mode: z.string().optional().nullable(),
@@ -20,7 +24,7 @@ export async function fetchCategories(req: FastifyRequest, reply: FastifyReply) 
       userId: req.user.sub,
       contains: contains ?? "",
       mode: mode as Prisma.QueryMode,
-      page
+      page,
     });
 
     return reply.status(200).send({ categories });
@@ -31,5 +35,4 @@ export async function fetchCategories(req: FastifyRequest, reply: FastifyReply) 
 
     throw err;
   }
-
 }

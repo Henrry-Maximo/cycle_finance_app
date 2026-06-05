@@ -1,8 +1,9 @@
-import { ExpensesRepository } from "@/repositories/expenses-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { UsersRepository } from "@/repositories/users-repository";
-import { CategoriesRepository } from "@/repositories/categories-repository";
 import { Expense } from "@/generated/prisma/client";
+import { CategoriesRepository } from "@/repositories/categories-repository";
+import { ExpensesRepository } from "@/repositories/expenses-repository";
+import { UsersRepository } from "@/repositories/users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface RegisterExpensesUseCaseRequest {
   id?: string;

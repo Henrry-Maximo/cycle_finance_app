@@ -1,7 +1,8 @@
-import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeGetMetricsUserUseCase } from "@/use-cases/factories/make-get-metrics-user-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
+
+import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { makeGetMetricsUserUseCase } from "@/use-cases/factories/make-get-metrics-user-use-case";
 
 const querySchema = z.object({
   from: z.string().optional(),

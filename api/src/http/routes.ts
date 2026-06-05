@@ -1,7 +1,8 @@
 import { FastifyInstance } from "fastify";
-import { usersRoutes } from "./controllers/users/routes";
-import { expensesRoutes } from "./controllers/expenses/routes";
+
 import { categoriesRoutes } from "./controllers/categories/routes";
+import { expensesRoutes } from "./controllers/expenses/routes";
+import { usersRoutes } from "./controllers/users/routes";
 
 export async function appRoutes(app: FastifyInstance) {
   app.register(usersRoutes);

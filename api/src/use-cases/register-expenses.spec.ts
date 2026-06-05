@@ -1,10 +1,12 @@
-import { expect, describe, it, beforeEach } from "vitest";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { RegisterExpensesUseCase } from "./register-expenses";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { hash } from "bcryptjs";
+import { beforeEach,describe, expect, it } from "vitest";
+
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { RegisterExpensesUseCase } from "./register-expenses";
 
 let usersRepository: InMemoryUsersRepository;
 let expensesRepository: InMemoryExpensesRepository;

@@ -1,4 +1,5 @@
 import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
+
 import { GetUsersUseCase } from "../fetch-users";
 
 export function makeGetUsersUseCase() {

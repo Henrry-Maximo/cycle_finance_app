@@ -1,17 +1,19 @@
-import { expect, describe, it, beforeEach } from 'vitest';
-import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository';
-import { hash } from 'bcryptjs';
-import { InMemoryExpensesRepository } from '@/repositories/in-memory/in-memory-expenses-repository';
-import { FetchExpensesUseCase } from './fetch-expenses';
-import { InMemoryCategoriesRepository } from '@/repositories/in-memory/in-memory-categories-repository';
-import { ResourceNotFoundError } from './errors/resource-not-found-error';
+import { hash } from "bcryptjs";
+import { beforeEach,describe, expect, it } from "vitest";
+
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { FetchExpensesUseCase } from "./fetch-expenses";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
 let expensesRepository: InMemoryExpensesRepository;
 let sut: FetchExpensesUseCase;
 
-describe('Fetch User Expenses History Use Case', () => {
+describe("Fetch User Expenses History Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
@@ -19,7 +21,7 @@ describe('Fetch User Expenses History Use Case', () => {
     sut = new FetchExpensesUseCase(usersRepository, expensesRepository);
   });
 
-  it('should be able to fetch expenses history', async () => {
+  it("should be able to fetch expenses history", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -30,8 +32,8 @@ describe('Fetch User Expenses History Use Case', () => {
       title: "Alimentação",
       description: "Categoria criada para fiscalizar as compras de alimentos",
       user: {
-        connect: { id: userCreated.id }
-      }
+        connect: { id: userCreated.id },
+      },
     });
 
     await expensesRepository.create({
@@ -40,19 +42,19 @@ describe('Fetch User Expenses History Use Case', () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10.60,
+      price: 10.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
     await expensesRepository.create({
@@ -61,30 +63,30 @@ describe('Fetch User Expenses History Use Case', () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 5.60,
+      price: 5.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
         connect: {
-          id: userCreated.id
-        }
+          id: userCreated.id,
+        },
       },
       category: {
         connect: {
-          id: categoryCreated.id
-        }
-      }
+          id: categoryCreated.id,
+        },
+      },
     });
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      page: 1
+      page: 1,
     });
 
     expect(expenses).toHaveLength(2);
   });
 
-  it('should be able to fetch paginated expenses history', async () => {
+  it("should be able to fetch paginated expenses history", async () => {
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -95,8 +97,8 @@ describe('Fetch User Expenses History Use Case', () => {
       title: "Alimentação",
       description: "Categoria criada para fiscalizar as compras de alimentos",
       user: {
-        connect: { id: userCreated.id }
-      }
+        connect: { id: userCreated.id },
+      },
     });
 
     for (let i = 1; i <= 22; i++) {
@@ -107,38 +109,40 @@ describe('Fetch User Expenses History Use Case', () => {
         description: "Café da manhã",
         cnpj: "123.242.324.23/24",
         source: "Embu das Artes / São Paulo",
-        price: 10.60,
+        price: 10.6,
         card_last_digits: "2343",
         created_at: new Date(),
         user: {
           connect: {
-            id: userCreated.id
-          }
+            id: userCreated.id,
+          },
         },
         category: {
           connect: {
-            id: categoryCreated.id
-          }
-        }
+            id: categoryCreated.id,
+          },
+        },
       });
     }
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      page: 2
+      page: 2,
     });
 
     expect(expenses).toHaveLength(2);
     expect(expenses).toEqual([
-      expect.objectContaining({ id: 'expense-21' }),
-      expect.objectContaining({ id: 'expense-22' })
+      expect.objectContaining({ id: "expense-21" }),
+      expect.objectContaining({ id: "expense-22" }),
     ]);
   });
 
-  it('should not be able to fetch expenses history if user id not exists', async () => {
-    await expect(() => sut.execute({
-      userId: "non-existing-id",
-      page: 1
-    })).rejects.toBeInstanceOf(ResourceNotFoundError);
+  it("should not be able to fetch expenses history if user id not exists", async () => {
+    await expect(() =>
+      sut.execute({
+        userId: "non-existing-id",
+        page: 1,
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

@@ -1,11 +1,12 @@
-import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
+
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
+import { DeleteCategoryUseCase } from "./delete-category";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { DeleteCategoryUseCase } from "./delete-category";
 
 let categoriesRepository: InMemoryCategoriesRepository;
 let usersRepository: InMemoryUsersRepository;
@@ -16,9 +17,7 @@ describe("Delete Category Use Case", () => {
     categoriesRepository = new InMemoryCategoriesRepository();
     usersRepository = new InMemoryUsersRepository();
 
-    sut = new DeleteCategoryUseCase(
-      categoriesRepository
-    );
+    sut = new DeleteCategoryUseCase(categoriesRepository);
   });
 
   it("should be able to delete an category", async () => {
@@ -40,7 +39,7 @@ describe("Delete Category Use Case", () => {
     });
 
     await expect(
-      sut.execute({ id, userId: userCreated.id })
+      sut.execute({ id, userId: userCreated.id }),
     ).resolves.toBeNull();
   });
 
@@ -69,7 +68,7 @@ describe("Delete Category Use Case", () => {
     });
 
     await expect(
-      sut.execute({ id, userId: userOther.id })
+      sut.execute({ id, userId: userOther.id }),
     ).rejects.toBeInstanceOf(NotAuthorizedError);
   });
 
@@ -81,7 +80,7 @@ describe("Delete Category Use Case", () => {
     });
 
     await expect(
-      sut.execute({ id: 'non-expense', userId: userCreated.id })
+      sut.execute({ id: "non-expense", userId: userCreated.id }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });

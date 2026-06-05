@@ -1,10 +1,12 @@
-import { expect, describe, it, beforeEach } from "vitest";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { hash } from "bcryptjs";
-import { RegisterCategoriesUseCase } from "./register-categories";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { beforeEach,describe, expect, it } from "vitest";
+
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { RegisterCategoriesUseCase } from "./register-categories";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -56,7 +58,8 @@ describe("Register Categories Use Case", () => {
 
     const { category } = await sut.execute({
       title: "Alimentação",
-      description: "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
+      description:
+        "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
       user_id: userCreated.id,
     });
 

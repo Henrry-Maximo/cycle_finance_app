@@ -1,6 +1,5 @@
 import { describe, it } from "vitest";
 
 describe(() => {
-  it.skip("", () => {
-  })
-})
+  it.skip("", () => {});
+});

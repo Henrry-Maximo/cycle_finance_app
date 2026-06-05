@@ -1,12 +1,10 @@
-import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeRegisterExpensesUseCase } from "@/use-cases/factories/make-register-expenses-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function register(
-  req: FastifyRequest,
-  reply: FastifyReply,
-) {
+import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { makeRegisterExpensesUseCase } from "@/use-cases/factories/make-register-expenses-use-case";
+
+export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerExpensesSchema = z.object({
     title: z.string(),
     enterprise: z.string(),

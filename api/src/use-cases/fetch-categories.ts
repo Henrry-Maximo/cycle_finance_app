@@ -1,6 +1,7 @@
+import { Category, Prisma } from "@/generated/prisma/client";
 import { CategoriesRepository } from "@/repositories/categories-repository";
 import { UsersRepository } from "@/repositories/users-repository";
-import { Category, Prisma } from "@/generated/prisma/client";
+
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchCategoriesUseCaseRequest {
@@ -18,16 +19,26 @@ export class FetchCategoriesUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private categoriesRepository: CategoriesRepository,
-  ) { };
+  ) {}
 
-  async execute({ userId, contains = "", mode = "default", page }: FetchCategoriesUseCaseRequest): Promise<FetchCategoriesUseCaseResponse> {
+  async execute({
+    userId,
+    contains = "",
+    mode = "default",
+    page,
+  }: FetchCategoriesUseCaseRequest): Promise<FetchCategoriesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new ResourceNotFoundError();
     }
 
-    const categories = await this.categoriesRepository.findManyByUserId(userId, contains, mode, page);
+    const categories = await this.categoriesRepository.findManyByUserId(
+      userId,
+      contains,
+      mode,
+      page,
+    );
 
     return { categories };
   }

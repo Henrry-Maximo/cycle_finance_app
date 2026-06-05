@@ -1,7 +1,8 @@
-import { PrismaExpensesRepository } from "@/repositories/prisma/prisma-expenses-repository";
-import { RegisterExpensesUseCase } from "../register-expenses";
-import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
 import { PrismaCategoriesRespository } from "@/repositories/prisma/prisma-categories-repository";
+import { PrismaExpensesRepository } from "@/repositories/prisma/prisma-expenses-repository";
+import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
+
+import { RegisterExpensesUseCase } from "../register-expenses";
 
 export function makeRegisterExpensesUseCase() {
   const expensesRepository = new PrismaExpensesRepository();

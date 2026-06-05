@@ -1,7 +1,9 @@
+import { randomUUID } from "node:crypto";
+
 import { PasswordResetTokens } from "@/generated/prisma/client";
 import { PasswordResetTokensCreateInput } from "@/generated/prisma/models";
+
 import { ResetPasswordTokensRepository } from "../reset-password-tokens-repository";
-import { randomUUID } from "node:crypto";
 
 export class InMemoryResetPasswordTokensRepository implements ResetPasswordTokensRepository {
   public items: PasswordResetTokens[] = [];
@@ -13,7 +15,7 @@ export class InMemoryResetPasswordTokensRepository implements ResetPasswordToken
       created_at: data.created_at ? new Date(data.created_at) : new Date(),
       expires_at: new Date(data.expires_at),
       used_at: data.used_at ? new Date(data.used_at) : null,
-      user_id: data.user.connect?.id!, 
+      user_id: data.user.connect?.id!,
     };
 
     this.items.push(tokenPayload);
@@ -26,7 +28,7 @@ export class InMemoryResetPasswordTokensRepository implements ResetPasswordToken
 
     if (!tokenPayload) {
       return null;
-    };
+    }
 
     return tokenPayload;
   }

@@ -1,20 +1,16 @@
-import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
-import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeDeleteExpenseUseCase } from "@/use-cases/factories/make-delete-expense-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-export async function deleteExpense(
-  req: FastifyRequest,
-  reply: FastifyReply,
-) {
+import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
+import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { makeDeleteExpenseUseCase } from "@/use-cases/factories/make-delete-expense-use-case";
+
+export async function deleteExpense(req: FastifyRequest, reply: FastifyReply) {
   const deleteExpensesSchema = z.object({
     id: z.string(),
   });
 
-  const {
-    id
-  } = deleteExpensesSchema.parse(req.query);
+  const { id } = deleteExpensesSchema.parse(req.query);
 
   try {
     const deleteExpensesUseCase = makeDeleteExpenseUseCase();
@@ -29,7 +25,6 @@ export async function deleteExpense(
     }
 
     if (err instanceof NotAuthorizedError) {
-
     }
 
     throw err;

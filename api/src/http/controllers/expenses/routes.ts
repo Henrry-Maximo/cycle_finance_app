@@ -1,9 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { fetchExpenses } from "./fetch-user-expenses-history-controller";
-import { register } from "./register-controller";
+
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
-import { getMeticsUser } from "./get-user-metrics-controller";
+
 import { deleteExpense } from "./delete-controller";
+import { fetchExpenses } from "./fetch-user-expenses-history-controller";
+import { getMeticsUser } from "./get-user-metrics-controller";
+import { register } from "./register-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */

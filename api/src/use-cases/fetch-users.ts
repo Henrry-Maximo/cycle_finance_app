@@ -2,7 +2,7 @@ import { User } from "@/generated/prisma/client";
 import { UsersRepository } from "@/repositories/users-repository";
 
 interface GetUsersUseCaseRequest {
-  query?: string | null,
+  query?: string | null;
 }
 
 interface GetUsersUseCaseResponse {
@@ -10,11 +10,11 @@ interface GetUsersUseCaseResponse {
 }
 
 export class GetUsersUseCase {
-  constructor(
-    private usersRepository: UsersRepository,
-  ) { }
+  constructor(private usersRepository: UsersRepository) {}
 
-  async execute({ query }: GetUsersUseCaseRequest): Promise<GetUsersUseCaseResponse> {
+  async execute({
+    query,
+  }: GetUsersUseCaseRequest): Promise<GetUsersUseCaseResponse> {
     const users = query
       ? await this.usersRepository.findByName(query)
       : await this.usersRepository.findMany();
