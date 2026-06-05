@@ -9,7 +9,7 @@ interface PasswordUseCaseResponse {
   message: string;
 }
 
-export class RequestResetPasswordUseCase {
+export class ResetPasswordUseCase {
   constructor(private usersRepository: UsersRepository) {}
 
   async execute({

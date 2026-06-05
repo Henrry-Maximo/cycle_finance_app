@@ -3,7 +3,7 @@ import { prisma } from "@/lib/prisma";
 
 import { ResetPasswordTokensRepository } from "../reset-password-tokens-repository";
 
-export class PrismaResetPasswordTokens implements ResetPasswordTokensRepository {
+export class PrismaResetPasswordTokensRepository implements ResetPasswordTokensRepository {
   async create(data: PasswordResetTokensCreateInput) {
     const tokenPayload = await prisma.passwordResetTokens.create({
       data,
