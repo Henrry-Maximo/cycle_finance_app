@@ -1,6 +1,6 @@
 import { CategoriesRepository } from "@/repositories/categories-repository";
 import { UsersRepository } from "@/repositories/users-repository";
-import { Category, Prisma } from "generated/prisma/client";
+import { Category, Prisma } from "@/generated/prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchCategoriesUseCaseRequest {

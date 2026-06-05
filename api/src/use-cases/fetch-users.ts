@@ -1,5 +1,5 @@
+import { User } from "@/generated/prisma/client";
 import { UsersRepository } from "@/repositories/users-repository";
-import { User } from "generated/prisma/client";
 
 interface GetUsersUseCaseRequest {
   query?: string | null,

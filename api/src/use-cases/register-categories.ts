@@ -1,8 +1,8 @@
-import { Category } from "generated/prisma/client";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { UsersRepository } from "@/repositories/users-repository";
 import { CategoriesRepository } from "@/repositories/categories-repository";
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
+import { Category } from "@/generated/prisma/client";
 
 interface RegisterCategoriesUseCaseRequest {
   id?: string;
