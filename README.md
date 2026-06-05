@@ -25,6 +25,7 @@
 
 - [x] O usuário deve poder se cadastrar
 - [x] O usuário deve poder se logar
+- [ ] O usuário deve poder resetar a senha
 - [x] O usuário deve poder registrar uma categoria
 - [x] O usuário deve poder registrar um comprovante
 - [x] O usuário deve poder visualizar suas informações de perfil
@@ -33,7 +34,10 @@
 - [x] O usuário deve poder visualizar a quantidade de despesas registradas
 - [x] O usuário deve poder visualizar a quantidade de despesas registradas no dia
 - [x] O usuário deve poder visualizar o valor gasto do mês
-- [x] O usuário deve poder visualizar o valor gasto do diaxxxxxx
+- [x] O usuário deve poder visualizar o valor gasto do dia
+- [x] O usuário deve poder deletar depesas
+- [x] O usuário deve poder deletar categorias
+- [ ] O usuário deve poder deletar a própria conta 
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
@@ -43,12 +47,17 @@
 - [X] Todas as listas de dados precisam estar paginadas com 20 itens por página; 
 - [x] O banco de dados deve utilizar UUID v7 para performance e identificação;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
+- [ ] Todos os usuários devem ser identificados pela permissão de "membro" ou "admin";
 
 ### Regras de Negócio (RN)
 
 - [x] O usuário não deve poder se cadastrar com e-mail duplicado;
 - [x] O usuário não deve poder cadastrar categorias com o mesmo título;
+- [x] O usuário não deve poder deletar despesas de outro usuário;
+- [x] O usuário não deve poder deletar categorias de outro usuário;
 - [ ] O usuário não deve poder deletar uma categoria com gastos vinculados;
+- [ ] O usuário não deve poder cadastrar mais que 15 categorias;
+- [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
 
 ## Fluxograma de Desenvolvimento
 
