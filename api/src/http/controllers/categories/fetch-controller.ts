@@ -1,7 +1,7 @@
+import { Prisma } from "@/generated/prisma/client";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-fetch-categories-use-case";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { Prisma } from "generated/prisma/client";
 import z from "zod";
 
 export async function fetchCategories(req: FastifyRequest, reply: FastifyReply) {

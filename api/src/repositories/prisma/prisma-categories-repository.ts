@@ -1,7 +1,7 @@
-import { Category, Prisma } from "generated/prisma/client";
-import { CategoryCreateInput } from "generated/prisma/models";
+import { CategoryCreateInput } from "@/generated/prisma/models";
 import { CategoriesRepository } from "../categories-repository";
 import { prisma } from "@/lib/prisma";
+import { Prisma } from "@/generated/prisma/client";
 
 export class PrismaCategoriesRespository implements CategoriesRepository {
   async create(data: CategoryCreateInput) {

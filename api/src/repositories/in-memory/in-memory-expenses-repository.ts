@@ -1,8 +1,8 @@
-import { Expense } from "generated/prisma/client";
+import { Expense } from "@/generated/prisma/client";
 import { ExpensesRepository } from "../expenses-repository";
-import { ExpenseCreateInput } from "generated/prisma/models";
-import { QueryMode } from "generated/prisma/internal/prismaNamespace";
 import { randomUUID } from "node:crypto";
+import { ExpenseCreateInput } from "@/generated/prisma/models";
+import { QueryMode } from "@/generated/prisma/internal/prismaNamespace";
 
 export class InMemoryExpensesRepository implements ExpensesRepository {
   public items: Expense[] = [];

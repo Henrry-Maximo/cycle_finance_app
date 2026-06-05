@@ -1,8 +1,8 @@
-import { Category } from "generated/prisma/client";
+import { Category } from "@/generated/prisma/client";
 import { CategoriesRepository } from "../categories-repository";
-import { CategoryCreateInput } from "generated/prisma/models";
-import { QueryMode } from "generated/prisma/internal/prismaNamespace";
 import { randomUUID } from "node:crypto";
+import { CategoryCreateInput } from "@/generated/prisma/models";
+import { QueryMode } from "@/generated/prisma/internal/prismaNamespace";
 
 export class InMemoryCategoriesRepository implements CategoriesRepository {
   public items: Category[] = [];

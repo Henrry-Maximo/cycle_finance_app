@@ -23,10 +23,25 @@ model User {
   terms_accepted_at DateTime @default(now())
   terms_version     String   @default("1.0")
 
-  categories Category[]
-  expenses   Expense[]
+  categories          Category[]
+  expenses            Expense[]
+  passwordResetTokens PasswordResetTokens[]
 
   @@map("users")
+}
+
+model PasswordResetTokens {
+  id    String @id @default(uuid(7)) @db.Uuid
+  token String
+
+  created_at DateTime  @default(now())
+  expires_at DateTime
+  used_at    DateTime?
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String @db.Uuid
+
+  @@map("password_reset_tokens")
 }
 
 model Expense {
