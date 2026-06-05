@@ -54,7 +54,7 @@ export class InMemoryUsersRepository implements UsersRepository {
     return null;
   }
 
-  async allUsers(): Promise<User[]> {
+  async findMany(): Promise<User[]> {
     const users = this.items;
     
     return users;

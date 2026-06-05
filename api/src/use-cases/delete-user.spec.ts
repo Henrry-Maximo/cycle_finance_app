@@ -1,20 +1,14 @@
-import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { DeleteUserUseCase } from "./delete-user";
 
-let expensesRepository: InMemoryExpensesRepository;
-let categoriesRepository: InMemoryCategoriesRepository;
 let usersRepository: InMemoryUsersRepository;
 let sut: DeleteUserUseCase;
 
 describe("Delete User Use Case", () => {
   beforeEach(() => {
-    expensesRepository = new InMemoryExpensesRepository();
-    categoriesRepository = new InMemoryCategoriesRepository();
     usersRepository = new InMemoryUsersRepository();
 
     sut = new DeleteUserUseCase(

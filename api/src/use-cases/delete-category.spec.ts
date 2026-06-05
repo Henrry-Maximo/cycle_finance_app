@@ -7,14 +7,12 @@ import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { DeleteCategoryUseCase } from "./delete-category";
 
-let expensesRepository: InMemoryExpensesRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
 let usersRepository: InMemoryUsersRepository;
 let sut: DeleteCategoryUseCase;
 
 describe("Delete Category Use Case", () => {
   beforeEach(() => {
-    expensesRepository = new InMemoryExpensesRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
     usersRepository = new InMemoryUsersRepository();
 

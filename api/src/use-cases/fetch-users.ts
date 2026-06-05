@@ -17,7 +17,7 @@ export class GetUsersUseCase {
   async execute({ query }: GetUsersUseCaseRequest): Promise<GetUsersUseCaseResponse> {
     const users = query
       ? await this.usersRepository.findByName(query)
-      : await this.usersRepository.allUsers();
+      : await this.usersRepository.findMany();
 
     return { users };
   }
