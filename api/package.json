@@ -1,12 +1,13 @@
 {
   "name": "cycle_finance_api",
   "version": "1.0.0",
+  "type": "module",
   "description": "Cycle Finance API",
   "main": "index.js",
   "scripts": {
     "start:dev": "tsx --watch src/server.ts",
     "start": "node build/server.js",
-    "build": "tsup src/server.ts --format cjs --clean --out-dir build",
+    "build": "tsup src/server.ts --format esm --clean --out-dir build",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
