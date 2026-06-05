@@ -1,5 +1,3 @@
-import { CategoriesRepository } from "@/repositories/categories-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { UsersRepository } from "@/repositories/users-repository";
 
