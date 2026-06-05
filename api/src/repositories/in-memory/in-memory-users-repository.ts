@@ -5,7 +5,7 @@ import { randomUUID } from "node:crypto";
 
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = [];
-
+  
   async create(data: UserCreateInput) {
     const user = {
       id: data.id ?? String(randomUUID()),
@@ -16,17 +16,17 @@ export class InMemoryUsersRepository implements UsersRepository {
       terms_accepted_at: new Date(),
       terms_version: '1.0.0'
     };
-
+    
     this.items.push(user);
-
+    
     return user;
   }
 
   async findByEmail(email: string) {
     const user = this.items.find((item) => item.email === email);
-
+    
     if (!user) return null;
-
+    
     return user;
   }
 
@@ -37,18 +37,26 @@ export class InMemoryUsersRepository implements UsersRepository {
 
     return user;
   }
-
+  
   async findByName(name: string) {
     const user = this.items.find((item) => item.name === name);
 
     if (!user) return [];
-
+    
     return [user];
+  }
+
+  async delete(id: string) {
+    const index = this.items.findIndex((item) => item.id === id);
+
+    this.items.splice(index, 1);
+
+    return null;
   }
 
   async allUsers(): Promise<User[]> {
     const users = this.items;
-
+    
     return users;
   }
 }
