@@ -2,5 +2,5 @@ node_modules
 build
 .env
 coverage
-/generated/prisma
+src/generated/
 codes.ts
