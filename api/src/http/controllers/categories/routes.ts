@@ -7,6 +7,6 @@ import { register } from "./register-controller";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
-  app.get("/categories", { onRequest: [verifyJWT] }, fetchCategories);
-  app.post("/categories", { onRequest: [verifyJWT] }, register);
+  app.get("/categories", { preHandler: [verifyJWT] }, fetchCategories);
+  app.post("/categories", { preHandler: [verifyJWT] }, register);
 }

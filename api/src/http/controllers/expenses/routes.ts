@@ -9,8 +9,8 @@ import { register } from "./register-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
-  app.get("/expenses", { onRequest: [verifyJWT] }, fetchExpenses);
-  app.get("/metrics", { onRequest: [verifyJWT] }, getMeticsUser);
-  app.post("/expenses", { onRequest: [verifyJWT] }, register);
-  app.delete("/expenses", { onRequest: [verifyJWT] }, deleteExpense);
+  app.get("/expenses", { preHandler: [verifyJWT] }, fetchExpenses);
+  app.get("/metrics", { preHandler: [verifyJWT] }, getMeticsUser);
+  app.post("/expenses", { preHandler: [verifyJWT] }, register);
+  app.delete("/expenses", { preHandler: [verifyJWT] }, deleteExpense);
 }
