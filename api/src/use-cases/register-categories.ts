@@ -4,6 +4,7 @@ import { UsersRepository } from "@/repositories/users-repository";
 
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { CategoryLimitReachedError } from "./errors/category-limit-reached-error";
 
 interface RegisterCategoriesUseCaseRequest {
   id?: string;
@@ -31,6 +32,13 @@ export class RegisterCategoriesUseCase {
 
     if (!user) {
       throw new ResourceNotFoundError();
+    }
+
+    const categories = await this.categoriesRepository.findManyById(user.id);
+    const maxRegisterLimit = 15;
+
+    if (categories.length >= maxRegisterLimit) {
+      throw new CategoryLimitReachedError();
     }
 
     const categoryAlreadyExists = await this.categoriesRepository.findByName(

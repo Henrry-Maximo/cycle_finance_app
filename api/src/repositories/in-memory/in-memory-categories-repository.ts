@@ -64,6 +64,12 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     return category;
   }
 
+  async findManyById(id: string) {
+    const categories = this.items.filter((item) => item.user_id === id);
+
+    return categories;
+  }
+
   async delete(id: string) {
     const index = this.items.findIndex((item) => item.id === id);
 

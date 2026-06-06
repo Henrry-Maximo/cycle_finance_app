@@ -1,10 +1,19 @@
-import { Prisma } from "@/generated/prisma/client";
+import { Category, Prisma } from "@/generated/prisma/client";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
 import { CategoriesRepository } from "../categories-repository";
 
 export class PrismaCategoriesRespository implements CategoriesRepository {
+  async findManyById(id: string): Promise<Category[]> {
+    const categories = await prisma.category.findMany({
+      where: {
+        user_id: id,
+      },
+    });
+
+    return categories;
+  }
   async create(data: CategoryCreateInput) {
     const category = await prisma.category.create({
       data,

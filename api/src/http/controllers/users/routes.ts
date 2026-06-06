@@ -17,7 +17,7 @@ export async function usersRoutes(app: FastifyInstance) {
   /* Authenticated */
   app.get(
     "/users",
-    { preHandler: [verifyJWT, verifyUserRole("admin")] },
+    { preHandler: [verifyJWT, verifyUserRole("ADMIN")] },
     fetchUsers,
   );
   app.get("/me", { preHandler: [verifyJWT] }, profile);

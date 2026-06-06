@@ -4,6 +4,7 @@ import z from "zod";
 import { CategoryAlreadyExistsError } from "@/use-cases/errors/category-already-exists-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeRegisterCategoriesUseCase } from "@/use-cases/factories/make-register-categories-use-case";
+import { CategoryLimitReachedError } from "@/use-cases/errors/category-limit-reached-error";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerCategoriesSchema = z.object({
@@ -26,6 +27,10 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: err.message });
+    }
+
+    if (err instanceof CategoryLimitReachedError) {
+      return reply.status(429).send({ message: err.message });
     }
 
     if (err instanceof CategoryAlreadyExistsError) {
