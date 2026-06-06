@@ -37,7 +37,7 @@
 - [x] O usuário deve poder visualizar o valor gasto do dia
 - [x] O usuário deve poder deletar depesas
 - [x] O usuário deve poder deletar categorias
-- [ ] O usuário deve poder deletar a própria conta 
+- [x] O usuário deve poder deletar a própria conta 
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)

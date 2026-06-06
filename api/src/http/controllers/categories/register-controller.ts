@@ -1,4 +1,4 @@
-import { FastifyReply,FastifyRequest } from "fastify";
+import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
 import { CategoryAlreadyExistsError } from "@/use-cases/errors/category-already-exists-error";

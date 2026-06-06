@@ -1,4 +1,4 @@
-import { PasswordResetTokens,Prisma } from "@/generated/prisma/client";
+import { PasswordResetTokens, Prisma } from "@/generated/prisma/client";
 
 export interface ResetPasswordTokensRepository {
   create(
