@@ -7,6 +7,7 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { RegisterCategoriesUseCase } from "./register-categories";
+import { CategoryLimitReachedError } from "./errors/category-limit-reached-error";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -70,5 +71,29 @@ describe("Register Categories Use Case", () => {
         user_id: category.user_id,
       }),
     ).rejects.toBeInstanceOf(CategoryAlreadyExistsError);
+  });
+
+  it("should not be able to register category if max limit reached", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    for (let i = 1; i <= 15; i++) {
+      await sut.execute({
+        title: `Alimentação ${i}`,
+        description: "",
+        user_id: userCreated.id,
+      });
+    }
+
+    await expect(async () =>
+      sut.execute({
+        title: "Alimentação 16",
+        description: "",
+        user_id: userCreated.id,
+      }),
+    ).rejects.toBeInstanceOf(CategoryLimitReachedError);
   });
 });
