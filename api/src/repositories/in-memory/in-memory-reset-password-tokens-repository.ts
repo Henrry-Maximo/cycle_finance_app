@@ -15,7 +15,7 @@ export class InMemoryResetPasswordTokensRepository implements ResetPasswordToken
       created_at: data.created_at ? new Date(data.created_at) : new Date(),
       expires_at: new Date(data.expires_at),
       used_at: data.used_at ? new Date(data.used_at) : null,
-      user_id: data.user.connect?.id!,
+      user_id: data.user.connect!.id!,
     };
 
     this.items.push(tokenPayload);

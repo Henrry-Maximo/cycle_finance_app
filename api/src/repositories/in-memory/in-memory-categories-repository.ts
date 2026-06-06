@@ -15,7 +15,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
       title: data.title,
       description: data.description ?? null,
       created_at: new Date(),
-      user_id: data.user.connect?.id!,
+      user_id: data.user.connect!.id!,
     };
 
     this.items.push(category);

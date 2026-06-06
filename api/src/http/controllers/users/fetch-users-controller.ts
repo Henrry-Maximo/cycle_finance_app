@@ -10,13 +10,9 @@ export async function fetchUsers(req: FastifyRequest, reply: FastifyReply) {
 
   const { query } = searchUsersSchema.parse(req.query);
 
-  try {
-    const getUsersUseCase = makeGetUsersUseCase();
+  const getUsersUseCase = makeGetUsersUseCase();
 
-    const { users } = await getUsersUseCase.execute({ query });
+  const { users } = await getUsersUseCase.execute({ query });
 
-    return reply.status(200).send({ users });
-  } catch (err) {
-    throw err;
-  }
+  return reply.status(200).send({ users });
 }

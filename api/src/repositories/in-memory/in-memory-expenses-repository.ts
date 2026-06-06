@@ -20,8 +20,8 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
       price: data.price,
       card_last_digits: data.card_last_digits,
       created_at: data.created_at ? new Date(data.created_at) : new Date(),
-      user_id: data.user.connect?.id!,
-      category_id: data.category.connect?.id!,
+      user_id: data.user.connect!.id!,
+      category_id: data.category.connect!.id!,
     };
 
     this.items.push(expense);

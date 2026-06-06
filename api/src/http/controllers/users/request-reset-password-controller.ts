@@ -1,9 +1,8 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error";
-import { makeRequestResetPassword } from "@/use-cases/factories/make-request-reset-password-use-case";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { makeRequestResetPassword } from "@/use-cases/factories/make-request-reset-password-use-case";
 
 export async function requestResetPasswordTokens(
   req: FastifyRequest,

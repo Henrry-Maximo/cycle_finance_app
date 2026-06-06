@@ -25,6 +25,7 @@ export async function deleteExpense(req: FastifyRequest, reply: FastifyReply) {
     }
 
     if (err instanceof NotAuthorizedError) {
+      return reply.status(401).send({ message: err.message });
     }
 
     throw err;
