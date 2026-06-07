@@ -7,6 +7,9 @@ import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tok
 import { hash } from "bcryptjs";
 import { randomBytes } from "node:crypto";
 import { RequestResetPasswordUseCase } from "./request-reset-password";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { env } from "@/env";
+import { ResetPasswordTokenInvalid } from "./errors/reset-password-token-invalid-error";
 
 let usersRepository: UsersRepository;
 let resetPasswordTokensRepository: ResetPasswordTokensRepository;
@@ -17,6 +20,7 @@ describe("Reset Password Token Use Case", () => {
   beforeEach(() => {
     usersRepository = new InMemoryUsersRepository();
     resetPasswordTokensRepository = new InMemoryResetPasswordTokensRepository();
+
     requestResetPasswordUseCase = new RequestResetPasswordUseCase(
       usersRepository,
       resetPasswordTokensRepository,
@@ -28,36 +32,64 @@ describe("Reset Password Token Use Case", () => {
     );
   });
 
-  it.skip("should be able to register a new password", async () => {
+  it("should be able to register a new password", async () => {
     const user = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
       password_hash: await hash("123456", 6),
     });
 
-    // const expiresAt = new Date();
-    // expiresAt.setHours(expiresAt.getHours() + 2);
-    // const base64UrlString = randomBytes(32).toString("base64url");
-
-    // const url = await resetPasswordTokensRepository.create({
-    //   expires_at: expiresAt,
-    //   token: base64UrlString,
-    //   user: {
-    //     connect: {
-    //       id,
-    //     },
-    //   },
-    // });
-
-    const url = await requestResetPasswordUseCase.execute({
+    const { url } = await requestResetPasswordUseCase.execute({
       email: user.email,
     });
 
-    // await expect(
-    //   sut.execute({
-    //     token: url,
-    //     password: "password-new",
-    //   }),
-    // ).resolves.toEqual({ url: expect.any(String) }));
+    const token = new URL(url).searchParams.get("token")!;
+
+    await expect(
+      sut.execute({
+        token,
+        password: "password-new",
+      }),
+    ).resolves.toEqual(null);
+  });
+
+  it("should not be possible to validate a token if it does not exist", async () => {
+    await expect(
+      sut.execute({
+        token: "non-token",
+        password: "password-new",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be possible to validate a token if it is invalid", async () => {
+    const { id } = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const expiresAt = new Date();
+    expiresAt.setHours(expiresAt.getHours() - 2);
+
+    const data = await resetPasswordTokensRepository.create({
+      token: "non-token",
+      expires_at: expiresAt,
+      user: {
+        connect: {
+          id,
+        },
+      },
+    });
+
+    const url = `${env.APP_URL}/reset-password?token=${data.token}`;
+    const token = new URL(url).searchParams.get("token")!;
+
+    expect(() =>
+      sut.execute({
+        token,
+        password: "new-password",
+      }),
+    ).rejects.toBeInstanceOf(ResetPasswordTokenInvalid);
   });
 });
