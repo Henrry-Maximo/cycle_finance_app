@@ -5,4 +5,9 @@ export interface ResetPasswordTokensRepository {
     data: Prisma.PasswordResetTokensCreateInput,
   ): Promise<PasswordResetTokens>;
   findById(id: string): Promise<PasswordResetTokens | null>;
+  findByToken(token: string): Promise<PasswordResetTokens | null>;
+  update(
+    id: string,
+    data: Prisma.PasswordResetTokensUpdateInput,
+  ): Promise<null>;
 }

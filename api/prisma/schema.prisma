@@ -32,7 +32,7 @@ model User {
 
 model PasswordResetTokens {
   id    String @id @default(uuid(7)) @db.Uuid
-  token String
+  token String @unique
 
   created_at DateTime  @default(now())
   expires_at DateTime

@@ -1,7 +1,10 @@
 import { randomUUID } from "node:crypto";
 
 import { PasswordResetTokens } from "@/generated/prisma/client";
-import { PasswordResetTokensCreateInput } from "@/generated/prisma/models";
+import {
+  PasswordResetTokensCreateInput,
+  PasswordResetTokensUpdateInput,
+} from "@/generated/prisma/models";
 
 import { ResetPasswordTokensRepository } from "../reset-password-tokens-repository";
 
@@ -31,5 +34,28 @@ export class InMemoryResetPasswordTokensRepository implements ResetPasswordToken
     }
 
     return tokenPayload;
+  }
+
+  async findByToken(token: string): Promise<PasswordResetTokens | null> {
+    const resetPasswordTokens = this.items.find((item) => item.token === token);
+
+    if (!resetPasswordTokens) {
+      return null;
+    }
+
+    return resetPasswordTokens;
+  }
+
+  async update(token: string, data: PasswordResetTokensUpdateInput) {
+    const resetPasswordToken = this.items.find((item) => item.token === token);
+
+    if (!resetPasswordToken) {
+      return null;
+    }
+
+    // resetPasswordToken!.used_at = new Date();
+    Object.assign(resetPasswordToken, data);
+
+    return null;
   }
 }

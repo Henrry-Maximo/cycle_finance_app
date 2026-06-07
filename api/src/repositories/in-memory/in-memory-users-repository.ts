@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 
 import { User } from "@/generated/prisma/client";
-import { UserCreateInput } from "@/generated/prisma/models";
+import { UserCreateInput, UserUpdateInput } from "@/generated/prisma/models";
 
 import { UsersRepository } from "../users-repository";
 
@@ -60,5 +60,18 @@ export class InMemoryUsersRepository implements UsersRepository {
     const users = this.items;
 
     return users;
+  }
+
+  async update(id: string, data: UserUpdateInput) {
+    const user = this.items.find((item) => item.id === id);
+
+    if (!user) {
+      return null;
+    }
+
+    // resetPasswordToken!.used_at = new Date();
+    Object.assign(user, data);
+
+    return null;
   }
 }
