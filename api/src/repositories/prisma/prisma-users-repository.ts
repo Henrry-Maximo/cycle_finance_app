@@ -2,6 +2,7 @@ import { Prisma } from "@/generated/prisma/client";
 import { prisma } from "@/lib/prisma";
 
 import { UsersRepository } from "../users-repository";
+import { UserUpdateInput } from "@/generated/prisma/models";
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: Prisma.UserCreateInput) {
@@ -53,6 +54,17 @@ export class PrismaUsersRepository implements UsersRepository {
       where: {
         id,
       },
+    });
+
+    return null;
+  }
+
+  async update(id: string, data: UserUpdateInput) {
+    await prisma.user.update({
+      where: {
+        id,
+      },
+      data,
     });
 
     return null;

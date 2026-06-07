@@ -56,7 +56,7 @@
 - [x] O usuário não deve poder deletar despesas de outro usuário;
 - [x] O usuário não deve poder deletar categorias de outro usuário;
 - [ ] O usuário não deve poder deletar uma categoria com gastos vinculados;
-- [ ] O usuário não deve poder cadastrar mais que 15 categorias;
+- [x] O usuário não deve poder cadastrar mais que 15 categorias;
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
 
 ## Fluxograma de Desenvolvimento

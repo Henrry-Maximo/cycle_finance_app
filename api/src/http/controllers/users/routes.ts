@@ -8,11 +8,13 @@ import { profile } from "./profile-controller";
 import { register } from "./register-controller";
 import { requestResetPasswordTokens } from "./request-reset-password-controller";
 import { verifyUserRole } from "@/http/middlewares/verify-user-role";
+import { resetPasswordTokens } from "./reset-password-controller";
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post("/users", register);
   app.post("/sessions", authenticate);
   app.post("/reset-password/request", requestResetPasswordTokens);
+  app.post("/reset-password", resetPasswordTokens);
 
   /* Authenticated */
   app.get(
