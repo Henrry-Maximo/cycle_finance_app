@@ -5,7 +5,6 @@ import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/
 import { UsersRepository } from "@/repositories/users-repository";
 import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 import { hash } from "bcryptjs";
-import { randomBytes } from "node:crypto";
 import { RequestResetPasswordUseCase } from "./request-reset-password";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { env } from "@/env";
@@ -85,7 +84,7 @@ describe("Reset Password Token Use Case", () => {
     const url = `${env.APP_URL}/reset-password?token=${data.token}`;
     const token = new URL(url).searchParams.get("token")!;
 
-    expect(() =>
+    await expect(() =>
       sut.execute({
         token,
         password: "new-password",
