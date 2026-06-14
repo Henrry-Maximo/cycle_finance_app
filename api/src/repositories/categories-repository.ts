@@ -1,4 +1,4 @@
-import { Category, Prisma } from "@/generated/prisma/client";
+import { Category, Expense, Prisma } from "@/generated/prisma/client";
 
 export interface CategoriesRepository {
   create(data: Prisma.CategoryCreateInput): Promise<Category>;
@@ -11,5 +11,6 @@ export interface CategoriesRepository {
     mode: Prisma.QueryMode,
     page: number,
   ): Promise<Category[]>;
+  findManyExpensesById(id: string): Promise<Expense[]>;
   delete(id: string): Promise<null>;
 }

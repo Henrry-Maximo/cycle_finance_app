@@ -2,6 +2,7 @@ import { CategoriesRepository } from "@/repositories/categories-repository";
 
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { CategoryIsLinkedExpense } from "./errors/category-is-linked-expense-error";
 
 interface DeleteCategoryUseCaseRequest {
   id: string;
@@ -20,6 +21,14 @@ export class DeleteCategoryUseCase {
 
     if (category.user_id != userId) {
       throw new NotAuthorizedError();
+    }
+
+    const expenses = await this.categoriesRepository.findManyExpensesById(
+      category.id,
+    );
+
+    if (expenses.length > 0) {
+      throw new CategoryIsLinkedExpense();
     }
 
     await this.categoriesRepository.delete(id);

@@ -1,4 +1,4 @@
-import { Category, Prisma } from "@/generated/prisma/client";
+import { Category, Expense, Prisma } from "@/generated/prisma/client";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
@@ -61,6 +61,16 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     });
 
     return category;
+  }
+
+  async findManyExpensesById(id: string) {
+    const expenses = await prisma.expense.findMany({
+      where: {
+        category_id: id,
+      },
+    });
+
+    return expenses;
   }
 
   async delete(id: string) {

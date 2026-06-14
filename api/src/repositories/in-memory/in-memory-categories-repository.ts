@@ -5,8 +5,11 @@ import { QueryMode } from "@/generated/prisma/internal/prismaNamespace";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 
 import { CategoriesRepository } from "../categories-repository";
+import { InMemoryExpensesRepository } from "./in-memory-expenses-repository";
 
 export class InMemoryCategoriesRepository implements CategoriesRepository {
+  constructor(private expensesRepository?: InMemoryExpensesRepository) {}
+
   public items: Category[] = [];
 
   async create(data: CategoryCreateInput) {
@@ -68,6 +71,15 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     const categories = this.items.filter((item) => item.user_id === id);
 
     return categories;
+  }
+
+  async findManyExpensesById(id: string) {
+    const expenses =
+      this.expensesRepository?.items.filter(
+        (item) => item.category_id === id,
+      ) ?? [];
+
+    return expenses;
   }
 
   async delete(id: string) {
