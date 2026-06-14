@@ -56,7 +56,7 @@
 - [x] O usuário não deve poder cadastrar categorias com o mesmo título;
 - [x] O usuário não deve poder deletar despesas de outro usuário;
 - [x] O usuário não deve poder deletar categorias de outro usuário;
-- [ ] O usuário não deve poder deletar uma categoria com gastos vinculados;
+- [x] O usuário não deve poder deletar uma categoria com gastos vinculados;
 - [x] O usuário não deve poder cadastrar mais que 15 categorias;
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
 
