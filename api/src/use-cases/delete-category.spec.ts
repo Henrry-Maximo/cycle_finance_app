@@ -8,7 +8,7 @@ import { DeleteCategoryUseCase } from "./delete-category";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { CategoryIsLinkedExpense } from "./errors/category-is-linked-expense-error";
+import { CategoryIsLinkedExpenseError } from "./errors/category-is-linked-expense-error";
 
 let categoriesRepository: InMemoryCategoriesRepository;
 let expensesRepository: InMemoryExpensesRepository;
@@ -128,6 +128,6 @@ describe("Delete Category Use Case", () => {
 
     await expect(
       sut.execute({ id: categoryCreated.id, userId: userCreated.id }),
-    ).rejects.toBeInstanceOf(CategoryIsLinkedExpense);
+    ).rejects.toBeInstanceOf(CategoryIsLinkedExpenseError);
   });
 });
