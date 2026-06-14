@@ -7,14 +7,18 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { DeleteCategoryUseCase } from "./delete-category";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { CategoryIsLinkedExpense } from "./errors/category-is-linked-expense-error";
 
 let categoriesRepository: InMemoryCategoriesRepository;
+let expensesRepository: InMemoryExpensesRepository;
 let usersRepository: InMemoryUsersRepository;
 let sut: DeleteCategoryUseCase;
 
 describe("Delete Category Use Case", () => {
   beforeEach(() => {
-    categoriesRepository = new InMemoryCategoriesRepository();
+    expensesRepository = new InMemoryExpensesRepository();
+    categoriesRepository = new InMemoryCategoriesRepository(expensesRepository);
     usersRepository = new InMemoryUsersRepository();
 
     sut = new DeleteCategoryUseCase(categoriesRepository);
@@ -82,5 +86,48 @@ describe("Delete Category Use Case", () => {
     await expect(
       sut.execute({ id: "non-expense", userId: userCreated.id }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to delete an category if is linked expense", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      description:
+        "Categoria criada para ser usada com qualquer tipo de compra que envolva alimentos.",
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+    });
+
+    await expensesRepository.create({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 10.6,
+      card_last_digits: "2343",
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    await expect(
+      sut.execute({ id: categoryCreated.id, userId: userCreated.id }),
+    ).rejects.toBeInstanceOf(CategoryIsLinkedExpense);
   });
 });
