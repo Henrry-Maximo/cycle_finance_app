@@ -25,7 +25,7 @@
 
 - [x] O usuário deve poder se cadastrar
 - [x] O usuário deve poder se logar
-- [ ] O usuário deve poder resetar a senha
+- [x] O usuário deve poder resetar a senha
 - [x] O usuário deve poder registrar uma categoria
 - [x] O usuário deve poder registrar um comprovante
 - [x] O usuário deve poder visualizar suas informações de perfil
@@ -38,7 +38,7 @@
 - [x] O usuário deve poder deletar depesas
 - [x] O usuário deve poder deletar categorias
 - [x] O usuário deve poder deletar a própria conta 
-- [] O usuário deve poder subir uma planilha contendo os gastos
+- [ ] O usuário deve poder subir uma planilha contendo os gastos
 - [x] O administrador deve poder visualizar todos os usuários
 
 ### Requisitos Não-Funcionais (RNF)
