@@ -3,7 +3,7 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { toast } from 'sonner';
@@ -32,13 +32,15 @@ export interface ExpenseTableRowProps {
 }
 
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
-  const { mutateAsync: deleteUserFn } = useMutation({
+  const queryClient = useQueryClient();
+  const { mutateAsync: deleteExpenseUserFn } = useMutation({
     mutationFn: deleteExpenseUser,
   });
 
   async function handleDeleteExpense() {
     try {
-      await deleteUserFn(expense.id);
+      await deleteExpenseUserFn(expense.id);
+      await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
       toast.success('A despesa foi apagada com sucesso!');
     } catch {
       toast.error('Error ao apagar a despesa.');

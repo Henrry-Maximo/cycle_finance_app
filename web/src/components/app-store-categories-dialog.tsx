@@ -1,11 +1,12 @@
 import { PencilIcon, TrashIcon } from '@phosphor-icons/react';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
 
+import { deleteCategoryUser } from '@/api/delete-category-user';
 import { getCategoriesUser } from '@/api/get-categories-user';
 import { registerCategory } from '@/api/register-category';
 import { Button } from '@/components/ui/button';
@@ -44,15 +45,30 @@ export function StoreCategoriesDialog() {
     handleSubmit,
     formState: { isSubmitting },
   } = useForm<StoreCategoriesSchema>();
+  const queryClient = useQueryClient();
 
   const { mutateAsync: registerCategoryFn } = useMutation({
     mutationFn: registerCategory,
+  });
+
+  const { mutateAsync: deleteCategoryUserFn } = useMutation({
+    mutationFn: deleteCategoryUser,
   });
 
   const { data: categoriesData } = useQuery({
     queryKey: ['user-categories'],
     queryFn: getCategoriesUser,
   });
+
+  async function handleDeleteCategory(id: string) {
+    try {
+      await deleteCategoryUserFn(id);
+      await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
+      toast.success('A categoria foi apagada com sucesso!');
+    } catch {
+      toast.error('Error ao apagar a categoria.');
+    }
+  }
 
   async function handleRegisterCategory(data: StoreCategoriesSchema) {
     try {
@@ -187,6 +203,7 @@ export function StoreCategoriesDialog() {
                           variant="ghost"
                           size="default"
                           className="cursor-pointer"
+                          onClick={() => handleDeleteCategory(category.id)}
                         >
                           <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
                           <span className="sr-only">Excluir</span>
