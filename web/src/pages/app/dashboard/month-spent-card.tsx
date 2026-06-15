@@ -18,7 +18,6 @@ export function MonthSpentCard({ amount }: MonthSpentCardProps) {
 
       <CardContent className="space-y-1">
         <span className="text-2xl font-bold tracking-tight">
-          R${' '}
           {amount.toLocaleString('pt-BR', {
             style: 'currency',
             currency: 'BRL',
