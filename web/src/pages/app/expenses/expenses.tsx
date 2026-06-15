@@ -67,7 +67,11 @@ export function Expenses() {
             </Table>
           </div>
 
-          <Pagination pageIndex={0} totalCount={105} perPage={10} />
+          <Pagination
+            pageIndex={0}
+            totalCount={expensesData?.expenses.length ?? 0}
+            perPage={10}
+          />
         </div>
       </div>
     </>

@@ -3,9 +3,12 @@ import {
   PencilIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
+import { useMutation } from '@tanstack/react-query';
 import { format, formatDistanceToNow } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { toast } from 'sonner';
 
+import { deleteExpenseUser } from '@/api/delete-expense-user';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TableCell, TableRow } from '@/components/ui/table';
@@ -29,6 +32,19 @@ export interface ExpenseTableRowProps {
 }
 
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
+  const { mutateAsync: deleteUserFn } = useMutation({
+    mutationFn: deleteExpenseUser,
+  });
+
+  async function handleDeleteExpense() {
+    try {
+      await deleteUserFn(expense.id);
+      toast.success('A despesa foi apagada com sucesso!');
+    } catch {
+      toast.error('Error ao apagar a despesa.');
+    }
+  }
+
   return (
     <TableRow>
       <TableCell>
@@ -43,13 +59,15 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
           <ExpenseDetails />
         </Dialog>
       </TableCell>
-      <TableCell className="font-mono text-xs font-medium">1</TableCell>
+      <TableCell className="w-2 truncate font-mono text-xs font-medium">
+        {expense.id.substring(0, 12) + '...'}
+      </TableCell>
       <TableCell className="font-medium">{expense.title}</TableCell>
       <TableCell>
         <div className="flex items-center gap-2">
           <span className="h-2 w-2 rounded-full bg-slate-400" />
           <span className="text-muted-foreground font-medium">
-            {expense.category_id}
+            {expense.category_id.substring(0, 12) + '...'}
           </span>
         </div>
       </TableCell>
@@ -85,7 +103,12 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </Button>
       </TableCell>
       <TableCell>
-        <Button variant="ghost" size="default" className="cursor-pointer">
+        <Button
+          onClick={handleDeleteExpense}
+          variant="ghost"
+          size="default"
+          className="cursor-pointer"
+        >
           <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
           <span className="sr-only">Excluir</span>
         </Button>
