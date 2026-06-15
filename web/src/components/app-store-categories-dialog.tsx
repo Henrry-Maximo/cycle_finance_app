@@ -76,7 +76,7 @@ export function StoreCategoriesDialog() {
         title: data.title,
         description: data.description,
       });
-
+      await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
       toast.success('Categoria cadastrada com sucesso.');
     } catch {
       toast.error('Erro ao cadastrar categoria.');
