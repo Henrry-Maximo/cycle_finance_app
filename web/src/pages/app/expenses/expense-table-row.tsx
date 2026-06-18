@@ -1,7 +1,6 @@
 import {
   MagnifyingGlassIcon,
   PencilIcon,
-  SpinnerBallIcon,
   TrashIcon,
 } from '@phosphor-icons/react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -34,7 +33,7 @@ export interface ExpenseTableRowProps {
 
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   const queryClient = useQueryClient();
-  const { mutateAsync: deleteExpenseUserFn, isPending } = useMutation({
+  const { mutateAsync: deleteExpenseUserFn } = useMutation({
     mutationFn: deleteExpenseUser,
   });
 
@@ -112,11 +111,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
           size="default"
           className="cursor-pointer"
         >
-          {isPending ? (
-            <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-          ) : (
-            <SpinnerBallIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-          )}
+          <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
           <span className="sr-only">Excluir</span>
         </Button>
       </TableCell>
