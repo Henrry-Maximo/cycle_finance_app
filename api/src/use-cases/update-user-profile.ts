@@ -1,11 +1,16 @@
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { User } from "@/generated/prisma/client";
 
 interface UpdateUserProfileUseCaseRequest {
   userId: string;
   name?: string;
   email?: string;
+}
+
+interface UpdateUserProfileUseCaseResponse {
+  user: User;
 }
 
 export class UpdateUserProfileUseCase {
@@ -15,7 +20,7 @@ export class UpdateUserProfileUseCase {
     userId,
     name,
     email,
-  }: UpdateUserProfileUseCaseRequest): Promise<null> {
+  }: UpdateUserProfileUseCaseRequest): Promise<UpdateUserProfileUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
@@ -27,6 +32,6 @@ export class UpdateUserProfileUseCase {
       ...(email && { email }),
     });
 
-    return null;
+    return { user };
   }
 }
