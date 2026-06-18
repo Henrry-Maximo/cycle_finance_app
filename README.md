@@ -38,6 +38,7 @@
 - [x] O usuário deve poder deletar depesas
 - [x] O usuário deve poder deletar categorias
 - [x] O usuário deve poder deletar a própria conta 
+- [x] O usuário deve poder atualizar as informações de seu perfil
 - [ ] O usuário deve poder subir uma planilha contendo os gastos
 - [x] O administrador deve poder visualizar todos os usuários
 
