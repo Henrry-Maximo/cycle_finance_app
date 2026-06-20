@@ -5,6 +5,7 @@ import z, { ZodError } from "zod";
 
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
+import fastifyRateLimit from "@fastify/rate-limit";
 
 export const app = fastify();
 
@@ -18,6 +19,11 @@ app.register(cors, {
 });
 
 app.register(appRoutes);
+
+app.register(fastifyRateLimit, {
+  max: 3,
+  timeWindow: "1 minute",
+});
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
