@@ -18,12 +18,12 @@ app.register(cors, {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
 
-app.register(appRoutes);
-
 app.register(fastifyRateLimit, {
-  max: 3,
+  max: 100,
   timeWindow: "1 minute",
 });
+
+app.register(appRoutes);
 
 app.setErrorHandler((error, _, reply) => {
   if (error instanceof ZodError) {
@@ -31,6 +31,10 @@ app.setErrorHandler((error, _, reply) => {
       .status(400)
       .send({ message: "Validation error.", issues: z.treeifyError(error) });
   }
+
+  // if (error.) {
+  //   return reply.status(429).send({ message: "Too Many Requests." });
+  // }
 
   if (env.NODE_ENV !== "production") {
     console.log(error);
