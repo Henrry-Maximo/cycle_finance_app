@@ -5,9 +5,10 @@ import z, { ZodError } from "zod";
 
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
-import fastifyRateLimit from "@fastify/rate-limit";
 
-export const app = fastify();
+export const app = fastify({
+  logger: false,
+});
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
@@ -16,11 +17,6 @@ app.register(fastifyJwt, {
 app.register(cors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
-});
-
-app.register(fastifyRateLimit, {
-  max: 100,
-  timeWindow: "1 minute",
 });
 
 app.register(appRoutes);

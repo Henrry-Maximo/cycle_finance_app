@@ -9,6 +9,7 @@ import { register } from "./register-controller";
 import { requestResetPasswordTokens } from "./request-reset-password-controller";
 import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 import { resetPasswordTokens } from "./reset-password-controller";
+import { rateLimiter } from "@/http/middlewares/rate-limiter";
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post("/users", register);
@@ -19,7 +20,7 @@ export async function usersRoutes(app: FastifyInstance) {
   /* Authenticated */
   app.get(
     "/users",
-    { preHandler: [verifyJWT, verifyUserRole("ADMIN")] },
+    { preHandler: [verifyJWT, verifyUserRole("ADMIN"), rateLimiter] },
     fetchUsers,
   );
   app.get("/me", { preHandler: [verifyJWT] }, profile);
