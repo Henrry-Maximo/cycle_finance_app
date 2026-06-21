@@ -50,6 +50,8 @@
 - [x] O banco de dados deve utilizar UUID v7 para performance e identificação;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
 - [x] Todos os usuários devem ser identificados pela permissão de "membro" ou "admin";
+- [x] A API deve utilizar o Redis para armazenamento de informações em memória como a
+função de rate limiter;
 - [x] As rotas devem estar resguardadas utilizando rate limit - 100 requisiçoes por minuto (limitando a quantidade de requsições do usuário)
 
 ### Regras de Negócio (RN)
