@@ -2,45 +2,58 @@
 
 ![alt text](logo.png)
 
-- Software para gerenciamento de gastos através da análise de comprovantes de pagamentos utilizando a câmera do dispositivo para escaneamento das informações para cadastramento na plataforma. Uma exibição claro de gastos por mês/ano.
+- Software para gerenciamento financeiro que permite registrar despesas manualmente ou através da captura de comprovantes utilizando a câmera do dispositivo. O sistema oferece visualizações e análises dos gastos por dia, mês e ano.
 
 > 🚧 **Status:** Em desenvolvimento
 
 ## Estrutura do Repositório
 
 - **API**: Armazena o código backend da aplicação;
-- **MOBILE**: Armazena a interface web do cliente;
-- **WEB**: Armazena a interface mobile do cliente.
+- **WEB**: Armazena a interface web do cliente;
+- **MOBILE**: Armazena a interface mobile do cliente.
 
 ## Stack Ferramental
 
-- **Backend:** Node.js (Fastify), PrismaORM v7, PostgreSQL, Docker, Zod, tsup, tsx.
-- **Frontend:** React.js.
+- **Backend:** Node.js, Fastify, PrismaORM v7, PostgreSQL, Redis, Docker, Zod.
+- **Frontend:** React.js, React-Hook-Form, React-Router, Tanstack-Query, Shadcn, RadixUI, PhosphorIcons, Axios, Date-fns, Zod, Sonner, ReCharts, React-Helmet, Tailwindcss.
 - **Mobile:** React Native.
-- **Tooling:** TypeScript, ESLint, Prettier.
+- **Tooling:** TypeScript, ESLint, Prettier, tsup, tsx.
 
 ## Documentação de Negócio
 
+## Arquitetura
+
+- API REST utilizando Fastify
+- Autenticação baseada em JWT
+- Controle de acesso baseado em papéis (RBAC)
+- Persistência com PostgreSQL
+- Cache e Rate Limiting com Redis
+- Validação de entrada com Zod
+- ORM Prisma
+
 ### Requisitos Funcionais (RF)
 
-- [x] O usuário deve poder se cadastrar
-- [x] O usuário deve poder se logar
-- [x] O usuário deve poder resetar a senha
-- [x] O usuário deve poder registrar uma categoria
-- [x] O usuário deve poder registrar um comprovante
-- [x] O usuário deve poder visualizar suas informações de perfil
-- [x] O usuário deve poder visualizar o histórico de todas as suas despesas
-- [x] O usuário deve poder visualizar o histórico de todas as suas categorias
-- [x] O usuário deve poder visualizar a quantidade de despesas registradas
-- [x] O usuário deve poder visualizar a quantidade de despesas registradas no dia
-- [x] O usuário deve poder visualizar o valor gasto do mês
-- [x] O usuário deve poder visualizar o valor gasto do dia
-- [x] O usuário deve poder deletar depesas
-- [x] O usuário deve poder deletar categorias
-- [x] O usuário deve poder deletar a própria conta 
-- [x] O usuário deve poder atualizar as informações de seu perfil
-- [ ] O usuário deve poder subir uma planilha contendo os gastos
-- [x] O administrador deve poder visualizar todos os usuários
+- [x] O usuário deve poder se cadastrar;
+- [x] O usuário deve poder se logar;
+- [x] O usuário deve poder resetar a senha;
+- [x] O usuário deve poder registrar uma categoria;
+- [x] O usuário deve poder registrar um comprovante;
+- [x] O usuário deve poder visualizar suas informações de perfil;
+- [x] O usuário deve poder visualizar o histórico de todas as suas despesas;
+- [x] O usuário deve poder visualizar o histórico de todas as suas categorias;
+- [x] O usuário deve poder visualizar a quantidade de despesas registradas;
+- [x] O usuário deve poder visualizar a quantidade de despesas registradas no dia;
+- [x] O usuário deve poder visualizar o valor gasto do mês;
+- [x] O usuário deve poder visualizar o valor gasto do dia;
+- [x] O usuário deve poder deletar depesas;
+- [x] O usuário deve poder deletar categorias;
+- [x] O usuário deve poder deletar a própria conta;
+- [x] O usuário deve poder atualizar as informações de seu perfil;
+- [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
+- [ ] O usuário deve poder capturar uma foto de um comprovante;
+- [ ] O sistema deve extrair informações do comprovante automaticamente;
+- [ ] O sistema deve sugerir valores e datas com base no comprovante;
+- [x] O administrador deve poder visualizar todos os usuários.
 
 ### Requisitos Não-Funcionais (RNF)
 
@@ -50,9 +63,10 @@
 - [x] O banco de dados deve utilizar UUID v7 para performance e identificação;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
 - [x] Todos os usuários devem ser identificados pela permissão de "membro" ou "admin";
-- [x] A API deve utilizar o Redis para armazenamento de informações em memória como a
-função de rate limiter;
-- [x] As rotas devem estar resguardadas utilizando rate limit - 100 requisiçoes por minuto (limitando a quantidade de requsições do usuário)
+- [x] O Redis deve ser utilizado para cache e rate limiting;
+- [x] O sistema deve possuir tratamento centralizado de erros;
+- [x] O administrador não pode visualizar senhas dos usuários.
+- [ ] A API deve registrar logs de erros e auditoria.
 
 ### Regras de Negócio (RN)
 
@@ -63,6 +77,9 @@ função de rate limiter;
 - [x] O usuário não deve poder deletar uma categoria com gastos vinculados;
 - [x] O usuário não deve poder cadastrar mais que 15 categorias;
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
+- [x] O usuário não deve poder visualizar despesas de outros usuários;
+- [x] O usuário não deve poder atualizar despesas de outros usuários;
+- [x] O administrador pode visualizar todos os usuários;
 
 ## Fluxograma de Desenvolvimento
 
@@ -70,9 +87,18 @@ função de rate limiter;
 
 ## Estrutura do Banco de Dados
 
+### Entidades
+
 - [x] Users
 - [x] Expenses
 - [x] Categories
+
+### Relacionamentos
+
+- Um usuário possui várias despesas
+- Um usuário possui até 15 categorias
+- Uma categoria pode possuir várias despesas
+- Uma despesa pertence a uma categoria
 
 ## Comandos para Iniciar o Projeto
 
