@@ -6,11 +6,16 @@ import { deleteExpense } from "./delete-controller";
 import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
+import { rateLimiter } from "@/http/middlewares/rate-limiter";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
-  app.get("/expenses", { preHandler: [verifyJWT] }, fetchExpenses);
-  app.get("/metrics", { preHandler: [verifyJWT] }, getMeticsUser);
-  app.post("/expenses", { preHandler: [verifyJWT] }, register);
-  app.delete("/expenses", { preHandler: [verifyJWT] }, deleteExpense);
+  app.get("/expenses", { preHandler: [verifyJWT, rateLimiter] }, fetchExpenses);
+  app.get("/metrics", { preHandler: [verifyJWT, rateLimiter] }, getMeticsUser);
+  app.post("/expenses", { preHandler: [verifyJWT, rateLimiter] }, register);
+  app.delete(
+    "/expenses",
+    { preHandler: [verifyJWT, rateLimiter] },
+    deleteExpense,
+  );
 }

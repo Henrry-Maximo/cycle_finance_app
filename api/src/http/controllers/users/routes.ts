@@ -12,10 +12,18 @@ import { resetPasswordTokens } from "./reset-password-controller";
 import { rateLimiter } from "@/http/middlewares/rate-limiter";
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.post("/users", register);
-  app.post("/sessions", authenticate);
-  app.post("/reset-password/request", requestResetPasswordTokens);
-  app.post("/reset-password", resetPasswordTokens);
+  app.post("/users", { preHandler: [rateLimiter] }, register);
+  app.post("/sessions", { preHandler: [rateLimiter] }, authenticate);
+  app.post(
+    "/reset-password/request",
+    { preHandler: [rateLimiter] },
+    requestResetPasswordTokens,
+  );
+  app.post(
+    "/reset-password",
+    { preHandler: [rateLimiter] },
+    resetPasswordTokens,
+  );
 
   /* Authenticated */
   app.get(
@@ -23,7 +31,7 @@ export async function usersRoutes(app: FastifyInstance) {
     { preHandler: [verifyJWT, verifyUserRole("ADMIN"), rateLimiter] },
     fetchUsers,
   );
-  app.get("/me", { preHandler: [verifyJWT] }, profile);
+  app.get("/me", { preHandler: [verifyJWT, rateLimiter] }, profile);
 }
 
 /*
