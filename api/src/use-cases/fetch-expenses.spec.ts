@@ -80,7 +80,7 @@ describe("Fetch User Expenses History Use Case", () => {
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      page: 1,
+      pageIndex: 1,
     });
 
     expect(expenses).toHaveLength(2);
@@ -101,7 +101,7 @@ describe("Fetch User Expenses History Use Case", () => {
       },
     });
 
-    for (let i = 1; i <= 22; i++) {
+    for (let i = 1; i <= 32; i++) {
       await expensesRepository.create({
         id: `expense-${i}`,
         title: "Pães",
@@ -127,13 +127,15 @@ describe("Fetch User Expenses History Use Case", () => {
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      page: 2,
+      pageIndex: 3,
     });
+
+    console.log(expenses);
 
     expect(expenses).toHaveLength(2);
     expect(expenses).toEqual([
-      expect.objectContaining({ id: "expense-21" }),
-      expect.objectContaining({ id: "expense-22" }),
+      expect.objectContaining({ id: "expense-31" }),
+      expect.objectContaining({ id: "expense-32" }),
     ]);
   });
 
@@ -141,7 +143,7 @@ describe("Fetch User Expenses History Use Case", () => {
     await expect(() =>
       sut.execute({
         userId: "non-existing-id",
-        page: 1,
+        pageIndex: 1,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });

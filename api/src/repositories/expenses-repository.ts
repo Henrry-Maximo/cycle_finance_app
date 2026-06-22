@@ -5,9 +5,9 @@ export interface ExpensesRepository {
   findById(id: string): Promise<Expense | null>;
   findManyByUserId(
     userId: string,
-    contains: string,
-    mode: Prisma.QueryMode,
-    page: number,
+    expenseName: string,
+    pageIndex: number,
+    perPage: number,
   ): Promise<Expense[]>;
   findManyByUserIdInPeriod(
     userId: string,

@@ -39,21 +39,18 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
   async findManyByUserId(
     userId: string,
-    contains: string,
-    mode: QueryMode,
-    page: number,
+    expenseName: string,
+    // mode: QueryMode,
+    pageIndex: number,
+    perPage: number,
   ) {
     const expenses = this.items
       .filter((item) => {
         if (item.user_id === userId) {
-          if (mode === "insensitive") {
-            return item.title.toLowerCase().includes(contains.toLowerCase());
-          }
-
-          return item.title.includes(contains);
+          return item.title.toLowerCase().includes(expenseName.toLowerCase());
         }
       })
-      .slice((page - 1) * 20, page * 20);
+      .slice((pageIndex - 1) * perPage, pageIndex * perPage);
 
     return expenses;
   }

@@ -25,18 +25,27 @@ export class PrismaExpensesRepository implements ExpensesRepository {
 
   async findManyByUserId(
     user_id: string,
-    contains: string,
-    mode: Prisma.QueryMode,
+    expenseName: string,
+    pageIndex: number,
+    perPage: number,
   ) {
+    const skip = pageIndex * perPage;
+    const take = perPage;
+
     const expensesUser = await prisma.expense.findMany({
+      skip,
+      take,
       where: {
         user_id: {
           equals: user_id,
         },
         title: {
-          contains,
-          mode,
+          contains: expenseName,
+          mode: "insensitive",
         },
+      },
+      orderBy: {
+        created_at: "desc", // mais recente
       },
     });
 

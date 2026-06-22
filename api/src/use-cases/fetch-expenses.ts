@@ -1,19 +1,27 @@
-import { Expense, Prisma } from "generated/prisma/client";
-
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { Expense } from "@/generated/prisma/client";
 
 interface FetchExpensesUseCaseRequest {
   userId: string;
-  contains?: string;
-  mode?: Prisma.QueryMode;
-  page: number;
+  expenseName?: string;
+  // mode?: Prisma.QueryMode;
+  pageIndex: number;
+  perPage?: number;
+}
+
+interface Pagination {
+  pageIndex: number;
+  perPage: number;
+  totalCount: number;
+  totalPages: number;
 }
 
 interface FetchExpensesUseCaseResponse {
   expenses: Expense[];
+  meta: Pagination;
 }
 
 export class FetchExpensesUseCase {
@@ -24,9 +32,10 @@ export class FetchExpensesUseCase {
 
   async execute({
     userId,
-    contains = "",
-    mode = "default",
-    page,
+    expenseName = "",
+    // mode = "default",
+    pageIndex = 0,
+    perPage = 15,
   }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
@@ -36,13 +45,22 @@ export class FetchExpensesUseCase {
 
     const expenses = await this.expensesRepository.findManyByUserId(
       userId,
-      contains,
-      mode,
-      page,
+      expenseName,
+      pageIndex,
+      perPage,
     );
+
+    const amountOfExpenses = expenses.length;
+    const totalPages = Math.ceil(expenses.length / 15);
 
     return {
       expenses,
+      meta: {
+        pageIndex,
+        perPage: 15,
+        totalCount: amountOfExpenses,
+        totalPages: totalPages,
+      },
     };
   }
 }
