@@ -44,7 +44,6 @@ describe("Get User Categories History Use Case", () => {
 
     const { categories } = await sut.execute({
       userId: userCreated.id,
-      page: 1,
     });
 
     expect(categories).toHaveLength(2);
@@ -61,7 +60,7 @@ describe("Get User Categories History Use Case", () => {
       password_hash: await hash("123456", 6),
     });
 
-    for (let i = 1; i <= 22; i++) {
+    for (let i = 1; i <= 32; i++) {
       await categoriesRepository.create({
         id: `category-${i}`,
         title: "Alimentação",
@@ -74,13 +73,13 @@ describe("Get User Categories History Use Case", () => {
 
     const { categories } = await sut.execute({
       userId: userCreated.id,
-      page: 2,
+      pageIndex: 3,
     });
 
     expect(categories).toHaveLength(2);
     expect(categories).toEqual([
-      expect.objectContaining({ id: "category-21" }),
-      expect.objectContaining({ id: "category-22" }),
+      expect.objectContaining({ id: "category-31" }),
+      expect.objectContaining({ id: "category-32" }),
     ]);
   });
 
@@ -88,7 +87,6 @@ describe("Get User Categories History Use Case", () => {
     await expect(() =>
       sut.execute({
         userId: "non-existing-id",
-        page: 1,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });

@@ -36,21 +36,17 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
 
   async findManyByUserId(
     userId: string,
-    contains: string,
-    mode: QueryMode,
-    page: number,
+    categoryName: string,
+    pageIndex: number,
+    perPage: number,
   ): Promise<Category[]> {
     const categories = this.items
       .filter((item) => {
         if (item.user_id === userId) {
-          if (mode === "insensitive") {
-            return item.title.toLowerCase().includes(contains.toLowerCase());
-          }
-
-          return item.title.includes(contains);
+          return item.title.toLowerCase().includes(categoryName.toLowerCase());
         }
       })
-      .slice((page - 1) * 20, page * 20);
+      .slice((pageIndex - 1) * perPage, pageIndex * perPage);
 
     return categories;
   }

@@ -7,9 +7,9 @@ export interface CategoriesRepository {
   findManyById(id: string): Promise<Category[]>;
   findManyByUserId(
     userId: string,
-    contains: string,
-    mode: Prisma.QueryMode,
-    page: number,
+    categoryName: string,
+    pageIndex: number,
+    perPage: number,
   ): Promise<Category[]>;
   findManyExpensesById(id: string): Promise<Expense[]>;
   delete(id: string): Promise<null>;

@@ -59,7 +59,7 @@
 
 - [x] A senha do usuário precisa estar em formato hash;
 - [x] Os dados da aplicação precisam estar persistidos em um banco PostgreSQL;
-- [X] Todas as listas de dados precisam estar paginadas com 20 itens por página; 
+- [x] Todas as listas de dados precisam estar paginadas com 15 itens por página; 
 - [x] O banco de dados deve utilizar UUID v7 para performance e identificação;
 - [x] O usuário deve ser identificado por um JWT (JSON Web Token) entre as requisições;
 - [x] Todos os usuários devem ser identificados pela permissão de "membro" ou "admin";

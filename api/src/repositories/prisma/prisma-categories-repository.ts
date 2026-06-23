@@ -34,18 +34,24 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
 
   async findManyByUserId(
     userId: string,
-    contains: string,
-    mode: Prisma.QueryMode,
+    categoryName: string,
+    pageIndex: number,
+    perPage: number,
   ) {
     const categories = await prisma.category.findMany({
+      skip: (pageIndex - 1) * perPage,
+      take: perPage,
       where: {
         user_id: {
           equals: userId,
         },
         title: {
-          contains,
-          mode,
+          contains: categoryName,
+          mode: "insensitive",
         },
+      },
+      orderBy: {
+        created_at: "desc",
       },
     });
 

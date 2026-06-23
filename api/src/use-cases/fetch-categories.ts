@@ -6,13 +6,21 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchCategoriesUseCaseRequest {
   userId: string;
-  contains?: string;
-  mode?: Prisma.QueryMode;
+  categoryName?: string;
+  pageIndex?: number;
+  perPage?: number;
+}
+
+interface Pagination {
   page: number;
+  perPage: number;
+  totalCount: number;
+  totalPages: number;
 }
 
 interface FetchCategoriesUseCaseResponse {
   categories: Category[];
+  meta: Pagination;
 }
 
 export class FetchCategoriesUseCase {
@@ -23,9 +31,9 @@ export class FetchCategoriesUseCase {
 
   async execute({
     userId,
-    contains = "",
-    mode = "default",
-    page,
+    categoryName = "",
+    pageIndex = 1,
+    perPage = 15,
   }: FetchCategoriesUseCaseRequest): Promise<FetchCategoriesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
@@ -35,11 +43,22 @@ export class FetchCategoriesUseCase {
 
     const categories = await this.categoriesRepository.findManyByUserId(
       userId,
-      contains,
-      mode,
-      page,
+      categoryName,
+      pageIndex,
+      perPage,
     );
 
-    return { categories };
+    const totalCount = categories.length;
+    const totalPages = Math.ceil(totalCount / perPage);
+
+    return {
+      categories,
+      meta: {
+        page: pageIndex,
+        perPage,
+        totalCount,
+        totalPages,
+      },
+    };
   }
 }
