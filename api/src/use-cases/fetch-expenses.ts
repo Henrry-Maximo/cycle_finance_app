@@ -60,7 +60,7 @@ export class FetchExpensesUseCase {
         pageIndex,
         perPage,
         totalCount,
-        totalPages: totalPages,
+        totalPages,
       },
     };
   }
