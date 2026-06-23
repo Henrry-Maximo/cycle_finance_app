@@ -10,24 +10,22 @@ export async function fetchCategories(
   reply: FastifyReply,
 ) {
   const searchCategoriesSchema = z.object({
-    contains: z.string().optional().nullable(),
-    mode: z.string().optional().nullable(),
-    page: z.number().default(1),
+    query: z.string().optional().nullable(),
+    page: z.coerce.number().default(1),
   });
 
-  const { contains, mode, page } = searchCategoriesSchema.parse(req.query);
+  const { query, page } = searchCategoriesSchema.parse(req.query);
 
   try {
     const fetchCategoriesUseCase = makeGetCategoriesUseCase();
 
-    const { categories } = await fetchCategoriesUseCase.execute({
+    const { categories, meta } = await fetchCategoriesUseCase.execute({
       userId: req.user.sub,
-      contains: contains ?? "",
-      mode: mode as Prisma.QueryMode,
-      page,
+      categoryName: query ?? "",
+      pageIndex: page,
     });
 
-    return reply.status(200).send({ categories });
+    return reply.status(200).send({ categories, meta });
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: err.message });
