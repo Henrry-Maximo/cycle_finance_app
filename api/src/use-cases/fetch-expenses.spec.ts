@@ -130,8 +130,6 @@ describe("Fetch User Expenses History Use Case", () => {
       pageIndex: 3,
     });
 
-    console.log(expenses);
-
     expect(expenses).toHaveLength(2);
     expect(expenses).toEqual([
       expect.objectContaining({ id: "expense-31" }),

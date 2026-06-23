@@ -69,7 +69,7 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     return expenses;
   }
 
-  async countByUserId(userId: string, expenseName: string): Promise<number> {
+  async countByUserId(userId: string, expenseName: string) {
     const countRecords = await prisma.expense.count({
       where: {
         title: {

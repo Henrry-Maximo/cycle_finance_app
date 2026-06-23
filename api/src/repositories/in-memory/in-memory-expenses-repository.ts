@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 
 import { Expense } from "@/generated/prisma/client";
-import { QueryMode } from "@/generated/prisma/internal/prismaNamespace";
 import { ExpenseCreateInput } from "@/generated/prisma/models";
 
 import { ExpensesRepository } from "../expenses-repository";
@@ -64,6 +63,20 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     );
 
     return expenses;
+  }
+
+  async countByUserId(userId: string, expenseName: string) {
+    const countRecords = this.items.filter((item) => {
+      const matchesUser = item.user_id === userId;
+
+      const matchesName = expenseName
+        ? item.title.toLowerCase().includes(expenseName.toLowerCase())
+        : true;
+
+      return matchesUser && matchesName;
+    });
+
+    return countRecords.length;
   }
 
   async delete(id: string) {
