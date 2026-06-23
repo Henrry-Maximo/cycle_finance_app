@@ -1,4 +1,3 @@
-import { Prisma } from "@/generated/prisma/client";
 import { ExpenseCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
@@ -68,6 +67,22 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     });
 
     return expenses;
+  }
+
+  async countByUserId(userId: string, expenseName: string): Promise<number> {
+    const countRecords = await prisma.expense.count({
+      where: {
+        title: {
+          contains: expenseName,
+          mode: "insensitive",
+        },
+        user_id: {
+          equals: userId,
+        },
+      },
+    });
+
+    return countRecords;
   }
 
   async delete(id: string) {

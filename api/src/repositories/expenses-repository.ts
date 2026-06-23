@@ -14,6 +14,7 @@ export interface ExpensesRepository {
     from: Date,
     to: Date,
   ): Promise<Expense[]>;
+  countByUserId(userId: string, expenseName: string): Promise<number>;
   delete(id: string): Promise<null>;
 }
 

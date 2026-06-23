@@ -48,15 +48,18 @@ export class FetchExpensesUseCase {
       perPage,
     );
 
-    const amountOfExpenses = expenses.length;
-    const totalPages = Math.ceil(expenses.length / perPage);
+    const totalCount = await this.expensesRepository.countByUserId(
+      userId,
+      expenseName,
+    );
+    const totalPages = Math.ceil(totalCount / perPage);
 
     return {
       expenses,
       meta: {
         pageIndex,
         perPage,
-        totalCount: amountOfExpenses,
+        totalCount,
         totalPages: totalPages,
       },
     };
