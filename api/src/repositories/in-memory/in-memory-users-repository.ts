@@ -62,6 +62,20 @@ export class InMemoryUsersRepository implements UsersRepository {
     return users;
   }
 
+  async findManyByName(userName: string, pageIndex: number, perPage: number) {
+    const users = this.items
+      .filter((item) => {
+        if (item.name === userName) {
+          return item.name.toLowerCase().includes(userName.toLowerCase());
+        }
+
+        return this.items;
+      })
+      .slice((pageIndex - 1) * perPage, pageIndex * perPage);
+
+    return users;
+  }
+
   async update(id: string, data: UserUpdateInput) {
     const user = this.items.find((item) => item.id === id);
 

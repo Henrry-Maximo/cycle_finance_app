@@ -39,7 +39,6 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
   async findManyByUserId(
     userId: string,
     expenseName: string,
-    // mode: QueryMode,
     pageIndex: number,
     perPage: number,
   ) {

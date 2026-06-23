@@ -33,21 +33,33 @@ export class PrismaUsersRepository implements UsersRepository {
     return user;
   }
 
-  async findMany() {
-    const users = await prisma.user.findMany();
-
-    return users;
-  }
-
-  async findByName(name: string) {
+  async findManyByName(userName: string, pageIndex: number, perPage: number) {
     const users = await prisma.user.findMany({
+      skip: (pageIndex - 1) * perPage,
+      take: perPage,
       where: {
-        name: { contains: name },
+        name: {
+          contains: userName,
+          mode: "insensitive",
+        },
+      },
+      orderBy: {
+        terms_accepted_at: "desc",
       },
     });
 
     return users;
   }
+
+  // async findByName(name: string) {
+  //   const users = await prisma.user.findMany({
+  //     where: {
+  //       name: { contains: name },
+  //     },
+  //   });
+
+  //   return users;
+  // }
 
   async delete(id: string) {
     await prisma.user.delete({
