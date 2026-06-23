@@ -7,7 +7,6 @@ import { Expense } from "@/generated/prisma/client";
 interface FetchExpensesUseCaseRequest {
   userId: string;
   expenseName?: string;
-  // mode?: Prisma.QueryMode;
   pageIndex: number;
   perPage?: number;
 }
@@ -33,8 +32,7 @@ export class FetchExpensesUseCase {
   async execute({
     userId,
     expenseName = "",
-    // mode = "default",
-    pageIndex = 0,
+    pageIndex = 1,
     perPage = 15,
   }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
@@ -51,13 +49,13 @@ export class FetchExpensesUseCase {
     );
 
     const amountOfExpenses = expenses.length;
-    const totalPages = Math.ceil(expenses.length / 15);
+    const totalPages = Math.ceil(expenses.length / perPage);
 
     return {
       expenses,
       meta: {
         pageIndex,
-        perPage: 15,
+        perPage,
         totalCount: amountOfExpenses,
         totalPages: totalPages,
       },

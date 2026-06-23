@@ -29,12 +29,9 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     pageIndex: number,
     perPage: number,
   ) {
-    const skip = pageIndex * perPage;
-    const take = perPage;
-
     const expensesUser = await prisma.expense.findMany({
-      skip,
-      take,
+      skip: (pageIndex - 1) * perPage,
+      take: perPage,
       where: {
         user_id: {
           equals: user_id,
