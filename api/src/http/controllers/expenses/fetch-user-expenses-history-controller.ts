@@ -1,27 +1,24 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
-import { Prisma } from "@/generated/prisma/client";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFetchExpensesUseCase } from "@/use-cases/factories/make-fetch-expenses-use-case";
 
 export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
   const searchExpensesSchema = z.object({
-    contains: z.string().optional().nullable(),
-    mode: z.string().optional().nullable(),
-    page: z.number().default(1),
+    query: z.string().optional().nullable(),
+    page: z.coerce.number().default(1),
   });
 
-  const { contains, mode, page } = searchExpensesSchema.parse(req.query);
+  const { query, page } = searchExpensesSchema.parse(req.query);
 
   try {
     const fetchExpensesUseCase = makeFetchExpensesUseCase();
 
     const { expenses } = await fetchExpensesUseCase.execute({
       userId: req.user.sub,
-      contains: contains ?? "",
-      mode: mode as Prisma.QueryMode,
-      page,
+      expenseName: query ?? "",
+      pageIndex: page,
     });
 
     return reply.status(200).send({ expenses });
