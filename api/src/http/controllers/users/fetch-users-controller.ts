@@ -5,14 +5,18 @@ import { makeGetUsersUseCase } from "@/use-cases/factories/make-get-users-use-ca
 
 export async function fetchUsers(req: FastifyRequest, reply: FastifyReply) {
   const searchUsersSchema = z.object({
-    query: z.string().nullable().default(""),
+    query: z.string().optional().nullable(),
+    page: z.coerce.number().default(1),
   });
 
-  const { query } = searchUsersSchema.parse(req.query);
+  const { query, page } = searchUsersSchema.parse(req.query);
 
   const getUsersUseCase = makeGetUsersUseCase();
 
-  const { users } = await getUsersUseCase.execute({ query });
+  const { users, meta } = await getUsersUseCase.execute({
+    userName: query ?? "",
+    pageIndex: page,
+  });
 
-  return reply.status(200).send({ users });
+  return reply.status(200).send({ users, meta });
 }
