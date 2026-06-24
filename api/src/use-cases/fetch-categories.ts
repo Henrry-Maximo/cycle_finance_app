@@ -48,7 +48,10 @@ export class FetchCategoriesUseCase {
       perPage,
     );
 
-    const totalCount = categories.length;
+    const totalCount = await this.categoriesRepository.countByUserId(
+      userId,
+      categoryName,
+    );
     const totalPages = Math.ceil(totalCount / perPage);
 
     return {

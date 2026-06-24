@@ -1,7 +1,6 @@
 import { randomUUID } from "node:crypto";
 
 import { Category } from "@/generated/prisma/client";
-import { QueryMode } from "@/generated/prisma/internal/prismaNamespace";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 
 import { CategoriesRepository } from "../categories-repository";
@@ -76,6 +75,20 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
       ) ?? [];
 
     return expenses;
+  }
+
+  async countByUserId(userId: string, categoryName: string) {
+    const countRecords = this.items.filter((item) => {
+      const matchesUser = item.user_id === userId;
+
+      const matchesName = categoryName
+        ? item.title.toLowerCase().includes(categoryName.toLowerCase())
+        : true;
+
+      return matchesUser && matchesName;
+    });
+
+    return countRecords.length;
   }
 
   async delete(id: string) {

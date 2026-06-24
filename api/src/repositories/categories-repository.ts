@@ -12,5 +12,6 @@ export interface CategoriesRepository {
     perPage: number,
   ): Promise<Category[]>;
   findManyExpensesById(id: string): Promise<Expense[]>;
+  countByUserId(userId: string, categoryName: string): Promise<number>;
   delete(id: string): Promise<null>;
 }

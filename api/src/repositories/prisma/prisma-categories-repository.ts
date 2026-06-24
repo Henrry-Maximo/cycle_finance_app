@@ -79,6 +79,25 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     return expenses;
   }
 
+  async countByUserId(userId: string, categoryName: string) {
+    const countRecords = await prisma.category.count({
+      where: {
+        title: {
+          contains: categoryName,
+          mode: "insensitive",
+        },
+        user_id: {
+          equals: userId,
+        },
+      },
+      orderBy: {
+        created_at: "desc",
+      },
+    });
+
+    return countRecords;
+  }
+
   async delete(id: string) {
     await prisma.category.delete({
       where: {
