@@ -1,8 +1,8 @@
 import { CategoriesRepository } from "@/repositories/categories-repository";
 
+import { CategoryIsLinkedExpenseError } from "./errors/category-is-linked-expense-error";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { CategoryIsLinkedExpenseError } from "./errors/category-is-linked-expense-error";
 
 interface DeleteCategoryUseCaseRequest {
   id: string;

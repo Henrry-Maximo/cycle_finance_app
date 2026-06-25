@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { limiter } from "@/lib/redis";
 import { RateLimiterRes } from "rate-limiter-flexible";
+
+import { limiter } from "@/lib/redis";
 
 export async function rateLimiter(req: FastifyRequest, reply: FastifyReply) {
   try {

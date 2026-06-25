@@ -3,8 +3,8 @@ import { CategoriesRepository } from "@/repositories/categories-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { CategoryLimitReachedError } from "./errors/category-limit-reached-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface RegisterCategoriesUseCaseRequest {
   id?: string;

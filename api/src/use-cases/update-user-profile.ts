@@ -1,7 +1,7 @@
+import { User } from "@/generated/prisma/client";
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { User } from "@/generated/prisma/client";
 
 interface UpdateUserProfileUseCaseRequest {
   userId: string;

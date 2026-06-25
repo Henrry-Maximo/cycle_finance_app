@@ -1,14 +1,16 @@
-import { beforeEach, describe, expect, it } from "vitest";
-import { ResetPasswordUseCase } from "./reset-password";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/in-memory-reset-password-tokens-repository";
-import { UsersRepository } from "@/repositories/users-repository";
-import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 import { hash } from "bcryptjs";
-import { RequestResetPasswordUseCase } from "./request-reset-password";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { env } from "@/env";
+import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/in-memory-reset-password-tokens-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
+import { UsersRepository } from "@/repositories/users-repository";
+
 import { ResetPasswordTokenInvalid } from "./errors/reset-password-token-invalid-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { RequestResetPasswordUseCase } from "./request-reset-password";
+import { ResetPasswordUseCase } from "./reset-password";
 
 let usersRepository: UsersRepository;
 let resetPasswordTokensRepository: ResetPasswordTokensRepository;

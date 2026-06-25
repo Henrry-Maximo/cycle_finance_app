@@ -1,8 +1,8 @@
+import { Expense } from "@/generated/prisma/client";
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { Expense } from "@/generated/prisma/client";
 
 interface FetchExpensesUseCaseRequest {
   userId: string;

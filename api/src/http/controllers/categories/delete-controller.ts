@@ -1,10 +1,10 @@
 import { FastifyReply, FastifyRequest } from "fastify";
 import z from "zod";
 
+import { CategoryIsLinkedExpenseError } from "@/use-cases/errors/category-is-linked-expense-error";
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeDeleteCategoryUseCase } from "@/use-cases/factories/make-delete-category-use-case";
-import { CategoryIsLinkedExpenseError } from "@/use-cases/errors/category-is-linked-expense-error";
 
 export async function deleteCategory(req: FastifyRequest, reply: FastifyReply) {
   const deleteCategoriesSchema = z.object({

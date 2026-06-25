@@ -1,15 +1,15 @@
 import { FastifyInstance } from "fastify";
 
+import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
+import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 
 import { authenticate } from "./authenticate-controller";
 import { fetchUsers } from "./fetch-users-controller";
 import { profile } from "./profile-controller";
 import { register } from "./register-controller";
 import { requestResetPasswordTokens } from "./request-reset-password-controller";
-import { verifyUserRole } from "@/http/middlewares/verify-user-role";
 import { resetPasswordTokens } from "./reset-password-controller";
-import { rateLimiter } from "@/http/middlewares/rate-limiter";
 
 export async function usersRoutes(app: FastifyInstance) {
   app.post("/users", { preHandler: [rateLimiter] }, register);

@@ -5,9 +5,9 @@ import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
 import { CategoryAlreadyExistsError } from "./errors/category-already-exists-error";
+import { CategoryLimitReachedError } from "./errors/category-limit-reached-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { RegisterCategoriesUseCase } from "./register-categories";
-import { CategoryLimitReachedError } from "./errors/category-limit-reached-error";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;

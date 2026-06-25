@@ -1,8 +1,10 @@
+import { hash } from "bcryptjs";
+
 import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 import { UsersRepository } from "@/repositories/users-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+
 import { ResetPasswordTokenInvalid } from "./errors/reset-password-token-invalid-error";
-import { hash } from "bcryptjs";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface PasswordUseCaseRequest {
   token: string;

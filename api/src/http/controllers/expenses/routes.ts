@@ -1,12 +1,12 @@
 import { FastifyInstance } from "fastify";
 
+import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
 
 import { deleteExpense } from "./delete-controller";
 import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
-import { rateLimiter } from "@/http/middlewares/rate-limiter";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */

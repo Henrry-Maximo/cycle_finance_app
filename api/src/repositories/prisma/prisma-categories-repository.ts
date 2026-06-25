@@ -1,4 +1,4 @@
-import { Category, Expense, Prisma } from "@/generated/prisma/client";
+import { Category } from "@/generated/prisma/client";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 

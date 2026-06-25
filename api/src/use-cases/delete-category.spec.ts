@@ -2,13 +2,13 @@ import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
 import { DeleteCategoryUseCase } from "./delete-category";
+import { CategoryIsLinkedExpenseError } from "./errors/category-is-linked-expense-error";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { CategoryIsLinkedExpenseError } from "./errors/category-is-linked-expense-error";
 
 let categoriesRepository: InMemoryCategoriesRepository;
 let expensesRepository: InMemoryExpensesRepository;
