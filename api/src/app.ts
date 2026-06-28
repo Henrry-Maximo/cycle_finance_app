@@ -1,4 +1,4 @@
-import cors from "@fastify/cors";
+import { fastifyCors } from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import fastify from "fastify";
 import z, { ZodError } from "zod";
@@ -6,17 +6,53 @@ import z, { ZodError } from "zod";
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
 
+import {
+  validatorCompiler,
+  serializerCompiler,
+  ZodTypeProvider,
+  jsonSchemaTransform,
+} from "fastify-type-provider-zod";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
+
 export const app = fastify({
   logger: false,
-});
+}).withTypeProvider<ZodTypeProvider>();
+
+// usando o zod validação de todos os dados que vão entrar
+app.setValidatorCompiler(validatorCompiler);
+
+// usando o zod para transformar (serialização) os dados de saída
+app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
 });
 
-app.register(cors, {
+app.register(fastifyCors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+});
+
+app.register(fastifySwagger, {
+  // várias especifícações: openapi / swagger (formatos)
+  openapi: {
+    info: {
+      title: "Typed API",
+      description: "API Restful Cycle Finance for management of expenses.",
+      version: "1.0.0",
+      contact: {
+        name: "Henrique Maximo",
+        email: "Henrrylimadasilva@gmail.com",
+        url: "https://www.linkedin.com/in/henrique-maximo/",
+      },
+    },
+  },
+  transform: jsonSchemaTransform,
+});
+
+app.register(fastifySwaggerUi, {
+  routePrefix: "/docs",
 });
 
 app.register(appRoutes);
