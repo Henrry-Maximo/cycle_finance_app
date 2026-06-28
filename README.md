@@ -223,6 +223,12 @@
     ```
 (Nota: Utilizar "moduleResolution": "Bundler", pois o build do projeto seja gerenciado pelo empacotador tsup).
 
+- pnpm install @fastify/swagger @fastify/swagger-ui
+[biblioteca swagger pare realizar o mapeamento de entrada e saída de dados, realizando uma documentação dos endpoints da API]
+
+- pnpm install fastify-type-provider-zod
+[biblioteca para realizar a integração do zod validation com a ferramenta de documentação swagger]
+
 ### Frontend
 
 - pnpm add tailwindcss @tailwindcss/vite
