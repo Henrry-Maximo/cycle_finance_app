@@ -17,7 +17,6 @@ export async function resetPasswordTokens(
 
   try {
     const resetPasswordUseCase = makeResetPassword();
-    console.log(password);
 
     await resetPasswordUseCase.execute({
       token,
