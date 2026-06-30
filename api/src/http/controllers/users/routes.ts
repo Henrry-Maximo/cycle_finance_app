@@ -159,6 +159,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     },
     fetchUsers,
   );
+  
   app.get(
     "/me",
     {

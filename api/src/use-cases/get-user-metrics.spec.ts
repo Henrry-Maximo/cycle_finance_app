@@ -148,6 +148,7 @@ describe("Get User Metrics Use Case", () => {
     //   `Total de despeas no mês (preço): ${total_expenses_month}`,
     // );
 
+    // console.log(`here: ${count_expenses_day}`);
     expect(count_expenses_day).toEqual(3);
     expect(count_expenses_month).toEqual(4);
     expect(total_expenses_day).toEqual(7);
