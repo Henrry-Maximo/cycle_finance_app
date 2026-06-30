@@ -99,7 +99,11 @@ describe("Get User Metrics Use Case", () => {
       },
     });
 
+    const expenses = expensesRepository.items;
+    console.log(expenses);
+
     const date = new Date();
+    // console.log(date);
     date.setDate(date.getDate() - 1);
     const yesterday = date.toISOString();
     // let hours = ("0" + (date.getHours() + 21)).slice(-2);

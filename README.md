@@ -66,7 +66,7 @@
 - [x] O Redis deve ser utilizado para cache e rate limiting;
 - [x] O sistema deve possuir tratamento centralizado de erros;
 - [x] O administrador não pode visualizar senhas dos usuários.
-- [ ] A API deve registrar logs de erros e auditoria;
+- [x] A API deve registrar logs de erros e auditoria;
 - [ ] Todas as rotas precisam estar documentadas utilizando o swagger.
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry
 
