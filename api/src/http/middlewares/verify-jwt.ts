@@ -9,6 +9,7 @@ export async function verifyJWT(req: FastifyRequest, reply: FastifyReply) {
     if (env.NODE_ENV === "dev") {
       console.error(err);
     }
+
     return reply.status(401).send({ message: "Unauthorized." });
   }
 }

@@ -14,7 +14,7 @@
 
 ## Stack Ferramental
 
-- **Backend:** Node.js, Fastify, PrismaORM v7, PostgreSQL, Redis, Docker, Zod.
+- **Backend:** Node.js, Fastify, PrismaORM v7, PostgreSQL, Redis, Docker, Zod, Swagger.
 - **Frontend:** React.js, React-Hook-Form, React-Router, Tanstack-Query, Shadcn, RadixUI, PhosphorIcons, Axios, Date-fns, Zod, Sonner, ReCharts, React-Helmet, Tailwindcss.
 - **Mobile:** React Native.
 - **Tooling:** TypeScript, ESLint, Prettier, tsup, tsx.
@@ -68,6 +68,7 @@
 - [x] O administrador não pode visualizar senhas dos usuários.
 - [ ] A API deve registrar logs de erros e auditoria;
 - [ ] Todas as rotas precisam estar documentadas utilizando o swagger.
+- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry
 
 ### Regras de Negócio (RN)
 

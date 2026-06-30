@@ -1,6 +1,6 @@
 import { fastifyCors } from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
-import fastify from "fastify";
+import fastify, { FastifyError } from "fastify";
 import z, { ZodError } from "zod";
 
 import { env } from "./env";
@@ -14,9 +14,12 @@ import {
 } from "fastify-type-provider-zod";
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
+import { RateLimiterRes } from "rate-limiter-flexible";
 
 export const app = fastify({
-  logger: false,
+  logger:
+    env.NODE_ENV === "dev" ? { transport: { target: "pino-pretty" } } : true,
+  trustProxy: true,
 }).withTypeProvider<ZodTypeProvider>();
 
 // usando o zod validação de todos os dados que vão entrar
@@ -57,7 +60,7 @@ app.register(fastifySwaggerUi, {
 
 app.register(appRoutes);
 
-app.setErrorHandler((error, _, reply) => {
+app.setErrorHandler((error: FastifyError, req, reply) => {
   if (error instanceof ZodError) {
     return reply
       .status(400)
@@ -67,6 +70,12 @@ app.setErrorHandler((error, _, reply) => {
   // if (error.) {
   //   return reply.status(429).send({ message: "Too Many Requests." });
   // }
+
+  if (error instanceof RateLimiterRes) {
+    return reply.status(429).send({
+      message: "Too Many Requests",
+    });
+  }
 
   if (env.NODE_ENV !== "production") {
     console.log(error);
