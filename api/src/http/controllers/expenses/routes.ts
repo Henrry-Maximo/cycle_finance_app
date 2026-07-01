@@ -65,7 +65,7 @@ export async function expensesRoutes(app: FastifyInstance) {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
         tags: ["expenses"],
-        description: "List metrics user",
+        description: "List metrics from user",
         query: z.object({
           from: z.string().optional(),
           to: z.string().optional(),
@@ -96,7 +96,7 @@ export async function expensesRoutes(app: FastifyInstance) {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
         tags: ["expenses"],
-        description: "List metrics user",
+        description: "Create a new expense",
         body: z.object({
           title: z.string(),
           enterprise: z.string(),
@@ -126,16 +126,9 @@ export async function expensesRoutes(app: FastifyInstance) {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
         tags: ["expenses"],
-        description: "List metrics user",
-        body: z.object({
-          title: z.string(),
-          enterprise: z.string(),
-          description: z.string().nullable().optional().default(null),
-          cnpj: z.string().nullable().optional().default(null),
-          source: z.string().nullable().optional().default(null),
-          price: z.coerce.number(),
-          card_last_digits: z.string().min(1).max(4),
-          category_id: z.string(),
+        description: "Delete expense from user",
+        query: z.object({
+          id: z.string(),
         }),
         response: {
           201: z.null().describe("Delete a expense."),
