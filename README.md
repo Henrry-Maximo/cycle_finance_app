@@ -67,7 +67,7 @@
 - [x] O sistema deve possuir tratamento centralizado de erros;
 - [x] O administrador não pode visualizar senhas dos usuários.
 - [x] A API deve registrar logs de erros e auditoria;
-- [ ] Todas as rotas precisam estar documentadas utilizando o swagger.
+- [x] Todas as rotas precisam estar documentadas utilizando o swagger.
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry
 
 ### Regras de Negócio (RN)
