@@ -49,6 +49,9 @@
 - [x] O usuário deve poder deletar categorias;
 - [x] O usuário deve poder deletar a própria conta;
 - [x] O usuário deve poder atualizar as informações de seu perfil;
+- [ ] O usuário deve poder atualizar uma despesa;
+- [ ] O usuário deve poder atualizar uma categoria;
+- [ ] O usuário deve poder filtrar seu histórico de despesas por período e por categoria.
 - [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
 - [ ] O usuário deve poder capturar uma foto de um comprovante;
 - [ ] O sistema deve extrair informações do comprovante automaticamente;
@@ -67,8 +70,11 @@
 - [x] O sistema deve possuir tratamento centralizado de erros;
 - [x] O administrador não pode visualizar senhas dos usuários.
 - [x] A API deve registrar logs de erros e auditoria;
-- [x] Todas as rotas precisam estar documentadas utilizando o swagger.
-- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry
+- [x] Todas as rotas precisam estar documentadas utilizando o swagger;
+- [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
+- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
+- [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
+- [ ] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
 
 ### Regras de Negócio (RN)
 
@@ -78,6 +84,11 @@
 - [x] O usuário não deve poder deletar categorias de outro usuário;
 - [x] O usuário não deve poder deletar uma categoria com gastos vinculados;
 - [x] O usuário não deve poder cadastrar mais que 15 categorias;
+- [ ] O usuário só pode atualizar despesas e categorias criadas por ele mesmo.
+- [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
+- [ ] O token de reset de senha deve expirar em 15 minutos e só pode ser usado uma vez;
+- [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
+- [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB).
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
