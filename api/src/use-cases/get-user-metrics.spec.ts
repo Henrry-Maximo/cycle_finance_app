@@ -1,5 +1,5 @@
 import { hash } from "bcryptjs";
-import { beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
@@ -15,13 +15,22 @@ let sut: GetUserMetricsUseCase;
 
 describe("Get User Metrics Use Case", () => {
   beforeEach(() => {
+    vi.useFakeTimers();
+
     usersRepository = new InMemoryUsersRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
     expensesRepository = new InMemoryExpensesRepository();
     sut = new GetUserMetricsUseCase(usersRepository, expensesRepository);
   });
 
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("should be able to get expenses count from metrics", async () => {
+    const mockDate = new Date(2026, 6, 15, 12, 0, 0);
+    vi.setSystemTime(mockDate);
+
     const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -99,13 +108,8 @@ describe("Get User Metrics Use Case", () => {
       },
     });
 
-    const expenses = expensesRepository.items;
-    console.log(expenses);
-
     const date = new Date();
-    // console.log(date);
     date.setDate(date.getDate() - 1);
-    const yesterday = date.toISOString();
     // let hours = ("0" + (date.getHours() + 21)).slice(-2);
     // let minutes = ("0" + date.getMinutes()).slice(-2);
     // let seconds = ("0" + date.getSeconds()).slice(-2);
@@ -123,7 +127,7 @@ describe("Get User Metrics Use Case", () => {
       source: "Embu das Artes / São Paulo",
       price: 2 * 100,
       card_last_digits: "2343",
-      created_at: yesterday,
+      created_at: date,
       user: {
         connect: {
           id: userCreated.id,
