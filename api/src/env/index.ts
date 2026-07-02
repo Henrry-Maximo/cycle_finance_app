@@ -11,6 +11,7 @@ const envSchema = z.object({
   REDIS_HOST: z.string(),
   REDIS_PORT: z.coerce.number(),
   REDIS_PASSWORD: z.string().optional(),
+  GEMINI_API_KEY: z.string(),
 });
 
 // [safeParse]: efetua validação dos dados

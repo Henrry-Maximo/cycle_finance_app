@@ -15,12 +15,19 @@ import {
 import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { RateLimiterRes } from "rate-limiter-flexible";
+import fastifyMultipart from "@fastify/multipart";
 
 export const app = fastify({
   logger:
     env.NODE_ENV === "dev" ? { transport: { target: "pino-pretty" } } : true,
   trustProxy: true,
 }).withTypeProvider<ZodTypeProvider>();
+
+app.register(fastifyMultipart, {
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB for upload files
+  },
+});
 
 // usando o zod validação de todos os dados que vão entrar
 app.setValidatorCompiler(validatorCompiler);
