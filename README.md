@@ -14,7 +14,7 @@
 
 ## Stack Ferramental
 
-- **Backend:** Node.js, Fastify, PrismaORM v7, PostgreSQL, Redis, Docker, Zod, Swagger.
+- **Backend:** Node.js, Fastify, PrismaORM v7, PostgreSQL, Redis, Docker, Zod, Swagger, FastifyMultipart, GeminiIA Client API.
 - **Frontend:** React.js, React-Hook-Form, React-Router, Tanstack-Query, Shadcn, RadixUI, PhosphorIcons, Axios, Date-fns, Zod, Sonner, ReCharts, React-Helmet, Tailwindcss.
 - **Mobile:** React Native.
 - **Tooling:** TypeScript, ESLint, Prettier, tsup, tsx.
