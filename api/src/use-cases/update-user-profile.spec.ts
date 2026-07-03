@@ -16,16 +16,16 @@ describe("Update User Profile Use Case", () => {
   });
 
   it("should be able to update user profile", async () => {
-    const { id } = await usersRepository.create({
+    const userCreated = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
       password_hash: await hash("123456", 6),
     });
 
     const { user } = await sut.execute({
-      userId: id,
-      name: "John Doe 2",
+      userId: userCreated.id,
       email: "johndoe2@example.com",
+      username: "John Doe 2",
     });
 
     expect(user.id).toEqual(expect.any(String));
@@ -37,6 +37,8 @@ describe("Update User Profile Use Case", () => {
     await expect(() =>
       sut.execute({
         userId: "non-existing-id",
+        email: "",
+        username: "",
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });

@@ -5,8 +5,8 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface UpdateUserProfileUseCaseRequest {
   userId: string;
-  name?: string;
-  email?: string;
+  username: string | null;
+  email: string | null;
 }
 
 interface UpdateUserProfileUseCaseResponse {
@@ -18,7 +18,7 @@ export class UpdateUserProfileUseCase {
 
   async execute({
     userId,
-    name,
+    username,
     email,
   }: UpdateUserProfileUseCaseRequest): Promise<UpdateUserProfileUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
@@ -28,8 +28,10 @@ export class UpdateUserProfileUseCase {
     }
 
     await this.usersRepository.update(userId, {
-      ...(name && { name }),
-      ...(email && { email }),
+      // ...(username && { username }),
+      // ...(email && { email }),
+      name: username ? username : user.name,
+      email: email ? email : user.email,
     });
 
     return { user };
