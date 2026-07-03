@@ -8,6 +8,7 @@ import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import z from "zod";
+import { analyzeReceiptController } from "./analyze-receipt-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -146,5 +147,42 @@ export async function expensesRoutes(app: FastifyInstance) {
       },
     },
     deleteExpense,
+  );
+
+  app.post(
+    "/expenses/analyze",
+    {
+      schema: {
+        tags: ["Expenses"],
+        description:
+          "Envia a imagem de um comprovante fiscal para extração inteligente de dados com o Gemini.",
+        consumes: ["multipart/form-data"],
+        // response: {
+        //   200: {
+        //     type: "object",
+        //     required: ["suggestions"],
+        //     properties: {
+        //       suggestions: {
+        //         type: "object",
+        //         required: ["title", "amount", "date", "category"],
+        //         properties: {
+        //           title: { type: "string" },
+        //           amount: { type: "number" },
+        //           date: { type: "string" },
+        //           category: { type: "string" },
+        //         },
+        //       },
+        //     },
+        //   },
+        //   400: {
+        //     type: "object",
+        //     properties: {
+        //       message: { type: "string" },
+        //     },
+        //   },
+        // },
+      },
+    },
+    analyzeReceiptController,
   );
 }
