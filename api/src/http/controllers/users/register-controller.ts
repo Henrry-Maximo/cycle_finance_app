@@ -6,7 +6,7 @@ import z from "zod";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
   const registerUsersSchema = z.object({
-    username: z.string().max(38),
+    username: z.string().min(1).max(38),
     email: z.email(),
     password: z.string().min(6).max(22),
   });

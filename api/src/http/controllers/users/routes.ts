@@ -10,6 +10,7 @@ import { requestResetPasswordTokens } from "./request-reset-password-controller"
 import { resetPasswordTokens } from "./reset-password-controller";
 import z from "zod";
 import { FastifyTypedInstance } from "@/types";
+import { updateProfile } from "./update-profile-controller";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(
@@ -64,6 +65,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     },
     authenticate,
   );
+
   app.post(
     "/reset-password/request",
     {
@@ -90,6 +92,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     },
     requestResetPasswordTokens,
   );
+
   app.post(
     "/reset-password",
     {
@@ -166,23 +169,18 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
         tags: ["users"],
-        description: "Get my profile.",
+        description: "Get profile.",
         response: {
           200: z
             .object({
-              users: z.array(
-                z.object({
-                  name: z.string(),
-                  id: z.string(),
-                  email: z.string(),
-                  password_hash: z.undefined(),
-                  role: z.enum(["MEMBER", "ADMIN"]),
-                  terms_accepted_at: z.date(),
-                  terms_version: z.string(),
-                }),
-              ),
+              id: z.string(),
+              name: z.string(),
+              email: z.string(),
+              role: z.enum(["MEMBER", "ADMIN"]),
+              terms_accepted_at: z.date(),
+              terms_version: z.string(),
             })
-            .describe("Get me."),
+            .describe("Profile informations."),
           404: z
             .object({
               message: z.string(),
@@ -192,6 +190,31 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       },
     },
     profile,
+  );
+
+  app.patch(
+    "/me",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        tags: ["users"],
+        description: "Update profile.",
+        response: {
+          200: z
+            .object({
+              username: z.string(),
+              email: z.string(),
+            })
+            .describe("Profile update with successful."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Rosource not found."),
+        },
+      },
+    },
+    updateProfile,
   );
 }
 
