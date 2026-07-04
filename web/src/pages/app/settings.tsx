@@ -55,7 +55,7 @@ export function Settings() {
               <CardContent className="space-y-4">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Nome</Label>
-                  <Input id="name" defaultValue={profile?.user.name} />
+                  <Input id="name" defaultValue={profile?.name} />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">E-mail</Label>
@@ -63,7 +63,7 @@ export function Settings() {
                     id="email"
                     type="email"
                     disabled
-                    defaultValue={profile?.user.email}
+                    defaultValue={profile?.email}
                   />
                 </div>
                 <Button variant="outline" className="w-fit">

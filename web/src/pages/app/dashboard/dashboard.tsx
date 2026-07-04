@@ -49,7 +49,7 @@ export function Dashboard() {
               <h1 className="text-3xl font-bold tracking-tight">
                 {greeting()},
                 <span className="text-primary">
-                  {profile?.user.name
+                  {profile?.name
                     .split('-')
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ')}

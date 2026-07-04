@@ -8,9 +8,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { getProfileUser } from '@/api/get-profile-user';
-import {
-  StoreCategoriesDialog
-} from '@/components/app-store-categories-dialog';
+import { StoreCategoriesDialog } from '@/components/app-store-categories-dialog';
 
 import { Button } from './ui/button';
 import { Dialog, DialogTrigger } from './ui/dialog';
@@ -49,7 +47,7 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
             ) : (
               <>
                 <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
-                  {profile?.user.name
+                  {profile?.name
                     .split('-')
                     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                     .join(' ')}
@@ -69,9 +67,9 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
               </div>
             ) : (
               <>
-                <span>{profile?.user.name}</span>
+                <span>{profile?.name}</span>
                 <span className="text-muted-foreground text-xs font-normal">
-                  {profile?.user.email}
+                  {profile?.email}
                 </span>
               </>
             )}
