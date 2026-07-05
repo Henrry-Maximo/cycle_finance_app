@@ -1,4 +1,4 @@
-import { Category } from "@/generated/prisma/client";
+import { Category, Prisma } from "@/generated/prisma/client";
 import { CategoryCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
@@ -96,6 +96,20 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     });
 
     return countRecords;
+  }
+
+  async update(
+    id: string,
+    data: Omit<Prisma.CategoryUpdateInput, "id" | "user" | "created_at">,
+  ) {
+    const category = await prisma.category.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return category;
   }
 
   async delete(id: string) {

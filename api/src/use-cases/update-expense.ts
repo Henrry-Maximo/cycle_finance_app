@@ -34,14 +34,12 @@ export class UpdateExpenseUseCase {
     expenseId,
     ...data
   }: UpdateExpenseUseCaseRequest): Promise<UpdateExpenseUseCaseResponse> {
-    // 1. identificar usuário solicitante
     const user = await this.usersRepository.findById(userId);
 
     if (!user) {
       throw new ResourceNotFoundError();
     }
 
-    // 2. identificar despesa que deseja atualizar
     const expenseFinding = await this.expensesRepository.findById(expenseId);
 
     if (!expenseFinding) {

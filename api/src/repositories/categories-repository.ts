@@ -13,5 +13,9 @@ export interface CategoriesRepository {
   ): Promise<Category[]>;
   findManyExpensesById(id: string): Promise<Expense[]>;
   countByUserId(userId: string, categoryName: string): Promise<number>;
+  update(
+    id: string,
+    data: Omit<Prisma.CategoryUpdateInput, "id" | "user" | "created_at">,
+  ): Promise<Category>;
   delete(id: string): Promise<null>;
 }

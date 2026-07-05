@@ -1,7 +1,10 @@
 import { randomUUID } from "node:crypto";
 
 import { Category } from "@/generated/prisma/client";
-import { CategoryCreateInput } from "@/generated/prisma/models";
+import {
+  CategoryCreateInput,
+  CategoryUpdateInput,
+} from "@/generated/prisma/models";
 
 import { CategoriesRepository } from "../categories-repository";
 import { InMemoryExpensesRepository } from "./in-memory-expenses-repository";
@@ -89,6 +92,14 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     });
 
     return countRecords.length;
+  }
+
+  async update(id: string, data: CategoryUpdateInput) {
+    const category = this.items.find((item) => item.id == id)!;
+
+    Object.assign(category, data);
+
+    return category;
   }
 
   async delete(id: string) {
