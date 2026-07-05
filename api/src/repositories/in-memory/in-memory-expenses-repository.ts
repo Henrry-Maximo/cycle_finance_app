@@ -1,6 +1,6 @@
 import { randomUUID } from "node:crypto";
 
-import { Expense } from "@/generated/prisma/client";
+import { Expense, Prisma } from "@/generated/prisma/client";
 import { ExpenseCreateInput } from "@/generated/prisma/models";
 
 import { ExpensesRepository } from "../expenses-repository";
@@ -76,6 +76,23 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     });
 
     return countRecords.length;
+  }
+
+  async update(
+    id: string,
+    data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,
+  ) {
+    const expense = this.items.find((item) => item.id === id)!;
+
+    const { category, ...restOfData } = data;
+
+    Object.assign(expense, restOfData);
+
+    if (category?.connect?.id) {
+      expense.category_id = category.connect.id;
+    }
+
+    return expense;
   }
 
   async delete(id: string) {

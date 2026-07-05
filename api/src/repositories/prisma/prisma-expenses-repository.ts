@@ -2,6 +2,7 @@ import { ExpenseCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
 import { ExpensesRepository } from "../expenses-repository";
+import { Prisma } from "@/generated/prisma/client";
 
 export class PrismaExpensesRepository implements ExpensesRepository {
   async create(data: ExpenseCreateInput) {
@@ -83,6 +84,20 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     });
 
     return countRecords;
+  }
+
+  async update(
+    id: string,
+    data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,
+  ) {
+    const expense = await prisma.expense.update({
+      where: {
+        id,
+      },
+      data,
+    });
+
+    return expense;
   }
 
   async delete(id: string) {

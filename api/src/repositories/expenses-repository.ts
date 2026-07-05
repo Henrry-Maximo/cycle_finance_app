@@ -15,6 +15,10 @@ export interface ExpensesRepository {
     to: Date,
   ): Promise<Expense[]>;
   countByUserId(userId: string, expenseName: string): Promise<number>;
+  update(
+    id: string,
+    data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,
+  ): Promise<Expense>;
   delete(id: string): Promise<null>;
 }
 
