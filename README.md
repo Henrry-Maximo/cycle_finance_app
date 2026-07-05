@@ -88,7 +88,9 @@
 - [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
 - [ ] O token de reset de senha deve expirar em 15 minutos e só pode ser usado uma vez;
 - [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
-- [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB).
+- [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB);
+- [x] O usuário só pode atualizar a própria despesa;
+- [x] O usuário não deve poder atualizar a despesa com a mesma categoria já em uso por ela;
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
