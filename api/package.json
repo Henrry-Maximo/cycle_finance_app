@@ -15,7 +15,8 @@
     "db:studio": "prisma studio --browser none",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "seed": "tsx prisma/seed.ts"
   },
   "keywords": [],
   "author": "Henrry-maximo",
