@@ -25,7 +25,7 @@ export const app = fastify({
 
 app.register(fastifyMultipart, {
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB for upload files
+    fileSize: env.MAX_FILE_SIZE_MB * 1024 * 1024, // 5MB for upload files limit
   },
 });
 

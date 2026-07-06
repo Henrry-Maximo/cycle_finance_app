@@ -12,6 +12,7 @@ const envSchema = z.object({
   REDIS_PORT: z.coerce.number(),
   REDIS_PASSWORD: z.string().optional(),
   GEMINI_API_KEY: z.string(),
+  MAX_FILE_SIZE_MB: z.coerce.number().default(5),
 });
 
 // [safeParse]: efetua validação dos dados

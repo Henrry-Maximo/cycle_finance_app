@@ -6,6 +6,7 @@ import { env } from "@/env";
 export const redisClient = new Redis({
   host: env.REDIS_HOST,
   port: env.REDIS_PORT,
+  // password: env.REDIS_PASSWORD,
 });
 
 export const limiter = new RateLimiterRedis({

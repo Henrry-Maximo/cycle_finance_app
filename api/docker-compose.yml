@@ -17,6 +17,7 @@ services:
     container_name: cycle-redis
     ports:
       - 6379:6379
+    # command: redis-server --requirepass xy616F18I
     # volumes:
     #   - redis_data:/data
 
