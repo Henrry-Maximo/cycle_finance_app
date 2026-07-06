@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { CategoryAlreadyInUseError } from "./errors/category-already-in-use-error";
 import { Expense } from "@/generated/prisma/client";
+import { CategoriesRepository } from "@/repositories/categories-repository";
 
 interface UpdateExpenseUseCaseRequest {
   userId: string;
@@ -21,12 +22,11 @@ interface UpdateExpenseUseCaseResponse {
   expense: Expense;
 }
 
-interface UpdateExpenseUseCaseResponse {}
-
 export class UpdateExpenseUseCase {
   constructor(
     private usersRepository: UsersRepository,
     private expensesRepository: ExpensesRepository,
+    private categoriesRepository: CategoriesRepository,
   ) {}
 
   async execute({
@@ -50,8 +50,22 @@ export class UpdateExpenseUseCase {
       throw new ResourceNotFoundError();
     }
 
-    if (expenseFinding.category_id === data.category) {
-      throw new CategoryAlreadyInUseError();
+    if (data.category) {
+      if (expenseFinding.category_id === data.category) {
+        throw new CategoryAlreadyInUseError();
+      }
+
+      const categoryFinding = await this.categoriesRepository.findById(
+        data.category,
+      );
+
+      if (!categoryFinding) {
+        throw new ResourceNotFoundError();
+      }
+
+      if (categoryFinding.user_id !== user.id) {
+        throw new ResourceNotFoundError();
+      }
     }
 
     const expense = await this.expensesRepository.update(expenseId, {

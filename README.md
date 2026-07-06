@@ -90,6 +90,7 @@
 - [x] O usuário que solicitou renovação de senha não pode cadastrar a mesma senha novamente;
 - [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
 - [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB);
+- [x] O usuário não deve pode atualizar uma despesa informando a categoria de outro usuário;
 - [x] O usuário só pode atualizar a própria despesa;
 - [x] O usuário não deve poder atualizar a despesa com a mesma categoria já em uso por ela;
 - [x] Os usuários, por padrão, recebem o cargo (permissão) de "membro";

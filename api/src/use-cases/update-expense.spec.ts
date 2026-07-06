@@ -6,6 +6,7 @@ import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-e
 import { UpdateExpenseUseCase } from "./update-expense";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { CategoryAlreadyInUseError } from "./errors/category-already-in-use-error";
 
 let usersRepository: InMemoryUsersRepository;
 let expensesRepository: InMemoryExpensesRepository;
@@ -18,7 +19,11 @@ describe("Update Expense from User Use Case", () => {
     expensesRepository = new InMemoryExpensesRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
 
-    sut = new UpdateExpenseUseCase(usersRepository, expensesRepository);
+    sut = new UpdateExpenseUseCase(
+      usersRepository,
+      expensesRepository,
+      categoriesRepository,
+    );
   });
 
   it("should be able to update expense from user", async () => {
@@ -89,6 +94,227 @@ describe("Update Expense from User Use Case", () => {
         userId: "non-existing-id",
         expenseId: "",
         category: "",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to update expense that not exists", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    await expect(() =>
+      sut.execute({
+        userId: userCreated.id,
+        expenseId: "non-existing-id",
+        category: "",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to update expense if user request is difference of expense user id", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const userOther = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      user: {
+        connect: {
+          id: userOther.id,
+        },
+      },
+    });
+
+    const expenseCreated = await expensesRepository.create({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 9.52,
+      card_last_digits: "2343",
+      created_at: new Date(),
+      user: {
+        connect: {
+          id: userOther.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    await expect(() =>
+      sut.execute({
+        userId: userCreated.id,
+        expenseId: expenseCreated.id,
+        category: "",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to update expense with the same category in use", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+    });
+
+    const expenseCreated = await expensesRepository.create({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 9.52,
+      card_last_digits: "2343",
+      created_at: new Date(),
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    await expect(() =>
+      sut.execute({
+        userId: userCreated.id,
+        expenseId: expenseCreated.id,
+        category: categoryCreated.id,
+      }),
+    ).rejects.toBeInstanceOf(CategoryAlreadyInUseError);
+  });
+
+  it("should not be able to update expense with category that was not found", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+    });
+
+    const expenseCreated = await expensesRepository.create({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 9.52,
+      card_last_digits: "2343",
+      created_at: new Date(),
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    await expect(() =>
+      sut.execute({
+        userId: userCreated.id,
+        expenseId: expenseCreated.id,
+        category: "non-existing-id",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be able to update expense if category not belonging from user", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const userOther = await usersRepository.create({
+      name: "Ashita no Joe",
+      email: "ashitanojoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+    });
+
+    const categoryFromUserOther = await categoriesRepository.create({
+      title: "Alimentação",
+      user: {
+        connect: {
+          id: userOther.id,
+        },
+      },
+    });
+
+    const expenseCreated = await expensesRepository.create({
+      title: "Pães",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 9.52,
+      card_last_digits: "2343",
+      created_at: new Date(),
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    await expect(() =>
+      sut.execute({
+        userId: userCreated.id,
+        expenseId: expenseCreated.id,
+        category: categoryFromUserOther.id,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
