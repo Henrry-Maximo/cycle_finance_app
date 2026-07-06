@@ -11,6 +11,7 @@ import { ResetPasswordTokenInvalid } from "./errors/reset-password-token-invalid
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { RequestResetPasswordUseCase } from "./request-reset-password";
 import { ResetPasswordUseCase } from "./reset-password";
+import { ReusingPasswordsIsNotAllowedError } from "./errors/reusing-passwords-is-not-allowed-error";
 
 let usersRepository: UsersRepository;
 let resetPasswordTokensRepository: ResetPasswordTokensRepository;
@@ -63,7 +64,7 @@ describe("Reset Password Token Use Case", () => {
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 
-  it("should not be possible to validate a token if it is invalid", async () => {
+  it("should not be possible to validate a token if it's invalid", async () => {
     const { id } = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -94,7 +95,7 @@ describe("Reset Password Token Use Case", () => {
     ).rejects.toBeInstanceOf(ResetPasswordTokenInvalid);
   });
 
-  it("should not be possible to validate a token if it is used", async () => {
+  it("should not be possible to validate a token if it's used", async () => {
     const { id } = await usersRepository.create({
       name: "John Doe",
       email: "johndoe@example.com",
@@ -153,5 +154,26 @@ describe("Reset Password Token Use Case", () => {
         password: "new-password",
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it("should not be possible to reusing password on reset password from user.", async () => {
+    const user = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const { url } = await requestResetPasswordUseCase.execute({
+      email: user.email,
+    });
+
+    const token = new URL(url).searchParams.get("token")!;
+
+    await expect(
+      sut.execute({
+        token,
+        password: "123456",
+      }),
+    ).rejects.toBeInstanceOf(ReusingPasswordsIsNotAllowedError);
   });
 });

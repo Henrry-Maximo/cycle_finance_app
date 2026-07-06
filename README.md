@@ -70,6 +70,7 @@
 - [x] O administrador não pode visualizar senhas dos usuários.
 - [x] A API deve registrar logs de erros e auditoria;
 - [x] Todas as rotas precisam estar documentadas utilizando o swagger;
+- [ ] Os testes unitários devem ter cobertura de 100% (coverage);
 - [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
 - [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
