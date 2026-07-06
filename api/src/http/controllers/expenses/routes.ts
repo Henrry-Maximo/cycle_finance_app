@@ -9,6 +9,7 @@ import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import z from "zod";
 import { analyzeReceiptController } from "./analyze-receipt-controller";
+import { update } from "./update-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -184,5 +185,41 @@ export async function expensesRoutes(app: FastifyInstance) {
       },
     },
     analyzeReceiptController,
+  );
+
+  app.patch(
+    "/expenses",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        tags: ["expenses"],
+        description: "Update expense from user.",
+        response: {
+          200: z
+            .object({
+              title: z.string().nullable(),
+              enterprise: z.string().nullable(),
+              description: z.string().nullable().nullable(),
+              cnpj: z.string().nullable().nullable(),
+              source: z.string().nullable().nullable(),
+              price: z.coerce.number().nullable(),
+              card_last_digits: z.string().min(1).max(4).nullable(),
+              category_id: z.string().nullable(),
+            })
+            .describe("Expense update with successful."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Rosource not found."),
+          409: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Category already in use."),
+        },
+      },
+    },
+    update,
   );
 }

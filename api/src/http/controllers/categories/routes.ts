@@ -7,6 +7,7 @@ import { deleteCategory } from "./delete-controller";
 import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
 import z from "zod";
+import { update } from "./update-controller";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -115,5 +116,30 @@ export async function categoriesRoutes(app: FastifyInstance) {
       },
     },
     deleteCategory,
+  );
+
+  app.patch(
+    "/categories",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        tags: ["categories"],
+        description: "Update category from user.",
+        response: {
+          200: z
+            .object({
+              title: z.string().nullable(),
+              description: z.string().nullable().nullable(),
+            })
+            .describe("Category update with successful."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Rosource not found."),
+        },
+      },
+    },
+    update,
   );
 }
