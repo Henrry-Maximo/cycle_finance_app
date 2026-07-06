@@ -4,6 +4,7 @@ import z from "zod";
 import { ResetPasswordTokenInvalid } from "@/use-cases/errors/reset-password-token-invalid-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeResetPassword } from "@/use-cases/factories/make-reset-password-use-case";
+import { ReusingPasswordsIsNotAllowedError } from "@/use-cases/errors/reusing-passwords-is-not-allowed-error";
 
 export async function resetPasswordTokens(
   req: FastifyRequest,
@@ -31,6 +32,10 @@ export async function resetPasswordTokens(
 
     if (err instanceof ResetPasswordTokenInvalid) {
       return reply.status(401).send({ message: err.message });
+    }
+
+    if (err instanceof ReusingPasswordsIsNotAllowedError) {
+      return reply.status(422).send({ message: err.message });
     }
 
     throw err;

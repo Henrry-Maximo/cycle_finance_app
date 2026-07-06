@@ -49,13 +49,12 @@
 - [x] O usuário deve poder deletar categorias;
 - [x] O usuário deve poder deletar a própria conta;
 - [x] O usuário deve poder atualizar as informações de seu perfil;
-- [ ] O usuário deve poder atualizar uma despesa;
-- [ ] O usuário deve poder atualizar uma categoria;
+- [x] O usuário deve poder atualizar uma despesa;
+- [x] O usuário deve poder atualizar uma categoria;
 - [ ] O usuário deve poder filtrar seu histórico de despesas por período e por categoria.
 - [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
-- [ ] O usuário deve poder capturar uma foto de um comprovante;
-- [ ] O sistema deve extrair informações do comprovante automaticamente;
-- [ ] O sistema deve sugerir valores e datas com base no comprovante;
+- [x] O usuário deve poder enviar o comprovante e o sistema deve extrair as informações;
+- [x] O sistema deve sugerir valores e datas com base no comprovante;
 - [x] O administrador deve poder visualizar todos os usuários.
 
 ### Requisitos Não-Funcionais (RNF)
@@ -74,7 +73,7 @@
 - [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
 - [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
-- [ ] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
+- [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
 
 ### Regras de Negócio (RN)
 
@@ -84,9 +83,10 @@
 - [x] O usuário não deve poder deletar categorias de outro usuário;
 - [x] O usuário não deve poder deletar uma categoria com gastos vinculados;
 - [x] O usuário não deve poder cadastrar mais que 15 categorias;
-- [ ] O usuário só pode atualizar despesas e categorias criadas por ele mesmo.
+- [x] O usuário só pode atualizar despesas e categorias criadas por ele mesmo.
 - [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
-- [ ] O token de reset de senha deve expirar em 15 minutos e só pode ser usado uma vez;
+- [x] O token de reset de senha deve expirar em 15 minutos e só pode ser usado uma vez;
+- [x] O usuário que solicitou renovação de senha não pode cadastrar a mesma senha novamente;
 - [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
 - [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB);
 - [x] O usuário só pode atualizar a própria despesa;

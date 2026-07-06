@@ -29,8 +29,9 @@ export class RequestResetPasswordUseCase {
       throw new ResourceNotFoundError();
     }
 
-    const expiresAt = new Date();
-    expiresAt.setHours(expiresAt.getHours() + 2);
+    const FIFTEEN_MINUTES_IN_MS = 15 * 60 * 1000;
+    const expiresAt = new Date(Date.now() + FIFTEEN_MINUTES_IN_MS);
+    // expiresAt.setHours(expiresAt.getHours() + 2);
 
     const base64UrlString = randomBytes(32).toString("base64url");
     const data = await this.resetPasswordTokensRepository.create({
