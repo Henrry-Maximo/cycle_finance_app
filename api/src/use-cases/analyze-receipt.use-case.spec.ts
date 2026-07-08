@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { AnalyzeReceiptUseCase } from "./analyze-receipt.use-case";
 import { ReceiptAnalyzerProvider } from "../repositories/receipt-analyzer";
+import { InvalidFileTypeError } from "./errors/invalid-file-type-error";
+import { FileBufferCannotBeEmptyError } from "./errors/file-buffer-cannot-be-empty-error";
 
 let sut: AnalyzeReceiptUseCase;
 
@@ -28,15 +30,39 @@ describe("Analyze Receipt Use Case", () => {
     expect(suggestions.amount).toBe(42.5);
   });
 
-  // it("should not be able to analyze an invalid file type", async () => {
-  //   const mockReceiptAnalyzer: ReceiptAnalyzerProvider = { execute: vi.fn() };
-  //   const sut = new AnalyzeReceiptUseCase(mockReceiptAnalyzer);
+  it("should not be able to analyze an invalid file type", async () => {
+    const mockReceiptAnalyzer: ReceiptAnalyzerProvider = { execute: vi.fn() };
+    const sut = new AnalyzeReceiptUseCase(mockReceiptAnalyzer);
 
-  //   await expect(
-  //     sut.execute({
-  //       fileBuffer: Buffer.from("fake-pdf"),
-  //       mimeType: "application/pdf",
-  //     }),
-  //   ).rejects.toThrow("Invalid file type. Only JPEG and PNG are allowed.");
-  // });
+    await expect(
+      sut.execute({
+        fileBuffer: Buffer.from("fake-pdf"),
+        mimeType: "application/pdf",
+      }),
+    ).rejects.toBeInstanceOf(InvalidFileTypeError);
+  });
+
+  it("should not be able to analyze with an empty file buffer", async () => {
+    const mockReceiptAnalyzer: ReceiptAnalyzerProvider = { execute: vi.fn() };
+    const sut = new AnalyzeReceiptUseCase(mockReceiptAnalyzer);
+
+    await expect(
+      sut.execute({
+        fileBuffer: Buffer.alloc(0),
+        mimeType: "image/jpeg",
+      }),
+    ).rejects.toBeInstanceOf(FileBufferCannotBeEmptyError);
+  });
+
+  it("should not be able to analyze with a null file buffer", async () => {
+    const mockReceiptAnalyzer: ReceiptAnalyzerProvider = { execute: vi.fn() };
+    const sut = new AnalyzeReceiptUseCase(mockReceiptAnalyzer);
+
+    await expect(
+      sut.execute({
+        fileBuffer: null as unknown as Buffer,
+        mimeType: "image/jpeg",
+      }),
+    ).rejects.toBeInstanceOf(FileBufferCannotBeEmptyError);
+  });
 });
