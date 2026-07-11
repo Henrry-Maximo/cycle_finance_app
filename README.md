@@ -121,6 +121,30 @@
 
 ## Comandos para Iniciar o Projeto
 
+### API
+
+#### Desenvolvimento
+- `pnpm install` — instala dependências da API
+- `docker compose up -d` — lança o serviço de banco de dados e redis como container 
+- `pnpm start:dev` — inicia o servidor em modo watch (ambiente de desenvolvimento)
+- `pnpm build` — compila o projeto
+- `pnpm start` — inicia o servidor compilado
+
+#### Testes
+- `pnpm test` — executa os testes uma vez
+- `pnpm test:watch` — executa os testes em modo watch
+- `pnpm test:coverage` — executa os testes com cobertura
+- `pnpm test:ui` — abre a interface visual dos testes
+
+#### Banco de Dados
+- `pnpm db:studio` — abre o Prisma Studio
+- `pnpm seed` — popula o banco com dados iniciais (usuário administrador)
+
+#### Qualidade de Código
+- `pnpm lint` — verifica problemas de lint
+- `pnpm lint:fix` — corrige problemas de lint automaticamente
+- `pnpm format` — formata o código com Prettier
+
 ## Comandos de Desenvolvimento
 
 ### Backend
