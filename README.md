@@ -51,11 +51,13 @@
 - [x] O usuário deve poder atualizar as informações de seu perfil;
 - [x] O usuário deve poder atualizar uma despesa;
 - [x] O usuário deve poder atualizar uma categoria;
-- [ ] O usuário deve poder filtrar seu histórico de despesas por período e por categoria.
-- [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
+- [ ] O usuário deve poder visualizar despesas agrupadas por data e valor;
+- [ ] O usuário deve poder visualizar a quantidade de despesas por categoria
+- [ ] O usuário deve poder filtrar seu histórico de despesas por período e por categoria;
 - [x] O usuário deve poder enviar o comprovante e o sistema deve extrair as informações;
 - [x] O sistema deve sugerir valores e datas com base no comprovante;
 - [x] O administrador deve poder visualizar todos os usuários.
+- [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
 
 ### Requisitos Não-Funcionais (RNF)
 
@@ -71,10 +73,10 @@
 - [x] A API deve registrar logs de erros e auditoria;
 - [x] Todas as rotas precisam estar documentadas utilizando o swagger;
 - [x] Os testes unitários devem ter cobertura de 100% (coverage);
-- [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
-- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
-- [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
 - [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
+- [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
+- [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
+- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
 
 ### Regras de Negócio (RN)
 
@@ -85,11 +87,9 @@
 - [x] O usuário não deve poder deletar uma categoria com gastos vinculados;
 - [x] O usuário não deve poder cadastrar mais que 15 categorias;
 - [x] O usuário só pode atualizar despesas e categorias criadas por ele mesmo.
-- [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
 - [x] O token de reset de senha deve expirar em 15 minutos e só pode ser usado uma vez;
 - [x] O usuário que solicitou renovação de senha não pode cadastrar a mesma senha novamente;
-- [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
-- [ ] Deve ter um limite de tamanho para o upload da foto (máximo 5MB);
+- [x] Deve ter um limite de tamanho para o upload da foto (máximo 5MB);
 - [x] O usuário não deve pode atualizar uma despesa informando a categoria de outro usuário;
 - [x] O usuário só pode atualizar a própria despesa;
 - [x] O usuário não deve poder atualizar a despesa com a mesma categoria já em uso por ela;
@@ -97,6 +97,8 @@
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
 - [x] O administrador pode visualizar todos os usuários;
+- [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
+- [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
 
 ## Fluxograma de Desenvolvimento
 
