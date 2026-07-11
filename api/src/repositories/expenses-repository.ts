@@ -20,6 +20,7 @@ export interface ExpensesRepository {
     data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,
   ): Promise<Expense>;
   delete(id: string): Promise<null>;
+  deleteByUserId(userId: string): Promise<void>;
 }
 
 // total expense on month R$

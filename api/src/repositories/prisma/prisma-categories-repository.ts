@@ -121,4 +121,12 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
 
     return null;
   }
+
+  async deleteByUserId(userId: string) {
+    await prisma.category.deleteMany({
+      where: {
+        user_id: userId,
+      },
+    });
+  }
 }

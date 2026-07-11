@@ -109,4 +109,12 @@ export class PrismaExpensesRepository implements ExpensesRepository {
 
     return null;
   }
+
+  async deleteByUserId(userId: string) {
+    await prisma.expense.deleteMany({
+      where: {
+        user_id: userId,
+      },
+    });
+  }
 }

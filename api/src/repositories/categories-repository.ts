@@ -18,4 +18,5 @@ export interface CategoriesRepository {
     data: Omit<Prisma.CategoryUpdateInput, "id" | "user" | "created_at">,
   ): Promise<Category>;
   delete(id: string): Promise<null>;
+  deleteByUserId(userId: string): Promise<void>;
 }
