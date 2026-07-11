@@ -97,7 +97,7 @@
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
 - [x] O administrador pode visualizar todos os usuários;
-- [ ] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
+- [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
 - [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
 
 ## Fluxograma de Desenvolvimento

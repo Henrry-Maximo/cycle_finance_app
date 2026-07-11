@@ -57,6 +57,15 @@ app.register(fastifySwagger, {
         url: "https://www.linkedin.com/in/henrique-maximo/",
       },
     },
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
   },
   transform: jsonSchemaTransform,
 });
