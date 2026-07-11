@@ -16,6 +16,11 @@ export async function categoriesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["categories"],
         description: "List categories",
         query: z.object({
@@ -50,6 +55,11 @@ export async function categoriesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["categories"],
         description: "Create a new category",
         body: z.object({
@@ -84,6 +94,11 @@ export async function categoriesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["categories"],
         description: "Delete category from user",
         query: z.object({
@@ -123,6 +138,11 @@ export async function categoriesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["categories"],
         description: "Update category from user.",
         response: {

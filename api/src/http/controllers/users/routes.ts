@@ -130,6 +130,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [verifyJWT, verifyUserRole("ADMIN"), rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["users"],
         description: "List users.",
         query: z.object({
@@ -169,6 +174,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["users"],
         description: "Get profile.",
         response: {
@@ -198,6 +208,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["users"],
         description: "Update profile.",
         response: {
@@ -223,6 +238,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["users"],
         description: "Delete user.",
         response: {

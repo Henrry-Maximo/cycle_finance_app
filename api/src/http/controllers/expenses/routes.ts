@@ -18,6 +18,11 @@ export async function expensesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["expenses"],
         description: "List expenses",
         query: z.object({
@@ -66,6 +71,11 @@ export async function expensesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["expenses"],
         description: "List metrics from user",
         query: z.object({
@@ -97,6 +107,11 @@ export async function expensesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["expenses"],
         description: "Create a new expense",
         body: z.object({
@@ -127,6 +142,11 @@ export async function expensesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["expenses"],
         description: "Delete expense from user",
         query: z.object({
@@ -153,8 +173,14 @@ export async function expensesRoutes(app: FastifyInstance) {
   app.post(
     "/expenses/analyze",
     {
+      preHandler: [verifyJWT, rateLimiter],
       schema: {
-        tags: ["Expenses"],
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        tags: ["expenses"],
         description:
           "Envia a imagem de um comprovante fiscal para extração inteligente de dados com o Gemini.",
         consumes: ["multipart/form-data"],
@@ -192,6 +218,11 @@ export async function expensesRoutes(app: FastifyInstance) {
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
         tags: ["expenses"],
         description: "Update expense from user.",
         response: {
