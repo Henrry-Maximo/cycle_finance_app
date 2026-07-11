@@ -11,6 +11,7 @@ import { resetPasswordTokens } from "./reset-password-controller";
 import z from "zod";
 import { FastifyTypedInstance } from "@/types";
 import { updateProfile } from "./update-profile-controller";
+import { deleteUser } from "./delete-user-controller";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(
@@ -215,6 +216,26 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       },
     },
     updateProfile,
+  );
+
+  app.delete(
+    "/users/:id",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        tags: ["users"],
+        description: "Delete user.",
+        response: {
+          200: z.null().describe("User delete with successful."),
+          401: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Not authorized."),
+        },
+      },
+    },
+    deleteUser,
   );
 }
 
