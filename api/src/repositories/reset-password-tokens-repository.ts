@@ -10,4 +10,5 @@ export interface ResetPasswordTokensRepository {
     id: string,
     data: Prisma.PasswordResetTokensUpdateInput,
   ): Promise<null>;
+  deleteByUserId(userId: string): Promise<void>;
 }

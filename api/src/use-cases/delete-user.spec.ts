@@ -7,10 +7,12 @@ import { DeleteUserUseCase } from "./delete-user";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/in-memory-reset-password-tokens-repository";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
 let expensesRepository: InMemoryExpensesRepository;
+let resetPasswordTokensRepository: InMemoryResetPasswordTokensRepository;
 let sut: DeleteUserUseCase;
 
 describe("Delete User Use Case", () => {
@@ -18,11 +20,13 @@ describe("Delete User Use Case", () => {
     usersRepository = new InMemoryUsersRepository();
     categoriesRepository = new InMemoryCategoriesRepository();
     expensesRepository = new InMemoryExpensesRepository();
+    resetPasswordTokensRepository = new InMemoryResetPasswordTokensRepository();
 
     sut = new DeleteUserUseCase(
       usersRepository,
       expensesRepository,
       categoriesRepository,
+      resetPasswordTokensRepository,
     );
   });
 

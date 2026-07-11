@@ -45,4 +45,12 @@ export class PrismaResetPasswordTokensRepository implements ResetPasswordTokensR
 
     return null;
   }
+
+  async deleteByUserId(userId: string) {
+    await prisma.passwordResetTokens.deleteMany({
+      where: {
+        user_id: userId,
+      },
+    });
+  }
 }

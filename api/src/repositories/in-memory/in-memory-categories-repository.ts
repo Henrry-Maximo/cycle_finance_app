@@ -11,9 +11,6 @@ import { InMemoryExpensesRepository } from "./in-memory-expenses-repository";
 
 export class InMemoryCategoriesRepository implements CategoriesRepository {
   constructor(private expensesRepository?: InMemoryExpensesRepository) {}
-  async deleteByUserId(userId: string) {
-    this.items = this.items.filter((item) => item.user_id !== userId);
-  }
 
   public items: Category[] = [];
 
@@ -113,5 +110,9 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
     }
 
     return null;
+  }
+
+  async deleteByUserId(userId: string) {
+    this.items = this.items.filter((item) => item.user_id !== userId);
   }
 }

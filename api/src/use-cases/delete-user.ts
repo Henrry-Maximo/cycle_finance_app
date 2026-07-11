@@ -3,6 +3,7 @@ import { UsersRepository } from "@/repositories/users-repository";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { CategoriesRepository } from "@/repositories/categories-repository";
+import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 
 interface DeleteUserUseCaseRequest {
   id: string;
@@ -14,6 +15,7 @@ export class DeleteUserUseCase {
     private usersRepository: UsersRepository,
     private expensesRepository: ExpensesRepository,
     private categoriesRepository: CategoriesRepository,
+    private resetPasswordTokensRepository: ResetPasswordTokensRepository,
   ) {}
 
   async execute({ id, userId }: DeleteUserUseCaseRequest): Promise<null> {
@@ -25,6 +27,7 @@ export class DeleteUserUseCase {
 
     await this.expensesRepository.deleteByUserId(id);
     await this.categoriesRepository.deleteByUserId(id);
+    await this.resetPasswordTokensRepository.deleteByUserId(id);
     await this.usersRepository.delete(id);
 
     return null;

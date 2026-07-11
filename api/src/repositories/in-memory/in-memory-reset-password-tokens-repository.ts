@@ -58,4 +58,8 @@ export class InMemoryResetPasswordTokensRepository implements ResetPasswordToken
 
     return null;
   }
+
+  async deleteByUserId(userId: string) {
+    this.items = this.items.filter((item) => item.user_id !== userId);
+  }
 }
