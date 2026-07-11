@@ -104,4 +104,8 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
     return null;
   }
+
+  async deleteByUserId(userId: string) {
+    this.items = this.items.filter((item) => item.user_id !== userId);
+  }
 }
