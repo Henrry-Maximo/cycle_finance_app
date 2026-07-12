@@ -137,6 +137,81 @@ describe("Fetch User Expenses History Use Case", () => {
     ]);
   });
 
+  it("should be able to fetch expenses history thorugh filter: name, from and to date", async () => {
+    const userCreated = await usersRepository.create({
+      name: "John Doe",
+      email: "johndoe@example.com",
+      password_hash: await hash("123456", 6),
+    });
+
+    const categoryCreated = await categoriesRepository.create({
+      title: "Alimentação",
+      description: "Categoria criada para fiscalizar as compras de alimentos",
+      user: {
+        connect: { id: userCreated.id },
+      },
+    });
+
+    for (let i = 1; i <= 16; i++) {
+      await expensesRepository.create({
+        id: `expense-${i}`,
+        title: "Pães",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.6,
+        card_last_digits: "2343",
+        created_at: new Date(),
+        user: {
+          connect: {
+            id: userCreated.id,
+          },
+        },
+        category: {
+          connect: {
+            id: categoryCreated.id,
+          },
+        },
+      });
+    }
+
+    for (let i = 17; i <= 32; i++) {
+      await expensesRepository.create({
+        id: `expense-${i}`,
+        title: "Salsicha",
+        enterprise: "Mercado Ceifa",
+        description: "Café da manhã",
+        cnpj: "123.242.324.23/24",
+        source: "Embu das Artes / São Paulo",
+        price: 10.6,
+        card_last_digits: "2343",
+        created_at: new Date(),
+        user: {
+          connect: {
+            id: userCreated.id,
+          },
+        },
+        category: {
+          connect: {
+            id: categoryCreated.id,
+          },
+        },
+      });
+    }
+
+    const today = new Date();
+    const { expenses } = await sut.execute({
+      userId: userCreated.id,
+      pageIndex: 1,
+      expenseName: "Salsicha",
+      from: new Date(today.getFullYear(), today.getMonth(), 1),
+      to: new Date(today.getFullYear(), today.getMonth() + 1, 0),
+    });
+
+    expect(expenses).toHaveLength(15);
+  });
+
   it("should not be able to fetch expenses history if user id not exists", async () => {
     await expect(() =>
       sut.execute({

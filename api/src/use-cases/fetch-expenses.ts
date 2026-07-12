@@ -7,6 +7,9 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 interface FetchExpensesUseCaseRequest {
   userId: string;
   expenseName?: string;
+  categoryName?: string;
+  from?: Date;
+  to?: Date;
   pageIndex: number;
   perPage?: number;
 }
@@ -31,7 +34,10 @@ export class FetchExpensesUseCase {
 
   async execute({
     userId,
-    expenseName = "",
+    expenseName,
+    categoryName,
+    from,
+    to,
     pageIndex = 1,
     perPage = 15,
   }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
@@ -41,11 +47,22 @@ export class FetchExpensesUseCase {
       throw new ResourceNotFoundError();
     }
 
+    const today = new Date();
+    const fromStartDate = from
+      ? from
+      : new Date(today.getFullYear(), today.getMonth(), 1);
+    const toEndDate = to
+      ? to
+      : new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
     const expenses = await this.expensesRepository.findManyByUserId(
       userId,
-      expenseName,
-      pageIndex,
+      fromStartDate,
+      toEndDate,
       perPage,
+      pageIndex,
+      expenseName,
+      categoryName,
     );
 
     const totalCount = await this.expensesRepository.countByUserId(

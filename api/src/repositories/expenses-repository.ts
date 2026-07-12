@@ -5,16 +5,19 @@ export interface ExpensesRepository {
   findById(id: string): Promise<Expense | null>;
   findManyByUserId(
     userId: string,
-    expenseName: string,
-    pageIndex: number,
+    from: Date,
+    to: Date,
     perPage: number,
+    pageIndex: number,
+    expenseName?: string,
+    categoryName?: string,
   ): Promise<Expense[]>;
   findManyByUserIdInPeriod(
     userId: string,
     from: Date,
     to: Date,
   ): Promise<Expense[]>;
-  countByUserId(userId: string, expenseName: string): Promise<number>;
+  countByUserId(userId: string, expenseName?: string): Promise<number>;
   update(
     id: string,
     data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,

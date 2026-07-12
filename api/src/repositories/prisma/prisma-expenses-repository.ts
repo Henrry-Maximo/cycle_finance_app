@@ -25,9 +25,12 @@ export class PrismaExpensesRepository implements ExpensesRepository {
 
   async findManyByUserId(
     user_id: string,
-    expenseName: string,
-    pageIndex: number,
+    from: Date,
+    to: Date,
     perPage: number,
+    pageIndex: number,
+    expenseName?: string,
+    categoryName?: string,
   ) {
     const expensesUser = await prisma.expense.findMany({
       skip: (pageIndex - 1) * perPage,
@@ -36,10 +39,26 @@ export class PrismaExpensesRepository implements ExpensesRepository {
         user_id: {
           equals: user_id,
         },
-        title: {
-          contains: expenseName,
-          mode: "insensitive",
-        },
+        ...(expenseName && {
+          title: {
+            contains: expenseName,
+            mode: "insensitive",
+          },
+        }),
+        ...(categoryName && {
+          category: {
+            title: {
+              contains: categoryName,
+              mode: "insensitive",
+            },
+          },
+        }),
+        ...((from || to) && {
+          created_at: {
+            gte: from,
+            lte: to,
+          },
+        }),
       },
       orderBy: {
         created_at: "desc", // mais recente
