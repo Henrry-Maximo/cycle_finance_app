@@ -74,6 +74,7 @@
 - [x] Todas as rotas precisam estar documentadas utilizando o swagger;
 - [x] Os testes unitários devem ter cobertura de 100% (coverage);
 - [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
+- [ ] Invalidar o JWT ao deletar a conta do usuário;
 - [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
 - [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
