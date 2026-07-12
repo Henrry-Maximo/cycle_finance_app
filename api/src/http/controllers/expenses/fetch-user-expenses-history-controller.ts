@@ -5,20 +5,34 @@ import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-err
 import { makeFetchExpensesUseCase } from "@/use-cases/factories/make-fetch-expenses-use-case";
 
 export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
-  const searchExpensesSchema = z.object({
-    query: z.string().optional().nullable(),
+  const searchExpensesQuerySchema = z.object({
+    expense: z.string().optional(),
+    category: z.string().optional(),
+    from: z
+      .string()
+      .optional()
+      .transform((val) => (val ? new Date(val) : undefined)),
+    to: z
+      .string()
+      .optional()
+      .transform((val) => (val ? new Date(val) : undefined)),
     page: z.coerce.number().default(1),
   });
 
-  const { query, page } = searchExpensesSchema.parse(req.query);
+  const { expense, category, from, to, page } = searchExpensesQuerySchema.parse(
+    req.query,
+  );
 
   try {
     const fetchExpensesUseCase = makeFetchExpensesUseCase();
 
     const { expenses, meta } = await fetchExpensesUseCase.execute({
       userId: req.user.sub,
-      expenseName: query ?? "",
       pageIndex: page,
+      ...(expense && { expenseName: expense }),
+      ...(category && { categoryName: category }),
+      ...(from && { from }),
+      ...(to && { to }),
     });
 
     return reply.status(200).send({ expenses, meta });

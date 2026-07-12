@@ -26,7 +26,16 @@ export async function expensesRoutes(app: FastifyInstance) {
         tags: ["expenses"],
         description: "List expenses",
         query: z.object({
-          query: z.string().optional().nullable(),
+          expense: z.string().optional(),
+          category: z.string().optional(),
+          from: z
+            .string()
+            .optional()
+            .transform((val) => (val ? new Date(val) : undefined)),
+          to: z
+            .string()
+            .optional()
+            .transform((val) => (val ? new Date(val) : undefined)),
           page: z.coerce.number().default(1),
         }),
         response: {
@@ -137,39 +146,6 @@ export async function expensesRoutes(app: FastifyInstance) {
     register,
   );
 
-  app.delete(
-    "/expenses",
-    {
-      preHandler: [verifyJWT, rateLimiter],
-      schema: {
-        security: [
-          {
-            bearerAuth: [],
-          },
-        ],
-        tags: ["expenses"],
-        description: "Delete expense from user",
-        query: z.object({
-          id: z.string(),
-        }),
-        response: {
-          201: z.null().describe("Delete a expense."),
-          404: z
-            .object({
-              message: z.string(),
-            })
-            .describe("Expense not found."),
-          401: z
-            .object({
-              message: z.string(),
-            })
-            .describe("Not authorized."),
-        },
-      },
-    },
-    deleteExpense,
-  );
-
   app.post(
     "/expenses/analyze",
     {
@@ -252,5 +228,38 @@ export async function expensesRoutes(app: FastifyInstance) {
       },
     },
     update,
+  );
+
+  app.delete(
+    "/expenses",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        tags: ["expenses"],
+        description: "Delete expense from user",
+        query: z.object({
+          id: z.string(),
+        }),
+        response: {
+          201: z.null().describe("Delete a expense."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Expense not found."),
+          401: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Not authorized."),
+        },
+      },
+    },
+    deleteExpense,
   );
 }
