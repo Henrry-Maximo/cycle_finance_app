@@ -53,7 +53,7 @@
 - [x] O usuário deve poder atualizar uma categoria;
 - [ ] O usuário deve poder visualizar despesas agrupadas por data e valor;
 - [ ] O usuário deve poder visualizar a quantidade de despesas por categoria
-- [ ] O usuário deve poder filtrar seu histórico de despesas por período e por categoria;
+- [x] O usuário deve poder filtrar seu histórico de despesas por período e por categoria;
 - [x] O usuário deve poder enviar o comprovante e o sistema deve extrair as informações;
 - [x] O sistema deve sugerir valores e datas com base no comprovante;
 - [x] O administrador deve poder visualizar todos os usuários.
