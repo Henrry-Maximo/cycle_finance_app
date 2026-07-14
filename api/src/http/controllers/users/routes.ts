@@ -12,6 +12,7 @@ import z from "zod";
 import { FastifyTypedInstance } from "@/types";
 import { updateProfile } from "./update-profile-controller";
 import { deleteUser } from "./delete-user-controller";
+import { refresh } from "./refresh-token-jwt-controller";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(
@@ -231,6 +232,24 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       },
     },
     updateProfile,
+  );
+
+  // post ou patch: para atualizar uma informação única
+  app.patch(
+    "/token/refresh",
+    {
+      preHandler: [rateLimiter],
+      schema: {
+        tags: ["users"],
+        description: "Refresh token.",
+        response: {
+          200: z.object({
+            token: z.string(),
+          }),
+        },
+      },
+    },
+    refresh,
   );
 
   app.delete(
