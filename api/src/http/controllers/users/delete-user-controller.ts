@@ -19,7 +19,7 @@ export async function deleteUser(req: FastifyRequest, reply: FastifyReply) {
       userId: req.user.sub,
     });
 
-    return reply.status(200).send();
+    return reply.clearCookie("refreshToken").status(200).send();
   } catch (err) {
     if (err instanceof NotAuthorizedError) {
       return reply.status(401).send({ message: err.message });

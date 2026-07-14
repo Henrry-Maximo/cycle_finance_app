@@ -25,6 +25,7 @@
 
 - API REST utilizando Fastify
 - Autenticação baseada em JWT
+- Autenticação automática via Refresh Token (JWT)
 - Controle de acesso baseado em papéis (RBAC)
 - Persistência com PostgreSQL
 - Cache e Rate Limiting com Redis
@@ -75,7 +76,7 @@
 - [x] Os testes unitários devem ter cobertura de 100% (coverage);
 - [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
 - [x] O sistema deve implementar refresh token para renovação de autenticação;
-- [ ] Invalidar o JWT ao deletar a conta do usuário;
+- [x] Invalidar o JWT ao deletar a conta do usuário;
 - [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
 - [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
 - [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
