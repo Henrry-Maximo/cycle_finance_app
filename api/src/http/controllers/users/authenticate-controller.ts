@@ -31,9 +31,27 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
       },
     );
 
-    return reply.status(200).send({
-      token,
-    });
+    const refreshToken = await reply.jwtSign(
+      {},
+      {
+        sign: {
+          sub: user.id,
+          expiresIn: "7d", // usuário perde autenticação se ficar 7 dias sem acessar
+        },
+      },
+    );
+
+    return reply
+      .setCookie("refreshToken", refreshToken, {
+        path: "/", // todas as rotas podem ler este cookie
+        secure: true, // cookie encripitado via HTTPs
+        sameSite: true, // cookie somente acessível dentro do mesmo domínio
+        httpOnly: true, // acessado somente pelo backend da aplicação (contexto da requisição/resposta)
+      })
+      .status(200)
+      .send({
+        token,
+      });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message });

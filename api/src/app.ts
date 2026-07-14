@@ -16,6 +16,7 @@ import fastifySwagger from "@fastify/swagger";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import { RateLimiterRes } from "rate-limiter-flexible";
 import fastifyMultipart from "@fastify/multipart";
+import fastifyCookie from "@fastify/cookie";
 
 export const app = fastify({
   logger:
@@ -37,7 +38,17 @@ app.setSerializerCompiler(serializerCompiler);
 
 app.register(fastifyJwt, {
   secret: env.JWT_SECRET,
+  cookie: {
+    cookieName: "refreshToken",
+    signed: false, // a informação (cookie) não é assinado (processo de hash, para validar eventualmente)
+  },
+  sign: {
+    expiresIn: "10m", // 10 minutos: refresh token para criar um novo JWT
+  },
 });
+
+// criar / recuperar cookies na requisição
+app.register(fastifyCookie);
 
 app.register(fastifyCors, {
   origin: "*",
