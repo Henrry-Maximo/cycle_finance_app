@@ -48,6 +48,12 @@ export class FetchExpensesGroupedByDateUseCase {
       toEndDate,
     );
 
+    if (expensesList.length == 0) {
+      return {
+        expenses: [],
+      };
+    }
+
     const transformed = expensesList.reduce(
       (acc, current) => {
         const date = current.created_at.toISOString().split("T")[0]!;

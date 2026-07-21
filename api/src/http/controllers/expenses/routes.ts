@@ -10,6 +10,7 @@ import { register } from "./register-controller";
 import z from "zod";
 import { analyzeReceiptController } from "./analyze-receipt-controller";
 import { update } from "./update-controller";
+import { fetchExpensesGroupedByDate } from "./fetch-expenses-grouped-by-date-use-case";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -109,6 +110,44 @@ export async function expensesRoutes(app: FastifyInstance) {
       },
     },
     getMeticsUser,
+  );
+
+  app.get(
+    "/period",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        tags: ["expenses"],
+        description: "List expenses grouped by date from user",
+        query: z.object({
+          from: z.string().optional(),
+          to: z.string().optional(),
+        }),
+        response: {
+          200: z
+            .object({
+              expenses: z.array(
+                z.object({
+                  date: z.string(),
+                  value: z.number(),
+                }),
+              ),
+            })
+            .describe("Fetch expenses grouped by date from user."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("User not found."),
+        },
+      },
+    },
+    fetchExpensesGroupedByDate,
   );
 
   app.post(

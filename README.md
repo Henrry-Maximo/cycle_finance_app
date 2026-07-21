@@ -128,7 +128,8 @@
 
 #### Desenvolvimento
 - `pnpm install` — instala dependências da API
-- `docker compose up -d` — lança o serviço de banco de dados e redis como container 
+- `docker compose up -d` — lança o serviço de banco de dados e redis como container
+- `npx prisma migrate deploy`
 - `pnpm start:dev` — inicia o servidor em modo watch (ambiente de desenvolvimento)
 - `pnpm build` — compila o projeto
 - `pnpm start` — inicia o servidor compilado
