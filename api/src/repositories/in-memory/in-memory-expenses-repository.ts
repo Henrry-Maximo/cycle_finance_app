@@ -36,6 +36,16 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
+  async findManyByUserIdGrouped(id: string): Promise<Expense[]> {
+    const expenses = this.items.filter((item) => {
+      if (item.user_id !== id) return false;
+
+      return true;
+    });
+
+    return expenses;
+  }
+
   async findManyByUserId(
     user_id: string,
     from: Date,

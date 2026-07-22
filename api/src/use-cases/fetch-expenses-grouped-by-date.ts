@@ -64,6 +64,7 @@ export class FetchExpensesGroupedByDateUseCase {
           acc[date] = current.price;
         }
 
+        console.log(acc);
         return acc;
       },
       {} as Record<string, number>,

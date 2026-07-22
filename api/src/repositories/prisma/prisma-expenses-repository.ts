@@ -2,7 +2,7 @@ import { ExpenseCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
 import { ExpensesRepository } from "../expenses-repository";
-import { Prisma } from "@/generated/prisma/client";
+import { Expense, Prisma } from "@/generated/prisma/client";
 
 export class PrismaExpensesRepository implements ExpensesRepository {
   async create(data: ExpenseCreateInput) {
@@ -21,6 +21,25 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     });
 
     return expense;
+  }
+
+  async findManyByUserIdGrouped(id: string): Promise<Expense[]> {
+    const expensesList = await prisma.expense.findMany({
+      where: {
+        user_id: {
+          equals: id,
+        },
+      },
+    });
+
+    const expenses = expensesList.map((expense) => {
+      return {
+        ...expense,
+        price: expense.price / 100,
+      };
+    });
+
+    return expenses;
   }
 
   async findManyByUserId(

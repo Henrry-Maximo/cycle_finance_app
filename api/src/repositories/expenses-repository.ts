@@ -3,6 +3,7 @@ import { Expense, Prisma } from "@/generated/prisma/client";
 export interface ExpensesRepository {
   create(data: Prisma.ExpenseCreateInput): Promise<Expense>;
   findById(id: string): Promise<Expense | null>;
+  findManyByUserIdGrouped(id: string): Promise<Expense[]>;
   findManyByUserId(
     userId: string,
     from: Date,
