@@ -30,6 +30,7 @@
     // "noPropertyAccessFromIndexSignature": true,
     // Recommended Options
     "strict": true,
+    "strictNullChecks": true,
     "jsx": "react-jsx",
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,

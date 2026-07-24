@@ -10,7 +10,7 @@ import { register } from "./register-controller";
 import z from "zod";
 import { analyzeReceiptController } from "./analyze-receipt-controller";
 import { update } from "./update-controller";
-import { fetchExpensesGroupedByDate } from "./fetch-expenses-grouped-by-date-use-case";
+import { fetchExpensesGroupedByDate } from "./fetch-expenses-grouped-by-date-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -113,7 +113,7 @@ export async function expensesRoutes(app: FastifyInstance) {
   );
 
   app.get(
-    "/period",
+    "/expenses/period",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {

@@ -8,6 +8,7 @@ import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
 import z from "zod";
 import { update } from "./update-controller";
+import { fetchCategoriesGroupedByTotal } from "./fetch-categories-grouped-by-total-controller";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -87,6 +88,41 @@ export async function categoriesRoutes(app: FastifyInstance) {
       },
     },
     register,
+  );
+
+  app.get(
+    "/categories/period",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        tags: ["categories"],
+        description: "List categories grouped by total from user",
+        response: {
+          200: z
+            .object({
+              categories: z.array(
+                z.object({
+                  name: z.string(),
+                  count: z.number(),
+                  total: z.number(),
+                }),
+              ),
+            })
+            .describe("Fetch categories grouped by total from user."),
+          404: z
+            .object({
+              message: z.string(),
+            })
+            .describe("User not found."),
+        },
+      },
+    },
+    fetchCategoriesGroupedByTotal,
   );
 
   app.delete(
