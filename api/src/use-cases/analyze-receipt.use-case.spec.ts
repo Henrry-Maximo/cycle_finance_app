@@ -21,13 +21,13 @@ describe("Analyze Receipt Use Case", () => {
   });
 
   it("should be able to analyze a valid receipt image", async () => {
-    const { suggestions } = await sut.execute({
+    const { extracted } = await sut.execute({
       fileBuffer: Buffer.from("fake-image-data"),
       mimeType: "image/jpeg",
     });
 
-    expect(suggestions.title).toBe("Mercado Central");
-    expect(suggestions.amount).toBe(42.5);
+    expect(extracted.title).toBe("Mercado Central");
+    expect(extracted.amount).toBe(42.5);
   });
 
   it("should not be able to analyze an invalid file type", async () => {
