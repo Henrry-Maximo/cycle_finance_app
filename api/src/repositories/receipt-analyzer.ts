@@ -7,7 +7,10 @@ export interface AnalyzeReceiptResponse {
   title: string;
   amount: number;
   date: string;
-  category: string;
+  cpfOrCNPJ: string;
+  transactionId: string;
+  city: string;
+  state: string;
 }
 
 export interface ReceiptAnalyzerProvider {

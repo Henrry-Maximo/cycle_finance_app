@@ -11,7 +11,7 @@ interface AnalyzeReceiptUseCaseRequest {
 }
 
 interface AnalyzeReceiptUseCaseResponse {
-  suggestions: AnalyzeReceiptResponse;
+  extracted: AnalyzeReceiptResponse;
 }
 
 export class AnalyzeReceiptUseCase {
@@ -31,11 +31,11 @@ export class AnalyzeReceiptUseCase {
       throw new FileBufferCannotBeEmptyError();
     }
 
-    const suggestions = await this.receiptAnalyzer.execute({
+    const extracted = await this.receiptAnalyzer.execute({
       fileBuffer,
       mimeType: mimeType as "image/jpeg" | "image/png",
     });
 
-    return { suggestions };
+    return { extracted };
   }
 }

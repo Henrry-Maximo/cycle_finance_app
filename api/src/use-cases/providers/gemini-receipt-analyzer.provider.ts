@@ -1,20 +1,15 @@
-import { type GoogleGenAI } from "@google/genai";
-import { z } from "zod";
+import { ApiError, type GoogleGenAI } from "@google/genai";
 import {
   AnalyzeReceiptRequest,
   AnalyzeReceiptResponse,
   ReceiptAnalyzerProvider,
 } from "../../repositories/receipt-analyzer";
 import { ai } from "@/lib/gemini";
-
-const geminiSchema = z.object({
-  title: z.string(),
-  amount: z.number(),
-  date: z.string(),
-  category: z.string(),
-});
+import { RequestPerMinutePerModelFreeError } from "../errors/request-per-minute-per-model-free-error";
+import { ExternalServiceUnavailableError } from "../errors/external-service-unavailable-error";
 
 export class GeminiReceiptAnalyzerProvider implements ReceiptAnalyzerProvider {
+  // constructor(private ai: GoogleGenAI) {}
   private ai: GoogleGenAI;
 
   constructor() {
@@ -32,31 +27,42 @@ export class GeminiReceiptAnalyzerProvider implements ReceiptAnalyzerProvider {
       },
     };
 
-    const response = await this.ai.models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
-        imagePart,
-        'Extraia o título do estabelecimento, valor total decimal, data no formato YYYY-MM-DD e uma categoria lógica deste comprovante (se não tiver categoria, deixe "coloque a categoria").',
-      ],
-      config: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: "OBJECT",
-          properties: {
-            title: { type: "STRING" },
-            amount: { type: "NUMBER" },
-            date: { type: "STRING" },
-            category: { type: "STRING" },
+    try {
+      const response = await this.ai.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: [
+          imagePart,
+          "Extraia o título do estabelecimento ou nome do proprietário, valor total em decimal, data no formato YYYY-MM-DD, CPF OU CNPJ, os quatro digitos do cartão, cidade e estado. Entenda que alguns comprovantes são diferentes de outros. Ou seja, pode ter ou não as informações acima.",
+        ],
+        config: {
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "OBJECT",
+            properties: {
+              title: { type: "STRING" },
+              amount: { type: "NUMBER" },
+              date: { type: "STRING" },
+              cpfOrCNPJ: { type: "STRING" },
+              transactionId: { type: "STRING" },
+              city: { type: "STRING" },
+              state: { type: "STRING" },
+            },
+            required: ["title", "amount", "date", "transactionId"],
           },
-          required: ["title", "amount", "date", "category"],
         },
-      },
-    });
+      });
 
-    if (!response.text) {
-      throw new Error("Gemini failed to return text.");
+      if (!response.text) {
+        throw new ExternalServiceUnavailableError();
+      }
+
+      return JSON.parse(response.text);
+    } catch (err) {
+      if (err instanceof ApiError && err.status == 429) {
+        throw new RequestPerMinutePerModelFreeError();
+      }
+
+      throw err;
     }
-
-    return geminiSchema.parse(JSON.parse(response.text));
   }
 }
