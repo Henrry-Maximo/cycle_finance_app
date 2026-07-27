@@ -6,6 +6,7 @@ import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-e
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
 import { FetchExpensesGroupedByDateUseCase } from "./fetch-expenses-grouped-by-date";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -134,5 +135,13 @@ describe("Fetch User Expenses Grouped By Date Use Case", () => {
         expect.objectContaining({ value: 11.2 }),
       ]),
     );
+  });
+
+  it("should be not able to fetch expenses grouped by date if user not found", async () => {
+    await expect(() =>
+      sut.execute({
+        userId: "id-non-existing",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
