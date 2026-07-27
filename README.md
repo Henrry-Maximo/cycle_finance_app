@@ -100,7 +100,11 @@
 - [x] O administrador pode visualizar todos os usuários;
 - [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata.
 
-## V2
+### Cobertura dos Testes Unitários
+
+![alt text](tests-unit.png)
+
+## V2 (Planejado)
 
 ### Requisitos Funcionais (RF)
 
