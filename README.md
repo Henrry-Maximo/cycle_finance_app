@@ -32,6 +32,8 @@
 - Validação de entrada com Zod
 - ORM Prisma
 
+## V1
+
 ### Requisitos Funcionais (RF)
 
 - [x] O usuário deve poder se cadastrar;
@@ -58,7 +60,6 @@
 - [x] O usuário deve poder enviar o comprovante e o sistema deve extrair as informações;
 - [x] O sistema deve sugerir valores e datas com base no comprovante;
 - [x] O administrador deve poder visualizar todos os usuários.
-- [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
 
 ### Requisitos Não-Funcionais (RNF)
 
@@ -76,10 +77,7 @@
 - [x] Os testes unitários devem ter cobertura de 100% (coverage);
 - [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
 - [x] O sistema deve implementar refresh token para renovação de autenticação;
-- [x] Invalidar o JWT ao deletar a conta do usuário;
-- [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
-- [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
-- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
+- [x] Invalidar o JWT ao deletar a conta do usuário.
 
 ### Regras de Negócio (RN)
 
@@ -100,8 +98,24 @@
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
 - [x] O administrador pode visualizar todos os usuários;
-- [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
+- [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata.
+
+## V2
+
+### Requisitos Funcionais (RF)
+
+- [ ] O usuário deve poder importar uma planilha contendo gastos para cadastramento em lote;
+
+### Requisitos Não-Funcionais (RNF)
+
+- [ ] A API deve tratar as datas considerando o fuso horário do usuário/padronizar tudo em UTC no banco e fazer a conversão na camada de aplicação;
+- [ ] As imagens dos comprovantes devem ser armazenadas em um serviço de Object Storage (S3/R2);
+- [ ] Realizar integração com ferramenta externa de log: DataDog, NewRelic, Sentry;
+
+### Regras de Negócio (RN)
+
 - [ ] Se a planilha contiver um gasto com uma categoria que ultrapasse o limite de 15 categorias, ou se a linha estiver corrompida, o sistema deve rejeitar o lote inteiro e retornar um relatório de erros;
+
 
 ## Fluxograma de Desenvolvimento
 
@@ -112,6 +126,7 @@
 ### Entidades
 
 - [x] Users
+- [X] PasswordResetTokens
 - [x] Expenses
 - [x] Categories
 
