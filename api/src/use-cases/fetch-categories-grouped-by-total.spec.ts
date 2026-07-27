@@ -4,6 +4,7 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 import { FetchCategoriesGroupedByTotalUseCase } from "./fetch-categories-grouped-by-total";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;
@@ -142,5 +143,13 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
         { name: "Transporte", count: 2, total: 41.2 },
       ]),
     });
+  });
+
+  it("should be not able to fetch categories grouped by total if user not found", async () => {
+    await expect(() =>
+      sut.execute({
+        userId: "id-non-existing",
+      }),
+    ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
 });
