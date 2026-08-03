@@ -1,3 +1,4 @@
+import { CircleNotchIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
@@ -9,7 +10,6 @@ import { signIn } from '@/api/sign-in';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
-import { CircleNotchIcon } from '@phosphor-icons/react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signInForm = z.object({
@@ -112,11 +112,11 @@ export function SignIn() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="flex h-11 w-full flex-row gap-2 items-center justify-center bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
+              className="flex h-11 w-full flex-row items-center justify-center gap-2 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
             >
-             {isSubmitting && (
-              <CircleNotchIcon className="h-14 w-14 animate-spin" />
-             )}
+              {isSubmitting && (
+                <CircleNotchIcon className="h-14 w-14 animate-spin" />
+              )}
               Acessar plataforma
             </Button>
           </form>

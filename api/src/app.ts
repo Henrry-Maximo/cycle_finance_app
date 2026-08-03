@@ -51,7 +51,8 @@ app.register(fastifyJwt, {
 app.register(fastifyCookie);
 
 app.register(fastifyCors, {
-  origin: "*",
+  origin: env.APP_URL,
+  credentials: true, // enabled cookies
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
 

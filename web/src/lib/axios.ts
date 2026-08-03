@@ -5,6 +5,7 @@ import { env } from '@/env';
 // const tokenApi = localStorage.getItem('cycle_finance_api') ?? null;
 export const api = axios.create({
   baseURL: env.VITE_API_URL,
+  withCredentials: true,
 });
 
 if (env.VITE_ENABLE_API_DELAY) {
