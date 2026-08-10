@@ -34,13 +34,11 @@ export class FetchExpensesGroupedByDateUseCase {
       throw new ResourceNotFoundError();
     }
 
-    const today = new Date();
-    const fromStartDate = from
-      ? from
-      : new Date(today.getFullYear(), today.getMonth(), 1);
-    const toEndDate = to
-      ? to
-      : new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const now = new Date();
+    const fromStartDate =
+      from ?? new Date(now.getFullYear(), now.getMonth(), 1);
+    const toEndDate =
+      to ?? new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59); // 1 -> avança um mês, 0 -> volta 1 dia a partir do dia 1, horas/minutos/segundos
 
     const expensesList = await this.expensesRepository.findManyByUserIdInPeriod(
       userId,
@@ -48,26 +46,20 @@ export class FetchExpensesGroupedByDateUseCase {
       toEndDate,
     );
 
-    if (expensesList.length == 0) {
-      return {
-        expenses: [],
-      };
-    }
+    const transformed = expensesList.reduce<Record<string, number>>(
+      (expensesByDate, expense) => {
+        const year = expense.created_at.getFullYear();
+        const month = String(expense.created_at.getMonth() + 1).padStart(
+          2,
+          "0",
+        );
+        const day = String(expense.created_at.getDate()).padStart(2, "0");
+        const date = `${year}-${month}-${day}`;
 
-    const transformed = expensesList.reduce(
-      (acc, current) => {
-        const date = current.created_at.toISOString().split("T")[0]!;
-
-        if (acc[date]) {
-          acc[date] += current.price;
-        } else {
-          acc[date] = current.price;
-        }
-
-        // console.log(acc);
-        return acc;
+        expensesByDate[date] = (expensesByDate[date] ?? 0) + expense.price;
+        return expensesByDate;
       },
-      {} as Record<string, number>,
+      {},
     );
 
     const expenses = Object.entries(transformed).map(([date, value]) => ({
