@@ -118,7 +118,7 @@ export function SignIn() {
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
                     title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                    className="text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 transition-colors hover:text-white"
+                    className="text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors hover:text-white"
                   >
                     <div className="relative h-4 w-4">
                       <EyeIcon

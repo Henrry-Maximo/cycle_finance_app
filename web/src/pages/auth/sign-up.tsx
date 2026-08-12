@@ -1,4 +1,6 @@
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -22,6 +24,7 @@ const signUpForm = z.object({
 type SignUpForm = z.infer<typeof signUpForm>;
 
 export function SignUp() {
+  const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
     register,
@@ -104,17 +107,45 @@ export function SignUp() {
               </Field>
 
               <Field className="space-y-2">
-                <div className="flex items-center justify-between">
+                <div className="flex justify-between">
                   <FieldLabel className="text-accent-foreground font-medium">
                     Senha
                   </FieldLabel>
+                  <div className="flex items-center justify-between">
+                    <Link
+                      to="/request"
+                      className="text-xs text-blue-600 hover:underline"
+                    >
+                      Esqueceu a senha?
+                    </Link>
+                  </div>
                 </div>
-                <Input
-                  {...register('password')}
-                  type="password"
-                  placeholder="••••••••"
-                  className="text-accent-foreground h-11"
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    {...register('password')}
+                    placeholder="••••••••"
+                    className="text-accent-foreground h-11"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={
+                      showPassword ? 'Ocultar senha' : 'Mostrar senha'
+                    }
+                    title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                    className="text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors hover:text-white"
+                  >
+                    <div className="relative h-4 w-4">
+                      <EyeIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
+                      />
+                      <EyeSlashIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 -rotate-90 opacity-0'}`}
+                      />
+                    </div>
+                  </button>
+                </div>
               </Field>
             </div>
 
