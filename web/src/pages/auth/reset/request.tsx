@@ -1,11 +1,50 @@
+import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
+import z from 'zod';
 
+import { RequestPasswordError } from '@/api/errors/request-password-error';
+import { RequestPasswordFetchError } from '@/api/errors/request-password-fetch-error';
+import { requestPassword } from '@/api/request-password';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const requestPasswordForm = z.object({
+  email: z.string(),
+});
+
+type RequestPasswordForm = z.infer<typeof requestPasswordForm>;
+
 export function Request() {
+  // controle do formulário com dados
+  const { register, handleSubmit } = useForm<RequestPasswordForm>();
+
+  const { mutateAsync: requestPasswordFn } = useMutation({
+    mutationFn: requestPassword,
+  });
+
+  async function handleRequestPassword(data: RequestPasswordForm) {
+    try {
+      const { message } = await requestPasswordFn({
+        email: data.email,
+      });
+
+      toast.success(message);
+    } catch (err) {
+      if (err instanceof RequestPasswordError) {
+        toast.error(err.message);
+      }
+
+      if (err instanceof RequestPasswordFetchError) {
+        toast.error(err.message);
+      }
+    }
+  }
+
   return (
     <>
       <Helmet title="Recuperação" />
@@ -22,13 +61,17 @@ export function Request() {
             </p>
           </header>
 
-          <form className="flex flex-col gap-6">
+          <form
+            onSubmit={handleSubmit(handleRequestPassword)}
+            className="flex flex-col gap-6"
+          >
             <Field className="space-y-2">
               <FieldLabel className="text-accent-foreground font-medium">
                 E-mail
               </FieldLabel>
               <Input
                 type="email"
+                {...register('email')}
                 placeholder="exemplo@email.com"
                 className="text-muted-foreground h-11 transition-all focus:ring-blue-600"
               />

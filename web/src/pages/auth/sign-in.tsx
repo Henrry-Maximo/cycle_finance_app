@@ -21,19 +21,23 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>;
 
 export function SignIn() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false); // exibir e ocultar a senha
+
+  const [searchParams] = useSearchParams(); // obter dados passados via URL
+
+  const navigate = useNavigate(); // direcionamento
+
   const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
+    register, // registrar inputs
+    handleSubmit, // capturar formulário
+    formState: { isSubmitting }, // estados do formulário
   } = useForm<SignInForm>({
     defaultValues: {
-      email: searchParams.get('email') ?? '',
+      email: searchParams.get('email') ?? '', // buscar por email após cadastro
     },
   });
 
+  // passar função por mutation
   const { mutateAsync: authenticate } = useMutation({
     mutationFn: signIn,
   });
