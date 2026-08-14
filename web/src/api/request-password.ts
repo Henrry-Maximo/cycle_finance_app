@@ -13,11 +13,14 @@ export async function requestPassword({ email }: RequestPassword) {
       email,
     });
 
-    if (response.status !== 201) {
+    if (response.status !== 200) {
       throw new RequestPasswordError();
     }
 
-    return { message: 'Link de renovação enviado com sucesso!' };
+    return {
+      message: 'Link de renovação enviado com sucesso!',
+      response,
+    };
   } catch {
     throw new RequestPasswordFetchError();
   }

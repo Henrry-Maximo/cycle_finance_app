@@ -1,4 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
@@ -20,19 +21,26 @@ const requestPasswordForm = z.object({
 type RequestPasswordForm = z.infer<typeof requestPasswordForm>;
 
 export function Request() {
-  // controle do formulário com dados
+  // controle do formulário
   const { register, handleSubmit } = useForm<RequestPasswordForm>();
 
+  const [resetUrl, setResetUrl] = useState<string>();
+
+  // modificar dados - mais específico (roda apenas quando manda / sem cache)
   const { mutateAsync: requestPasswordFn } = useMutation({
     mutationFn: requestPassword,
   });
 
   async function handleRequestPassword(data: RequestPasswordForm) {
     try {
-      const { message } = await requestPasswordFn({
+      const { message, response } = await requestPasswordFn({
         email: data.email,
       });
 
+      const { url } = response.data;
+      setResetUrl(url);
+
+      // console.log('Reached home.');
       toast.success(message);
     } catch (err) {
       if (err instanceof RequestPasswordError) {
@@ -81,6 +89,20 @@ export function Request() {
               Enviar
             </Button>
           </form>
+
+          {resetUrl && (
+            <div className="rounded-sm border-2 px-4 py-2">
+              <h1 className="text-accent-foreground text-sm font-semibold tracking-tight">
+                Use o link abaixo!
+              </h1>
+              <Link
+                to="/update"
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Clique aqui para redefinir sua senha
+              </Link>
+            </div>
+          )}
 
           <footer className="text-center">
             <p className="text-accent-foreground text-sm">
