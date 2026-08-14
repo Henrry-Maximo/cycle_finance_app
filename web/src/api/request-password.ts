@@ -7,20 +7,26 @@ interface RequestPassword {
   email: string;
 }
 
-export async function requestPassword({ email }: RequestPassword) {
-  try {
-    const response = await api.post('/reset-password/request', {
-      email,
-    });
+interface RequestPasswordResponse {
+  url: string;
+}
 
-    if (response.status !== 200) {
+export async function requestPassword({
+  email,
+}: RequestPassword): Promise<RequestPasswordResponse> {
+  try {
+    const { data, status } = await api.post<{ url: string }>(
+      '/reset-password/request',
+      {
+        email,
+      },
+    );
+
+    if (status !== 200) {
       throw new RequestPasswordError();
     }
 
-    return {
-      message: 'Link de renovação enviado com sucesso!',
-      response,
-    };
+    return { url: data.url };
   } catch {
     throw new RequestPasswordFetchError();
   }

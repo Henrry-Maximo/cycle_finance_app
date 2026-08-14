@@ -24,6 +24,7 @@ export function Request() {
   // controle do formulário
   const { register, handleSubmit } = useForm<RequestPasswordForm>();
 
+  // variável pra armazenar URL Token
   const [resetUrl, setResetUrl] = useState<string>();
 
   // modificar dados - mais específico (roda apenas quando manda / sem cache)
@@ -33,15 +34,12 @@ export function Request() {
 
   async function handleRequestPassword(data: RequestPasswordForm) {
     try {
-      const { message, response } = await requestPasswordFn({
+      const { url } = await requestPasswordFn({
         email: data.email,
       });
 
-      const { url } = response.data;
       setResetUrl(url);
-
-      // console.log('Reached home.');
-      toast.success(message);
+      toast.success('Link de renovação enviado com sucesso!');
     } catch (err) {
       if (err instanceof RequestPasswordError) {
         toast.error(err.message);
