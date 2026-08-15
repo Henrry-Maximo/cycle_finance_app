@@ -44,7 +44,7 @@ export class RequestResetPasswordUseCase {
       },
     });
 
-    const url = `${env.APP_URL}/reset-password?token=${data.token}`;
+    const url = `${env.APP_URL}/update?token=${data.token}`;
 
     return { url };
   }

@@ -94,7 +94,7 @@ export function Request() {
                 Use o link abaixo!
               </h1>
               <Link
-                to="/update"
+                to={resetUrl}
                 className="text-sm text-blue-500 hover:underline"
               >
                 Clique aqui para redefinir sua senha

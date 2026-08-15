@@ -1,11 +1,53 @@
+import { useMutation } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
-import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { toast } from 'sonner';
+import z from 'zod';
 
+import { updatePassword } from '@/api/update-password';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const resetPasswordForm = z.object({
+  password: z.string().min(6),
+});
+
+type ResetPasswordForm = z.infer<typeof resetPasswordForm>;
+
 export function Update() {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const { register, handleSubmit } = useForm<ResetPasswordForm>();
+
+  const { mutateAsync: updatePasswordFn } = useMutation({
+    mutationFn: updatePassword,
+  });
+
+  async function handleResetPassword(data: ResetPasswordForm) {
+    try {
+      const token = searchParams.get('token');
+      if (!token) {
+        toast.error('Token inválido.');
+        navigate('/request');
+        return;
+      }
+
+      await updatePasswordFn({
+        password: data.password,
+        token,
+      });
+
+      toast.success('A senha foi redefinida com sucesso.');
+      navigate('/sign-in');
+    } catch {
+      toast.error('Error ao redefinir senha.');
+    }
+  }
+
   return (
     <>
       <Helmet title="Confirmação" />
@@ -22,7 +64,10 @@ export function Update() {
             </p>
           </header>
 
-          <form className="flex flex-col gap-6">
+          <form
+            onSubmit={handleSubmit(handleResetPassword)}
+            className="flex flex-col gap-6"
+          >
             <div className="space-y-4">
               <Field className="space-y-2">
                 <div className="flex items-center justify-between">
@@ -31,6 +76,7 @@ export function Update() {
                   </FieldLabel>
                 </div>
                 <Input
+                  {...register('password')}
                   type="password"
                   placeholder="••••••••"
                   className="text-accent-foreground h-11"
