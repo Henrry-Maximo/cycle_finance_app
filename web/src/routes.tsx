@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router-dom';
 
 import { AppLayout } from './pages/_layouts/app';
 import { AuthLayout } from './pages/_layouts/auth';
-import { RootLayout } from './pages/_layouts/root';
 import { NotFound } from './pages/404';
 import { Error } from './pages/500';
 import { Dashboard } from './pages/app/dashboard/dashboard';
@@ -17,65 +16,60 @@ import { ProtectedRoute } from './ProtectedRoute';
 
 export const router = createBrowserRouter([
   {
-    element: <RootLayout />,
+    path: '/',
+    element: <ProtectedRoute />,
+    errorElement: <Error />,
     children: [
       {
         path: '/',
-        element: <ProtectedRoute />,
-        errorElement: <Error />,
+        element: <AppLayout />,
         children: [
           {
             path: '/',
-            element: <AppLayout />,
-            children: [
-              {
-                path: '/',
-                element: <Dashboard />,
-              },
-              {
-                path: '/expenses',
-                element: <Expenses />,
-              },
-              {
-                path: '/scan',
-                element: <Scan />,
-              },
-              {
-                path: '/settings',
-                element: <Settings />,
-              },
-            ],
+            element: <Dashboard />,
+          },
+          {
+            path: '/expenses',
+            element: <Expenses />,
+          },
+          {
+            path: '/scan',
+            element: <Scan />,
+          },
+          {
+            path: '/settings',
+            element: <Settings />,
           },
         ],
-      },
-
-      {
-        path: '/',
-        element: <AuthLayout />,
-        children: [
-          {
-            path: '/sign-in',
-            element: <SignIn />,
-          },
-          {
-            path: '/sign-up',
-            element: <SignUp />,
-          },
-          {
-            path: '/request',
-            element: <Request />,
-          },
-          {
-            path: '/update',
-            element: <Update />,
-          },
-        ],
-      },
-
-      {
-        path: '*',
-        element: <NotFound />,
       },
     ],
+  },
+
+  {
+    path: '/',
+    element: <AuthLayout />,
+    children: [
+      {
+        path: '/sign-in',
+        element: <SignIn />,
+      },
+      {
+        path: '/sign-up',
+        element: <SignUp />,
+      },
+      {
+        path: '/request',
+        element: <Request />,
+      },
+      {
+        path: '/update',
+        element: <Update />,
+      },
+    ],
+  },
+
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
