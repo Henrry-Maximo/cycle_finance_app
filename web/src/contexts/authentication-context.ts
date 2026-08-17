@@ -3,7 +3,6 @@ import { createContext } from 'react';
 interface AuthenticateContextType {
   token: string | null;
   addCurrentTokenSession: (token: string) => void;
-  // setTokenSession: ;
 }
 
 export const AuthenticationContext = createContext(

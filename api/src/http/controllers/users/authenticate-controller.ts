@@ -48,7 +48,7 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
         sameSite: true, // cookie somente acessível dentro do mesmo domínio
         httpOnly: true, // acessado somente pelo backend da aplicação (contexto da requisição/resposta)
       })
-      .status(204)
+      .status(200)
       .send({ token });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
