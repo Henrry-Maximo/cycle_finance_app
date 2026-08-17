@@ -1,6 +1,6 @@
 import { CircleNotchIcon, EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -11,6 +11,7 @@ import { signIn } from '@/api/sign-in';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { AuthenticationContext } from '@/contexts/authentication-context';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signInForm = z.object({
@@ -21,6 +22,7 @@ const signInForm = z.object({
 type SignInForm = z.infer<typeof signInForm>;
 
 export function SignIn() {
+  const { addCurrentTokenSession } = useContext(AuthenticationContext);
   const [showPassword, setShowPassword] = useState(false); // exibir e ocultar a senha
 
   const [searchParams] = useSearchParams(); // obter dados passados via URL
@@ -49,7 +51,9 @@ export function SignIn() {
         password: data.password,
       });
 
-      localStorage.setItem('cycle_finance_api', token);
+      addCurrentTokenSession(token);
+
+      // localStorage.setItem('cycle_finance_api', token);
       // console.log(data);
       // throw new Error('');
       // await new Promise((resolve) => setTimeout(resolve, 2000));

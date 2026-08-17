@@ -5,7 +5,7 @@ import { env } from '@/env';
 // const tokenApi = localStorage.getItem('cycle_finance_api') ?? null;
 export const api = axios.create({
   baseURL: env.VITE_API_URL,
-  withCredentials: true,
+  withCredentials: true, // cookies do frontend enviados automaticamente para o backend (assim o back pode ter acesso ao cookie de autenticação, e determinar se o usuário está logado)
 });
 
 if (env.VITE_ENABLE_API_DELAY) {

@@ -48,10 +48,8 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
         sameSite: true, // cookie somente acessível dentro do mesmo domínio
         httpOnly: true, // acessado somente pelo backend da aplicação (contexto da requisição/resposta)
       })
-      .status(200)
-      .send({
-        token,
-      });
+      .status(204)
+      .send({ token });
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return reply.status(400).send({ message: err.message });
