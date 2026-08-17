@@ -52,7 +52,7 @@ export function SignIn() {
       });
 
       addCurrentTokenSession(token);
-      console.log(token);
+      // console.log(token);
 
       // localStorage.setItem('cycle_finance_api', token);
       // console.log(data);
