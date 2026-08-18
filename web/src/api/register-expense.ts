@@ -8,7 +8,6 @@ interface RegisterExpenseBody {
   source: string;
   price: number;
   card_last_digits: string;
-  user_id: string;
   category_id: string;
 }
 
@@ -20,7 +19,6 @@ export async function registerExpense({
   source,
   price,
   card_last_digits,
-  user_id,
   category_id,
 }: RegisterExpenseBody) {
   try {
@@ -32,7 +30,6 @@ export async function registerExpense({
       source,
       price,
       card_last_digits,
-      user_id,
       category_id,
     });
 

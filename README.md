@@ -100,6 +100,12 @@
 - [x] O administrador pode visualizar todos os usuários;
 - [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata.
 
+### Funcionalidades (FT)
+
+- [x] Autenticação através da memória do React (Context API / Refresh Token - Cookie);
+- [x] Redefinição de senha;
+- [x] Cadastro de despesas do usuário;
+
 ### Cobertura dos Testes Unitários
 
 ![alt text](tests-unit.png)

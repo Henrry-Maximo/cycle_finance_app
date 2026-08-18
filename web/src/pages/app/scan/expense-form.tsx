@@ -1,5 +1,4 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { jwtDecode } from 'jwt-decode';
 import { Controller, useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import z from 'zod';
@@ -32,9 +31,6 @@ const registerExpenseForm = z.object({
 
 type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
 
-interface TokenRegisterExpensePayload {
-  sub: string;
-}
 
 interface Category {
   id: string;
@@ -71,15 +67,6 @@ export function ExpenseForm() {
 
   async function handleRegisterExpense(data: RegisterExpenseForm) {
     try {
-      const token = localStorage.getItem('cycle_finance_api');
-
-      if (!token) {
-        throw new Error('Usuário não identificado.');
-      }
-
-      const decodedToken = jwtDecode<TokenRegisterExpensePayload>(token);
-      const userId = decodedToken.sub;
-
       const { message } = await registerExpenseFn({
         title: data.title,
         enterprise: data.enterprise,
@@ -88,7 +75,6 @@ export function ExpenseForm() {
         source: data.source,
         price: Number(data.price),
         card_last_digits: data.card_last_digits,
-        user_id: userId,
         category_id: data.category_id,
       });
 
