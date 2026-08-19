@@ -118,7 +118,8 @@
 - [ ] Filtro de pesquisa por category na tabela;
 - [ ] Botão de remover filtros (limpar campos / realizar requisição novamente);
 - [ ] Adicionar paginação na tabela de despesas;
-
+- [ ] Personalizar alerta do checkbox (browser);
+- [ ] Upload de comprovante (imagem - arquivo) via form;
 
 ### Cobertura dos Testes Unitários
 

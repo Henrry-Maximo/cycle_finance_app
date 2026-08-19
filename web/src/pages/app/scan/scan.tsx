@@ -5,7 +5,7 @@ import { ExpenseForm } from './expense-form';
 import { UploadFileForm } from './upload-file-form';
 
 export function Scan() {
-  const [isSubmitFileUpload] = useState(true);
+  const [isSubmitFileUpload] = useState(false);
 
   return (
     <>
