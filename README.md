@@ -102,9 +102,23 @@
 
 ### Funcionalidades (FT)
 
-- [x] Autenticação através da memória do React (Context API / Refresh Token - Cookie);
+- [x] Autenticação: dados sensível em memória - CONTEXT API;
 - [x] Redefinição de senha;
-- [x] Cadastro de despesas do usuário;
+- [x] Cadastro de despesas;
+- [ ] Exibição dos dados no gráfico de gasto no período;
+- [ ] Exibição dos dados no gráfico de categorias populares;
+- [ ] Limitar a quantidade de caracteres na exibição do nome do usuário;
+- [ ] Loading para o gráfico de gasto no período;
+- [ ] Loading para o gráfico de categorias populares;
+- [ ] Exibir detalhes da despesa selecionada;
+- [ ] Editar uma despesa;
+- [ ] Confirmação de remoção de despesa;
+- [ ] Filtro de pesquisa por id na tabela;
+- [ ] Filtro de pesquisa por name na tabela;
+- [ ] Filtro de pesquisa por category na tabela;
+- [ ] Botão de remover filtros (limpar campos / realizar requisição novamente);
+- [ ] Adicionar paginação na tabela de despesas;
+
 
 ### Cobertura dos Testes Unitários
 
