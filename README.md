@@ -120,6 +120,7 @@
 - [ ] Adicionar paginação na tabela de despesas;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
+- [x] Preview do comprovante enviado;
 
 ### Cobertura dos Testes Unitários
 
