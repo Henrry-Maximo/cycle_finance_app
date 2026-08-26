@@ -147,10 +147,10 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             .object({
               users: z.array(
                 z.object({
-                  name: z.string(),
                   id: z.string(),
+                  name: z.string(),
                   email: z.string(),
-                  password_hash: z.string(),
+                  // password_hash: z.string(),
                   role: z.enum(["MEMBER", "ADMIN"]),
                   terms_accepted_at: z.date(),
                   terms_version: z.string(),
