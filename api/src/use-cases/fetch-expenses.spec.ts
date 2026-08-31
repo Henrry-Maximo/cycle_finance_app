@@ -36,6 +36,8 @@ describe("Fetch User Expenses History Use Case", () => {
       },
     });
 
+    const today = new Date();
+
     await expensesRepository.create({
       title: "Pães",
       enterprise: "Mercado Ceifa",
@@ -44,7 +46,7 @@ describe("Fetch User Expenses History Use Case", () => {
       source: "Embu das Artes / São Paulo",
       price: 10.6,
       card_last_digits: "2343",
-      created_at: new Date(),
+      created_at: today,
       user: {
         connect: {
           id: userCreated.id,
@@ -65,7 +67,32 @@ describe("Fetch User Expenses History Use Case", () => {
       source: "Embu das Artes / São Paulo",
       price: 5.6,
       card_last_digits: "2343",
-      created_at: new Date(),
+      created_at: today,
+      user: {
+        connect: {
+          id: userCreated.id,
+        },
+      },
+      category: {
+        connect: {
+          id: categoryCreated.id,
+        },
+      },
+    });
+
+    const yasterday = new Date(today.getFullYear(), today.getMonth() - 1, 10);
+    console.log(yasterday);
+    // yasterday.setDate(yasterday.getDate() - 1);
+
+    await expensesRepository.create({
+      title: "Leite",
+      enterprise: "Mercado Ceifa",
+      description: "Café da manhã",
+      cnpj: "123.242.324.23/24",
+      source: "Embu das Artes / São Paulo",
+      price: 5.6,
+      card_last_digits: "2343",
+      created_at: yasterday,
       user: {
         connect: {
           id: userCreated.id,
@@ -82,6 +109,8 @@ describe("Fetch User Expenses History Use Case", () => {
       userId: userCreated.id,
       pageIndex: 1,
     });
+
+    console.log(expenses);
 
     expect(expenses).toHaveLength(2);
   });

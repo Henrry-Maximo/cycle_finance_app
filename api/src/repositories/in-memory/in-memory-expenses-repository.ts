@@ -56,18 +56,21 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     categoryName?: string,
   ) {
     const expenses = this.items
-      .filter((item) => {
-        if (item.user_id !== user_id) return false;
+      .filter((expense) => {
+        if (expense.user_id !== user_id) return false; // if is the same user
 
         if (
           expenseName &&
-          !item.title.toLowerCase().includes(expenseName.toLowerCase())
-        )
+          !expense.title.toLowerCase().includes(expenseName.toLowerCase())
+        ) {
           return false;
+        }
 
-        if (item.created_at < from || item.created_at > to) return false;
+        if (expense.created_at >= from || expense.created_at <= to) {
+          return true;
+        }
 
-        return true;
+        return false;
       })
       .slice((pageIndex - 1) * perPage, pageIndex * perPage);
 
