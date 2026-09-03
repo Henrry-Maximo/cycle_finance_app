@@ -53,20 +53,29 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
     perPage: number,
     pageIndex: number,
     expenseName?: string,
-    categoryName?: string,
+    _categoryName?: string,
   ) {
     const expenses = this.items
       .filter((expense) => {
-        if (expense.user_id !== user_id) return false; // if is the same user
+        // true -> what is the different user -> forwent
+        if (expense.user_id !== user_id) return false;
 
-        if (
-          expenseName &&
-          !expense.title.toLowerCase().includes(expenseName.toLowerCase())
-        ) {
-          return false;
+        // true  -> title NOT contains the text -> forwent
+        // false -> title CONTAINS the text     -> not forwent
+        if (expenseName) {
+          const titleContainsSerch = expense.title
+            .toLowerCase()
+            .includes(expenseName.toLowerCase());
+
+          if (!titleContainsSerch) {
+            return false;
+          }
         }
 
-        if (expense.created_at <= from || expense.created_at >= to) {
+        // true -> if is date outside of period month -> forwent
+        const isOutsidePeriod =
+          expense.created_at < from || expense.created_at > to;
+        if (isOutsidePeriod) {
           return false;
         }
 
