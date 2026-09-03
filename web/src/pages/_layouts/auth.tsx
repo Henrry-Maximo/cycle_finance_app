@@ -10,8 +10,16 @@ export function AuthLayout() {
         {/* <div className="absolute h-80 w-80 bg-blue-600/4- blur-[120px] rounded-full -top-10 -left-10" /> */}
 
         <div className="relative z-10 flex h-full w-full flex-col gap-6 border-r-2 border-blue-600 px-4 py-2">
-          <header>
+          <header className="flex justify-between">
             <p className="text-sm text-zinc-600">Cycle Finance Web.</p>
+            <a
+              href="https://github.com/Henrry-Maximo"
+              target="_blank"
+              className="text-sm text-zinc-600"
+              rel="noreferrer"
+            >
+              Eu, Henrry-Maximo.
+            </a>
           </header>
           <main className="z-10 flex flex-1 flex-col items-center justify-center gap-6">
             <img
@@ -33,7 +41,7 @@ export function AuthLayout() {
                 <WarningCircleIcon className="h-6 w-6" /> Plataforma em
                 Desenvolvimento (Fase Alpha)
               </p>
-              <p className="text-accent mt-1 text-xs">
+              <p className="text-muted-foreground mt-1 text-center text-xs">
                 Este é um ambiente de testes. Os dados cadastrados aqui podem
                 ser limpos ou apagados a qualquer momento devido a manutenções
                 no banco de dados.

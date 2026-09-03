@@ -68,12 +68,12 @@ export function SignUp() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-accent-foreground text-3xl font-semibold tracking-tight">
+            <h1 className="text-accent-foreground p-4 text-3xl font-semibold tracking-tight">
               Cadastre sua conta
             </h1>
             <p className="text-muted-foreground text-sm">
-              Seja bem-vindo! Insira seus dados para criar sua conta e utilizar
-              hoje mesmo.
+              Seja bem-vindo(a)! Informe seus dados para criar sua conta e
+              utilizar hoje mesmo.
             </p>
           </header>
 
@@ -84,12 +84,12 @@ export function SignUp() {
             <div className="space-y-4">
               <Field className="space-y-2">
                 <FieldLabel className="text-accent-foreground font-medium">
-                  Username
+                  Usuário
                 </FieldLabel>
                 <Input
                   {...register('username')}
                   type="text"
-                  placeholder="Henrry"
+                  placeholder="username"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
@@ -101,7 +101,7 @@ export function SignUp() {
                 <Input
                   {...register('email')}
                   type="email"
-                  placeholder="exemplo@email.com"
+                  placeholder="email"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
@@ -134,7 +134,7 @@ export function SignUp() {
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
                     title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                    className="text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors hover:text-white"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
                   >
                     <div className="relative h-4 w-4">
                       <EyeIcon
@@ -158,7 +158,7 @@ export function SignUp() {
 
             <Field orientation="horizontal">
               <Checkbox
-                className="dark:border-accent dark:border-2"
+                className="dark:border-accent ml-4 cursor-pointer dark:border-2"
                 id="terms-checkbox"
                 name="terms-checkbox"
                 required
@@ -166,7 +166,7 @@ export function SignUp() {
               />
               <Label
                 htmlFor="terms-checkbox"
-                className="text-accent-foreground ml-2 text-xs leading-relaxed"
+                className="text-accent-foreground cursor-pointer text-xs leading-relaxed"
               >
                 Ao continuar, você concorda com nossos termos de serviços e
                 política de privacidade.

@@ -58,8 +58,8 @@ export function Request() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-accent-foreground text-3xl font-semibold tracking-tight">
-              Recupere o acesso a sua conta!
+            <h1 className="text-accent-foreground p-4 text-3xl font-semibold tracking-tight">
+              Recupere sua conta!
             </h1>
             <p className="text-muted-foreground text-sm">
               Informe seu e-mail abaixo para receber um link de atulização de
@@ -78,7 +78,7 @@ export function Request() {
               <Input
                 type="email"
                 {...register('email')}
-                placeholder="exemplo@email.com"
+                placeholder="email"
                 className="text-muted-foreground h-11 transition-all focus:ring-blue-600"
               />
             </Field>

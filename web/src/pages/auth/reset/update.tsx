@@ -1,4 +1,6 @@
+import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -20,6 +22,7 @@ type ResetPasswordForm = z.infer<typeof resetPasswordForm>;
 export function Update() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const [showPassword, setShowPassword] = useState(false);
 
   const { register, handleSubmit } = useForm<ResetPasswordForm>();
 
@@ -55,7 +58,7 @@ export function Update() {
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
           <header className="flex flex-col gap-2 text-left">
-            <h1 className="text-accent-foreground text-3xl font-semibold tracking-tight">
+            <h1 className="text-accent-foreground p-4 text-3xl font-semibold tracking-tight">
               Confirme sua nova senha abaixo!
             </h1>
             <p className="text-muted-foreground text-sm">
@@ -89,11 +92,31 @@ export function Update() {
                     Digite a senha novamente
                   </FieldLabel>
                 </div>
-                <Input
-                  type="password"
-                  placeholder="••••••••"
-                  className="text-accent-foreground h-11"
-                />
+                <div className="relative">
+                  <Input
+                    type={showPassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    className="text-accent-foreground h-11"
+                  />
+                  <button
+                    type="button"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-label={
+                      showPassword ? 'Ocultar senha' : 'Mostrar senha'
+                    }
+                    title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
+                  >
+                    <div className="relative h-4 w-4">
+                      <EyeIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
+                      ></EyeIcon>
+                      <EyeSlashIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
+                      ></EyeSlashIcon>
+                    </div>
+                  </button>
+                </div>
               </Field>
             </div>
 

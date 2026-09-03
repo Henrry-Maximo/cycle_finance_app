@@ -8,6 +8,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import { signIn } from '@/api/sign-in';
+import { ThemeToggle } from '@/components/theme/theme-toggle';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
@@ -73,6 +74,9 @@ export function SignIn() {
 
       <main className="flex h-full flex-col items-center justify-center p-8 lg:p-20">
         <div className="flex w-full max-w-100 flex-col gap-8">
+          <div className="ml-auto">
+            <ThemeToggle />
+          </div>
           <header className="flex flex-col gap-2 text-left">
             <h1 className="text-accent-foreground p-4 text-3xl font-semibold tracking-tight">
               Entrar na conta
@@ -94,7 +98,7 @@ export function SignIn() {
                 <Input
                   {...register('email')}
                   type="email"
-                  placeholder="exemplo@email.com"
+                  placeholder="email"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
               </Field>
@@ -127,14 +131,14 @@ export function SignIn() {
                       showPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
                     title={showPassword ? 'Ocultar senha' : 'Mostrar senha'}
-                    className="text-muted-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors hover:text-white"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
                   >
                     <div className="relative h-4 w-4">
                       <EyeIcon
                         className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
                       />
                       <EyeSlashIcon
-                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 -rotate-90 opacity-0'}`}
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
                       />
                     </div>
                   </button>
@@ -145,7 +149,7 @@ export function SignIn() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="flex h-11 w-full flex-row items-center justify-center gap-2 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
+              className="flex h-11 w-full cursor-pointer flex-row items-center justify-center gap-2 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
             >
               {isSubmitting && (
                 <CircleNotchIcon className="h-14 w-14 animate-spin" />
