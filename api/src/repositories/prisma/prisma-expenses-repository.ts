@@ -1,8 +1,8 @@
+import { Expense, Prisma } from "@/generated/prisma/client";
 import { ExpenseCreateInput } from "@/generated/prisma/models";
 import { prisma } from "@/lib/prisma";
 
 import { ExpensesRepository } from "../expenses-repository";
-import { Expense, Prisma } from "@/generated/prisma/client";
 
 export class PrismaExpensesRepository implements ExpensesRepository {
   async create(data: ExpenseCreateInput) {

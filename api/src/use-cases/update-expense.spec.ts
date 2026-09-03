@@ -1,12 +1,13 @@
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { UpdateExpenseUseCase } from "./update-expense";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
 import { CategoryAlreadyInUseError } from "./errors/category-already-in-use-error";
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { UpdateExpenseUseCase } from "./update-expense";
 
 let usersRepository: InMemoryUsersRepository;
 let expensesRepository: InMemoryExpensesRepository;

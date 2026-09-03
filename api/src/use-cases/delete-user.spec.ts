@@ -1,13 +1,13 @@
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 
+import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
+import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/in-memory-reset-password-tokens-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
 import { DeleteUserUseCase } from "./delete-user";
 import { NotAuthorizedError } from "./errors/not-authorized-error";
-import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
-import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
-import { InMemoryResetPasswordTokensRepository } from "@/repositories/in-memory/in-memory-reset-password-tokens-repository";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;

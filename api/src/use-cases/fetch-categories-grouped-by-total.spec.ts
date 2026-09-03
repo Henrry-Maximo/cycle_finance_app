@@ -1,10 +1,12 @@
+import { hash } from "bcryptjs";
+import { beforeEach, describe, expect, it } from "vitest";
+
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
-import { hash } from "bcryptjs";
-import { beforeEach, describe, expect, it } from "vitest";
-import { FetchCategoriesGroupedByTotalUseCase } from "./fetch-categories-grouped-by-total";
+
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { FetchCategoriesGroupedByTotalUseCase } from "./fetch-categories-grouped-by-total";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;

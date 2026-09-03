@@ -1,4 +1,4 @@
-import { hash, compare } from "bcryptjs";
+import { compare,hash } from "bcryptjs";
 
 import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 import { UsersRepository } from "@/repositories/users-repository";

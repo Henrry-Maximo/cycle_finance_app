@@ -1,5 +1,6 @@
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { UsersRepository } from "@/repositories/users-repository";
+
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchExpensesGroupedByDateUseCaseRequest {
@@ -38,7 +39,7 @@ export class FetchExpensesGroupedByDateUseCase {
     const fromStartDate =
       from ?? new Date(now.getFullYear(), now.getMonth(), 1);
     const toEndDate =
-      to ?? new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59); // 1 -> avança um mês, 0 -> volta 1 dia a partir do dia 1, horas/minutos/segundos
+      to ?? new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59); // 1 -> avanï¿½a um mï¿½s, 0 -> volta 1 dia a partir do dia 1, horas/minutos/segundos
 
     const expensesList = await this.expensesRepository.findManyByUserIdInPeriod(
       userId,

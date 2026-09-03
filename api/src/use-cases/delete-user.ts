@@ -1,9 +1,9 @@
+import { CategoriesRepository } from "@/repositories/categories-repository";
+import { ExpensesRepository } from "@/repositories/expenses-repository";
+import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 
 import { NotAuthorizedError } from "./errors/not-authorized-error";
-import { ExpensesRepository } from "@/repositories/expenses-repository";
-import { CategoriesRepository } from "@/repositories/categories-repository";
-import { ResetPasswordTokensRepository } from "@/repositories/reset-password-tokens-repository";
 
 interface DeleteUserUseCaseRequest {
   id: string;

@@ -1,5 +1,6 @@
-import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
 import { PrismaCategoriesRespository } from "@/repositories/prisma/prisma-categories-repository";
+import { PrismaUsersRepository } from "@/repositories/prisma/prisma-users-repository";
+
 import { UpdateCategoryUseCase } from "../update-category";
 
 export function MakeUpdateCategoriesUseCase() {

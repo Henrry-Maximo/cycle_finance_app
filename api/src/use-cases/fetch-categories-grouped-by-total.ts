@@ -1,7 +1,8 @@
 import { CategoriesRepository } from "@/repositories/categories-repository";
-import { UsersRepository } from "@/repositories/users-repository";
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { ExpensesRepository } from "@/repositories/expenses-repository";
+import { UsersRepository } from "@/repositories/users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchCategoriesGroupedByTotalRequest {
   userId: string;

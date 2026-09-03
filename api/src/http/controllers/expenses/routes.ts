@@ -1,16 +1,16 @@
 import { FastifyInstance } from "fastify";
+import z from "zod";
 
 import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
 
+import { analyzeReceiptController } from "./analyze-receipt-controller";
 import { deleteExpense } from "./delete-controller";
+import { fetchExpensesGroupedByDate } from "./fetch-expenses-grouped-by-date-controller";
 import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
-import z from "zod";
-import { analyzeReceiptController } from "./analyze-receipt-controller";
 import { update } from "./update-controller";
-import { fetchExpensesGroupedByDate } from "./fetch-expenses-grouped-by-date-controller";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */

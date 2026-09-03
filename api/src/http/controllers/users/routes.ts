@@ -1,18 +1,19 @@
+import z from "zod";
+
 import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
 import { verifyUserRole } from "@/http/middlewares/verify-user-role";
+import { FastifyTypedInstance } from "@/types";
 
 import { authenticate } from "./authenticate-controller";
+import { deleteUser } from "./delete-user-controller";
 import { fetchUsers } from "./fetch-users-controller";
 import { profile } from "./profile-controller";
+import { refresh } from "./refresh-token-jwt-controller";
 import { register } from "./register-controller";
 import { requestResetPasswordTokens } from "./request-reset-password-controller";
 import { resetPasswordTokens } from "./reset-password-controller";
-import z from "zod";
-import { FastifyTypedInstance } from "@/types";
 import { updateProfile } from "./update-profile-controller";
-import { deleteUser } from "./delete-user-controller";
-import { refresh } from "./refresh-token-jwt-controller";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(

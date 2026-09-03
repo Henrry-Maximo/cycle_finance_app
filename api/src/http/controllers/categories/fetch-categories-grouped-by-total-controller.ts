@@ -1,6 +1,7 @@
+import { FastifyReply, FastifyRequest } from "fastify";
+
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFetchCategoriesGroupedByTotalUseCase } from "@/use-cases/factories/make-fetch-categories-grouped-by-total";
-import { FastifyReply, FastifyRequest } from "fastify";
 
 export async function fetchCategoriesGroupedByTotal(
   req: FastifyRequest,

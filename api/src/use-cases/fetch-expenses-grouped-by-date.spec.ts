@@ -5,8 +5,8 @@ import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory
 import { InMemoryExpensesRepository } from "@/repositories/in-memory/in-memory-expenses-repository";
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 
-import { FetchExpensesGroupedByDateUseCase } from "./fetch-expenses-grouped-by-date";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { FetchExpensesGroupedByDateUseCase } from "./fetch-expenses-grouped-by-date";
 
 let usersRepository: InMemoryUsersRepository;
 let categoriesRepository: InMemoryCategoriesRepository;

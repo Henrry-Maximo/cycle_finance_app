@@ -3,8 +3,8 @@ import z from "zod";
 
 import { ResetPasswordTokenInvalid } from "@/use-cases/errors/reset-password-token-invalid-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
-import { makeResetPassword } from "@/use-cases/factories/make-reset-password-use-case";
 import { ReusingPasswordsIsNotAllowedError } from "@/use-cases/errors/reusing-passwords-is-not-allowed-error";
+import { makeResetPassword } from "@/use-cases/factories/make-reset-password-use-case";
 
 export async function resetPasswordTokens(
   req: FastifyRequest,

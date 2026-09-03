@@ -1,8 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-import { AnalyzeReceiptUseCase } from "./analyze-receipt.use-case";
+import { beforeEach,describe, expect, it, vi } from "vitest";
+
 import { ReceiptAnalyzerProvider } from "../repositories/receipt-analyzer";
-import { InvalidFileTypeError } from "./errors/invalid-file-type-error";
+import { AnalyzeReceiptUseCase } from "./analyze-receipt.use-case";
 import { FileBufferCannotBeEmptyError } from "./errors/file-buffer-cannot-be-empty-error";
+import { InvalidFileTypeError } from "./errors/invalid-file-type-error";
 
 let sut: AnalyzeReceiptUseCase;
 

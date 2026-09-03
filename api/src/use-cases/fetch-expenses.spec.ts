@@ -81,9 +81,6 @@ describe("Fetch User Expenses History Use Case", () => {
     });
 
     const yasterday = new Date(today.getFullYear(), today.getMonth() - 1, 10);
-    console.log(yasterday);
-    // yasterday.setDate(yasterday.getDate() - 1);
-
     await expensesRepository.create({
       title: "Leite",
       enterprise: "Mercado Ceifa",
@@ -109,8 +106,6 @@ describe("Fetch User Expenses History Use Case", () => {
       userId: userCreated.id,
       pageIndex: 1,
     });
-
-    console.log(expenses);
 
     expect(expenses).toHaveLength(2);
   });

@@ -1,12 +1,14 @@
 import { ApiError, type GoogleGenAI } from "@google/genai";
+
+import { ai } from "@/lib/gemini";
+
 import {
   AnalyzeReceiptRequest,
   AnalyzeReceiptResponse,
   ReceiptAnalyzerProvider,
 } from "../../repositories/receipt-analyzer";
-import { ai } from "@/lib/gemini";
-import { RequestPerMinutePerModelFreeError } from "../errors/request-per-minute-per-model-free-error";
 import { ExternalServiceUnavailableError } from "../errors/external-service-unavailable-error";
+import { RequestPerMinutePerModelFreeError } from "../errors/request-per-minute-per-model-free-error";
 
 export class GeminiReceiptAnalyzerProvider implements ReceiptAnalyzerProvider {
   // constructor(private ai: GoogleGenAI) {}

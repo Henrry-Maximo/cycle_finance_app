@@ -1,9 +1,10 @@
 import { hash } from "bcryptjs";
 import { beforeEach, describe, expect, it } from "vitest";
 
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryCategoriesRepository } from "@/repositories/in-memory/in-memory-categories-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+
+import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { UpdateCategoryUseCase } from "./update-category";
 
 let usersRepository: InMemoryUsersRepository;

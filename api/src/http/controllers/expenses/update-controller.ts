@@ -1,9 +1,9 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-
-import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import z from "zod";
-import { MakeUpdateExpensesUseCase } from "@/use-cases/factories/make-update-expenses-use-case";
+
 import { CategoryAlreadyInUseError } from "@/use-cases/errors/category-already-in-use-error";
+import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
+import { MakeUpdateExpensesUseCase } from "@/use-cases/factories/make-update-expenses-use-case";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
   const updateExpensesQuerySchema = z.object({

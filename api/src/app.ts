@@ -1,22 +1,21 @@
+import fastifyCookie from "@fastify/cookie";
 import { fastifyCors } from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
+import fastifyMultipart from "@fastify/multipart";
+import fastifySwagger from "@fastify/swagger";
+import fastifySwaggerUi from "@fastify/swagger-ui";
 import fastify, { FastifyError, FastifyReply, FastifyRequest } from "fastify";
+import {
+  jsonSchemaTransform,
+  serializerCompiler,
+  validatorCompiler,
+  ZodTypeProvider,
+} from "fastify-type-provider-zod";
+import { RateLimiterRes } from "rate-limiter-flexible";
 import z, { ZodError } from "zod";
 
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
-
-import {
-  validatorCompiler,
-  serializerCompiler,
-  ZodTypeProvider,
-  jsonSchemaTransform,
-} from "fastify-type-provider-zod";
-import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
-import { RateLimiterRes } from "rate-limiter-flexible";
-import fastifyMultipart from "@fastify/multipart";
-import fastifyCookie from "@fastify/cookie";
 
 export const app = fastify({
   logger:

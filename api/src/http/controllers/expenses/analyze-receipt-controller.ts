@@ -1,7 +1,8 @@
+import { FastifyReply, FastifyRequest } from "fastify";
+
 import { ExternalServiceUnavailableError } from "@/use-cases/errors/external-service-unavailable-error";
 import { RequestPerMinutePerModelFreeError } from "@/use-cases/errors/request-per-minute-per-model-free-error";
 import { makeAnalyzeReceiptUseCase } from "@/use-cases/factories/make-analyze-receipt-use-case";
-import { FastifyReply, FastifyRequest } from "fastify";
   
 export async function analyzeReceiptController(
   request: FastifyRequest,

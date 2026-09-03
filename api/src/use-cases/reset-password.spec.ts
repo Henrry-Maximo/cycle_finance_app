@@ -9,9 +9,9 @@ import { UsersRepository } from "@/repositories/users-repository";
 
 import { ResetPasswordTokenInvalid } from "./errors/reset-password-token-invalid-error";
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { ReusingPasswordsIsNotAllowedError } from "./errors/reusing-passwords-is-not-allowed-error";
 import { RequestResetPasswordUseCase } from "./request-reset-password";
 import { ResetPasswordUseCase } from "./reset-password";
-import { ReusingPasswordsIsNotAllowedError } from "./errors/reusing-passwords-is-not-allowed-error";
 
 let usersRepository: UsersRepository;
 let resetPasswordTokensRepository: ResetPasswordTokensRepository;

@@ -1,14 +1,14 @@
 import { FastifyInstance } from "fastify";
+import z from "zod";
 
 import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
 
 import { deleteCategory } from "./delete-controller";
+import { fetchCategoriesGroupedByTotal } from "./fetch-categories-grouped-by-total-controller";
 import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
-import z from "zod";
 import { update } from "./update-controller";
-import { fetchCategoriesGroupedByTotal } from "./fetch-categories-grouped-by-total-controller";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */

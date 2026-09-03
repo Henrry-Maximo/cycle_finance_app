@@ -1,9 +1,9 @@
-import { FileBufferCannotBeEmptyError } from "./errors/file-buffer-cannot-be-empty-error";
-import { InvalidFileTypeError } from "./errors/invalid-file-type-error";
 import {
   AnalyzeReceiptResponse,
   ReceiptAnalyzerProvider,
 } from "../repositories/receipt-analyzer";
+import { FileBufferCannotBeEmptyError } from "./errors/file-buffer-cannot-be-empty-error";
+import { InvalidFileTypeError } from "./errors/invalid-file-type-error";
 
 interface AnalyzeReceiptUseCaseRequest {
   fileBuffer: Buffer;
