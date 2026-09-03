@@ -66,11 +66,11 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
           return false;
         }
 
-        if (expense.created_at >= from || expense.created_at <= to) {
-          return true;
+        if (expense.created_at <= from || expense.created_at >= to) {
+          return false;
         }
 
-        return false;
+        return true;
       })
       .slice((pageIndex - 1) * perPage, pageIndex * perPage);
 
