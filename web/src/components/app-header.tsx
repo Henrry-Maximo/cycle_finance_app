@@ -14,6 +14,7 @@ import { NavLink } from './app-nav-link';
 import { useTheme } from './theme/theme-provider';
 import { ThemeToggle } from './theme/theme-toggle';
 import { Separator } from './ui/separator';
+import { SidebarTrigger } from './ui/sidebar';
 
 export function Header() {
   const { addCurrentTokenSession } = useContext(AuthenticationContext);
@@ -37,15 +38,19 @@ export function Header() {
   }
 
   return (
-    <header className="flex h-24 flex-row items-center justify-between border-b px-4 sm:px-12">
+    <header className="flex h-24 w-full flex-row items-center justify-between border-b px-4 sm:px-12">
       <div className="hidden h-full items-center justify-center gap-12 lg:flex">
-        <Link to="/">
-          <img
-            src={currentLogo}
-            className="h-16 w-16"
-            alt="logo cycle finance app"
-          />
-        </Link>
+        <div className="flex items-center justify-center gap-4">
+          <SidebarTrigger className="cursor-pointer" />
+
+          <Link to="/">
+            <img
+              src={currentLogo}
+              className="h-16 w-16"
+              alt="logo cycle finance app"
+            />
+          </Link>
+        </div>
 
         <Separator orientation="vertical" className="h-auto" />
       </div>
