@@ -45,7 +45,7 @@ export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
       .setCookie("refreshToken", refreshToken, {
         path: "/", // todas as rotas podem ler este cookie
         secure: true, // cookie encripitado via HTTPs
-        sameSite: true, // cookie somente acessível dentro do mesmo domínio
+        sameSite: "none", // permite cross-site (Vercel + Render)
         httpOnly: true, // acessado somente pelo backend da aplicação (contexto da requisição/resposta)
       })
       .status(200)
