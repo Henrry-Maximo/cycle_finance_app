@@ -25,9 +25,7 @@ type SignInForm = z.infer<typeof signInForm>;
 export function SignIn() {
   const { addCurrentTokenSession } = useContext(AuthenticationContext);
   const [showPassword, setShowPassword] = useState(false); // exibir e ocultar a senha
-
   const [searchParams] = useSearchParams(); // obter dados passados via URL
-
   const navigate = useNavigate(); // direcionamento
 
   const {

@@ -1,9 +1,13 @@
 import { LaptopIcon, ScanIcon, TableIcon } from '@phosphor-icons/react';
+import { useMutation } from '@tanstack/react-query';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 
+import { logout } from '@/api/logout';
 import logoDark from '@/assets/logo_dark.png';
 import logoWhite from '@/assets/logo_white.png';
+import { AuthenticationContext } from '@/contexts/authentication-context';
 
 import { AccountMenu } from './app-account-menu';
 import { NavLink } from './app-nav-link';
@@ -12,17 +16,20 @@ import { ThemeToggle } from './theme/theme-toggle';
 import { Separator } from './ui/separator';
 
 export function Header() {
+  const { addCurrentTokenSession } = useContext(AuthenticationContext);
   const { theme } = useTheme();
   const navigate = useNavigate();
-
   const currentLogo = theme === 'dark' ? logoDark : logoWhite;
+
+  const { mutateAsync: logoutFn } = useMutation({
+    mutationFn: logout,
+  });
 
   async function handleLogout() {
     try {
-      localStorage.clear();
-
+      logoutFn(); // it request in the back for remove cookie
+      addCurrentTokenSession(''); // delete token
       toast.success('Sessão encerrada.');
-
       navigate(`/sign-in`);
     } catch {
       toast.error('Error ao encerrar sessão do usuário.');
@@ -30,12 +37,12 @@ export function Header() {
   }
 
   return (
-    <header className="flex h-28 flex-row items-center justify-between border-b px-4 sm:px-12">
+    <header className="flex h-24 flex-row items-center justify-between border-b px-4 sm:px-12">
       <div className="hidden h-full items-center justify-center gap-12 lg:flex">
         <Link to="/">
           <img
             src={currentLogo}
-            className="h-24 w-24"
+            className="h-16 w-16"
             alt="logo cycle finance app"
           />
         </Link>
