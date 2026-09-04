@@ -23,6 +23,7 @@ export function Update() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
+  const [showComparePassword, setShowComparePassword] = useState(false);
 
   const { register, handleSubmit } = useForm<ResetPasswordForm>();
 
@@ -78,23 +79,10 @@ export function Update() {
                     Senha
                   </FieldLabel>
                 </div>
-                <Input
-                  {...register('password')}
-                  type="password"
-                  placeholder="••••••••"
-                  className="text-accent-foreground h-11"
-                />
-              </Field>
-
-              <Field className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <FieldLabel className="text-accent-foreground font-medium">
-                    Digite a senha novamente
-                  </FieldLabel>
-                </div>
                 <div className="relative">
                   <Input
                     type={showPassword ? 'text' : 'password'}
+                    {...register('password')}
                     placeholder="••••••••"
                     className="text-accent-foreground h-11"
                   />
@@ -113,6 +101,41 @@ export function Update() {
                       ></EyeIcon>
                       <EyeSlashIcon
                         className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
+                      ></EyeSlashIcon>
+                    </div>
+                  </button>
+                </div>
+              </Field>
+
+              <Field className="space-y-2">
+                <div className="flex items-center justify-between">
+                  <FieldLabel className="text-accent-foreground font-medium">
+                    Digite a senha novamente
+                  </FieldLabel>
+                </div>
+                <div className="relative">
+                  <Input
+                    type={showComparePassword ? 'text' : 'password'}
+                    placeholder="••••••••"
+                    className="text-accent-foreground h-11"
+                  />
+                  <button
+                    type="button"
+                    className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
+                    onClick={() => setShowComparePassword((prev) => !prev)}
+                    aria-label={
+                      showComparePassword ? 'Ocultar senha' : 'Mostrar senha'
+                    }
+                    title={
+                      showComparePassword ? 'Ocultar senha' : 'Mostrar senha'
+                    }
+                  >
+                    <div className="relative h-4 w-4">
+                      <EyeIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showComparePassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
+                      ></EyeIcon>
+                      <EyeSlashIcon
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showComparePassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
                       ></EyeSlashIcon>
                     </div>
                   </button>
