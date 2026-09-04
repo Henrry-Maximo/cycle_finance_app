@@ -14,6 +14,7 @@ import { register } from "./register-controller";
 import { requestResetPasswordTokens } from "./request-reset-password-controller";
 import { resetPasswordTokens } from "./reset-password-controller";
 import { updateProfile } from "./update-profile-controller";
+import { logout } from "./logout-controller";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(
@@ -126,7 +127,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     resetPasswordTokens,
   );
 
-  /* Authenticated */
+  /* Only authenticated */
   app.get(
     "/users",
     {
@@ -205,6 +206,30 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     profile,
   );
 
+  app.post(
+    "/logout",
+    {
+      preHandler: [verifyJWT, rateLimiter],
+      schema: {
+        security: [
+          {
+            bearerAuth: [],
+          },
+        ],
+        tags: ["users"],
+        description: "Logout from user.",
+        response: {
+          200: z
+            .object({
+              message: z.string(),
+            })
+            .describe("Logout from user."),
+        },
+      },
+    },
+    logout,
+  );
+
   app.patch(
     "/me",
     {
@@ -235,7 +260,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     updateProfile,
   );
 
-  // post ou patch: para atualizar uma informação única
+  // updated in a way parcial
   app.patch(
     "/token/refresh",
     {
