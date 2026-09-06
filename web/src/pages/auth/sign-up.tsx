@@ -1,3 +1,4 @@
+import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
 import { useState } from 'react';
@@ -14,11 +15,18 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signUpForm = z.object({
-  username: z.string().min(3).max(18),
-  email: z.email(),
-  password: z.string().min(6),
+  username: z
+    .string()
+    .min(3, 'Username deve ter mais que 3 caracteres.')
+    .max(18, 'Username deve ter no máximo 18 caracteres.')
+    .regex(/^[a-zA-Z0-9_]+$/, 'Somente letras e underline são permitidos.'),
+  email: z.email('Email inválido'),
+  password: z
+    .string()
+    .min(6, 'Senha deve ter no mínimo 4 caracteres.')
+    .max(62, 'Senha deve ter no máximo 32 caracteres.')
+    .regex(/^\S+$/, 'Senha não deve conter espaços.'),
 });
 
 type SignUpForm = z.infer<typeof signUpForm>;
@@ -29,8 +37,10 @@ export function SignUp() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<SignUpForm>();
+    formState: { isSubmitting, errors },
+  } = useForm<SignUpForm>({
+    resolver: zodResolver(signUpForm),
+  });
 
   const { mutateAsync: registerUserFn } = useMutation({
     mutationFn: registerUser,
@@ -92,6 +102,12 @@ export function SignUp() {
                   placeholder="username"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
+
+                {errors.username && (
+                  <span className="text-xs text-red-500">
+                    {errors.username.message}
+                  </span>
+                )}
               </Field>
 
               <Field className="space-y-2">
@@ -104,6 +120,12 @@ export function SignUp() {
                   placeholder="email"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
+
+                {errors.email && (
+                  <span className="text-xs text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </Field>
 
               <Field className="space-y-2">
@@ -146,6 +168,12 @@ export function SignUp() {
                     </div>
                   </button>
                 </div>
+
+                {errors.password && (
+                  <span className="text-xs text-red-500">
+                    {errors.password.message}
+                  </span>
+                )}
               </Field>
             </div>
 

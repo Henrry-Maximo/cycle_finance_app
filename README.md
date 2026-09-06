@@ -105,6 +105,7 @@
 - [x] Autenticação: dados sensível em memória - CONTEXT API;
 - [x] Redefinição de senha;
 - [x] Cadastro de despesas;
+- [ ] Validação de campos com erros;
 - [ ] Exibição dos dados no gráfico de gasto no período;
 - [ ] Exibição dos dados no gráfico de categorias populares;
 - [ ] Limitar a quantidade de caracteres na exibição do nome do usuário;
