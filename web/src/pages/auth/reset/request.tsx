@@ -23,7 +23,7 @@ import { Input } from '@/components/ui/input';
 const requestPasswordForm = z.object({
   email: z
     .email('Email inválido.')
-    .min(1, 'Email dete ter mais que um caracter.')
+    .min(1, 'Email dete ter mais que 1 caracter.')
     .max(72, 'Email deve ter no máximo 72 caracteres.'),
 });
 
@@ -43,7 +43,7 @@ export function Request() {
   const [resetUrl, setResetUrl] = useState<string>();
 
   // modificar dados - mais específico (roda apenas quando manda / sem cache)
-  const { mutateAsync: requestPasswordFn, } = useMutation({
+  const { mutateAsync: requestPasswordFn } = useMutation({
     mutationFn: requestPassword,
   });
 

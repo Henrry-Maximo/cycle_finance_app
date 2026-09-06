@@ -17,7 +17,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signInForm = z.object({
-  email: z.email('Email inválido.'),
+  email: z
+    .email('Email inválido.')
+    .min(1, 'Email dete ter mais que 1 caracter.')
+    .max(72, 'Email deve ter no máximo 72 caracteres.'),
   password: z
     .string()
     .min(6, 'Senha deve ter no mínimo 4 caracteres.')

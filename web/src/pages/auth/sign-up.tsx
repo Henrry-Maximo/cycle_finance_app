@@ -21,7 +21,10 @@ const signUpForm = z.object({
     .min(3, 'Username deve ter mais que 3 caracteres.')
     .max(18, 'Username deve ter no máximo 18 caracteres.')
     .regex(/^[a-zA-Z0-9_]+$/, 'Somente letras e underline são permitidos.'),
-  email: z.email('Email inválido.'),
+  email: z
+    .email('Email inválido.')
+    .min(1, 'Email dete ter mais que 1 caracter.')
+    .max(72, 'Email deve ter no máximo 72 caracteres.'),
   password: z
     .string()
     .min(6, 'Senha deve ter no mínimo 4 caracteres.')
