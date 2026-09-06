@@ -5,7 +5,7 @@ import logoDark from '@/assets/logo_dark.png';
 
 export function AuthLayout() {
   return (
-    <div className="grid h-screen grid-cols-1 antialiased lg:grid-cols-2">
+    <div className="grid h-screen grid-cols-1 overflow-hidden antialiased lg:grid-cols-2">
       <div className="relative hidden flex-col items-center justify-center overflow-hidden bg-zinc-950 lg:flex">
         {/* <div className="absolute h-80 w-80 bg-blue-600/4- blur-[120px] rounded-full -top-10 -left-10" /> */}
 
@@ -59,8 +59,10 @@ export function AuthLayout() {
         </div>
       </div>
 
-      <div className="flex flex-1 flex-col">
-        <Outlet />
+      <div className="h-full overflow-y-auto">
+        <div className="flex min-h-full flex-col items-center justify-center py-2">
+          <Outlet />
+        </div>
       </div>
     </div>
   );
