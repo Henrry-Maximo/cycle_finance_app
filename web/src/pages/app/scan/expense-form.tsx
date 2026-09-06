@@ -16,21 +16,42 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
-  title: z.string().min(1).max(80),
-  description: z.string().min(1).max(240),
-  enterprise: z.string().min(1).max(48),
-  cnpj: z.string().min(1).max(16),
-  source: z.string().min(1).max(48),
-  price: z.string().min(1).max(16),
-  card_last_digits: z.string().min(1).max(3),
+  title: z
+    .string()
+    .min(1, 'O título deve ter mais que 1 caracter.')
+    .max(80, 'O título deve ter no máximo 80 caracteres.'),
+  description: z
+    .string()
+    .min(1, 'A descrição deve ter mais que 1 caracter.')
+    .max(240, 'A descrição deve ter no máximo 240 caracteres.'),
+  enterprise: z
+    .string()
+    .min(1, 'O nome da empresa deve ter mais que 1 caracter.')
+    .max(48, 'O nome da empresa deve ter no máximo 48 caracteres.'),
+  cnpj: z
+    .string()
+    .min(1, 'O CNPJ deve ter mais que 1 caracter.')
+    .max(16, 'O CNPJ deve ter no máximo 16 caracteres'),
+  source: z
+    .string()
+    .min(1, 'O Estado/Município deve ter mais que 1 caracter.')
+    .max(48, 'O Estado/Município deve ter no máximo 48 caracteres.'),
+  price: z
+    .string()
+    .min(1, 'O valor deve ter mais que 1 caracter.')
+    .max(16, 'O valor deve ter no máximo 16 caracteres.'),
+  card_last_digits: z
+    .string()
+    .min(1, 'O digíto do cartão deve ter mais que 1 caracter.')
+    .max(3, 'O digíto do cartão deve ter no máximo 3 caracteres.'),
   category_id: z.string().min(1),
 });
 
 type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
-
 
 interface Category {
   id: string;
@@ -49,8 +70,9 @@ export function ExpenseForm() {
     register,
     handleSubmit,
     control,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors },
   } = useForm<RegisterExpenseForm>({
+    resolver: zodResolver(registerExpenseForm),
     defaultValues: {
       category_id: '',
     },
