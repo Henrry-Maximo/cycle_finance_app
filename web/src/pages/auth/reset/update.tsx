@@ -11,11 +11,26 @@ import { updatePassword } from '@/api/update-password';
 import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const resetPasswordForm = z.object({
-  password: z.string().min(6),
-});
+const resetPasswordForm = z
+  .object({
+    password: z
+      .string()
+      .min(6, 'Senha deve ter no mínimo 4 caracteres.')
+      .max(62, 'Senha deve ter no máximo 32 caracteres.')
+      .regex(/^\S+$/, 'Senha não deve conter espaços.'),
+    confirmPassword: z
+      .string()
+      .min(6, 'Senha deve ter no mínimo 4 caracteres.')
+      .max(62, 'Senha deve ter no máximo 32 caracteres.')
+      .regex(/^\S+$/, 'Senha não deve conter espaços.'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Senhas não conferem.',
+    path: ['confirmPassword'],
+  });
 
 type ResetPasswordForm = z.infer<typeof resetPasswordForm>;
 
@@ -23,9 +38,15 @@ export function Update() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const [showPassword, setShowPassword] = useState(false);
-  const [showComparePassword, setShowComparePassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { register, handleSubmit } = useForm<ResetPasswordForm>();
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+  } = useForm<ResetPasswordForm>({
+    resolver: zodResolver(resetPasswordForm),
+  });
 
   const { mutateAsync: updatePasswordFn } = useMutation({
     mutationFn: updatePassword,
@@ -105,6 +126,12 @@ export function Update() {
                     </div>
                   </button>
                 </div>
+
+                {errors.password && (
+                  <span className="text-xs text-red-500">
+                    {errors.password.message}
+                  </span>
+                )}
               </Field>
 
               <Field className="space-y-2">
@@ -115,35 +142,45 @@ export function Update() {
                 </div>
                 <div className="relative">
                   <Input
-                    type={showComparePassword ? 'text' : 'password'}
+                    {...register('confirmPassword')}
+                    type={showConfirmPassword ? 'text' : 'password'}
                     placeholder="••••••••"
                     className="text-accent-foreground h-11"
                   />
                   <button
                     type="button"
                     className="text-muted-foreground hover:text-foreground absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer transition-colors"
-                    onClick={() => setShowComparePassword((prev) => !prev)}
+                    onClick={() => setShowConfirmPassword((prev) => !prev)}
                     aria-label={
-                      showComparePassword ? 'Ocultar senha' : 'Mostrar senha'
+                      showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
                     title={
-                      showComparePassword ? 'Ocultar senha' : 'Mostrar senha'
+                      showConfirmPassword ? 'Ocultar senha' : 'Mostrar senha'
                     }
                   >
                     <div className="relative h-4 w-4">
                       <EyeIcon
-                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showComparePassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showConfirmPassword ? 'scale-50 rotate-90 opacity-0' : 'scale-100 rotate-0 opacity-100'}`}
                       ></EyeIcon>
                       <EyeSlashIcon
-                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showComparePassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
+                        className={`absolute inset-0 h-4 w-4 transition-all duration-200 ${showConfirmPassword ? 'scale-100 rotate-0 opacity-100' : 'scale-50 rotate-90 opacity-0'}`}
                       ></EyeSlashIcon>
                     </div>
                   </button>
                 </div>
+
+                {errors.confirmPassword && (
+                  <span className="text-xs text-red-500">
+                    {errors.confirmPassword.message}
+                  </span>
+                )}
               </Field>
             </div>
 
-            <Button className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600">
+            <Button
+              disabled={isSubmitting}
+              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
+            >
               Confirmar
             </Button>
           </form>

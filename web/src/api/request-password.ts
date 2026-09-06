@@ -14,20 +14,20 @@ interface RequestPasswordResponse {
 export async function requestPassword({
   email,
 }: RequestPassword): Promise<RequestPasswordResponse> {
-  try {
-    const { data, status } = await api.post<{ url: string }>(
-      '/reset-password/request',
-      {
-        email,
-      },
-    );
+  const { data, status } = await api.post<{ url: string }>(
+    '/reset-password/request',
+    {
+      email,
+    },
+  );
 
-    if (status !== 200) {
-      throw new RequestPasswordError();
-    }
+  if (status === 404) {
+    throw new RequestPasswordError();
+  }
 
-    return { url: data.url };
-  } catch {
+  if (status === 500) {
     throw new RequestPasswordFetchError();
   }
+
+  return { url: data.url };
 }

@@ -13,11 +13,16 @@ import { Button } from '@/components/ui/button';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { AuthenticationContext } from '@/contexts/authentication-context';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signInForm = z.object({
-  email: z.email(),
-  password: z.string().min(6),
+  email: z.email('Email inválido.'),
+  password: z
+    .string()
+    .min(6, 'Senha deve ter no mínimo 4 caracteres.')
+    .max(62, 'Senha deve ter no máximo 32 caracteres.')
+    .regex(/^\S+$/, 'Senha não deve conter espaços.'),
 });
 
 type SignInForm = z.infer<typeof signInForm>;
@@ -31,8 +36,9 @@ export function SignIn() {
   const {
     register, // registrar inputs
     handleSubmit, // capturar formulário
-    formState: { isSubmitting }, // estados do formulário
+    formState: { isSubmitting, errors }, // estados do formulário
   } = useForm<SignInForm>({
+    resolver: zodResolver(signInForm),
     defaultValues: {
       email: searchParams.get('email') ?? '', // buscar por email após cadastro
     },
@@ -99,6 +105,11 @@ export function SignIn() {
                   placeholder="email"
                   className="text-accent-foreground h-11 transition-all focus:ring-blue-600"
                 />
+                {errors.email && (
+                  <span className="text-xs text-red-500">
+                    {errors.email.message}
+                  </span>
+                )}
               </Field>
 
               <Field className="space-y-2">
@@ -141,6 +152,12 @@ export function SignIn() {
                     </div>
                   </button>
                 </div>
+
+                {errors.password && (
+                  <span className="text-xs text-red-500">
+                    {errors.password.message}
+                  </span>
+                )}
               </Field>
             </div>
 
