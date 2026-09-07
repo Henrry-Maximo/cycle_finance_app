@@ -183,13 +183,14 @@ export function SignUp() {
             <Button
               className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
               disabled={isSubmitting}
+              type="submit"
             >
               Cadastrar conta
             </Button>
 
             <Field orientation="horizontal">
               <Checkbox
-                className="dark:border-accent ml-4 cursor-pointer dark:border-2"
+                className="dark:border-accent cursor-pointer dark:border-2"
                 id="terms-checkbox"
                 name="terms-checkbox"
                 required

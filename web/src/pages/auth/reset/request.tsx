@@ -49,6 +49,7 @@ export function Request() {
 
   async function handleRequestPassword(data: RequestPasswordForm) {
     try {
+      setResetUrl('');
       const { url } = await requestPasswordFn({
         email: data.email,
       });
