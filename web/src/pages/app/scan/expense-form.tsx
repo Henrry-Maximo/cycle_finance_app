@@ -35,7 +35,7 @@ const registerExpenseForm = z.object({
   cnpj: z
     .string()
     .min(1, 'O CNPJ deve ter mais que 1 caracter.')
-    .max(16, 'O CNPJ deve ter no máximo 16 caracteres'),
+    .max(22, 'O CNPJ deve ter no máximo 16 caracteres.'),
   source: z
     .string()
     .min(1, 'O Estado/Município deve ter mais que 1 caracter.')
@@ -48,7 +48,7 @@ const registerExpenseForm = z.object({
     .string()
     .min(1, 'O digíto do cartão deve ter mais que 1 caracter.')
     .max(3, 'O digíto do cartão deve ter no máximo 3 caracteres.'),
-  category_id: z.string().min(1),
+  category_id: z.string().min(1, 'Uma categoria deve ser selecionada.'),
 });
 
 type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
@@ -127,22 +127,32 @@ export function ExpenseForm() {
               placeholder="Digite o nome do produto(s)"
               disabled={isSubmitting}
             />
+            {errors.title && (
+              <span className="text-xs text-red-500">
+                {errors.title.message}
+              </span>
+            )}
           </Field>
 
           <Field>
             <FieldLabel
-              {...register('description')}
               htmlFor="description"
               className="text-foreground px-2 align-middle text-lg font-medium whitespace-break-spaces"
             >
               Descrição
             </FieldLabel>
             <Input
+              {...register('description')}
               id="description"
               type="text"
               placeholder="Digite uma descrição para a despesa"
               disabled={isSubmitting}
             />
+            {errors.description && (
+              <span className="text-xs text-red-500">
+                {errors.description.message}
+              </span>
+            )}
           </Field>
         </Card>
 
@@ -166,6 +176,11 @@ export function ExpenseForm() {
             <FieldDescription>
               Empresa obtida através do comprovante
             </FieldDescription>
+            {errors.enterprise && (
+              <span className="text-xs text-red-500">
+                {errors.enterprise.message}
+              </span>
+            )}
           </Field>
 
           <Field>
@@ -186,6 +201,9 @@ export function ExpenseForm() {
               CNPJ obtido através do comprovante
             </FieldDescription>
           </Field>
+          {errors.cnpj && (
+            <span className="text-xs text-red-500">{errors.cnpj.message}</span>
+          )}
         </Card>
 
         <Card className="flex w-full flex-col gap-8 px-4 md:grid md:grid-cols-5">
@@ -206,6 +224,12 @@ export function ExpenseForm() {
             <FieldDescription>
               Localização obtida através do comprovante
             </FieldDescription>
+
+            {errors.source && (
+              <span className="text-xs text-red-500">
+                {errors.source.message}
+              </span>
+            )}
           </Field>
 
           <Field className="md:col-span-2">
@@ -225,6 +249,11 @@ export function ExpenseForm() {
             <FieldDescription>
               Preço obtido através do comprovante
             </FieldDescription>
+            {errors.price && (
+              <span className="text-xs text-red-500">
+                {errors.price.message}
+              </span>
+            )}
           </Field>
 
           <Field className="md:col-span-1">
@@ -244,6 +273,11 @@ export function ExpenseForm() {
             <FieldDescription>
               Digítos do cartão obtido através do comprovante
             </FieldDescription>
+            {errors.card_last_digits && (
+              <span className="text-xs text-red-500">
+                {errors.card_last_digits.message}
+              </span>
+            )}
           </Field>
         </Card>
 
@@ -295,6 +329,12 @@ export function ExpenseForm() {
                 (é necessário realizar o cadastro com antecedência).
               </span>
             </FieldDescription>
+
+            {errors.category_id && (
+              <span className="text-xs text-red-500">
+                {errors.category_id.message}
+              </span>
+            )}
           </Field>
         </Card>
 
@@ -302,6 +342,7 @@ export function ExpenseForm() {
           <div className="flex flex-col items-center justify-center gap-2 md:grid md:grid-cols-2">
             <Button
               type="submit"
+              // disabled={isSubmitting}
               className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
             >
               Cadastrar Despesa
