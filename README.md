@@ -105,12 +105,14 @@
 - [x] Autenticação: dados sensível em memória - CONTEXT API;
 - [x] Redefinição de senha;
 - [x] Cadastro de despesas;
-- [ ] Validação de campos com erros;
+- [x] Validação de campos com erros;
+- [x] Tratamento de campo price;
+- [ ] Adicionar sidebar com botão de categoria;
 - [ ] Exibição dos dados no gráfico de gasto no período;
 - [ ] Exibição dos dados no gráfico de categorias populares;
-- [ ] Limitar a quantidade de caracteres na exibição do nome do usuário;
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
+- [ ] Limitar a quantidade de caracteres na exibição do nome do usuário;
 - [ ] Exibir detalhes da despesa selecionada;
 - [ ] Editar uma despesa;
 - [ ] Confirmação de remoção de despesa;

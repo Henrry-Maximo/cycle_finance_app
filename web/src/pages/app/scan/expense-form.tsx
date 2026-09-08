@@ -42,8 +42,19 @@ const registerExpenseForm = z.object({
     .max(48, 'O Estado/Município deve ter no máximo 48 caracteres.'),
   price: z
     .string()
-    .min(1, 'O valor deve ter mais que 1 caracter.')
-    .max(16, 'O valor deve ter no máximo 16 caracteres.'),
+    .min(1, 'O preço é obrigatório.')
+    .max(16, 'O valor deve ter no máximo 16 caracteres.')
+    .transform((val) => {
+      const cleanValue = val
+        .replace(/R\$\s?/, '')
+        .replace(/\./g, '')
+        .replace(',', '.')
+        .trim();
+
+      return Number(cleanValue);
+    })
+    .refine((val) => !isNaN(val), 'Insira um número válido.')
+    .refine((val) => val > 0, 'O preço deve ser maior que zero.'),
   card_last_digits: z
     .string()
     .min(1, 'O digíto do cartão deve ter mais que 1 caracter.')
@@ -51,7 +62,9 @@ const registerExpenseForm = z.object({
   category_id: z.string().min(1, 'Uma categoria deve ser selecionada.'),
 });
 
-type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
+// type RegisterExpenseForm = z.infer<typeof registerExpenseForm>;
+type RegisterExpenseFormInput = z.input<typeof registerExpenseForm>;
+type RegisterExpenseFormOutput = z.output<typeof registerExpenseForm>;
 
 interface Category {
   id: string;
@@ -71,7 +84,7 @@ export function ExpenseForm() {
     handleSubmit,
     control,
     formState: { isSubmitting, errors },
-  } = useForm<RegisterExpenseForm>({
+  } = useForm<RegisterExpenseFormInput, unknown, RegisterExpenseFormOutput>({
     resolver: zodResolver(registerExpenseForm),
     defaultValues: {
       category_id: '',
@@ -87,7 +100,7 @@ export function ExpenseForm() {
     queryFn: getCategoriesUser,
   });
 
-  async function handleRegisterExpense(data: RegisterExpenseForm) {
+  async function handleRegisterExpense(data: RegisterExpenseFormOutput) {
     try {
       const { message } = await registerExpenseFn({
         title: data.title,
@@ -95,7 +108,7 @@ export function ExpenseForm() {
         description: data.description,
         cnpj: data.cnpj,
         source: data.source,
-        price: Number(data.price),
+        price: data.price,
         card_last_digits: data.card_last_digits,
         category_id: data.category_id,
       });
@@ -200,10 +213,12 @@ export function ExpenseForm() {
             <FieldDescription>
               CNPJ obtido através do comprovante
             </FieldDescription>
+            {errors.cnpj && (
+              <span className="text-xs text-red-500">
+                {errors.cnpj.message}
+              </span>
+            )}
           </Field>
-          {errors.cnpj && (
-            <span className="text-xs text-red-500">{errors.cnpj.message}</span>
-          )}
         </Card>
 
         <Card className="flex w-full flex-col gap-8 px-4 md:grid md:grid-cols-5">
@@ -239,13 +254,19 @@ export function ExpenseForm() {
             >
               Preço
             </FieldLabel>
-            <Input
-              {...register('price')}
-              id="price"
-              type="text"
-              placeholder="Digite o valor da despesa"
-              disabled={isSubmitting}
-            />
+            <div className="relative">
+              <span className="absolute top-1/2 left-3 -translate-y-1/2 transition-colors">
+                R$
+              </span>
+              <Input
+                {...register('price')}
+                id="price"
+                type="text"
+                className="pl-8"
+                placeholder="0,00"
+                disabled={isSubmitting}
+              />
+            </div>
             <FieldDescription>
               Preço obtido através do comprovante
             </FieldDescription>

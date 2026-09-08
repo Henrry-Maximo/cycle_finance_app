@@ -105,7 +105,7 @@ export function Update() {
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
                     placeholder="••••••••"
-                    className="text-accent-foreground h-11"
+                    className="text-accent-foreground h-11 pr-10"
                   />
                   <button
                     type="button"
@@ -145,7 +145,7 @@ export function Update() {
                     {...register('confirmPassword')}
                     type={showConfirmPassword ? 'text' : 'password'}
                     placeholder="••••••••"
-                    className="text-accent-foreground h-11"
+                    className="text-accent-foreground h-11 pr-10"
                   />
                   <button
                     type="button"

@@ -150,7 +150,7 @@ export function SignUp() {
                     type={showPassword ? 'text' : 'password'}
                     {...register('password')}
                     placeholder="••••••••"
-                    className="text-accent-foreground h-11"
+                    className="text-accent-foreground h-11 pr-10"
                   />
                   <button
                     type="button"
