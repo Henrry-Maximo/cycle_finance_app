@@ -16,9 +16,10 @@ import {
 
 import { Button } from './ui/button';
 import { Dialog, DialogTrigger } from './ui/dialog';
-import { DropdownMenu } from './ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuItem } from './ui/dropdown-menu';
 import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
+import { StoreCategoriesDialog } from './app-store-categories-dialog';
 
 export function AppSidebar() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
@@ -31,20 +32,7 @@ export function AppSidebar() {
     <Dialog>
       <Sidebar className="border-r-2 border-blue-400">
         <SidebarHeader>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <DropdownMenu>
-                {/* <DropdownMenuTrigger asChild>
-              </DropdownMenuTrigger> */}
-                <SidebarMenuButton>Menu</SidebarMenuButton>
-                {/* <DropdownMenuContent className="w-[--radix-popper-anchor-width]">
-                <DropdownMenuItem>
-                  <span>Acme Inc</span>
-                </DropdownMenuItem>
-              </DropdownMenuContent> */}
-              </DropdownMenu>
-            </SidebarMenuItem>
-          </SidebarMenu>
+          <SidebarMenu>Menu</SidebarMenu>
         </SidebarHeader>
 
         <SidebarContent>
@@ -62,19 +50,23 @@ export function AppSidebar() {
             </DialogTrigger>
           </SidebarGroup> */}
           <SidebarGroup>
-            <SidebarGroupLabel>
-              <DialogTrigger asChild>
-                <Button
-                  variant="ghost"
-                  className="w-full cursor-pointer justify-start"
-                >
-                  <ListIcon className="mr-2 h-4 w-4" />
-                  <span>Minhas Categorias</span>
-                </Button>
-              </DialogTrigger>
-            </SidebarGroupLabel>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <DialogTrigger asChild>
+                  <SidebarMenuButton>
+                    <Button
+                      variant="ghost"
+                      className="w-full cursor-pointer justify-start"
+                    >
+                      <ListIcon className="mr-2 h-4 w-4" />
+                      <span>Minhas Categorias</span>
+                    </Button>
+                  </SidebarMenuButton>
+                </DialogTrigger>
+              </SidebarMenuItem>
+            </SidebarMenu>
 
-            <SidebarGroupLabel>
+            {/* <SidebarGroupLabel>
               <DialogTrigger asChild>
                 <Button
                   variant="ghost"
@@ -84,7 +76,7 @@ export function AppSidebar() {
                   <span>Meus uploads</span>
                 </Button>
               </DialogTrigger>
-            </SidebarGroupLabel>
+            </SidebarGroupLabel> */}
 
             {/* <SidebarGroupAction>
               <Plus /> <span className="sr-only">Add Project</span>
@@ -127,6 +119,8 @@ export function AppSidebar() {
           </footer>
         </SidebarFooter>
       </Sidebar>
+
+      <StoreCategoriesDialog />
     </Dialog>
   );
 }

@@ -78,20 +78,20 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
           <DropdownMenuSeparator />
 
           <DialogTrigger asChild>
-            <DropdownMenuItem className="cursor-pointer" asChild>
-              <Button
-                variant="ghost"
-                className="w-full cursor-pointer justify-start"
-              >
-                <ListIcon className="mr-2 h-4 w-4" />
-                <span>Categoria</span>
-              </Button>
+            {/* <DropdownMenuItem className="cursor-pointer" asChild> */}
+            <Button
+              variant="ghost"
+              className="w-full cursor-pointer justify-start"
+            >
+              <ListIcon className="mr-2 h-4 w-4" />
+              <span>Categoria</span>
+            </Button>
 
-              {/* <Link to="/settings">
+            {/* <Link to="/settings">
             <GearIcon className="mr-2 h-4 w-4" />
             <span>Configurações</span>
             </Link> */}
-            </DropdownMenuItem>
+            {/* </DropdownMenuItem> */}
           </DialogTrigger>
 
           <DropdownMenuItem className="cursor-pointer" asChild>
