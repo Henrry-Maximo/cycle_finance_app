@@ -10,7 +10,7 @@ import {
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem
+  SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
 import { Button } from './ui/button';
@@ -28,10 +28,12 @@ export function AppSidebar() {
 
   return (
     <Dialog>
-      <Sidebar className="border-r-2 border-blue-400">
-        <SidebarHeader>
+      <Sidebar className="border-gay-400 border-r-2">
+        <SidebarHeader className="pl-4">
           <SidebarMenu>Menu</SidebarMenu>
         </SidebarHeader>
+
+        <Separator />
 
         <SidebarContent>
           {/* <SidebarGroup>
