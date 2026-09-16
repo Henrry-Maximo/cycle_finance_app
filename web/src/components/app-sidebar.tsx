@@ -1,4 +1,4 @@
-import { File, ListIcon, UserCircleIcon } from '@phosphor-icons/react';
+import { ListIcon, UserCircleIcon } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -7,16 +7,14 @@ import {
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
-  SidebarMenuItem,
+  SidebarMenuItem
 } from '@/components/ui/sidebar';
 
 import { Button } from './ui/button';
 import { Dialog, DialogTrigger } from './ui/dialog';
-import { DropdownMenu, DropdownMenuItem } from './ui/dropdown-menu';
 import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import { StoreCategoriesDialog } from './app-store-categories-dialog';

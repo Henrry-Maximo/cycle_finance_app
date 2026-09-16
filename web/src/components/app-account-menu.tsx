@@ -35,89 +35,68 @@ export function AccountMenu({ handleLogout }: AccountMenuProps) {
   });
 
   return (
-    <Dialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild className="cursor-pointer">
-          <Button
-            variant="outline"
-            className="flex items-center gap-2 select-none"
-          >
-            {isLoadingProfile ? (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild className="cursor-pointer">
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 select-none"
+        >
+          {isLoadingProfile ? (
+            <Skeleton className="h-4 w-32" />
+          ) : (
+            <>
+              <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
+                {profile?.name
+                  .split('-')
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(' ')}
+              </span>
+              <ArrowDownLeftIcon className="h-4 w-4" />
+            </>
+          )}
+        </Button>
+      </DropdownMenuTrigger>
+
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel className="flex flex-col">
+          {isLoadingProfile ? (
+            <div className="space-y-1.5">
               <Skeleton className="h-4 w-32" />
-            ) : (
-              <>
-                <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
-                  {profile?.name
-                    .split('-')
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(' ')}
-                </span>
-                <ArrowDownLeftIcon className="h-4 w-4" />
-              </>
-            )}
-          </Button>
-        </DropdownMenuTrigger>
+              <Skeleton className="h-3 w-24" />
+            </div>
+          ) : (
+            <>
+              <span>{profile?.name}</span>
+              <span className="text-muted-foreground text-xs font-normal">
+                {profile?.email}
+              </span>
+            </>
+          )}
+        </DropdownMenuLabel>
 
-        <DropdownMenuContent align="end" className="w-56">
-          <DropdownMenuLabel className="flex flex-col">
-            {isLoadingProfile ? (
-              <div className="space-y-1.5">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-3 w-24" />
-              </div>
-            ) : (
-              <>
-                <span>{profile?.name}</span>
-                <span className="text-muted-foreground text-xs font-normal">
-                  {profile?.email}
-                </span>
-              </>
-            )}
-          </DropdownMenuLabel>
+        <DropdownMenuSeparator />
 
-          <DropdownMenuSeparator />
-
-          <DialogTrigger asChild>
-            {/* <DropdownMenuItem className="cursor-pointer" asChild> */}
-            <Button
-              variant="ghost"
-              className="w-full cursor-pointer justify-start"
-            >
-              <ListIcon className="mr-2 h-4 w-4" />
-              <span>Categoria</span>
-            </Button>
-
-            {/* <Link to="/settings">
+        <DropdownMenuItem className="cursor-pointer" asChild>
+          <Link to="/settings">
             <GearIcon className="mr-2 h-4 w-4" />
             <span>Configurações</span>
-            </Link> */}
-            {/* </DropdownMenuItem> */}
-          </DialogTrigger>
+          </Link>
+        </DropdownMenuItem>
 
-          <DropdownMenuItem className="cursor-pointer" asChild>
-            <Link to="/settings">
-              <GearIcon className="mr-2 h-4 w-4" />
-              <span>Configurações</span>
-            </Link>
-          </DropdownMenuItem>
-
-          <DropdownMenuItem
-            asChild
-            className="cursor-pointer text-rose-500 dark:text-rose-400"
+        <DropdownMenuItem
+          asChild
+          className="cursor-pointer text-rose-500 dark:text-rose-400"
+        >
+          <Button
+            variant="ghost"
+            className="w-full justify-start"
+            onClick={handleLogout}
           >
-            <Button
-              variant="ghost"
-              className="w-full justify-start"
-              onClick={handleLogout}
-            >
-              <SignOutIcon className="mr-2 h-4 w-4" />
-              <span>Sair</span>
-            </Button>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <StoreCategoriesDialog />
-    </Dialog>
+            <SignOutIcon className="mr-2 h-4 w-4" />
+            <span>Sair</span>
+          </Button>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
