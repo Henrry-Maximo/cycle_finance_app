@@ -59,7 +59,7 @@ export function AppSidebar() {
                       className="w-full cursor-pointer justify-start"
                     >
                       <ListIcon className="mr-2 h-4 w-4" />
-                      <span>Minhas Categorias</span>
+                      <span>Categorias</span>
                     </Button>
                   </SidebarMenuButton>
                 </DialogTrigger>
