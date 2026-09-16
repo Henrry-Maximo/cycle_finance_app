@@ -115,7 +115,7 @@
 - [x] Limitar a quantidade de caracteres na exibição do nome do usuário;
 - [ ] Exibir detalhes da despesa selecionada;
 - [ ] Editar uma despesa;
-- [ ] Confirmação de remoção de despesa;
+- [x] Confirmação de remoção de despesa;
 - [ ] Filtro de pesquisa por id na tabela;
 - [ ] Filtro de pesquisa por name na tabela;
 - [ ] Filtro de pesquisa por category na tabela;
