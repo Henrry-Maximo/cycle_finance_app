@@ -11,6 +11,7 @@ import { getCategoriesUser } from '@/api/get-categories-user';
 import { registerCategory } from '@/api/register-category';
 import { Button } from '@/components/ui/button';
 import {
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -30,6 +31,7 @@ import {
 } from '@/components/ui/table';
 
 import { Textarea } from './ui/textarea';
+import { Separator } from './ui/separator';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const storeCategoriesSchema = z.object({
@@ -144,17 +146,24 @@ export function StoreCategoriesDialog() {
               <PencilIcon className="h-3 w-3" />
               <span>Cadastrar</span>
             </Button>
-            <Button
-              variant="ghost"
-              size="default"
-              className="cursor-pointer"
-              type="button"
-            >
-              <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-              <span className="text-rose-500 dark:text-rose-400">Cancelar</span>
-            </Button>
+            <DialogClose asChild>
+              <Button
+                variant="ghost"
+                size="default"
+                className="cursor-pointer"
+                disabled={isSubmitting}
+                type="button"
+              >
+                <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+                <span className="text-rose-500 dark:text-rose-400">
+                  Cancelar
+                </span>
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </form>
+
+        <Separator />
 
         <div className="space-y-6">
           <DialogHeader>

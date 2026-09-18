@@ -19,7 +19,14 @@ import { Separator } from './ui/separator';
 import { Skeleton } from './ui/skeleton';
 import { StoreCategoriesDialog } from './app-store-categories-dialog';
 
+import logoDark from '@/assets/logo_dark.png';
+import logoWhite from '@/assets/logo_white.png';
+import { useTheme } from './theme/theme-provider';
+
 export function AppSidebar() {
+  const { theme } = useTheme();
+  const currentLogo = theme === 'dark' ? logoDark : logoWhite;
+
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['profile'], // chave identificadora da requisição (assim utiliza o cache)
     queryFn: getProfileUser, // dados
@@ -29,8 +36,12 @@ export function AppSidebar() {
   return (
     <Dialog>
       <Sidebar className="border-gay-400 border-r-2">
-        <SidebarHeader className="pl-4">
-          <SidebarMenu>Menu</SidebarMenu>
+        <SidebarHeader className="pt-4 pb-2 pl-4">
+          <img
+            src={currentLogo}
+            className="h-24 w-24"
+            alt="logo cycle finance app"
+          />
         </SidebarHeader>
 
         <Separator />
@@ -86,7 +97,7 @@ export function AppSidebar() {
         </SidebarContent>
 
         <SidebarFooter>
-          <SidebarMenu>
+          <SidebarMenu className="flex gap-2">
             <SidebarMenuItem className="flex items-center justify-center">
               <SidebarMenuButton>
                 <UserCircleIcon />
