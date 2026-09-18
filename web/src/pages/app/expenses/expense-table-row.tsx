@@ -61,7 +61,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
             </Button>
           </DialogTrigger>
 
-          <ExpenseDetails />
+          <ExpenseDetails key={expense.id} expense={expense} />
         </Dialog>
       </TableCell>
       <TableCell className="w-2 truncate font-mono text-xs font-medium">

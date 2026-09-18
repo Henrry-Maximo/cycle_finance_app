@@ -1,17 +1,14 @@
 import {
   ArrowDownLeftIcon,
   GearIcon,
-  ListIcon,
   SignOutIcon,
 } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
 import { getProfileUser } from '@/api/get-profile-user';
-import { StoreCategoriesDialog } from '@/components/app-store-categories-dialog';
 
 import { Button } from './ui/button';
-import { Dialog, DialogTrigger } from './ui/dialog';
 import {
   DropdownMenu,
   DropdownMenuContent,

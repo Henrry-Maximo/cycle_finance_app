@@ -1,4 +1,9 @@
-import { ListIcon, UserCircleIcon } from '@phosphor-icons/react';
+import {
+  ListIcon,
+  SquaresFourIcon,
+  TagIcon,
+  UserCircleIcon,
+} from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -69,7 +74,7 @@ export function AppSidebar() {
                       variant="ghost"
                       className="w-full cursor-pointer justify-start"
                     >
-                      <ListIcon className="mr-2 h-4 w-4" />
+                      <TagIcon className="mr-2 h-4 w-4" />
                       <span>Categorias</span>
                     </Button>
                   </SidebarMenuButton>

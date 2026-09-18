@@ -13,12 +13,30 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { format, formatDistanceToNow } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
-export function ExpenseDetails() {
+interface ExpenseDetailsProps {
+  expense: {
+    id: string;
+    title: string;
+    enterprise: string;
+    description: string | null;
+    cnpj: string | null;
+    source: string | null;
+    price: number;
+    card_last_digits: string;
+    created_at: Date;
+    user_id: string;
+    category_id: string;
+  };
+}
+
+export function ExpenseDetails({ expense }: ExpenseDetailsProps) {
   return (
     <DialogContent className="sm:max-w-3xl">
       <DialogHeader>
-        <DialogTitle>ID: 1</DialogTitle>
+        <DialogTitle>ID: {expense.id ?? ''}</DialogTitle>
         <DialogDescription>Detalhes da despesa</DialogDescription>
       </DialogHeader>
 
@@ -31,7 +49,7 @@ export function ExpenseDetails() {
                 <div className="flex items-center justify-end gap-2">
                   <span className="h-2 w-2 rounded-full bg-slate-400" />
                   <span className="text-muted-foreground font-medium">
-                    Transporte
+                    {expense.category_id ?? ''}
                   </span>
                 </div>
               </TableCell>
@@ -41,7 +59,9 @@ export function ExpenseDetails() {
               <TableCell className="text-muted-foreground">
                 Serviço/Produto
               </TableCell>
-              <TableCell className="text-right">Gasolina</TableCell>
+              <TableCell className="text-right">
+                {expense.title ?? ''}
+              </TableCell>
             </TableRow>
 
             <TableRow>
@@ -49,7 +69,7 @@ export function ExpenseDetails() {
                 Cartão (dígitos finais)
               </TableCell>
               <TableCell className="text-muted-foreground text-right">
-                546
+                {expense.card_last_digits ?? ''}
               </TableCell>
             </TableRow>
 
@@ -57,21 +77,30 @@ export function ExpenseDetails() {
               <TableCell className="text-muted-foreground">
                 Fornecedor (empresa)
               </TableCell>
-              <TableCell className="text-right">Mercado Ceifa</TableCell>
+              <TableCell className="text-right">
+                {expense.enterprise ?? ''}
+              </TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell className="text-muted-foreground">
                 Realizado há
               </TableCell>
-              <TableCell className="text-right">há 2 dias</TableCell>
+              <TableCell className="text-right">
+                {formatDistanceToNow(expense.created_at, {
+                  locale: ptBR,
+                  addSuffix: true,
+                })}
+              </TableCell>
             </TableRow>
 
             <TableRow>
               <TableCell className="text-muted-foreground">
                 Data de criação
               </TableCell>
-              <TableCell className="text-right">25/04/2026</TableCell>
+              <TableCell className="text-right">
+                {format(expense.created_at, 'dd/MM/yyyy')}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
@@ -88,14 +117,18 @@ export function ExpenseDetails() {
 
           <TableBody>
             <TableRow>
-              <TableCell className="font-medium">Gasolina</TableCell>
-              <TableCell className="text-right">R$ 54,99</TableCell>
+              <TableCell className="font-medium">{expense.title}</TableCell>
+              <TableCell className="text-right">
+                {expense.price.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </TableCell>
               <TableCell className="text-right leading-tight whitespace-pre-line">
-                {'São Paulo / Embu das Artes'.replace(' / ', '\n')}
+                {expense.source ?? expense.source!.replace(' / ', '\n')}
               </TableCell>
               <TableCell className="max-w-md text-right wrap-break-word whitespace-normal">
-                Despesa realizada para deslocamento até o trabalho não
-                precisando colocar gasolina durante a semana.
+                {expense.description ?? ''}
               </TableCell>
             </TableRow>
           </TableBody>
@@ -103,7 +136,12 @@ export function ExpenseDetails() {
           <TableFooter>
             <TableRow>
               <TableCell colSpan={3}>Total da despesa:</TableCell>
-              <TableCell className="text-right font-medium">R$ 54,99</TableCell>
+              <TableCell className="text-right font-medium">
+                {expense.price.toLocaleString('pt-br', {
+                  style: 'currency',
+                  currency: 'BRL',
+                })}
+              </TableCell>
             </TableRow>
           </TableFooter>
         </Table>
