@@ -1,4 +1,4 @@
-import { TrashIcon, XIcon } from '@phosphor-icons/react';
+import { SpinnerBallIcon, TrashIcon, XIcon } from '@phosphor-icons/react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -10,9 +10,10 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { useDeleteExpense } from '@/contexts/delete-expense-context';
+import { Separator } from './ui/separator';
 
 export function DeleteExpensesDialog() {
-  const { handleDeleteExpense } = useDeleteExpense();
+  const { handleDeleteExpense, isPending } = useDeleteExpense();
 
   return (
     <DialogContent className="sm:max-w-sm">
@@ -28,6 +29,7 @@ export function DeleteExpensesDialog() {
 
       <div className="space-y-6">
         <form className="flex flex-col gap-4">
+          <Separator />
           <DialogFooter className="flex flex-row justify-end">
             <DialogClose asChild>
               <Button
@@ -35,6 +37,7 @@ export function DeleteExpensesDialog() {
                 size="default"
                 className="cursor-pointer"
                 type="button"
+                disabled={isPending}
               >
                 <XIcon className="h-3 w-3" />
                 <span>Cancelar</span>
@@ -44,11 +47,15 @@ export function DeleteExpensesDialog() {
               variant="destructive"
               size="default"
               className="cursor-pointer"
-              type="submit"
+              type="button"
               onClick={handleDeleteExpense}
-              // disabled={isSubmitting}
+              disabled={isPending}
             >
-              <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+              {isPending ? (
+                <SpinnerBallIcon className="h-3 w-3 animate-spin" />
+              ) : (
+                <TrashIcon className="h-3 w-3 text-rose-500 dark:text-rose-400" />
+              )}
               <span className="text-rose-500 dark:text-rose-400">Excluir</span>
             </Button>
           </DialogFooter>

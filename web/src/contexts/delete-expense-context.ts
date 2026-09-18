@@ -2,6 +2,7 @@ import { createContext, useContext } from 'react';
 
 interface DeleteExpenseContextType {
   handleDeleteExpense: () => Promise<void>;
+  isPending: boolean;
 }
 
 export const DeleteExpenseContext = createContext(

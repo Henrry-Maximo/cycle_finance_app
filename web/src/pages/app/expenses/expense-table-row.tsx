@@ -35,7 +35,8 @@ export interface ExpenseTableRowProps {
 
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   const queryClient = useQueryClient();
-  const { mutateAsync: deleteExpenseUserFn } = useMutation({
+
+  const { mutateAsync: deleteExpenseUserFn, isPending } = useMutation({
     mutationFn: deleteExpenseUser,
   });
 
@@ -106,7 +107,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
           <span className="sr-only">Editar</span>
         </Button>
       </TableCell>
-      <DeleteExpenseContext.Provider value={{ handleDeleteExpense }}>
+      <DeleteExpenseContext.Provider value={{ handleDeleteExpense, isPending }}>
         <Dialog>
           <DialogTrigger asChild>
             <TableCell>
