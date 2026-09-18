@@ -1,9 +1,4 @@
-import {
-  ListIcon,
-  SquaresFourIcon,
-  TagIcon,
-  UserCircleIcon,
-} from '@phosphor-icons/react';
+import { TagIcon, UserCircleIcon } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
