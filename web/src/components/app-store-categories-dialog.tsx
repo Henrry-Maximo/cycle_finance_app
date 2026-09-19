@@ -11,12 +11,14 @@ import { getCategoriesUser } from '@/api/get-categories-user';
 import { registerCategory } from '@/api/register-category';
 import { Button } from '@/components/ui/button';
 import {
+  Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -32,6 +34,8 @@ import {
 
 import { Textarea } from './ui/textarea';
 import { Separator } from './ui/separator';
+import { DeleteCategoriesDialog } from './app-delete-category-dialog';
+import { DeleteCategoryContext } from '@/contexts/delete-category-context';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const storeCategoriesSchema = z.object({
@@ -53,7 +57,7 @@ export function StoreCategoriesDialog() {
     mutationFn: registerCategory,
   });
 
-  const { mutateAsync: deleteCategoryUserFn } = useMutation({
+  const { mutateAsync: deleteCategoryUserFn, isPending } = useMutation({
     mutationFn: deleteCategoryUser,
   });
 
@@ -207,17 +211,27 @@ export function StoreCategoriesDialog() {
                           })}
                         </span>
                       </TableCell>
-                      <TableCell>
-                        <Button
-                          variant="ghost"
-                          size="default"
-                          className="cursor-pointer"
-                          onClick={() => handleDeleteCategory(category.id)}
-                        >
-                          <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
-                          <span className="sr-only">Excluir</span>
-                        </Button>
-                      </TableCell>
+                      <DeleteCategoryContext.Provider
+                        value={{ handleDeleteCategory, isPending }}
+                      >
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <TableCell>
+                              <Button
+                                variant="ghost"
+                                size="default"
+                                className="cursor-pointer"
+                                // onClick={() => handleDeleteCategory(category.id)}
+                              >
+                                <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
+                                <span className="sr-only">Excluir</span>
+                              </Button>
+                            </TableCell>
+                          </DialogTrigger>
+
+                          <DeleteCategoriesDialog id={category.id} />
+                        </Dialog>
+                      </DeleteCategoryContext.Provider>
                     </TableRow>
                   );
                 })}
