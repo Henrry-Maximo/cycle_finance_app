@@ -31,12 +31,12 @@ export function Pagination({
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="outline" className="h-8 w-8 p-0">
+          <Button variant="outline" className="h-8 w-8 p-0" disabled>
             <CaretDoubleLeftIcon className="h-4 w-4" />
             <span className="sr-only">Primeira página</span>
           </Button>
 
-          <Button variant="outline" className="h-8 w-8 p-0">
+          <Button variant="outline" className="h-8 w-8 p-0" disabled>
             <ArrowLeftIcon className="h-4 w-4" />
             <span className="sr-only">Página anterior</span>
           </Button>

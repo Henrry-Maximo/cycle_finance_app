@@ -113,7 +113,7 @@
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
 - [x] Limitar a quantidade de caracteres na exibição do nome do usuário;
-- [ ] Exibir detalhes da despesa selecionada;
+- [x] Exibir detalhes da despesa selecionada;
 - [ ] Editar uma despesa;
 - [x] Confirmação de remoção de despesa;
 - [ ] Filtro de pesquisa por id na tabela;
