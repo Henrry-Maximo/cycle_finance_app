@@ -16,5 +16,5 @@ export async function updateExpense({
   id,
   ...body
 }: UpdateExpense): Promise<void> {
-  await api.patch(`/expenses/${id}`, body);
+  await api.patch(`/expenses?id=${id}`, body);
 }

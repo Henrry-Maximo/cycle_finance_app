@@ -17,6 +17,7 @@ import { ExpenseDetails } from './expense-details';
 import { DeleteExpensesDialog } from '@/components/app-delete-expense-dialog';
 import { DeleteExpenseContext } from '@/contexts/delete-expense-context';
 import { UpdateExpenseDialog } from '@/components/app-update-expense-dialog';
+import { UpdateExpenseContext } from '@/contexts/update-expense-context';
 
 export interface ExpenseTableRowProps {
   expense: {
@@ -109,18 +110,20 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </Button>
       </TableCell> */}
 
-      <Dialog>
-        <DialogTrigger asChild>
-          <TableCell>
-            <Button variant="ghost" size="default" className="cursor-pointer">
-              <PencilIcon className="h-3 w-3" />
-              <span className="sr-only">Editar</span>
-            </Button>
-          </TableCell>
-        </DialogTrigger>
+      <UpdateExpenseContext.Provider value={{ expense, isPending }}>
+        <Dialog>
+          <DialogTrigger asChild>
+            <TableCell>
+              <Button variant="ghost" size="default" className="cursor-pointer">
+                <PencilIcon className="h-3 w-3" />
+                <span className="sr-only">Editar</span>
+              </Button>
+            </TableCell>
+          </DialogTrigger>
 
-        <UpdateExpenseDialog />
-      </Dialog>
+          <UpdateExpenseDialog />
+        </Dialog>
+      </UpdateExpenseContext.Provider>
 
       <DeleteExpenseContext.Provider value={{ handleDeleteExpense, isPending }}>
         <Dialog>
