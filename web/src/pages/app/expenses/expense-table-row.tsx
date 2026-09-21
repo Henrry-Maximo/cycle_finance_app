@@ -16,6 +16,7 @@ import { TableCell, TableRow } from '@/components/ui/table';
 import { ExpenseDetails } from './expense-details';
 import { DeleteExpensesDialog } from '@/components/app-delete-expense-dialog';
 import { DeleteExpenseContext } from '@/contexts/delete-expense-context';
+import { UpdateExpenseDialog } from '@/components/app-update-expense-dialog';
 
 export interface ExpenseTableRowProps {
   expense: {
@@ -101,12 +102,26 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </span>
       </TableCell>
 
-      <TableCell>
+      {/* <TableCell>
         <Button variant="ghost" size="default" className="cursor-pointer">
           <PencilIcon className="h-3 w-3" />
           <span className="sr-only">Editar</span>
         </Button>
-      </TableCell>
+      </TableCell> */}
+
+      <Dialog>
+        <DialogTrigger asChild>
+          <TableCell>
+            <Button variant="ghost" size="default" className="cursor-pointer">
+              <PencilIcon className="h-3 w-3" />
+              <span className="sr-only">Editar</span>
+            </Button>
+          </TableCell>
+        </DialogTrigger>
+
+        <UpdateExpenseDialog />
+      </Dialog>
+
       <DeleteExpenseContext.Provider value={{ handleDeleteExpense, isPending }}>
         <Dialog>
           <DialogTrigger asChild>
