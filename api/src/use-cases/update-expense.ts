@@ -77,7 +77,7 @@ export class UpdateExpenseUseCase {
       enterprise: data.enterprise ? data.enterprise : expenseFinding.enterprise,
       cnpj: data.cnpj ? data.cnpj : expenseFinding.cnpj,
       source: data.source ? data.source : expenseFinding.source,
-      price: data.price ? data.price : expenseFinding.price,
+      price: data.price ? data.price * 100 : expenseFinding.price,
       card_last_digits: data.card_last_digits
         ? data.card_last_digits
         : expenseFinding.card_last_digits,

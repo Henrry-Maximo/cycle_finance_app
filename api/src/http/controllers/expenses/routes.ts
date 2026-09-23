@@ -243,6 +243,15 @@ export async function expensesRoutes(app: FastifyInstance) {
         query: z.object({
           id: z.string(),
         }),
+        body: z.object({
+          title: z.string(),
+          enterprise: z.string(),
+          description: z.string(),
+          cnpj: z.string(),
+          source: z.string(),
+          price: z.number(),
+          card_last_digits: z.string(),
+        }),
         response: {
           200: z
             .object({
