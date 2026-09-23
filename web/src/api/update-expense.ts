@@ -9,7 +9,6 @@ interface UpdateExpense {
   source?: string;
   price?: number;
   card_last_digits?: string;
-  category_id?: string;
 }
 
 export async function updateExpense({

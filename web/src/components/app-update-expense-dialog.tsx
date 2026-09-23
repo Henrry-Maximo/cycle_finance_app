@@ -16,19 +16,15 @@ import { useUpdateExpense } from '@/contexts/update-expense-context';
 import { toast } from 'sonner';
 import { useForm } from 'react-hook-form';
 import { SpinnerBallIcon } from '@phosphor-icons/react';
-// import { useUpdateExpense } from '@/contexts/update-expense-context';
-// import { UpdateExpenseBody } from '@/api/update-expense';
-
-// type UpdateExpenseForm = Omit<UpdateExpenseBody, 'id'>;
+import { queryClient } from '@/lib/react-query';
 
 const updateExpenseSchema = z.object({
-  id: z.string(),
   title: z.string(),
   enterprise: z.string(),
   description: z.string(),
   cnpj: z.string(),
   source: z.string(),
-  price: z.string(),
+  price: z.number(),
   card_last_digits: z.string(),
 });
 
@@ -37,29 +33,6 @@ type UpdateExpenseSchema = z.infer<typeof updateExpenseSchema>;
 export function UpdateExpenseDialog() {
   const { expense, isPending } = useUpdateExpense();
 
-  const { mutateAsync: updateExpenseFn } = useMutation({
-    mutationFn: updateExpense,
-  });
-
-  async function handleUpdateExpense() {
-    try {
-      await updateExpenseFn({
-        id: expense.id,
-        title: expense.title,
-        enterprise: expense.enterprise,
-        description: expense.description ?? '',
-        cnpj: expense.cnpj ?? '',
-        source: expense.source ?? '',
-        price: Number(expense.price),
-        card_last_digits: expense.card_last_digits,
-      });
-
-      toast.success('Despesa atualizada com sucesso!');
-    } catch {
-      toast.error('Erro ao atualizar despesa.');
-    }
-  }
-
   const { register, handleSubmit } = useForm<UpdateExpenseSchema>({
     defaultValues: {
       title: expense.title,
@@ -67,10 +40,31 @@ export function UpdateExpenseDialog() {
       description: expense.description ?? '',
       cnpj: expense.cnpj ?? '',
       source: expense.source ?? '',
-      price: expense.price ? expense.price.toString() : '',
+      price: expense.price,
       card_last_digits: expense.card_last_digits,
     },
   });
+
+  const { mutateAsync: updateExpenseFn } = useMutation({
+    mutationFn: updateExpense,
+  });
+
+  async function handleUpdateExpense(data: UpdateExpenseSchema) {
+    try {
+      await updateExpenseFn({
+        id: expense.id,
+        ...data,
+        // price: Number(data.price),
+      });
+
+      // console.log(data.price);
+
+      await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
+      toast.success('Despesa atualizada com sucesso!');
+    } catch {
+      toast.error('Erro ao atualizar despesa.');
+    }
+  }
 
   return (
     <DialogContent className="sm:max-w-md">
@@ -121,11 +115,11 @@ export function UpdateExpenseDialog() {
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" type="button">
+            <Button variant="outline" disabled={isPending} type="button">
               Cancelar
             </Button>
           </DialogClose>
-          <Button type="submit">
+          <Button type="submit" disabled={isPending}>
             {isPending && <SpinnerBallIcon className="h-3 w-3 animate-spin" />}
             Salvar
           </Button>

@@ -240,6 +240,9 @@ export async function expensesRoutes(app: FastifyInstance) {
         ],
         tags: ["expenses"],
         description: "Update expense from user.",
+        query: z.object({
+          id: z.string(),
+        }),
         response: {
           200: z
             .object({
