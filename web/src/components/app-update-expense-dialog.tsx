@@ -31,7 +31,7 @@ const updateExpenseSchema = z.object({
 type UpdateExpenseSchema = z.infer<typeof updateExpenseSchema>;
 
 export function UpdateExpenseDialog() {
-  const { expense, isPending, setIsOpen } = useUpdateExpense();
+  const { expense, setIsOpen } = useUpdateExpense();
 
   const { register, handleSubmit } = useForm<UpdateExpenseSchema>({
     defaultValues: {
@@ -45,7 +45,7 @@ export function UpdateExpenseDialog() {
     },
   });
 
-  const { mutateAsync: updateExpenseFn } = useMutation({
+  const { mutateAsync: updateExpenseFn, isPending } = useMutation({
     mutationFn: updateExpense,
   });
 
@@ -59,6 +59,7 @@ export function UpdateExpenseDialog() {
 
       // console.log(data.price);
 
+      console.log(isPending);
       await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
       toast.success('Despesa atualizada com sucesso!');
       setIsOpen(false);
@@ -116,11 +117,16 @@ export function UpdateExpenseDialog() {
 
         <DialogFooter>
           <DialogClose asChild>
-            <Button variant="outline" disabled={isPending} type="button">
+            <Button
+              variant="outline"
+              disabled={isPending}
+              className="cursor-pointer"
+              type="button"
+            >
               Cancelar
             </Button>
           </DialogClose>
-          <Button type="submit" disabled={isPending}>
+          <Button type="submit" disabled={isPending} className="cursor-pointer">
             {isPending && <SpinnerBallIcon className="h-3 w-3 animate-spin" />}
             Salvar
           </Button>

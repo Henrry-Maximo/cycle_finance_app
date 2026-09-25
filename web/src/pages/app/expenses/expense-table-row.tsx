@@ -112,7 +112,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </Button>
       </TableCell> */}
 
-      <UpdateExpenseContext.Provider value={{ expense, isPending, setIsOpen }}>
+      <UpdateExpenseContext.Provider value={{ expense, setIsOpen }}>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <TableCell>

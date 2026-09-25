@@ -16,7 +16,6 @@ interface UpdateExpenseContextType {
     price?: number;
     card_last_digits?: string;
   };
-  isPending: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
   // handleUpdateExpense: () => Promise<void>;
 }
