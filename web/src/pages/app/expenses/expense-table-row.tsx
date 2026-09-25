@@ -18,6 +18,7 @@ import { DeleteExpensesDialog } from '@/components/app-delete-expense-dialog';
 import { DeleteExpenseContext } from '@/contexts/delete-expense-context';
 import { UpdateExpenseDialog } from '@/components/app-update-expense-dialog';
 import { UpdateExpenseContext } from '@/contexts/update-expense-context';
+import { useState } from 'react';
 
 export interface ExpenseTableRowProps {
   expense: {
@@ -37,6 +38,7 @@ export interface ExpenseTableRowProps {
 
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   const queryClient = useQueryClient();
+  const [isOpen, setIsOpen] = useState(false);
 
   const { mutateAsync: deleteExpenseUserFn, isPending } = useMutation({
     mutationFn: deleteExpenseUser,
@@ -110,8 +112,8 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
         </Button>
       </TableCell> */}
 
-      <UpdateExpenseContext.Provider value={{ expense, isPending }}>
-        <Dialog>
+      <UpdateExpenseContext.Provider value={{ expense, isPending, setIsOpen }}>
+        <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
             <TableCell>
               <Button variant="ghost" size="default" className="cursor-pointer">

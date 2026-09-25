@@ -1,4 +1,9 @@
-import { createContext, useContext } from 'react';
+import {
+  createContext,
+  useContext,
+  type Dispatch,
+  type SetStateAction,
+} from 'react';
 
 interface UpdateExpenseContextType {
   expense: {
@@ -12,6 +17,7 @@ interface UpdateExpenseContextType {
     card_last_digits?: string;
   };
   isPending: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
   // handleUpdateExpense: () => Promise<void>;
 }
 

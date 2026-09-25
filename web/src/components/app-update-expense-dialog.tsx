@@ -31,7 +31,7 @@ const updateExpenseSchema = z.object({
 type UpdateExpenseSchema = z.infer<typeof updateExpenseSchema>;
 
 export function UpdateExpenseDialog() {
-  const { expense, isPending } = useUpdateExpense();
+  const { expense, isPending, setIsOpen } = useUpdateExpense();
 
   const { register, handleSubmit } = useForm<UpdateExpenseSchema>({
     defaultValues: {
@@ -61,6 +61,7 @@ export function UpdateExpenseDialog() {
 
       await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
       toast.success('Despesa atualizada com sucesso!');
+      setIsOpen(false);
     } catch {
       toast.error('Erro ao atualizar despesa.');
     }
