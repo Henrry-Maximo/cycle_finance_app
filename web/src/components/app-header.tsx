@@ -43,6 +43,8 @@ export function Header() {
         <div className="flex items-center justify-center gap-4">
           <SidebarTrigger className="cursor-pointer" />
 
+          <Separator orientation="vertical" className="h-auto" />
+
           <Link to="/">
             <img
               src={currentLogo}
@@ -51,8 +53,6 @@ export function Header() {
             />
           </Link>
         </div>
-
-        <Separator orientation="vertical" className="h-auto" />
       </div>
 
       <nav className="flex items-center space-x-4 lg:space-x-6">

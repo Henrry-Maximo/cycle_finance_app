@@ -1,6 +1,6 @@
 'use client';
 
-import { SidebarIcon } from '@phosphor-icons/react';
+import { SidebarIcon, XIcon } from '@phosphor-icons/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { Slot } from 'radix-ui';
 import * as React from 'react';
@@ -256,7 +256,7 @@ function SidebarTrigger({
   onClick,
   ...props
 }: React.ComponentProps<typeof Button>) {
-  const { toggleSidebar } = useSidebar();
+  const { toggleSidebar, open } = useSidebar();
 
   return (
     <Button
@@ -271,7 +271,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <SidebarIcon />
+      {open ? <XIcon /> : <SidebarIcon />}
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   );

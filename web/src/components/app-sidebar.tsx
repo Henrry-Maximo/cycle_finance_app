@@ -1,4 +1,4 @@
-import { TagIcon, UserCircleIcon } from '@phosphor-icons/react';
+import { TagIcon, UserCircleIcon, XIcon } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -11,6 +11,7 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
 } from '@/components/ui/sidebar';
 
 import { Button } from './ui/button';
@@ -36,12 +37,13 @@ export function AppSidebar() {
   return (
     <Dialog>
       <Sidebar className="border-gay-400 border-r-2">
-        <SidebarHeader className="pt-4 pb-2 pl-4">
+        <SidebarHeader className="flex flex-row pt-4 pb-2 pl-4">
           <img
             src={currentLogo}
             className="h-24 w-24"
             alt="logo cycle finance app"
           />
+          <SidebarTrigger className="ml-auto" />
         </SidebarHeader>
 
         <Separator />
