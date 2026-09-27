@@ -81,7 +81,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
         return true;
       })
-      .slice((pageIndex - 1) * perPage, pageIndex * perPage);
+      .slice(pageIndex * perPage, (pageIndex + 1) * perPage);
 
     return expenses;
   }

@@ -104,7 +104,7 @@ describe("Fetch User Expenses History Use Case", () => {
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      pageIndex: 1,
+      page: 0,
     });
 
     expect(expenses).toHaveLength(2);
@@ -151,7 +151,7 @@ describe("Fetch User Expenses History Use Case", () => {
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      pageIndex: 3,
+      page: 3,
     });
 
     expect(expenses).toHaveLength(2);
@@ -227,7 +227,7 @@ describe("Fetch User Expenses History Use Case", () => {
     const today = new Date();
     const { expenses } = await sut.execute({
       userId: userCreated.id,
-      pageIndex: 1,
+      page: 1,
       expenseName: "Salsicha",
       from: new Date(today.getFullYear(), today.getMonth(), 1),
       to: new Date(today.getFullYear(), today.getMonth() + 1, 0),
@@ -240,7 +240,7 @@ describe("Fetch User Expenses History Use Case", () => {
     await expect(() =>
       sut.execute({
         userId: "non-existing-id",
-        pageIndex: 1,
+        page: 1,
       }),
     ).rejects.toBeInstanceOf(ResourceNotFoundError);
   });
