@@ -114,13 +114,13 @@
 - [ ] Loading para o gráfico de categorias populares;
 - [x] Limitar a quantidade de caracteres na exibição do nome do usuário;
 - [x] Exibir detalhes da despesa selecionada;
-- [ ] Editar uma despesa;
+- [x] Editar uma despesa;
 - [x] Confirmação de remoção de despesa;
 - [ ] Filtro de pesquisa por id na tabela;
 - [ ] Filtro de pesquisa por name na tabela;
 - [ ] Filtro de pesquisa por category na tabela;
 - [ ] Botão de remover filtros (limpar campos / realizar requisição novamente);
-- [ ] Adicionar paginação na tabela de despesas;
+- [x] Adicionar paginação na tabela de despesas;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
 - [x] Preview do comprovante enviado;
