@@ -15,13 +15,14 @@ import { ExpenseTableFilters } from './expense-table-filters';
 import { ExpenseTableRow } from './expense-table-row';
 import { useSearchParams } from 'react-router-dom';
 import z from 'zod';
+import { useEffect } from 'react';
 
 export function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const pageIndex = z.coerce
     .number()
-    // .transform((page) => page - 1)
+    .transform((page) => page - 1)
     .parse(searchParams.get('page') ?? '1');
 
   const { data: result } = useQuery({
@@ -36,6 +37,18 @@ export function Expenses() {
       return url;
     });
   }
+
+  useEffect(() => {
+    const url = searchParams.get('page');
+
+    if (url && url === '0') {
+      setSearchParams((url) => {
+        url.set('page', (1).toString());
+
+        return url;
+      });
+    }
+  }, []);
 
   return (
     <>

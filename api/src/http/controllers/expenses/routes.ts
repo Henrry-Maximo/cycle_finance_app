@@ -37,7 +37,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             .string()
             .optional()
             .transform((val) => (val ? new Date(val) : undefined)),
-          page: z.coerce.number().optional(),
+          pageIndex: z.coerce.number().optional(),
         }),
         response: {
           200: z

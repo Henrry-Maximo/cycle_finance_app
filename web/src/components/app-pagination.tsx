@@ -30,7 +30,7 @@ export function Pagination({
 
       <div className="flex items-center gap-6 lg:gap-8">
         <div className="text-sm font-medium">
-          Página {pageIndex} de {pages}
+          Página {pageIndex + 1} de {pages}
         </div>
 
         <div className="flex items-center gap-2">
@@ -38,7 +38,7 @@ export function Pagination({
             onClick={() => onPageChange(0)}
             variant="outline"
             className="h-8 w-8 cursor-pointer p-0"
-            // disabled
+            disabled={pageIndex === 0}
           >
             <CaretDoubleLeftIcon className="h-4 w-4" />
             <span className="sr-only">Primeira página</span>
@@ -48,14 +48,14 @@ export function Pagination({
             onClick={() => onPageChange(pageIndex - 1)}
             variant="outline"
             className="h-8 w-8 cursor-pointer p-0"
-            // disabled
+            disabled={pageIndex === 0}
           >
             <ArrowLeftIcon className="h-4 w-4" />
             <span className="sr-only">Página anterior</span>
           </Button>
 
           <Button
-            onClick={() => onPageChange(pageIndex)}
+            onClick={() => onPageChange(pageIndex + 1)}
             variant="outline"
             className="h-8 w-8 cursor-pointer p-0"
           >
