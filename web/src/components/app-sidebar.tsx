@@ -1,4 +1,4 @@
-import { TagIcon, UserCircleIcon, XIcon } from '@phosphor-icons/react';
+import { TagIcon, UserCircleIcon } from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -43,7 +43,7 @@ export function AppSidebar() {
             className="h-24 w-24"
             alt="logo cycle finance app"
           />
-          <SidebarTrigger className="ml-auto" />
+          <SidebarTrigger className="ml-auto cursor-pointer" />
         </SidebarHeader>
 
         <Separator />
