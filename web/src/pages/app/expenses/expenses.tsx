@@ -13,12 +13,29 @@ import {
 import { getExpensesUser } from '../../../api/get-expenses-user';
 import { ExpenseTableFilters } from './expense-table-filters';
 import { ExpenseTableRow } from './expense-table-row';
+import { useSearchParams } from 'react-router-dom';
+import z from 'zod';
 
 export function Expenses() {
-  const { data: expensesData } = useQuery({
-    queryKey: ['user-expenses'],
-    queryFn: getExpensesUser,
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const pageIndex = z.coerce
+    .number()
+    // .transform((page) => page - 1)
+    .parse(searchParams.get('page') ?? '1');
+
+  const { data: result } = useQuery({
+    queryKey: ['user-expenses', pageIndex], // incluir paramêtro pra atualização
+    queryFn: () => getExpensesUser({ pageIndex }),
   });
+
+  function handlePaginate(pageIndex: number) {
+    setSearchParams((url) => {
+      url.set('page', (pageIndex + 1).toString());
+
+      return url;
+    });
+  }
 
   return (
     <>
@@ -54,8 +71,8 @@ export function Expenses() {
               </TableHeader>
 
               <TableBody>
-                {expensesData &&
-                  expensesData.expenses.map((expense) => {
+                {result &&
+                  result.expenses.map((expense) => {
                     return (
                       <ExpenseTableRow key={expense.id} expense={expense} />
                     );
@@ -67,11 +84,14 @@ export function Expenses() {
             </Table>
           </div>
 
-          <Pagination
-            pageIndex={0}
-            totalCount={expensesData?.expenses.length ?? 0}
-            perPage={10}
-          />
+          {result && (
+            <Pagination
+              onPageChange={handlePaginate}
+              pageIndex={result.meta.pageIndex}
+              totalCount={result.meta.totalCount}
+              perPage={result.meta.perPage}
+            />
+          )}
         </div>
       </div>
     </>

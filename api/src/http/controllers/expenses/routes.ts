@@ -58,7 +58,7 @@ export async function expensesRoutes(app: FastifyInstance) {
                 }),
               ),
               meta: z.object({
-                page: z.number(),
+                pageIndex: z.number(),
                 perPage: z.number(),
                 totalCount: z.number(),
                 totalPages: z.number(),

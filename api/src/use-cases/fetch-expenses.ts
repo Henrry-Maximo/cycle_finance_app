@@ -15,7 +15,7 @@ interface FetchExpensesUseCaseRequest {
 }
 
 interface Pagination {
-  page: number;
+  pageIndex: number;
   perPage: number;
   totalCount: number;
   totalPages: number;
@@ -74,7 +74,7 @@ export class FetchExpensesUseCase {
     return {
       expenses,
       meta: {
-        page: pageIndex,
+        pageIndex,
         perPage,
         totalCount,
         totalPages,
