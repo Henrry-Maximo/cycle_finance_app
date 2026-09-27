@@ -104,6 +104,7 @@ describe("Fetch User Expenses History Use Case", () => {
 
     const { expenses } = await sut.execute({
       userId: userCreated.id,
+      from: today,
       pageIndex: 0,
     });
 
