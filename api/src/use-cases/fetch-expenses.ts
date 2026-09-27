@@ -47,13 +47,8 @@ export class FetchExpensesUseCase {
       throw new ResourceNotFoundError();
     }
 
-    const today = new Date();
-    const fromStartDate = from
-      ? from
-      : new Date(today.getFullYear(), today.getMonth(), 1);
-    const toEndDate = to
-      ? to
-      : new Date(today.getFullYear(), today.getMonth() + 1, 0);
+    const fromStartDate = from ? from : undefined;
+    const toEndDate = to ? to : undefined;
 
     const expenses = await this.expensesRepository.findManyByUserId(
       userId,
@@ -69,7 +64,7 @@ export class FetchExpensesUseCase {
       userId,
       expenseName,
     );
-    const totalPages = Math.ceil(totalCount / perPage);
+    const totalPages = Math.ceil(totalCount / perPage) || 1;
 
     return {
       expenses,

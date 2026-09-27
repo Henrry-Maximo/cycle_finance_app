@@ -6,8 +6,8 @@ export interface ExpensesRepository {
   findManyByUserIdGrouped(id: string): Promise<Expense[]>;
   findManyByUserId(
     userId: string,
-    from: Date,
-    to: Date,
+    from: Date | undefined,
+    to: Date | undefined,
     perPage: number,
     pageIndex: number,
     expenseName?: string,

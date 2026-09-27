@@ -39,16 +39,20 @@ export function Expenses() {
   }
 
   useEffect(() => {
-    const url = searchParams.get('page');
+    if (!result) return; // garante que os dados foram carregados
 
-    if (url && url === '0') {
+    const url = searchParams.get('page');
+    const totalPages = result?.meta.totalPages || 0;
+    const pageForNumber = Number(url);
+
+    if (url && (pageForNumber === 0 || pageForNumber > totalPages)) {
       setSearchParams((url) => {
         url.set('page', (1).toString());
 
         return url;
       });
     }
-  }, []);
+  }, [result]);
 
   return (
     <>
@@ -102,7 +106,8 @@ export function Expenses() {
               onPageChange={handlePaginate}
               pageIndex={result.meta.pageIndex}
               totalCount={result.meta.totalCount}
-              perPage={result.meta.perPage}
+              // perPage={result.meta.perPage}
+              totalPages={result.meta.totalPages}
             />
           )}
         </div>
