@@ -10,7 +10,7 @@ interface FetchExpensesUseCaseRequest {
   categoryName?: string;
   from?: Date;
   to?: Date;
-  pageIndex: number;
+  page?: number | undefined;
   perPage?: number;
 }
 
@@ -38,7 +38,7 @@ export class FetchExpensesUseCase {
     categoryName,
     from,
     to,
-    pageIndex = 1,
+    page = 0,
     perPage = 15,
   }: FetchExpensesUseCaseRequest): Promise<FetchExpensesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
@@ -55,6 +55,7 @@ export class FetchExpensesUseCase {
       ? to
       : new Date(today.getFullYear(), today.getMonth() + 1, 0);
 
+    const pageIndex = page > 0 ? page - 1 : 0; // se página existe, subtraí um do índice
     const expenses = await this.expensesRepository.findManyByUserId(
       userId,
       fromStartDate,

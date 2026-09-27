@@ -16,7 +16,7 @@ export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
       .string()
       .optional()
       .transform((val) => (val ? new Date(val) : undefined)),
-    page: z.coerce.number().default(1),
+    page: z.coerce.number().optional(),
   });
 
   const { expense, category, from, to, page } = searchExpensesQuerySchema.parse(
@@ -28,7 +28,7 @@ export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
 
     const { expenses, meta } = await fetchExpensesUseCase.execute({
       userId: req.user.sub,
-      pageIndex: page,
+      page,
       ...(expense && { expenseName: expense }),
       ...(category && { categoryName: category }),
       ...(from && { from }),

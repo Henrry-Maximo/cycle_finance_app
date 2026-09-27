@@ -52,7 +52,7 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     categoryName?: string,
   ) {
     const expensesUser = await prisma.expense.findMany({
-      skip: (pageIndex - 1) * perPage,
+      skip: pageIndex * perPage,
       take: perPage,
       where: {
         user_id: {
