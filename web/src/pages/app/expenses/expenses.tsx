@@ -20,14 +20,24 @@ import { useEffect } from 'react';
 export function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const expenseId = searchParams.get('expenseId');
+  const expenseName = searchParams.get('expenseName');
+  const category = searchParams.get('category');
+
   const pageIndex = z.coerce
     .number()
     .transform((page) => page - 1)
     .parse(searchParams.get('page') ?? '1');
 
   const { data: result } = useQuery({
-    queryKey: ['user-expenses', pageIndex], // incluir paramêtro pra atualização
-    queryFn: () => getExpensesUser({ pageIndex }),
+    queryKey: ['user-expenses', pageIndex, expenseId, expenseName, category], // incluir paramêtro pra atualização
+    queryFn: () =>
+      getExpensesUser({
+        pageIndex,
+        expenseId,
+        expenseName,
+        category: category === 'all' ? null : category,
+      }),
   });
 
   function handlePaginate(pageIndex: number) {

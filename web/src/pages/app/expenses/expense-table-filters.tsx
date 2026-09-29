@@ -31,9 +31,41 @@ export function ExpenseTableFilters() {
 
   const { register, handleSubmit, control } = useForm<ExpenseFiltersSchema>({
     resolver: zodResolver(expenseFiltersSchema),
+    defaultValues: {
+      expenseId: expenseId ?? '',
+      expenseName: expenseName ?? '',
+      category: category ?? 'all',
+    },
   });
 
-  function handleFilter(data: ExpenseFiltersSchema) {}
+  function handleFilter({
+    expenseId,
+    expenseName,
+    category,
+  }: ExpenseFiltersSchema) {
+    setSearchParams((state) => {
+      if (expenseId) {
+        state.set('expenseId', expenseId);
+      } else {
+        state.delete('expenseId');
+      }
+
+      if (expenseName) {
+        state.set('expenseName', expenseName);
+      } else {
+        state.delete('expenseName');
+      }
+
+      if (category) {
+        state.set('category', category);
+      } else {
+        state.delete('category');
+      }
+
+      state.set('page', '1');
+      return state;
+    });
+  }
 
   return (
     <form className="w-full" onSubmit={handleSubmit(handleFilter)}>
