@@ -29,14 +29,15 @@ export function ExpenseTableFilters() {
   const expenseName = searchParams.get('expenseName');
   const category = searchParams.get('category');
 
-  const { register, handleSubmit, control } = useForm<ExpenseFiltersSchema>({
-    resolver: zodResolver(expenseFiltersSchema),
-    defaultValues: {
-      expenseId: expenseId ?? '',
-      expenseName: expenseName ?? '',
-      category: category ?? 'all',
-    },
-  });
+  const { register, handleSubmit, control, reset } =
+    useForm<ExpenseFiltersSchema>({
+      resolver: zodResolver(expenseFiltersSchema),
+      defaultValues: {
+        expenseId: expenseId ?? '',
+        expenseName: expenseName ?? '',
+        category: category ?? 'all',
+      },
+    });
 
   function handleFilter({
     expenseId,
@@ -75,6 +76,12 @@ export function ExpenseTableFilters() {
       state.set('page', '1');
 
       return state;
+    });
+
+    reset({
+      expenseId: '',
+      expenseName: '',
+      category: 'all',
     });
   }
 
