@@ -9,29 +9,75 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import z from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Controller, useForm } from 'react-hook-form';
+import { useSearchParams } from 'react-router-dom';
+
+const expenseFiltersSchema = z.object({
+  expenseId: z.string().optional(),
+  expenseName: z.string().optional(),
+  category: z.string().optional(),
+});
+
+type ExpenseFiltersSchema = z.infer<typeof expenseFiltersSchema>;
 
 export function ExpenseTableFilters() {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const expenseId = searchParams.get('order');
+  const expenseName = searchParams.get('expenseName');
+  const category = searchParams.get('category');
+
+  const { register, handleSubmit, control } = useForm<ExpenseFiltersSchema>({
+    resolver: zodResolver(expenseFiltersSchema),
+  });
+
+  function handleFilter(data: ExpenseFiltersSchema) {}
+
   return (
-    <form className="w-full">
+    <form className="w-full" onSubmit={handleSubmit(handleFilter)}>
       <div className="flex w-full flex-col gap-4 md:flex-row md:items-center">
         <span className="shrink-0 text-sm font-semibold">Filtros:</span>
 
         <div className="flex w-full flex-col gap-2 md:flex-row">
-          <Input placeholder="ID da despesa" className="h-8 w-full md:w-32" />
-          <Input placeholder="Nome do Produto" className="h-8 w-full md:w-64" />
-          <Select defaultValue="all">
-            <SelectTrigger className="h-8 w-full md:w-48">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todas Categorias</SelectItem>
-              <SelectItem value="transport">Transporte</SelectItem>
-              <SelectItem value="food">Alimentação</SelectItem>
-              <SelectItem value="study">Estudo</SelectItem>
-              <SelectItem value="home">Casa</SelectItem>
-              <SelectItem value="leisure">Lazer</SelectItem>
-            </SelectContent>
-          </Select>
+          <Input
+            placeholder="ID da despesa"
+            className="h-8 w-full md:w-32"
+            {...register('expenseId')}
+          />
+          <Input
+            placeholder="Nome do Produto"
+            className="h-8 w-full md:w-64"
+            {...register('expenseName')}
+          />
+          <Controller
+            name="category"
+            control={control}
+            render={({ field: { name, onChange, value, disabled } }) => {
+              return (
+                <Select
+                  defaultValue="all"
+                  name={name}
+                  onValueChange={onChange}
+                  value={value}
+                  disabled={disabled}
+                >
+                  <SelectTrigger className="h-8 w-full md:w-48">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Todas Categorias</SelectItem>
+                    <SelectItem value="transport">Transporte</SelectItem>
+                    <SelectItem value="food">Alimentação</SelectItem>
+                    <SelectItem value="study">Estudo</SelectItem>
+                    <SelectItem value="home">Casa</SelectItem>
+                    <SelectItem value="leisure">Lazer</SelectItem>
+                  </SelectContent>
+                </Select>
+              );
+            }}
+          ></Controller>
         </div>
 
         <div className="flex w-full shrink-0 flex-col gap-2 md:w-auto md:flex-col">
