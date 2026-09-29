@@ -67,6 +67,17 @@ export function ExpenseTableFilters() {
     });
   }
 
+  function handleClearFilters() {
+    setSearchParams((state) => {
+      state.delete('expenseId');
+      state.delete('expenseName');
+      state.delete('category');
+      state.set('page', '1');
+
+      return state;
+    });
+  }
+
   return (
     <form className="w-full" onSubmit={handleSubmit(handleFilter)}>
       <div className="flex w-full flex-col gap-4 md:flex-row md:items-center">
@@ -123,6 +134,7 @@ export function ExpenseTableFilters() {
           </Button>
 
           <Button
+            onClick={handleClearFilters}
             type="button"
             variant="outline"
             className="h-8 w-full cursor-pointer md:w-auto"
