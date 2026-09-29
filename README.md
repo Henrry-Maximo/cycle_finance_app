@@ -116,10 +116,10 @@
 - [x] Exibir detalhes da despesa selecionada;
 - [x] Editar uma despesa;
 - [x] Confirmação de remoção de despesa;
-- [ ] Filtro de pesquisa por id na tabela;
-- [ ] Filtro de pesquisa por name na tabela;
-- [ ] Filtro de pesquisa por category na tabela;
-- [ ] Botão de remover filtros (limpar campos / realizar requisição novamente);
+- [x] Filtro de pesquisa por id na tabela;
+- [x] Filtro de pesquisa por name na tabela;
+- [x] Filtro de pesquisa por category na tabela;
+- [x] Botão de remover filtros (limpar campos / realizar requisição novamente);
 - [x] Adicionar paginação na tabela de despesas;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
