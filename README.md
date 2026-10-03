@@ -109,7 +109,7 @@
 - [x] Tratamento de campo price;
 - [x] Adicionar sidebar com botão de categoria;
 - [ ] Exibição dos dados no gráfico de gasto no período;
-- [ ] Exibição dos dados no gráfico de categorias populares;
+- [x] Exibição dos dados no gráfico de categorias populares;
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
 - [x] Limitar a quantidade de caracteres na exibição do nome do usuário;
