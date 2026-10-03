@@ -139,12 +139,12 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
       sut.execute({
         userId: userCreated.id,
       }),
-    ).resolves.toEqual({
-      categories: expect.arrayContaining([
+    ).resolves.toEqual(
+      expect.arrayContaining([
         { name: "Alimentação", count: 2, total: 30 },
         { name: "Transporte", count: 2, total: 41.2 },
       ]),
-    });
+    );
   });
 
   it("should be not able to fetch categories grouped by total if user not found", async () => {
