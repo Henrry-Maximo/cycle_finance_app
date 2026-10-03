@@ -23,7 +23,7 @@ export function Dashboard() {
   };
 
   const { data: metrics, isLoading } = useQuery({
-    queryKey: ['metrics'],
+    queryKey: ['metrics', 'user-expenses'],
     queryFn: getMetricsUser,
     staleTime: 1000 * 60 * 10, // 10 minutes
   });
