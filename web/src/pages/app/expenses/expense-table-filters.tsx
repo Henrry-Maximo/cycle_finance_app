@@ -104,6 +104,7 @@ export function ExpenseTableFilters() {
           <Controller
             name="category"
             control={control}
+            disabled={true}
             render={({ field: { name, onChange, value, disabled } }) => {
               return (
                 <Select
@@ -118,11 +119,6 @@ export function ExpenseTableFilters() {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">Todas Categorias</SelectItem>
-                    <SelectItem value="transport">Transporte</SelectItem>
-                    <SelectItem value="food">Alimentação</SelectItem>
-                    <SelectItem value="study">Estudo</SelectItem>
-                    <SelectItem value="home">Casa</SelectItem>
-                    <SelectItem value="leisure">Lazer</SelectItem>
                   </SelectContent>
                 </Select>
               );

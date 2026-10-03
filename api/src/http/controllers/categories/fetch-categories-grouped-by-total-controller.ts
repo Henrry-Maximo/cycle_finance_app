@@ -11,11 +11,11 @@ export async function fetchCategoriesGroupedByTotal(
     const fetchCategoriesGroupedByTotalUseCase =
       makeFetchCategoriesGroupedByTotalUseCase();
 
-    const { categories } = await fetchCategoriesGroupedByTotalUseCase.execute({
+    const categories = await fetchCategoriesGroupedByTotalUseCase.execute({
       userId: req.user.sub,
     });
 
-    return reply.status(200).send({ categories });
+    return reply.status(200).send(categories);
   } catch (err) {
     if (err instanceof ResourceNotFoundError) {
       return reply.status(404).send({ message: err.message });

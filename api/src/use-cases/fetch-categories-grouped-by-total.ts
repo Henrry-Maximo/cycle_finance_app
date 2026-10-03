@@ -8,15 +8,11 @@ interface FetchCategoriesGroupedByTotalRequest {
   userId: string;
 }
 
-interface CategoryItem {
+type FetchCategoriesGroupedByTotalResponse = {
   name: string;
   count: number;
   total: number;
-}
-
-interface FetchCategoriesGroupedByTotalResponse {
-  categories: CategoryItem[];
-}
+}[];
 
 export class FetchCategoriesGroupedByTotalUseCase {
   constructor(
@@ -56,6 +52,6 @@ export class FetchCategoriesGroupedByTotalUseCase {
       };
     });
 
-    return { categories: categoriesWithTotals };
+    return categoriesWithTotals;
   }
 }

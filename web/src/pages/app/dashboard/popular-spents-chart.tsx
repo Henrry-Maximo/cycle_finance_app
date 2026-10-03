@@ -3,36 +3,40 @@ import { Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 import colors from 'tailwindcss/colors';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { useQuery } from '@tanstack/react-query';
+import { getPopularCategories } from '@/api/popular-categories-chart';
 
-const data = [
-  {
-    category: 'Aliementação',
-    amount: 18,
-    fill: colors.emerald['500'],
-  },
-  {
-    category: 'Transporte',
-    amount: 4,
-    fill: colors.rose['500'],
-  },
-  {
-    category: 'Casa',
-    amount: 14,
-    fill: colors.yellow['500'],
-  },
-  {
-    category: 'Lazer',
-    amount: 2,
-    fill: colors.blue['500'],
-  },
-  {
-    category: 'Estudo',
-    amount: 7,
-    fill: colors.purple['500'],
-  },
+const COLORS = [
+  colors.emerald['500'],
+  colors.rose['500'],
+  colors.yellow['500'],
+  colors.blue['500'],
+  colors.purple['500'],
+  colors.orange['500'],
+  colors.pink['500'],
+  colors.teal['500'],
+  colors.cyan['500'],
+  colors.indigo['500'],
+  colors.red['500'],
+  colors.green['500'],
+  colors.amber['500'],
+  colors.violet['500'],
+  colors.sky['500'],
 ];
 
 export function PopularSpentsChart() {
+  const { data: popularCategories } = useQuery({
+    queryKey: ['user-expenses', 'popular-categories'],
+    queryFn: getPopularCategories,
+  });
+
+  const chartData = popularCategories
+    ?.filter((item) => item.count > 0)
+    .map((item, index) => ({
+      ...item,
+      fill: COLORS[index % COLORS.length],
+    }));
+
   return (
     <Card className="md:col-span-3">
       <CardHeader className="pb-8">
@@ -45,59 +49,63 @@ export function PopularSpentsChart() {
       </CardHeader>
 
       <CardContent>
-        <ResponsiveContainer width="100%" height={240}>
-          <PieChart style={{ fontSize: 12 }}>
-            <Pie
-              data={data}
-              dataKey="amount"
-              nameKey="category"
-              cx="50%"
-              cy="50%"
-              stroke="var(--color-background)"
-              shape={(props) => (
-                <Sector
-                  {...props}
-                  className="cursor-pointer transition-opacity outline-none hover:opacity-80"
-                />
-              )}
-              labelLine={false}
-              label={({
-                cx,
-                cy,
-                midAngle,
-                innerRadius,
-                outerRadius,
-                value,
-                index,
-              }) => {
-                const RADIAN = Math.PI / 180;
-                const radius = 12 + innerRadius + (outerRadius - innerRadius);
-                const x = cx + radius * Math.cos(-midAngle! * RADIAN);
-                const y = cy + radius * Math.sin(-midAngle! * RADIAN);
+        {popularCategories && (
+          <ResponsiveContainer width="100%" height={240}>
+            <PieChart style={{ fontSize: 12 }}>
+              <Pie
+                data={chartData}
+                dataKey="count"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                stroke="var(--color-background)"
+                shape={(props) => (
+                  <Sector
+                    {...props}
+                    className="cursor-pointer transition-opacity outline-none hover:opacity-80"
+                  />
+                )}
+                labelLine={false}
+                label={({
+                  cx,
+                  cy,
+                  midAngle,
+                  innerRadius,
+                  outerRadius,
+                  value,
+                  index,
+                }) => {
+                  const RADIAN = Math.PI / 180;
+                  const radius = 12 + innerRadius + (outerRadius - innerRadius);
+                  const x = cx + radius * Math.cos(-midAngle! * RADIAN);
+                  const y = cy + radius * Math.sin(-midAngle! * RADIAN);
 
-                return (
-                  <text
-                    x={x}
-                    y={y}
-                    className="fill-muted-foreground text-xs"
-                    textAnchor={x > cx ? 'start' : 'end'}
-                    dominantBaseline="central"
-                  >
-                    {data[index].category.length > 12
-                      ? data[index].category.substring(0, 12).concat('...')
-                      : data[index].category}{' '}
-                    ({value})
-                  </text>
-                );
-              }}
-              cursor="pointer"
-              outerRadius={86} // termina
-              innerRadius={64} // começa
-              strokeWidth={8}
-              // fill={colors.emerald['500']}
-            />
-          </PieChart>
-        </ResponsiveContainer>
+                  return (
+                    <text
+                      x={x}
+                      y={y}
+                      className="fill-muted-foreground text-xs"
+                      textAnchor={x > cx ? 'start' : 'end'}
+                      dominantBaseline="central"
+                    >
+                      {popularCategories[index].name.length > 12
+                        ? popularCategories[index].name
+                            .substring(0, 12)
+                            .concat('...')
+                        : popularCategories[index].name}{' '}
+                      ({value})
+                    </text>
+                  );
+                }}
+                cursor="pointer"
+                outerRadius={86} // termina
+                innerRadius={64} // começa
+                strokeWidth={8}
+                // fill={colors.emerald['500']}
+              />
+            </PieChart>
+          </ResponsiveContainer>
+        )}
       </CardContent>
     </Card>
   );

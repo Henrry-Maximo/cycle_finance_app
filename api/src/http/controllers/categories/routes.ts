@@ -104,15 +104,13 @@ export async function categoriesRoutes(app: FastifyInstance) {
         description: "List categories grouped by total from user",
         response: {
           200: z
-            .object({
-              categories: z.array(
-                z.object({
-                  name: z.string(),
-                  count: z.number(),
-                  total: z.number(),
-                }),
-              ),
-            })
+            .array(
+              z.object({
+                name: z.string(),
+                count: z.number(),
+                total: z.number(),
+              }),
+            )
             .describe("Fetch categories grouped by total from user."),
           404: z
             .object({
