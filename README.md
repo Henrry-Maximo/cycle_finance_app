@@ -108,10 +108,7 @@
 - [x] Validação de campos com erros;
 - [x] Tratamento de campo price;
 - [x] Adicionar sidebar com botão de categoria;
-- [ ] Exibição dos dados no gráfico de gasto no período;
 - [x] Exibição dos dados no gráfico de categorias populares;
-- [ ] Loading para o gráfico de gasto no período;
-- [ ] Loading para o gráfico de categorias populares;
 - [x] Limitar a quantidade de caracteres na exibição do nome do usuário;
 - [x] Exibir detalhes da despesa selecionada;
 - [x] Editar uma despesa;
@@ -121,6 +118,9 @@
 - [x] Filtro de pesquisa por category na tabela;
 - [x] Botão de remover filtros (limpar campos / realizar requisição novamente);
 - [x] Adicionar paginação na tabela de despesas;
+- [ ] Exibição dos dados no gráfico de gasto no período;
+- [ ] Loading para o gráfico de gasto no período;
+- [ ] Loading para o gráfico de categorias populares;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
 - [x] Preview do comprovante enviado;

@@ -55,11 +55,10 @@ app.register(fastifyCors, {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
 
-app.register(fastifySwagger, {
-  // várias especifícações: openapi / swagger (formatos)
+await app.register(fastifySwagger, {
   openapi: {
     info: {
-      title: "Typed API",
+      title: "Cycle Finance API - Management to Expenses System",
       description: "API Restful Cycle Finance for management of expenses.",
       version: "1.0.0",
       contact: {
@@ -68,14 +67,31 @@ app.register(fastifySwagger, {
         url: "https://www.linkedin.com/in/henrique-maximo/",
       },
     },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server',
+      },
+    ],
     components: {
       securitySchemes: {
+        // Se for um Header de API Key simples:
+        apiKey: {
+          type: 'apiKey',
+          name: 'x-api-key',
+          in: 'header',
+        },
+        // Se for autenticação via Bearer Token (JWT):
         bearerAuth: {
-          type: "http",
-          scheme: "bearer",
-          bearerFormat: "JWT",
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
         },
       },
+    },
+    externalDocs: {
+      url: 'https://swagger.io',
+      description: 'Find more info here',
     },
   },
   transform: jsonSchemaTransform,
