@@ -67,10 +67,15 @@ await app.register(fastifySwagger, {
         email: 'Henrrylimadasilva@gmail.com',
         url: 'https://www.linkedin.com/in/henrique-maximo/',
       },
+      termsOfService: 'https://cyclefi.com/terms',
       license: {
         name: 'MIT',
       },
     },
+    servers: [
+      { url: 'http://localhost:3333', description: 'Development' },
+      { url: 'https://cycle-finance-app.vercel.app/', description: 'Production' },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
@@ -80,6 +85,16 @@ await app.register(fastifySwagger, {
         },
       },
     },
+    externalDocs: {
+      url: 'https://github.com/Henrry-Maximo/cycle_finance_app',
+      description: 'GitHub Repository API Documentation',
+    },
+    tags: [
+      { name: 'Auth', description: 'Authentication and session management' },
+      { name: 'Users', description: 'User profile and account management' },
+      { name: 'Expenses', description: 'Expense registration and tracking' },
+      { name: 'Categories', description: 'Expense categorization' },
+    ],
   },
   transform: jsonSchemaTransform,
 });
