@@ -58,40 +58,27 @@ app.register(fastifyCors, {
 await app.register(fastifySwagger, {
   openapi: {
     info: {
-      title: "Cycle Finance API - Management to Expenses System",
-      description: "API Restful Cycle Finance for management of expenses.",
-      version: "1.0.0",
+      title: 'Cycle Finance API',
+      description:
+        'Cycle Finance is a financial management system that allows users to record expenses manually or by capturing receipts using their device camera. \nThe API provides expense tracking, categorization, analytics by day/month/year, JWT authentication with refresh token support, role-based access control (RBAC), and AI-powered receipt scanning via Gemini.',
+      version: '1.0.0',
       contact: {
-        name: "Henrique Maximo",
-        email: "Henrrylimadasilva@gmail.com",
-        url: "https://www.linkedin.com/in/henrique-maximo/",
+        name: 'Henrique Maximo',
+        email: 'Henrrylimadasilva@gmail.com',
+        url: 'https://www.linkedin.com/in/henrique-maximo/',
+      },
+      license: {
+        name: 'MIT',
       },
     },
-    servers: [
-      {
-        url: 'http://localhost:3000',
-        description: 'Development server',
-      },
-    ],
     components: {
       securitySchemes: {
-        // Se for um Header de API Key simples:
-        apiKey: {
-          type: 'apiKey',
-          name: 'x-api-key',
-          in: 'header',
-        },
-        // Se for autenticação via Bearer Token (JWT):
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
         },
       },
-    },
-    externalDocs: {
-      url: 'https://swagger.io',
-      description: 'Find more info here',
     },
   },
   transform: jsonSchemaTransform,
