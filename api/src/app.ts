@@ -14,6 +14,9 @@ import {
 import { RateLimiterRes } from "rate-limiter-flexible";
 import z, { ZodError } from "zod";
 
+
+import { readFileSync } from "node:fs";
+import path, { join } from "node:path";
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
 
@@ -101,6 +104,28 @@ await app.register(fastifySwagger, {
 
 app.register(fastifySwaggerUi, {
   routePrefix: "/docs",
+  uiConfig: {
+    docExpansion: "list",
+    deepLinking: true,
+    defaultModelExpandDepth: 1,
+    displayRequestDuration: true,
+    filter: true,
+    syntaxHighlight: {
+      theme: 'arta'
+    }
+  },
+  logo: {
+    type: "image/png",
+    content: readFileSync(path.join(process.cwd(), 'src', 'public', 'logo.png')),
+  },
+  theme: {
+    title: 'Cycle Finance API Docs', css: [
+      {
+        filename: 'theme.css',
+        content: `.swagger-ui .topbar { background-color: #000000; }`,
+      },
+    ],
+  }
 });
 
 app.register(appRoutes);
