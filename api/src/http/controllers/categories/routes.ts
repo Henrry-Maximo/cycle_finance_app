@@ -23,7 +23,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Categories"],
-        description: "List categories",
+        summary: "List user categories",
+        description: "Returns a paginated list of all categories owned by the authenticated user. Supports optional `query` filter by name. Defaults to **15 items per page**.",
         query: z.object({
           query: z.string().optional().nullable(),
           page: z.coerce.number().default(1),
@@ -62,7 +63,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Categories"],
-        description: "Create a new category",
+        summary: "Register a new category",
+        description: "Creates a new expense category for the authenticated user. Each user is limited to **15 categories**. Returns `409` if a category with the same title already exists, and `429` if the limit has been reached.",
         body: z.object({
           title: z.string(),
           description: z.string(),
@@ -101,7 +103,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Categories"],
-        description: "List categories grouped by total from user",
+        summary: "List categories grouped by total",
+        description: "Returns all categories for the authenticated user aggregated with the total amount spent and the number of expenses per category. Useful for rendering category distribution charts.",
         response: {
           200: z
             .array(
@@ -134,7 +137,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Categories"],
-        description: "Delete category from user",
+        summary: "Delete a category",
+        description: "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
         query: z.object({
           id: z.string(),
         }),
@@ -178,7 +182,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Categories"],
-        description: "Update category from user.",
+        summary: "Update a category",
+        description: "Updates the title or description of an existing category. Only the owner of the category can perform this action.",
         response: {
           200: z
             .object({

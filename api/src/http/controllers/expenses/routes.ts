@@ -25,7 +25,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "List expenses",
+        summary: "List user expenses",
+        description: "Returns a paginated list of all expenses for the authenticated user. Supports optional filters: `expense` (name), `category` (name), `from` and `to` (date range). Defaults to **15 items per page**.",
         query: z.object({
           expense: z.string().optional(),
           category: z.string().optional(),
@@ -87,7 +88,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "List metrics from user",
+        summary: "Get expense metrics",
+        description: "Returns aggregated metrics for the authenticated user: total and count of expenses for the **current day** and **current month**. Supports optional `from` and `to` date filters.",
         query: z.object({
           from: z.string().optional(),
           to: z.string().optional(),
@@ -123,7 +125,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "List expenses grouped by date from user",
+        summary: "List expenses grouped by date",
+        description: "Returns expenses aggregated by date with the total amount per day. Useful for rendering time-series charts. Supports optional `from` and `to` date filters.",
         query: z.object({
           from: z.string().optional(),
           to: z.string().optional(),
@@ -161,7 +164,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "Create a new expense",
+        summary: "Register a new expense",
+        description: "Creates a new expense linked to the authenticated user and a valid category owned by them. Returns `404` if the user or category is not found.",
         body: z.object({
           title: z.string(),
           enterprise: z.string(),
@@ -196,8 +200,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description:
-          "Envia a imagem de um comprovante fiscal para extração inteligente de dados com o Gemini.",
+        summary: "Analyze a receipt image",
+        description: "Uploads a receipt image (`JPEG` or `PNG`, max **5MB**) and uses **Gemini AI** to extract expense data such as title, amount, date, and category suggestions.",
         consumes: ["multipart/form-data"],
         // response: {
         //   200: {
@@ -239,7 +243,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "Update expense from user.",
+        summary: "Update an expense",
+        description: "Updates an existing expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `409` if the category is already in use by the expense.",
         query: z.object({
           id: z.string(),
         }),
@@ -292,7 +297,8 @@ export async function expensesRoutes(app: FastifyInstance) {
           },
         ],
         tags: ["Expenses"],
-        description: "Delete expense from user",
+        summary: "Delete an expense",
+        description: "Permanently deletes an expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `401` if the expense belongs to another user.",
         query: z.object({
           id: z.string(),
         }),
