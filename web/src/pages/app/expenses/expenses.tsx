@@ -5,6 +5,7 @@ import { Pagination } from '@/components/app-pagination';
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
@@ -16,6 +17,7 @@ import { ExpenseTableRow } from './expense-table-row';
 import { useSearchParams } from 'react-router-dom';
 import z from 'zod';
 import { useEffect } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -98,12 +100,19 @@ export function Expenses() {
               </TableHeader>
 
               <TableBody>
-                {result &&
+                {result ?
                   result.expenses.map((expense) => {
                     return (
                       <ExpenseTableRow key={expense.id} expense={expense} />
                     );
-                  })}
+                  }) : (
+                    Array.from({ length: 10 }).map((_, i) => (
+                      <TableRow key={i}>
+                        <TableCell colSpan={8}>
+                          <Skeleton className="h-8 w-full" />
+                        </TableCell>
+                      </TableRow>))
+                  )}
                 {/* {Array.from({ length: 10 }).map((_, i) => {
                   return <ExpenseTableRow key={i} />;
                 })} */}
