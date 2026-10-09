@@ -23,8 +23,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       preHandler: [rateLimiter],
       schema: {
         tags: ["Users"],
-        description: "Create a new user",
-        summary: "Create a new user",
+        summary: "Create a new user account",
+        description: "Creates a new user with **member** role by default with status code `201` and no content. Returns `409` if the email is already in use.",
         body: z.object({
           username: z.string().max(38),
           email: z.email(),

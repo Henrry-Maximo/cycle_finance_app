@@ -13,6 +13,8 @@ import { Update } from './pages/auth/reset/update';
 import { SignIn } from './pages/auth/sign-in';
 import { SignUp } from './pages/auth/sign-up';
 import { ProtectedRoute } from './ProtectedRoute';
+import { TermsLicense } from './pages/app/terms-license';
+import { TermsLicenseApi } from './pages/app/terms-license-api';
 
 export const router = createBrowserRouter([
   {
@@ -66,6 +68,16 @@ export const router = createBrowserRouter([
         element: <Update />,
       },
     ],
+  },
+
+  // {
+  //   path: 'terms',
+  //   element: <TermsLicense />
+  // },
+
+  {
+    path: 'terms-of-api',
+    element: <TermsLicenseApi />
   },
 
   {

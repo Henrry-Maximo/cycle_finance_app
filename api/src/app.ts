@@ -67,7 +67,7 @@ await app.register(fastifySwagger, {
         email: 'Henrrylimadasilva@gmail.com',
         url: 'https://www.linkedin.com/in/henrique-maximo/',
       },
-      termsOfService: 'https://cyclefi.com/terms',
+      termsOfService: 'https://cycle-finance-app.vercel.app/terms-of-api',
       license: {
         name: 'MIT',
       },
