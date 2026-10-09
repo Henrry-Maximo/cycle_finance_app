@@ -22,7 +22,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["categories"],
+        tags: ["Categories"],
         description: "List categories",
         query: z.object({
           query: z.string().optional().nullable(),
@@ -61,7 +61,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["categories"],
+        tags: ["Categories"],
         description: "Create a new category",
         body: z.object({
           title: z.string(),
@@ -100,7 +100,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["categories"],
+        tags: ["Categories"],
         description: "List categories grouped by total from user",
         response: {
           200: z
@@ -133,7 +133,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["categories"],
+        tags: ["Categories"],
         description: "Delete category from user",
         query: z.object({
           id: z.string(),
@@ -177,7 +177,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["categories"],
+        tags: ["Categories"],
         description: "Update category from user.",
         response: {
           200: z

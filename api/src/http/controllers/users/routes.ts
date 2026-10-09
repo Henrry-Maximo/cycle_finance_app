@@ -22,7 +22,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [rateLimiter],
       schema: {
-        tags: ["users"],
+        tags: ["Users"],
         description: "Create a new user",
         body: z.object({
           username: z.string().max(38),
@@ -47,7 +47,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [rateLimiter],
       schema: {
-        tags: ["users"],
+        tags: ["Auth"],
         description: "Create a new session.",
         body: z.object({
           email: z.email(),
@@ -75,7 +75,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [rateLimiter],
       schema: {
-        tags: ["users"],
+        tags: ["Auth"],
         description: "Create a request of reset password.",
         body: z.object({
           email: z.email(),
@@ -102,7 +102,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [rateLimiter],
       schema: {
-        tags: ["users"],
+        tags: ["Auth"],
         description: "Reset password.",
         query: z.object({
           token: z.string(),
@@ -138,7 +138,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["users"],
+        tags: ["Users"],
         description: "List users.",
         query: z.object({
           query: z.string().optional().nullable(),
@@ -182,7 +182,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["users"],
+        tags: ["Users"],
         description: "Get profile.",
         response: {
           200: z
@@ -216,7 +216,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["users"],
+        tags: ["Auth"],
         description: "Logout from user.",
         response: {
           200: z
@@ -240,7 +240,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["users"],
+        tags: ["Users"],
         description: "Update profile.",
         response: {
           200: z
@@ -266,7 +266,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
     {
       preHandler: [rateLimiter],
       schema: {
-        tags: ["users"],
+        tags: ["Auth"],
         description: "Refresh token.",
         response: {
           200: z.object({
@@ -288,7 +288,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["users"],
+        tags: ["Users"],
         description: "Delete user.",
         response: {
           200: z.null().describe("User delete with successful."),

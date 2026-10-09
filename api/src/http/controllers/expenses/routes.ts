@@ -24,7 +24,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "List expenses",
         query: z.object({
           expense: z.string().optional(),
@@ -77,7 +77,7 @@ export async function expensesRoutes(app: FastifyInstance) {
   );
 
   app.get(
-    "/metrics",
+    "/expenses/metrics",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
@@ -86,7 +86,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "List metrics from user",
         query: z.object({
           from: z.string().optional(),
@@ -122,7 +122,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "List expenses grouped by date from user",
         query: z.object({
           from: z.string().optional(),
@@ -160,7 +160,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "Create a new expense",
         body: z.object({
           title: z.string(),
@@ -195,7 +195,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description:
           "Envia a imagem de um comprovante fiscal para extração inteligente de dados com o Gemini.",
         consumes: ["multipart/form-data"],
@@ -238,7 +238,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "Update expense from user.",
         query: z.object({
           id: z.string(),
@@ -291,7 +291,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             bearerAuth: [],
           },
         ],
-        tags: ["expenses"],
+        tags: ["Expenses"],
         description: "Delete expense from user",
         query: z.object({
           id: z.string(),
