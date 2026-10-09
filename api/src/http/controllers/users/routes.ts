@@ -24,6 +24,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Users"],
         description: "Create a new user",
+        summary: "Create a new user",
         body: z.object({
           username: z.string().max(38),
           email: z.email(),
@@ -49,6 +50,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         description: "Create a new session.",
+        summary: "Create a new session.",
         body: z.object({
           email: z.email(),
           password: z.string().min(6).max(22),
@@ -77,6 +79,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         description: "Create a request of reset password.",
+        summary: "Create a request of reset password.",
         body: z.object({
           email: z.email(),
         }),
@@ -104,6 +107,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         description: "Reset password.",
+        summary: "Reset password.",
         query: z.object({
           token: z.string(),
         }),
@@ -140,6 +144,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         description: "List users.",
+        summary: "List users.",
         query: z.object({
           query: z.string().optional().nullable(),
           page: z.coerce.number().default(1),
@@ -184,6 +189,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         description: "Get profile.",
+        summary: "Get profile.",
         response: {
           200: z
             .object({
@@ -218,6 +224,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Auth"],
         description: "Logout from user.",
+        summary: "Logout from user.",
         response: {
           200: z
             .object({
@@ -242,6 +249,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         description: "Update profile.",
+        summary: "Update profile.",
         response: {
           200: z
             .object({
@@ -268,6 +276,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         description: "Refresh token.",
+        summary: "Refresh token.",
         response: {
           200: z.object({
             token: z.string(),
@@ -290,6 +299,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         description: "Delete user.",
+        summary: "Delete user.",
         response: {
           200: z.null().describe("User delete with successful."),
           401: z

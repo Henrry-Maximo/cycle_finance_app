@@ -9,7 +9,7 @@ export interface MetricsUserResponse {
 
 export async function getMetricsUser(): Promise<MetricsUserResponse> {
   try {
-    const response = await api.get('/metrics');
+    const response = await api.get('/expenses/metrics');
 
     if (!response) {
       throw new Error("Token inválido.");
