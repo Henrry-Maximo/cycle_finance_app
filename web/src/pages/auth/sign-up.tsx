@@ -14,6 +14,8 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { TermsLicense } from '../app/terms-license';
 
 const signUpForm = z.object({
   username: z
@@ -188,22 +190,32 @@ export function SignUp() {
               Cadastrar conta
             </Button>
 
-            <Field orientation="horizontal">
-              <Checkbox
-                className="dark:border-accent cursor-pointer dark:border-2"
-                id="terms-checkbox"
-                name="terms-checkbox"
-                required
-                disabled={isSubmitting}
-              />
-              <Label
-                htmlFor="terms-checkbox"
-                className="text-accent-foreground cursor-pointer text-xs leading-relaxed"
-              >
-                Ao continuar, você concorda com nossos termos de serviços e
-                política de privacidade.
-              </Label>
-            </Field>
+            <Dialog>
+              <Field orientation="horizontal" className='flex gap-4'>
+                <Checkbox
+                  className="dark:border-accent cursor-pointer dark:border-2"
+                  id="terms-checkbox"
+                  name="terms-checkbox"
+                  required
+                  disabled={isSubmitting}
+                />
+                <Label
+                  htmlFor="terms-checkbox"
+                  className="flex-wrap text-accent-foreground cursor-pointer text-xs leading-normal gap-0"
+                >
+                  Ao continuar, você concorda com nossos 
+                  <DialogTrigger asChild>
+                    <span className="text-blue-600 cursor-pointer hover:underline">
+                      termos de serviços e
+                    política de privacidade
+                    </span>
+                  </DialogTrigger>
+                  .
+                </Label>
+              </Field>
+
+              <TermsLicense />
+            </Dialog>
           </form>
 
           <footer className="text-center">
