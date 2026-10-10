@@ -12,11 +12,11 @@ export async function fetchExpensesGroupedByDate(
     from: z
       .string()
       .optional()
-      .transform((val) => (val ? new Date(val) : undefined)),
+      .transform((val) => (val ? new Date(val) : null)),
     to: z
       .string()
       .optional()
-      .transform((val) => (val ? new Date(val) : undefined)),
+      .transform((val) => (val ? new Date(val) : null)),
   });
 
   const { from, to } = expensesQuerySchema.parse(req.query);

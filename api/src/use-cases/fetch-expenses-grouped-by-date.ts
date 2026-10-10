@@ -5,12 +5,12 @@ import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 
 interface FetchExpensesGroupedByDateUseCaseRequest {
   userId: string;
-  from?: Date;
-  to?: Date;
+  from?: Date | null;
+  to?: Date | null;
 }
 
 interface Expense {
-  createAt: string;
+  date: string;
   value: number;
 }
 
@@ -57,14 +57,15 @@ export class FetchExpensesGroupedByDateUseCase {
         const day = String(expense.created_at.getDate()).padStart(2, "0");
         const date = `${year}-${month}-${day}`;
 
-        expensesByDate[date] = (expensesByDate[date] ?? 0) + expense.price;
+        expensesByDate[date] =
+          (expensesByDate[date] ?? 0) + expense.price / 100;
         return expensesByDate;
       },
       {},
     );
 
     const expenses = Object.entries(transformed).map(([date, value]) => ({
-      createAt: date,
+      date,
       value,
     }));
 
