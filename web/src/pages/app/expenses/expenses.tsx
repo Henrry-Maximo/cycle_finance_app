@@ -108,7 +108,7 @@ export function Expenses() {
                   }) : (
                     Array.from({ length: 10 }).map((_, i) => (
                       <TableRow key={i}>
-                        <TableCell colSpan={8}>
+                        <TableCell colSpan={9}>
                           <Skeleton className="h-8 w-full" />
                         </TableCell>
                       </TableRow>))
