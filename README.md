@@ -4,7 +4,9 @@
 
 - Software para gerenciamento financeiro que permite registrar despesas manualmente ou através da captura de comprovantes utilizando a câmera do dispositivo. O sistema oferece visualizações e análises dos gastos por dia, mês e ano.
 
-> 🚧 **Status:** Em desenvolvimento
+> 🚧 **Status v1:** Em desenvolvimento
+> 🔗 **Production:** https://cycle-finance-app.vercel.app/sign-in
+> 🔗 **Docs API:** https://cycle-finance-app-fcsp.onrender.com/docs
 
 ## Estrutura do Repositório
 
