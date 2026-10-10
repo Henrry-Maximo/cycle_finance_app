@@ -127,6 +127,7 @@
 - [x] Preview do comprovante enviado;
 - [x] Acesso aos termos de serviços/privacidade;
 - [x] Exibição dos dados no gráfico de gasto no período;
+- [ ] Validação de campo vazio no cadastro de categorias;
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
 - [ ] Personalizar alerta do checkbox (browser);

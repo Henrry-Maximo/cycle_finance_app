@@ -36,11 +36,11 @@ import { Textarea } from './ui/textarea';
 import { Separator } from './ui/separator';
 import { DeleteCategoriesDialog } from './app-delete-category-dialog';
 import { DeleteCategoryContext } from '@/contexts/delete-category-context';
+import { zodResolver } from '@hookform/resolvers/zod';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const storeCategoriesSchema = z.object({
-  title: z.string().min(1).max(28),
-  description: z.string().min(1).max(240),
+  title: z.string().min(1, 'O título deve ter mais que 1 caracter.').max(28, 'O título deve ter menos que 28 caracteres.'),
+  description: z.string().max(240).optional(),
 });
 
 type StoreCategoriesSchema = z.infer<typeof storeCategoriesSchema>;
@@ -49,8 +49,10 @@ export function StoreCategoriesDialog() {
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<StoreCategoriesSchema>();
+    formState: { isSubmitting, errors },
+  } = useForm<StoreCategoriesSchema>({
+    resolver: zodResolver(storeCategoriesSchema),
+  });
   const queryClient = useQueryClient();
 
   const { mutateAsync: registerCategoryFn } = useMutation({
@@ -114,10 +116,17 @@ export function StoreCategoriesDialog() {
                   {...register('title')}
                   disabled={isSubmitting}
                 />
-                <p className="text-muted-foreground text-xs">
-                  Preencha com o nome da categoria que deseja utilizar no
-                  cadastro das despesas.
-                </p>
+                {errors.title ? (
+                  <span className="text-xs text-red-500">
+                    {errors.title.message}
+                  </span>
+                ) :
+                  <p className="text-muted-foreground text-xs">
+                    Preencha com o nome da categoria que deseja utilizar no
+                    cadastro das despesas.
+                  </p>
+                }
+
               </div>
             </div>
 
@@ -198,7 +207,7 @@ export function StoreCategoriesDialog() {
                         {category.title}
                       </TableCell>
                       <TableCell className="max-w-md wrap-break-word whitespace-normal">
-                        {category.description}
+                        {category.description ? category.description : (<span className='text-gray-400'>Sem descrição.</span>)}
                       </TableCell>
                       <TableCell className="text-muted-foreground flex flex-col">
                         <span className="font-light">
@@ -221,7 +230,7 @@ export function StoreCategoriesDialog() {
                                 variant="ghost"
                                 size="default"
                                 className="cursor-pointer"
-                                // onClick={() => handleDeleteCategory(category.id)}
+                              // onClick={() => handleDeleteCategory(category.id)}
                               >
                                 <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
                                 <span className="sr-only">Excluir</span>
