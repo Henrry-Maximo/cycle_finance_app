@@ -46,6 +46,18 @@ export function AuthLayout() {
                 ser limpos ou apagados a qualquer momento devido a manutenções
                 no banco de dados.
               </p>
+              <div className="mt-3 w-full">
+                <div className="mb-1 flex justify-between text-xs text-zinc-500">
+                  <span>Progresso do projeto (v1)</span>
+                  <span>82%</span>
+                </div>
+                <div className="h-1.5 w-full overflow-hidden rounded-full bg-zinc-800">
+                  <div
+                    className="h-full rounded-full bg-blue-500 transition-all duration-700"
+                    style={{ width: '82%' }}
+                  />
+                </div>
+              </div>
             </div>
           </main>
           <footer className="flex justify-between">
