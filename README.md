@@ -5,7 +5,9 @@
 - Software para gerenciamento financeiro que permite registrar despesas manualmente ou através da captura de comprovantes utilizando a câmera do dispositivo. O sistema oferece visualizações e análises dos gastos por dia, mês e ano.
 
 > 🚧 **Status v1:** Em desenvolvimento
+>
 > 🔗 **Production:** https://cycle-finance-app.vercel.app/sign-in
+>
 > 🔗 **Docs API:** https://cycle-finance-app-fcsp.onrender.com/docs
 
 ## Estrutura do Repositório
@@ -100,7 +102,9 @@
 - [x] O usuário não deve poder visualizar despesas de outros usuários;
 - [x] O usuário não deve poder atualizar despesas de outros usuários;
 - [x] O administrador pode visualizar todos os usuários;
-- [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata.
+- [x] Ao deletar uma conta, todas as despesas e categorias vinculadas devem ser deletadas em cascata;
+- [x] O usuário deve ter acesso aos termos de serviços/política de privacidade;
+- [x] O usuário deve ter acesso a documentação da API;
 
 ### Funcionalidades (FT)
 
@@ -120,12 +124,13 @@
 - [x] Filtro de pesquisa por category na tabela;
 - [x] Botão de remover filtros (limpar campos / realizar requisição novamente);
 - [x] Adicionar paginação na tabela de despesas;
+- [x] Preview do comprovante enviado;
+- [x] Acesso aos termos de serviços/privacidade;
 - [ ] Exibição dos dados no gráfico de gasto no período;
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
-- [x] Preview do comprovante enviado;
 
 ### Cobertura dos Testes Unitários
 
