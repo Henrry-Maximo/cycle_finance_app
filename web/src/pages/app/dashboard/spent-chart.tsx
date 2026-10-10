@@ -18,11 +18,24 @@ import {
 } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { getDailyRevenueInPeriod } from '@/api/get-daily-revenue-in-period';
+import { Label } from '@/components/ui/label';
+import { DateRangePicker } from '@/components/ui/date-range-picker';
+import { useState } from 'react';
+import type { DateRange } from 'react-day-picker';
+import { subDays } from 'date-fns';
 
 export function SpentChart() {
+  const [dateRange, setDateRange] = useState<DateRange | undefined>({
+    from: subDays(new Date(), 7), // subtraindo 7 dias
+    to: new Date(),
+  });
+
   const { data: dailyRevenueInPeriod } = useQuery({
-    queryKey: ['metrics'],
-    queryFn: getDailyRevenueInPeriod
+    queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
+    queryFn: () => getDailyRevenueInPeriod({
+      from: dateRange?.from,
+      to: dateRange?.to
+    })
   });
 
   return (
@@ -33,6 +46,11 @@ export function SpentChart() {
             Gasto no período
           </CardTitle>
           <CardDescription>Gasto diário no período</CardDescription>
+        </div>
+
+        <div className='flex items-center gap-3'>
+          <Label>Período</Label>
+          <DateRangePicker date={dateRange} onDateChange={setDateRange} />
         </div>
       </CardHeader>
 

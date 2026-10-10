@@ -126,7 +126,7 @@
 - [x] Adicionar paginação na tabela de despesas;
 - [x] Preview do comprovante enviado;
 - [x] Acesso aos termos de serviços/privacidade;
-- [ ] Exibição dos dados no gráfico de gasto no período;
+- [x] Exibição dos dados no gráfico de gasto no período;
 - [ ] Loading para o gráfico de gasto no período;
 - [ ] Loading para o gráfico de categorias populares;
 - [ ] Personalizar alerta do checkbox (browser);
