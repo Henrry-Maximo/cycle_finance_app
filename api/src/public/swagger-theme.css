@@ -1,0 +1,321 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* ── Base ── */
+body,
+.swagger-ui {
+  background-color: #0a0a0a !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ── Topbar ── */
+.swagger-ui .topbar {
+  background-color: #111111;
+  border-bottom: 1px solid #1e1e1e;
+  padding: 8px 0;
+}
+
+/* .swagger-ui .topbar .download-url-wrapper { display: none; } */
+
+/* ── Info block ── */
+.swagger-ui .info .title,
+.swagger-ui .info h1,
+.swagger-ui .info h2,
+.swagger-ui .info h3 {
+  color: #ffffff;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .info p,
+.swagger-ui .info li,
+.swagger-ui .info a {
+  color: #a1a1aa;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .info a {
+  color: #3b82f6;
+}
+
+.swagger-ui .info a:hover {
+  color: #60a5fa;
+}
+
+/* ── Filter input ── */
+.swagger-ui .filter-container .operation-filter-input {
+  background: #1a1a1a;
+  border: 1px solid #2563eb44;
+  color: #e4e4e7;
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .filter-container .operation-filter-input:focus {
+  border-color: #2563eb;
+  outline: none;
+}
+
+/* ── Tags (section headers) ── */
+.swagger-ui .opblock-tag {
+  color: #ffffff !important;
+  border-bottom: 1px solid #1e1e1e !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .opblock-tag:hover {
+  background: #111111 !important;
+}
+
+.swagger-ui .opblock-tag small {
+  color: #71717a !important;
+}
+
+/* ── Operation blocks ── */
+.swagger-ui .opblock {
+  background: #111111 !important;
+  border: 1px solid #1e1e1e !important;
+  border-radius: 8px !important;
+  margin-bottom: 6px !important;
+}
+
+.swagger-ui .opblock .opblock-summary {
+  border-bottom: none !important;
+}
+
+.swagger-ui .opblock.is-open .opblock-summary {
+  border-bottom: 1px solid #1e1e1e !important;
+}
+
+.swagger-ui .opblock-summary-description,
+.swagger-ui .opblock-description-wrapper p {
+  color: #a1a1aa !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .opblock-summary-path {
+  color: #e4e4e7 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .opblock-body {
+  background: #0f0f0f !important;
+}
+
+/* ── HTTP method badges ── */
+.swagger-ui .opblock.opblock-get {
+  border-left: 3px solid #3b82f6 !important;
+}
+
+.swagger-ui .opblock.opblock-post {
+  border-left: 3px solid #22c55e !important;
+}
+
+.swagger-ui .opblock.opblock-patch {
+  border-left: 3px solid #f59e0b !important;
+}
+
+.swagger-ui .opblock.opblock-delete {
+  border-left: 3px solid #ef4444 !important;
+}
+
+.swagger-ui .opblock.opblock-get .opblock-summary-method {
+  background: #1d4ed8 !important;
+}
+
+.swagger-ui .opblock.opblock-post .opblock-summary-method {
+  background: #16a34a !important;
+}
+
+.swagger-ui .opblock.opblock-patch .opblock-summary-method {
+  background: #d97706 !important;
+}
+
+.swagger-ui .opblock.opblock-delete .opblock-summary-method {
+  background: #dc2626 !important;
+}
+
+.swagger-ui .opblock-summary-method {
+  border-radius: 4px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 11px !important;
+  min-width: 70px !important;
+}
+
+/* ── Sections inside expanded block ── */
+.swagger-ui .opblock-section-header {
+  background: #161616 !important;
+  border-bottom: 1px solid #1e1e1e !important;
+}
+
+.swagger-ui .opblock-section-header h4,
+.swagger-ui .opblock-section-header label {
+  color: #a1a1aa !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ── Tables (parameters) ── */
+.swagger-ui table thead tr th,
+.swagger-ui table thead tr td {
+  color: #71717a !important;
+  border-bottom: 1px solid #1e1e1e !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .parameter__name {
+  color: #e4e4e7 !important;
+}
+
+.swagger-ui .parameter__type {
+  color: #3b82f6 !important;
+}
+
+.swagger-ui .parameter__in {
+  color: #71717a !important;
+}
+
+.swagger-ui .parameter__deprecated {
+  color: #ef4444 !important;
+}
+
+.swagger-ui .prop-type {
+  color: #3b82f6 !important;
+}
+
+/* ── Inputs & textareas ── */
+.swagger-ui input[type=text],
+.swagger-ui input[type=email],
+.swagger-ui input[type=password],
+.swagger-ui textarea,
+.swagger-ui select {
+  background: #1a1a1a !important;
+  border: 1px solid #27272a !important;
+  color: #e4e4e7 !important;
+  border-radius: 6px !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui input:focus,
+.swagger-ui textarea:focus {
+  border-color: #2563eb !important;
+  outline: none !important;
+}
+
+/* ── Buttons ── */
+.swagger-ui .btn {
+  font-family: 'JetBrains Mono', monospace !important;
+  border-radius: 6px !important;
+}
+
+.swagger-ui .btn.execute {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+}
+
+.swagger-ui .btn.execute:hover {
+  background: #1d4ed8 !important;
+  border-color: #1d4ed8 !important;
+}
+
+.swagger-ui .btn.cancel {
+  border-color: #3f3f46 !important;
+  color: #a1a1aa !important;
+}
+
+.swagger-ui .btn.authorize {
+  background: transparent !important;
+  border: 1px solid #2563eb !important;
+  color: #3b82f6 !important;
+}
+
+.swagger-ui .btn.authorize:hover {
+  background: #2563eb1a !important;
+}
+
+.swagger-ui .btn.authorize svg {
+  fill: #3b82f6 !important;
+}
+
+/* ── Authorize modal ── */
+.swagger-ui .dialog-ux .modal-ux {
+  background: #111111 !important;
+  border: 1px solid #1e1e1e !important;
+  border-radius: 10px !important;
+}
+
+.swagger-ui .dialog-ux .modal-ux-header {
+  background: #0a0a0a !important;
+  border-bottom: 1px solid #1e1e1e !important;
+}
+
+.swagger-ui .dialog-ux .modal-ux-header h3 {
+  color: #ffffff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .dialog-ux .modal-ux-content p,
+.swagger-ui .dialog-ux .modal-ux-content label {
+  color: #a1a1aa !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* ── Response codes ── */
+.swagger-ui .responses-inner h4,
+.swagger-ui .responses-inner h5 {
+  color: #a1a1aa !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .response-col_status {
+  color: #e4e4e7 !important;
+}
+
+.swagger-ui .response-col_description {
+  color: #71717a !important;
+}
+
+/* ── Code / example blocks ── */
+.swagger-ui .highlight-code,
+.swagger-ui .microlight {
+  background: #0f0f0f !important;
+  border: 1px solid #1e1e1e !important;
+  border-radius: 6px !important;
+}
+
+/* ── Models section ── */
+.swagger-ui section.models {
+  background: #111111 !important;
+  border: 1px solid #1e1e1e !important;
+  border-radius: 8px !important;
+}
+
+.swagger-ui section.models h4 {
+  color: #ffffff !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+.swagger-ui .model-title {
+  color: #e4e4e7 !important;
+}
+
+.swagger-ui .model {
+  color: #a1a1aa !important;
+}
+
+/* ── Scrollbar ── */
+.swagger-ui *::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.swagger-ui *::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.swagger-ui *::-webkit-scrollbar-thumb {
+  background-color: #2563eb66;
+  border-radius: 999px;
+}
+
+.swagger-ui *::-webkit-scrollbar-thumb:hover {
+  background-color: #2563eb;
+}

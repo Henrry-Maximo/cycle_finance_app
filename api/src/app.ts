@@ -14,9 +14,8 @@ import {
 import { RateLimiterRes } from "rate-limiter-flexible";
 import z, { ZodError } from "zod";
 
-
 import { readFileSync } from "node:fs";
-import path, { join } from "node:path";
+import path from "node:path";
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
 
@@ -61,42 +60,45 @@ app.register(fastifyCors, {
 await app.register(fastifySwagger, {
   openapi: {
     info: {
-      title: 'Cycle Finance API',
+      title: "Cycle Finance API",
       description:
-        'Cycle Finance is a financial management system that allows users to record expenses manually or by capturing receipts using their device camera. \nThe API provides expense tracking, categorization, analytics by day/month/year, JWT authentication with refresh token support, role-based access control (RBAC), and AI-powered receipt scanning via Gemini.',
-      version: '1.0.0',
+        "Cycle Finance is a financial management system that allows users to record expenses manually or by capturing receipts using their device camera. \nThe API provides expense tracking, categorization, analytics by day/month/year, JWT authentication with refresh token support, role-based access control (RBAC), and AI-powered receipt scanning via Gemini.",
+      version: "1.0.0",
       contact: {
-        name: 'Henrique Maximo',
-        email: 'Henrrylimadasilva@gmail.com',
-        url: 'https://www.linkedin.com/in/henrique-maximo/',
+        name: "Henrique Maximo",
+        email: "Henrrylimadasilva@gmail.com",
+        url: "https://www.linkedin.com/in/henrique-maximo/",
       },
-      termsOfService: 'https://cycle-finance-app.vercel.app/terms-of-api',
+      termsOfService: "https://cycle-finance-app.vercel.app/terms-of-api",
       license: {
-        name: 'MIT',
+        name: "MIT",
       },
     },
     servers: [
-      { url: 'http://localhost:3333', description: 'Development' },
-      { url: 'https://cycle-finance-app.vercel.app/', description: 'Production' },
+      { url: "http://localhost:3333", description: "Development" },
+      {
+        url: "https://cycle-finance-app.vercel.app/",
+        description: "Production",
+      },
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
-          type: 'http',
-          scheme: 'bearer',
-          bearerFormat: 'JWT',
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
         },
       },
     },
     externalDocs: {
-      url: 'https://github.com/Henrry-Maximo/cycle_finance_app',
-      description: 'GitHub Repository API Documentation',
+      url: "https://github.com/Henrry-Maximo/cycle_finance_app",
+      description: "GitHub Repository API Documentation",
     },
     tags: [
-      { name: 'Auth', description: 'Authentication and session management' },
-      { name: 'Users', description: 'User profile and account management' },
-      { name: 'Expenses', description: 'Expense registration and tracking' },
-      { name: 'Categories', description: 'Expense categorization' },
+      { name: "Auth", description: "Authentication and session management" },
+      { name: "Users", description: "User profile and account management" },
+      { name: "Expenses", description: "Expense registration and tracking" },
+      { name: "Categories", description: "Expense categorization" },
     ],
   },
   transform: jsonSchemaTransform,
@@ -107,25 +109,31 @@ app.register(fastifySwaggerUi, {
   uiConfig: {
     docExpansion: "list",
     deepLinking: true,
-    defaultModelExpandDepth: 1,
+    defaultModelsExpandDepth: 1,
     displayRequestDuration: true,
     filter: true,
     syntaxHighlight: {
-      theme: 'arta'
-    }
+      theme: "arta",
+    },
   },
   logo: {
     type: "image/png",
-    content: readFileSync(path.join(process.cwd(), 'src', 'public', 'logo.png')),
+    content: readFileSync(
+      path.join(process.cwd(), "src", "public", "logo.png"),
+    ),
   },
   theme: {
-    title: 'Cycle Finance API Docs', css: [
+    title: "Cycle Finance API Docs",
+    css: [
       {
-        filename: 'theme.css',
-        content: `.swagger-ui .topbar { background-color: #000000; }`,
+        filename: "theme.css",
+        content: readFileSync(
+          path.join(process.cwd(), "src", "public", "swagger-theme.css"),
+          "utf-8",
+        ),
       },
     ],
-  }
+  },
 });
 
 app.register(appRoutes);
@@ -137,10 +145,6 @@ app.setErrorHandler(
         .status(400)
         .send({ message: "Validation error.", issues: z.treeifyError(error) });
     }
-
-    // if (error.) {
-    //   return reply.status(429).send({ message: "Too Many Requests." });
-    // }
 
     if (error instanceof RateLimiterRes) {
       return reply.status(429).send({
