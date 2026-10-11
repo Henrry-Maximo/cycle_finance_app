@@ -204,7 +204,7 @@ export function SignUp() {
                   className="flex-wrap text-accent-foreground cursor-pointer text-xs leading-normal gap-0"
                 >
                   Ao continuar, você concorda com nossos 
-                  <DialogTrigger asChild>
+                  <DialogTrigger>
                     <span className="text-blue-600 cursor-pointer hover:underline">
                       termos de serviços e
                     política de privacidade
