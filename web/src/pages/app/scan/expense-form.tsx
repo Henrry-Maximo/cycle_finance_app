@@ -17,6 +17,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { DateFormPicker } from '@/components/ui/date-form-picker';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
@@ -59,6 +60,7 @@ const registerExpenseForm = z.object({
     .string()
     .min(1, 'O digíto do cartão deve ter mais que 1 caracter.')
     .max(3, 'O digíto do cartão deve ter no máximo 3 caracteres.'),
+  created_at: z.string().optional(),
   category_id: z.string().min(1, 'Uma categoria deve ser selecionada.'),
 });
 
@@ -87,6 +89,7 @@ export function ExpenseForm() {
   } = useForm<RegisterExpenseFormInput, unknown, RegisterExpenseFormOutput>({
     resolver: zodResolver(registerExpenseForm),
     defaultValues: {
+      created_at: new Date().toISOString(),
       category_id: '',
     },
   });
@@ -125,7 +128,7 @@ export function ExpenseForm() {
         className="flex flex-col items-center justify-center py-4"
         onSubmit={handleSubmit(handleRegisterExpense)}
       >
-        <Card className="grid w-full grid-cols-2 gap-8 px-4">
+        <Card className="grid w-full grid-cols-3 gap-8 px-4">
           <Field>
             <FieldLabel
               htmlFor="title"
@@ -164,6 +167,21 @@ export function ExpenseForm() {
             {errors.description && (
               <span className="text-xs text-red-500">
                 {errors.description.message}
+              </span>
+            )}
+          </Field>
+
+          <Field>
+            <FieldLabel
+              htmlFor="description"
+              className="text-foreground px-2 align-middle text-lg font-medium whitespace-break-spaces"
+            >
+              Data
+            </FieldLabel>
+            <DateFormPicker />
+            {errors.created_at && (
+              <span className="text-xs text-red-500">
+                {errors.created_at.message}
               </span>
             )}
           </Field>
