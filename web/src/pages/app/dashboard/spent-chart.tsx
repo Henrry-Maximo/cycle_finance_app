@@ -23,6 +23,7 @@ import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { useMemo, useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
+import { ChartBarIcon, ChartLineIcon, ChartPieIcon } from '@phosphor-icons/react';
 
 export function SpentChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -64,7 +65,7 @@ export function SpentChart() {
       </CardHeader>
 
       <CardContent>
-        {chartDate && (
+        {chartDate && chartDate.length > 0 ? (
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartDate} style={{ fontSize: 12 }}>
               <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
@@ -94,6 +95,13 @@ export function SpentChart() {
               />
             </LineChart>
           </ResponsiveContainer>
+        ) : (
+          <div className="flex flex-col gap-2 h-60 pb-12 w-full items-center justify-center">
+            <ChartLineIcon className="h-14 w-14 text-muted-foreground" />
+            <span className="text-muted-foreground text-sm">
+              Nenhuma despesa cadastrada!
+            </span>
+          </div>
         )}
       </CardContent>
     </Card>
