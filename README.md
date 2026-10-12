@@ -125,10 +125,10 @@
 - [x] Acesso aos termos de serviços/privacidade;
 - [x] Exibição dos dados no gráfico de gasto no período;
 - [x] Validação de campo vazio no cadastro de categorias;
+- [x] Loading para o gráfico de gasto no período;
+- [x] Loading para o gráfico de categorias populares;
 - [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
 - [ ] Permitir cadastrar data manualmente na despesa;
-- [ ] Loading para o gráfico de gasto no período;
-- [ ] Loading para o gráfico de categorias populares;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Upload de comprovante (imagem - arquivo) via form;
 

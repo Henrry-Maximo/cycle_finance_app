@@ -38,6 +38,7 @@ export class RegisterExpensesUseCase {
     source,
     price,
     card_last_digits,
+    createdAt,
     user_id,
     category_id,
   }: RegisterExpensesUseCaseRequest): Promise<RegisterExpensesUseCaseResponse> {
@@ -54,6 +55,7 @@ export class RegisterExpensesUseCase {
     }
 
     const priceConvertInteger = price * 100;
+    console.log("use-case" + createdAt);
     const expense = await this.expensesRepository.create({
       title,
       description,
@@ -62,6 +64,7 @@ export class RegisterExpensesUseCase {
       source,
       price: priceConvertInteger,
       card_last_digits,
+      ...(createdAt && { created_at: createdAt }),
       user: {
         connect: {
           id: user.id,

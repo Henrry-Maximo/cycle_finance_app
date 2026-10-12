@@ -13,6 +13,10 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
     source: z.string().nullable().optional().default(null),
     price: z.coerce.number(),
     card_last_digits: z.string().min(1).max(4),
+    created_at: z
+      .string()
+      .optional()
+      .transform((val) => (val ? new Date(val) : undefined)),
     category_id: z.string(),
   });
 
@@ -24,11 +28,13 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
     source,
     price,
     card_last_digits,
+    created_at,
     category_id,
   } = registerExpensesSchema.parse(req.body);
 
   try {
     const registerExpensesUseCase = makeRegisterExpensesUseCase();
+    console.log("controller" + created_at);
 
     await registerExpensesUseCase.execute({
       title,
@@ -38,6 +44,7 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
       source,
       price,
       card_last_digits,
+      ...(created_at && { createdAt: created_at }),
       category_id,
       user_id: req.user.sub,
     });

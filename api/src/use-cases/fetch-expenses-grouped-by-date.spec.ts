@@ -129,8 +129,6 @@ describe("Fetch User Expenses Grouped By Date Use Case", () => {
       userId: userCreated.id,
     });
 
-    console.log(expenses);
-
     expect(expenses).toEqual(
       expect.arrayContaining([
         expect.objectContaining({ value: 16.2 }),

@@ -178,6 +178,7 @@ export async function expensesRoutes(app: FastifyInstance) {
           source: z.string().nullable().optional().default(null),
           price: z.coerce.number(),
           card_last_digits: z.string().min(1).max(4),
+          created_at: z.string().optional(),
           category_id: z.string(),
         }),
         response: {
