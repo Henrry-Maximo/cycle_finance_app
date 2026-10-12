@@ -17,9 +17,10 @@ import {
 interface DateRangerPickerProps extends React.ComponentProps<'div'> {
   date: DateRange | undefined
   onDateChange: (date: DateRange | undefined) => void
+  disabled: boolean; 
 }
 
-export function DateRangePicker({ date, onDateChange }: DateRangerPickerProps) {
+export function DateRangePicker({ date, onDateChange, disabled }: DateRangerPickerProps) {
   return (
     <Field className="mx-auto w-60">
       {/* <FieldLabel htmlFor="date-picker-range">Date Picker Range</FieldLabel> */}
@@ -48,6 +49,7 @@ export function DateRangePicker({ date, onDateChange }: DateRangerPickerProps) {
             selected={date}
             onSelect={onDateChange}
             numberOfMonths={2}
+            disabled={disabled}
           />
         </PopoverContent>
       </Popover>
