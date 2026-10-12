@@ -22,32 +22,40 @@ function formatDate(date: Date | undefined) {
   });
 }
 
-function isValidDate(date: Date | undefined) {
-  if (!date) {
-    return false;
-  }
-  return !isNaN(date.getTime());
+// function isValidDate(date: Date | undefined) {
+//   if (!date) {
+//     return false;
+//   }
+//   return !isNaN(date.getTime());
+// }
+
+interface DateFormPickerProps {
+  value?: string | undefined;
+  onDateChange?: (date: string | undefined) => void;
 }
 
-export function DateFormPicker() {
+export function DateFormPicker({ value, onDateChange }: DateFormPickerProps) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(new Date());
+  const [date, setDate] = React.useState<Date | undefined>(
+    value ? new Date(value) : undefined,
+  );
   const [month, setMonth] = React.useState<Date | undefined>(date);
-  const [value, setValue] = React.useState(formatDate(date));
+  const [inputValue, setInputValue] = React.useState(formatDate(date));
 
   return (
     <div className="relative w-48">
       <Input
         id="date-required"
-        value={value}
+        value={inputValue}
         placeholder="Jan 01, 2025"
         onChange={(e) => {
           const date = new Date(e.target.value);
-          setValue(e.target.value);
-          if (isValidDate(date)) {
-            setDate(date);
-            setMonth(date);
-          }
+          setInputValue(e.target.value);
+          setDate(date);
+          setMonth(date);
+          onDateChange?.(date.toISOString());
+          // if (isValidDate(date)) {
+          // }
         }}
         onKeyDown={(e) => {
           if (e.key === 'ArrowDown') {
@@ -82,7 +90,8 @@ export function DateFormPicker() {
             onMonthChange={setMonth}
             onSelect={(date) => {
               setDate(date);
-              setValue(formatDate(date));
+              setInputValue(formatDate(date));
+              onDateChange?.(date?.toISOString());
               setOpen(false);
             }}
           />

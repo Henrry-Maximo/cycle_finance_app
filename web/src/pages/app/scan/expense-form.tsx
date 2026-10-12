@@ -72,7 +72,7 @@ interface Category {
   id: string;
   title: string;
   description: string;
-  created_at: Date;
+  created_at: string;
   user_id: string;
 }
 
@@ -85,11 +85,11 @@ export function ExpenseForm() {
     register,
     handleSubmit,
     control,
+    reset,
     formState: { isSubmitting, errors },
   } = useForm<RegisterExpenseFormInput, unknown, RegisterExpenseFormOutput>({
     resolver: zodResolver(registerExpenseForm),
     defaultValues: {
-      created_at: new Date().toISOString(),
       category_id: '',
     },
   });
@@ -113,9 +113,11 @@ export function ExpenseForm() {
         source: data.source,
         price: data.price,
         card_last_digits: data.card_last_digits,
+        ...(data.created_at && { created_at: data.created_at }),
         category_id: data.category_id,
       });
 
+      reset();
       toast.success(message);
     } catch {
       toast.error('Erro ao cadastrar despesa.');
@@ -178,7 +180,13 @@ export function ExpenseForm() {
             >
               Data
             </FieldLabel>
-            <DateFormPicker />
+            <Controller
+              name="created_at"
+              control={control}
+              render={({ field: { value, onChange } }) => (
+                <DateFormPicker value={value} onDateChange={onChange} />
+              )}
+            />
             {errors.created_at && (
               <span className="text-xs text-red-500">
                 {errors.created_at.message}

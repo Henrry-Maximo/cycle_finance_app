@@ -8,6 +8,7 @@ interface RegisterExpenseBody {
   source: string;
   price: number;
   card_last_digits: string;
+  created_at?: string | undefined;
   category_id: string;
 }
 
@@ -19,9 +20,11 @@ export async function registerExpense({
   source,
   price,
   card_last_digits,
+  created_at,
   category_id,
 }: RegisterExpenseBody) {
   try {
+    console.log(created_at);
     const response = await api.post('/expenses', {
       title,
       enterprise,
@@ -30,6 +33,7 @@ export async function registerExpense({
       source,
       price,
       card_last_digits,
+      created_at,
       category_id,
     });
 
