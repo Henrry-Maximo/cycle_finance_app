@@ -24,6 +24,7 @@ import { useMemo, useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
 import { ChartLineIcon } from '@phosphor-icons/react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export function SpentChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
@@ -31,12 +32,13 @@ export function SpentChart() {
     to: new Date(),
   });
 
-  const { data: dailyRevenueInPeriod } = useQuery({
+  const { data: dailyRevenueInPeriod, isLoading } = useQuery({
     queryKey: ['metrics', 'daily-revenue-in-period', dateRange],
-    queryFn: () => getDailyRevenueInPeriod({
-      from: dateRange?.from,
-      to: dateRange?.to
-    })
+    queryFn: () =>
+      getDailyRevenueInPeriod({
+        from: dateRange?.from,
+        to: dateRange?.to,
+      }),
   });
 
   const chartDate = useMemo(() => {
@@ -44,9 +46,9 @@ export function SpentChart() {
       return {
         date: chartItem.date,
         value: chartItem.value,
-      }
-    })
-  }, [dailyRevenueInPeriod])
+      };
+    });
+  }, [dailyRevenueInPeriod]);
 
   return (
     <Card className="md:col-span-6">
@@ -58,14 +60,22 @@ export function SpentChart() {
           <CardDescription>Gasto diário no período</CardDescription>
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className="flex items-center gap-3">
           <Label>Período</Label>
-          <DateRangePicker disabled={!chartDate || chartDate?.length === 0} date={dateRange} onDateChange={setDateRange} />
+          <DateRangePicker
+            disabled={!chartDate || chartDate?.length === 0}
+            date={dateRange}
+            onDateChange={setDateRange}
+          />
         </div>
       </CardHeader>
 
       <CardContent>
-        {chartDate && chartDate.length > 0 ? (
+        {isLoading ? (
+          <div className="h-60 w-full">
+            <Skeleton className="w-ful h-full" />
+          </div>
+        ) : chartDate && chartDate.length > 0 ? (
           <ResponsiveContainer width="100%" height={240}>
             <LineChart data={chartDate} style={{ fontSize: 12 }}>
               <XAxis dataKey="date" tickLine={false} axisLine={false} dy={16} />
@@ -90,14 +100,14 @@ export function SpentChart() {
                 type="linear"
                 strokeWidth={2}
                 dataKey="value"
-                name='valor'
+                name="valor"
                 stroke={colors.blue['500']}
               />
             </LineChart>
           </ResponsiveContainer>
         ) : (
-          <div className="flex flex-col gap-2 h-60 pb-12 w-full items-center justify-center">
-            <ChartLineIcon className="h-14 w-14 text-muted-foreground" />
+          <div className="flex h-60 w-full flex-col items-center justify-center gap-2 pb-12">
+            <ChartLineIcon className="text-muted-foreground h-14 w-14" />
             <span className="text-muted-foreground text-sm">
               Nenhuma despesa cadastrada!
             </span>
