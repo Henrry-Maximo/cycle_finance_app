@@ -1,10 +1,15 @@
-import { ChartPieIcon, FolderSimpleDashedIcon, TrendUpIcon } from '@phosphor-icons/react';
+import {
+  ChartPieIcon,
+  FolderSimpleDashedIcon,
+  TrendUpIcon,
+} from '@phosphor-icons/react';
 import { Pie, PieChart, ResponsiveContainer, Sector } from 'recharts';
 import colors from 'tailwindcss/colors';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from '@tanstack/react-query';
 import { getPopularCategories } from '@/api/popular-categories-chart';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const COLORS = [
   colors.emerald['500'],
@@ -25,7 +30,7 @@ const COLORS = [
 ];
 
 export function PopularSpentsChart() {
-  const { data: popularCategories } = useQuery({
+  const { data: popularCategories, isLoading } = useQuery({
     queryKey: ['user-expenses', 'popular-categories', 'user-categories'],
     queryFn: getPopularCategories,
   });
@@ -51,7 +56,11 @@ export function PopularSpentsChart() {
       </CardHeader>
 
       <CardContent>
-        {popularCategories && popularCategories?.length > 0 ? (
+        {isLoading ? (
+          <div className="flex h-60 w-full items-center justify-center text-center">
+            <Skeleton className="h-52 w-52 rounded-full" />
+          </div>
+        ) : popularCategories && popularCategories.length > 0 ? (
           hasExpenses ? (
             <ResponsiveContainer width="100%" height={240}>
               <PieChart style={{ fontSize: 12 }}>
@@ -79,7 +88,8 @@ export function PopularSpentsChart() {
                     index,
                   }) => {
                     const RADIAN = Math.PI / 180;
-                    const radius = 12 + innerRadius + (outerRadius - innerRadius);
+                    const radius =
+                      12 + innerRadius + (outerRadius - innerRadius);
                     const x = cx + radius * Math.cos(-midAngle! * RADIAN);
                     const y = cy + radius * Math.sin(-midAngle! * RADIAN);
 
@@ -93,8 +103,8 @@ export function PopularSpentsChart() {
                       >
                         {popularCategories[index].name.length > 12
                           ? popularCategories[index].name
-                            .substring(0, 12)
-                            .concat('...')
+                              .substring(0, 12)
+                              .concat('...')
                           : popularCategories[index].name}{' '}
                         ({value})
                       </text>
@@ -104,21 +114,21 @@ export function PopularSpentsChart() {
                   outerRadius={86} // termina
                   innerRadius={64} // começa
                   strokeWidth={8}
-                // fill={colors.emerald['500']}
+                  // fill={colors.emerald['500']}
                 />
               </PieChart>
             </ResponsiveContainer>
           ) : (
-            <div className="flex flex-col gap-2 h-60 w-full items-center justify-center">
-              <ChartPieIcon className="h-14 w-14 text-muted-foreground" />
+            <div className="flex h-60 w-full flex-col items-center justify-center gap-2">
+              <ChartPieIcon className="text-muted-foreground h-14 w-14" />
               <span className="text-muted-foreground text-sm">
                 Nenhuma despesa cadastrada!
               </span>
             </div>
           )
         ) : (
-          <div className="flex flex-col gap-2 h-60 w-full items-center justify-center">
-            <FolderSimpleDashedIcon className="h-14 w-14 text-muted-foreground" />
+          <div className="flex h-60 w-full flex-col items-center justify-center gap-2">
+            <FolderSimpleDashedIcon className="text-muted-foreground h-14 w-14" />
             <span className="text-muted-foreground text-sm">
               Nenhuma categoria cadastrada!
             </span>

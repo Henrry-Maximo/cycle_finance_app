@@ -63,7 +63,7 @@ export function SpentChart() {
         <div className="flex items-center gap-3">
           <Label>Período</Label>
           <DateRangePicker
-            disabled={!chartDate || chartDate?.length === 0}
+            disabled={isLoading}
             date={dateRange}
             onDateChange={setDateRange}
           />
