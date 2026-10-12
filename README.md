@@ -1,14 +1,13 @@
 # Cycle Finance App
 
-![alt text](logo.png)
+![Cycle Finance App logo](logo.png)
 
 - Software para gerenciamento financeiro que permite registrar despesas manualmente ou através da captura de comprovantes utilizando a câmera do dispositivo. O sistema oferece visualizações e análises dos gastos por dia, mês e ano.
 
 > 🚧 **Status v1:** Em desenvolvimento
->
-> 🔗 **Production:** https://cycle-finance-app.vercel.app/sign-in
->
-> 🔗 **Docs API:** https://cycle-finance-app-fcsp.onrender.com/docs
+
+[![Production](https://img.shields.io/badge/Production-Vercel-000000?style=for-the-badge&logo=vercel)](https://cycle-finance-app.vercel.app/sign-in)
+[![Swagger Docs](https://img.shields.io/badge/API%20Docs-Swagger-85EA2D?style=for-the-badge&logo=swagger)](https://cycle-finance-app-fcsp.onrender.com/docs)
 
 ## Estrutura do Repositório
 
@@ -22,8 +21,6 @@
 - **Frontend:** React.js, React-Hook-Form, React-Router, Tanstack-Query, Shadcn, RadixUI, PhosphorIcons, Axios, Date-fns, Zod, Sonner, ReCharts, React-Helmet, Tailwindcss.
 - **Mobile:** React Native.
 - **Tooling:** TypeScript, ESLint, Prettier, tsup, tsx.
-
-## Documentação de Negócio
 
 ## Arquitetura
 
