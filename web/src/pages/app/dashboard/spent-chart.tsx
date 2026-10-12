@@ -23,7 +23,7 @@ import { DateRangePicker } from '@/components/ui/date-range-picker';
 import { useMemo, useState } from 'react';
 import type { DateRange } from 'react-day-picker';
 import { subDays } from 'date-fns';
-import { ChartBarIcon, ChartLineIcon, ChartPieIcon } from '@phosphor-icons/react';
+import { ChartLineIcon } from '@phosphor-icons/react';
 
 export function SpentChart() {
   const [dateRange, setDateRange] = useState<DateRange | undefined>({
