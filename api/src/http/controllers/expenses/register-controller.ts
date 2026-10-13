@@ -34,7 +34,6 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
 
   try {
     const registerExpensesUseCase = makeRegisterExpensesUseCase();
-    console.log("controller" + created_at);
 
     await registerExpensesUseCase.execute({
       title,

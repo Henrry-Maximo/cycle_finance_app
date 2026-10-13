@@ -55,7 +55,6 @@ export class RegisterExpensesUseCase {
     }
 
     const priceConvertInteger = price * 100;
-    console.log("use-case" + createdAt);
     const expense = await this.expensesRepository.create({
       title,
       description,
