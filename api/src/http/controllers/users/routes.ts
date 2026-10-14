@@ -335,11 +335,14 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         summary: "Delete a user account",
         description:
           "Permanently deletes the user account and all associated expenses, categories, and password reset tokens in cascade. Also clears the `refreshToken` cookie.",
+        query: z.object({
+          id: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
+        }),
         response: {
           200: z.null().describe("User delete with successful."),
           401: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Not authorized." }),
             })
             .describe("Not authorized."),
         },
