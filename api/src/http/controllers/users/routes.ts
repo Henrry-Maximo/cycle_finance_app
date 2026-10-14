@@ -37,17 +37,16 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             .meta({ example: "a_secure_password" }),
         }),
         response: {
-          201: z
-            .null()
-            .describe("User created.")
-            .meta({ example: "User created." }),
+          201: z.null().describe("User created.").meta({
+            example: {},
+          }),
           409: z
             .object({
               message: z.string(),
             })
             .describe("E-mail already exists.")
             .meta({
-              example: "E-mail already exists.",
+              example: { message: "E-mail already exists." },
             }),
         },
       },
@@ -340,7 +339,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         summary: "Delete a user account",
         description:
           "Permanently deletes the user account and all associated expenses, categories, and password reset tokens in cascade. Also clears the `refreshToken` cookie.",
-        query: z.object({
+        params: z.object({
           id: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
         }),
         response: {
