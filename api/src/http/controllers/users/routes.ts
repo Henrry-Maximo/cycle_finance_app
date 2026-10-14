@@ -15,6 +15,7 @@ import { requestResetPasswordTokens } from "./request-reset-password-controller"
 import { resetPasswordTokens } from "./reset-password-controller";
 import { updateProfile } from "./update-profile-controller";
 import { logout } from "./logout-controller";
+import { env } from "@/env";
 
 export async function usersRoutes(app: FastifyTypedInstance) {
   app.post(
@@ -24,7 +25,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Users"],
         summary: "Register a new user account",
-        description: "Creates a new user account with the **member** role by default. Returns `409` if the provided email is already registered.",
+        description:
+          "Creates a new user account with the **member** role by default. Returns `409` if the provided email is already registered.",
         body: z.object({
           username: z.string().max(38),
           email: z.email(),
@@ -50,20 +52,27 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         summary: "Authenticate and start a session",
-        description: "Validates credentials and returns a short-lived JWT token (`10min`) in the response body. A long-lived `refreshToken` (`7d`) is set as an **httpOnly** cookie. Returns `400` if credentials are invalid.",
+        description:
+          "Validates credentials and returns a short-lived JWT token (`10min`) in the response body. A long-lived `refreshToken` (`7d`) is set as an **httpOnly** cookie. Returns `400` if credentials are invalid.",
         body: z.object({
-          email: z.email(),
-          password: z.string().min(6).max(22),
+          email: z.email().meta({ example: "email@example.com" }),
+          password: z
+            .string()
+            .min(6)
+            .max(22)
+            .meta({ example: "a_secure_password" }),
         }),
         response: {
           200: z
             .object({
-              token: z.string(),
+              token: z.string().meta({
+                example: "asdasqwewe1232423rwefsdcsdcs32423423ewqewd23",
+              }),
             })
             .describe("Session token."),
           400: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Invalid credentials." }),
             })
             .describe("Invalid credentials."),
         },
@@ -79,19 +88,22 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         summary: "Request a password reset token",
-        description: "Sends a password reset token URL for the provided email. The token expires in **15 minutes** and can only be used once. Returns `404` if the email is not registered.",
+        description:
+          "Sends a password reset token URL for the provided email. The token expires in **15 minutes** and can only be used once. Returns `404` if the email is not registered.",
         body: z.object({
-          email: z.email(),
+          email: z.email().meta({ example: "email@example.com" }),
         }),
         response: {
           200: z
             .object({
-              url: z.string(),
+              url: z.string().meta({
+                example: `${env.APP_URL}/reset-password?token=asdasdqwe123123`,
+              }),
             })
             .describe("URL for reset password."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resource not found." }),
             })
             .describe("Resource not found."),
         },
@@ -107,22 +119,29 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         summary: "Reset user password",
-        description: "Resets the user password using a valid reset token passed as a query parameter. Returns `401` if the token is expired or already used. The new password cannot be the same as the previous one.",
+        description:
+          "Resets the user password using a valid reset token passed as a query parameter. Returns `401` if the token is expired or already used. The new password cannot be the same as the previous one.",
         query: z.object({
-          token: z.string(),
+          token: z.string().meta({ example: "asdasdqwe123123" }),
         }),
         body: z.object({
-          password: z.string().min(6).max(22),
+          password: z
+            .string()
+            .min(6)
+            .max(22)
+            .meta({ example: "a_new_secure_password" }),
         }),
         response: {
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resource not found." }),
             })
             .describe("Rosource not found."),
           401: z
             .object({
-              message: z.string(),
+              message: z
+                .string()
+                .meta({ example: "Reset password token invalid." }),
             })
             .describe("Reset password token invalid."),
         },
@@ -144,7 +163,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         summary: "List all registered users",
-        description: "Returns a paginated list of all users. **Requires ADMIN role.** Passwords are never exposed in the response.",
+        description:
+          "Returns a paginated list of all users. **Requires ADMIN role.** Passwords are never exposed in the response.",
         query: z.object({
           query: z.string().optional().nullable(),
           page: z.coerce.number().default(1),
@@ -189,7 +209,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         summary: "Get authenticated user profile",
-        description: "Returns the profile information of the currently authenticated user based on the JWT token.",
+        description:
+          "Returns the profile information of the currently authenticated user based on the JWT token.",
         response: {
           200: z
             .object({
@@ -224,11 +245,12 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Auth"],
         summary: "Logout and invalidate session",
-        description: "Clears the `refreshToken` httpOnly cookie, effectively ending the session. The JWT token expires naturally within 10 minutes.",
+        description:
+          "Clears the `refreshToken` httpOnly cookie, effectively ending the session. The JWT token expires naturally within 10 minutes.",
         response: {
           200: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Logout from user." }),
             })
             .describe("Logout from user."),
         },
@@ -249,7 +271,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         summary: "Update authenticated user profile",
-        description: "Partially updates the profile of the currently authenticated user. Only the fields provided in the request body will be updated.",
+        description:
+          "Partially updates the profile of the currently authenticated user. Only the fields provided in the request body will be updated.",
         response: {
           200: z
             .object({
@@ -276,7 +299,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
       schema: {
         tags: ["Auth"],
         summary: "Refresh the JWT access token",
-        description: "Issues a new short-lived JWT token using the `refreshToken` httpOnly cookie. Also rotates the `refreshToken` cookie with a new 7-day expiration. No Authorization header required.",
+        description:
+          "Issues a new short-lived JWT token using the `refreshToken` httpOnly cookie. Also rotates the `refreshToken` cookie with a new 7-day expiration. No Authorization header required.",
         response: {
           200: z.object({
             token: z.string(),
@@ -299,7 +323,8 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         ],
         tags: ["Users"],
         summary: "Delete a user account",
-        description: "Permanently deletes the user account and all associated expenses, categories, and password reset tokens in cascade. Also clears the `refreshToken` cookie.",
+        description:
+          "Permanently deletes the user account and all associated expenses, categories, and password reset tokens in cascade. Also clears the `refreshToken` cookie.",
         response: {
           200: z.null().describe("User delete with successful."),
           401: z
