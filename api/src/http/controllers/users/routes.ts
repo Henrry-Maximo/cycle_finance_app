@@ -28,17 +28,27 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         description:
           "Creates a new user account with the **member** role by default. Returns `409` if the provided email is already registered.",
         body: z.object({
-          username: z.string().max(38),
-          email: z.email(),
-          password: z.string().min(6).max(22),
+          username: z.string().max(38).meta({ example: "johndoe" }),
+          email: z.email().meta({ example: "email@example.com" }),
+          password: z
+            .string()
+            .min(6)
+            .max(22)
+            .meta({ example: "a_secure_password" }),
         }),
         response: {
-          201: z.null().describe("User created."),
+          201: z
+            .null()
+            .describe("User created.")
+            .meta({ example: "User created." }),
           409: z
             .object({
               message: z.string(),
             })
-            .describe("E-mail already exists."),
+            .describe("E-mail already exists.")
+            .meta({
+              example: "E-mail already exists.",
+            }),
         },
       },
     },
@@ -97,7 +107,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
           200: z
             .object({
               url: z.string().meta({
-                example: `${env.APP_URL}/reset-password?token=asdasdqwe123123`,
+                example: `${env.APP_URL}/reset-password?token=eyJhbGciOiJIUzI...`,
               }),
             })
             .describe("URL for reset password."),
@@ -122,7 +132,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         description:
           "Resets the user password using a valid reset token passed as a query parameter. Returns `401` if the token is expired or already used. The new password cannot be the same as the previous one.",
         query: z.object({
-          token: z.string().meta({ example: "asdasdqwe123123" }),
+          token: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
         }),
         body: z.object({
           password: z
@@ -166,7 +176,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         description:
           "Returns a paginated list of all users. **Requires ADMIN role.** Passwords are never exposed in the response.",
         query: z.object({
-          query: z.string().optional().nullable(),
+          query: z.string().optional().nullable().meta({ example: "john" }),
           page: z.coerce.number().default(1),
         }),
         response: {
@@ -174,23 +184,23 @@ export async function usersRoutes(app: FastifyTypedInstance) {
             .object({
               users: z.array(
                 z.object({
-                  id: z.string(),
-                  name: z.string(),
-                  email: z.string(),
+                  id: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
+                  name: z.string().meta({ example: "John Doe" }),
+                  email: z.string().meta({ example: "email@example.com" }),
                   // password_hash: z.string(),
                   role: z.enum(["MEMBER", "ADMIN"]),
                   terms_accepted_at: z.date(),
-                  terms_version: z.string(),
+                  terms_version: z.string().meta({ example: "v1" }),
                 }),
               ),
               meta: z.object({
                 page: z.number(),
-                perPage: z.number(),
+                perPage: z.number().meta({ example: 10 }),
                 totalCount: z.number(),
                 totalPages: z.number(),
               }),
             })
-            .describe("Rosource not found."),
+            .describe("Return all the users."),
         },
       },
     },
@@ -303,7 +313,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
           "Issues a new short-lived JWT token using the `refreshToken` httpOnly cookie. Also rotates the `refreshToken` cookie with a new 7-day expiration. No Authorization header required.",
         response: {
           200: z.object({
-            token: z.string(),
+            token: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
           }),
         },
       },
