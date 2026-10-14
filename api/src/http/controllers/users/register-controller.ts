@@ -25,6 +25,8 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
       email,
       password,
     });
+
+    return reply.status(201).send();
   } catch (err) {
     if (err instanceof UserAlreadyExistsError) {
       return reply.status(409).send({ message: err.message });
@@ -33,6 +35,4 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
     // return reply.status(500).send(); // TODO: fix me
     throw err; // se não for um erro conhecido, joga pra camada cima
   }
-
-  return reply.status(201).send();
 }

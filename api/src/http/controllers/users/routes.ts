@@ -154,6 +154,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
                 .meta({ example: "Reset password token invalid." }),
             })
             .describe("Reset password token invalid."),
+          422: z.object({
+            messge: z
+              .string()
+              .meta({ example: "Reusing passwords is not allowed." }),
+          }),
         },
       },
     },
