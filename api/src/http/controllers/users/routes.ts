@@ -287,18 +287,22 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         summary: "Update authenticated user profile",
         description:
           "Partially updates the profile of the currently authenticated user. Only the fields provided in the request body will be updated.",
+        body: z.object({
+          username: z.string().meta({ example: "johndoe" }),
+          email: z.email().meta({ example: "example@gmail.com" }),
+        }),
         response: {
           200: z
             .object({
-              username: z.string(),
-              email: z.string(),
+              username: z.string().meta({ example: "johndoe" }),
+              email: z.string().meta({ example: "email@example.com" }),
             })
             .describe("Profile update with successful."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resource not found." }),
             })
-            .describe("Rosource not found."),
+            .describe("Resource not found."),
         },
       },
     },
