@@ -181,7 +181,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
           "Returns a paginated list of all users. **Requires ADMIN role.** Passwords are never exposed in the response.",
         query: z.object({
           query: z.string().optional().nullable().meta({ example: "john" }),
-          page: z.coerce.number().default(1),
+          page: z.coerce.number().meta({ example: 0 }),
         }),
         response: {
           200: z
@@ -205,6 +205,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
               }),
             })
             .describe("Return all the users."),
+          403: z
+            .object({
+              message: z.string().meta({ example: "Forbidden." }),
+            })
+            .describe("Insufficient permission, only for admin."),
         },
       },
     },
@@ -236,6 +241,11 @@ export async function usersRoutes(app: FastifyTypedInstance) {
               terms_version: z.string().meta({ example: "v1" }),
             })
             .describe("Profile informations."),
+          403: z
+            .object({
+              message: z.string().meta({ example: "Forbidden." }),
+            })
+            .describe("Insufficient permission, only for admin."),
           404: z
             .object({
               message: z.string().meta({ example: "Resource not found." }),

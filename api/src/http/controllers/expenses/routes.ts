@@ -29,17 +29,19 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Returns a paginated list of all expenses for the authenticated user. Supports optional filters: `expense` (name), `category` (name), `from` and `to` (date range). Defaults to **15 items per page**.",
         query: z.object({
-          expense: z.string().optional(),
-          category: z.string().optional(),
+          expense: z.string().optional().meta({ example: "pães" }),
+          category: z.string().optional().meta({ example: "alimentação" }),
           from: z
             .string()
             .optional()
-            .transform((val) => (val ? new Date(val) : undefined)),
+            .transform((val) => (val ? new Date(val) : undefined))
+            .meta({ example: new Date().getFullYear() }),
           to: z
             .string()
             .optional()
-            .transform((val) => (val ? new Date(val) : undefined)),
-          pageIndex: z.coerce.number().optional(),
+            .transform((val) => (val ? new Date(val) : undefined))
+            .meta({ example: new Date().getFullYear() }),
+          pageIndex: z.coerce.number().meta({ example: 0 }),
         }),
         response: {
           200: z
@@ -61,7 +63,7 @@ export async function expensesRoutes(app: FastifyInstance) {
               ),
               meta: z.object({
                 pageIndex: z.number(),
-                perPage: z.number(),
+                perPage: z.number().meta({ example: 10 }),
                 totalCount: z.number(),
                 totalPages: z.number(),
               }),
@@ -69,7 +71,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             .describe("Fetch expenses."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "User not found." }),
             })
             .describe("User not found."),
         },
