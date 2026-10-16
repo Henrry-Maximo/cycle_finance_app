@@ -8,14 +8,10 @@ export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
   const searchExpensesQuerySchema = z.object({
     expense: z.string().optional(),
     category: z.string().optional(),
-    from: z
-      .string()
-      .optional()
-      .transform((val) => (val ? new Date(val) : undefined)),
-    to: z
-      .string()
-      .optional()
-      .transform((val) => (val ? new Date(val) : undefined)),
+    from: z.coerce.date().optional(),
+    // .transform((val) => (val ? new Date(val) : undefined)),
+    to: z.coerce.date().optional(),
+    // .transform((val) => (val ? new Date(val) : undefined)),
     pageIndex: z.coerce.number().optional(),
   });
 

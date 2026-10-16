@@ -11,8 +11,12 @@ import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
+import dayjs from "dayjs";
 
 export async function expensesRoutes(app: FastifyInstance) {
+  const today = dayjs().format("YYYY-MM-DDTHH:mm:ss");
+  const firstDayMonth = dayjs().startOf("month").format("YYYY-MM-DDTHH:mm:ss");
+
   /* Authenticated */
   app.get(
     "/expenses",
@@ -31,16 +35,10 @@ export async function expensesRoutes(app: FastifyInstance) {
         query: z.object({
           expense: z.string().optional().meta({ example: "pães" }),
           category: z.string().optional().meta({ example: "alimentação" }),
-          from: z
-            .string()
-            .optional()
-            .transform((val) => (val ? new Date(val) : undefined))
-            .meta({ example: new Date().getFullYear() }),
-          to: z
-            .string()
-            .optional()
-            .transform((val) => (val ? new Date(val) : undefined))
-            .meta({ example: new Date().getFullYear() }),
+          from: z.coerce.date().optional().meta({ example: firstDayMonth }),
+          // .transform((val) => (val ? new Date(val) : undefined)),
+          to: z.coerce.date().optional().meta({ example: today }),
+          // .transform((val) => (val ? new Date(val) : undefined)),
           pageIndex: z.coerce.number().meta({ example: 0 }),
         }),
         response: {
@@ -48,17 +46,36 @@ export async function expensesRoutes(app: FastifyInstance) {
             .object({
               expenses: z.array(
                 z.object({
-                  title: z.string(),
-                  description: z.string().nullable(),
-                  id: z.string(),
-                  created_at: z.date(),
-                  user_id: z.string(),
-                  enterprise: z.string(),
-                  cnpj: z.string().nullable(),
-                  source: z.string().nullable(),
-                  price: z.number(),
-                  card_last_digits: z.string(),
-                  category_id: z.string(),
+                  id: z
+                    .string()
+                    .meta({ example: "01a131f5-d211-76fb-a1eb-14c9d2af3651" }),
+                  title: z.string().meta({ example: "pães" }),
+                  description: z
+                    .string()
+                    .nullable()
+                    .meta({ example: "pães frescos." }),
+                  created_at: z
+                    .date()
+                    .meta({ example: "2026-10-12T21:12:36.113Z" }),
+                  user_id: z
+                    .string()
+                    .meta({ example: "019ff822-f98c-75a9-a4ae-ffead3c49987" }),
+                  enterprise: z
+                    .string()
+                    .meta({ example: "Padaria Bela Vista" }),
+                  cnpj: z
+                    .string()
+                    .nullable()
+                    .meta({ example: "12.345.678/0001-99" }),
+                  source: z
+                    .string()
+                    .nullable()
+                    .meta({ example: "Embu das Artes / São Paulo" }),
+                  price: z.number().meta({ example: 8.5 }),
+                  card_last_digits: z.string().meta({ example: "4108" }),
+                  category_id: z
+                    .string()
+                    .meta({ example: "01a12dd6-dc15-742e-8e18-2c46820112bf" }),
                 }),
               ),
               meta: z.object({
