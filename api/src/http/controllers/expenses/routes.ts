@@ -12,6 +12,7 @@ import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
 import dayjs from "dayjs";
+import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   const today = dayjs().format("YYYY-MM-DDTHH:mm:ss");
@@ -90,7 +91,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             .object({
               message: z.string().meta({ example: "User not found." }),
             })
-            .describe("User not found."),
+            .describe("User not found, occurs when not authenticate in API."),
         },
       },
     },
@@ -189,22 +190,12 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Register a new expense",
         description:
           "Creates a new expense linked to the authenticated user and a valid category owned by them. Returns `404` if the user or category is not found.",
-        body: z.object({
-          title: z.string(),
-          enterprise: z.string(),
-          description: z.string().nullable().optional().default(null),
-          cnpj: z.string().nullable().optional().default(null),
-          source: z.string().nullable().optional().default(null),
-          price: z.coerce.number(),
-          card_last_digits: z.string().min(1).max(4),
-          created_at: z.string().optional(),
-          category_id: z.string(),
-        }),
+        body: registerExpenseBodySchema,
         response: {
           201: z.null().describe("Create new a expense."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resource not found." }),
             })
             .describe("User or category not found."),
         },
