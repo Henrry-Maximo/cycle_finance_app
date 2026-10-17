@@ -1,8 +1,5 @@
-import dayjs from "dayjs";
+import { today } from "@/lib/date-current";
 import z from "zod";
-
-const today = dayjs().format("YYYY-MM-DDTHH:mm:ss");
-const firstDayMonth = dayjs().startOf("month").format("YYYY-MM-DDTHH:mm:ss");
 
 export const registerExpenseBodySchema = z.object({
   title: z.string().meta({ example: "pães" }),

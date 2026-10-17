@@ -11,14 +11,11 @@ import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
-import dayjs from "dayjs";
 import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
 import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
+import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
-  const today = dayjs().format("YYYY-MM-DDTHH:mm:ss");
-  const firstDayMonth = dayjs().startOf("month").format("YYYY-MM-DDTHH:mm:ss");
-
   /* Authenticated */
   app.get(
     "/expenses",
@@ -34,15 +31,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "List user expenses",
         description:
           "Returns a paginated list of all expenses for the authenticated user. Supports optional filters: `expense` (name), `category` (name), `from` and `to` (date range). Defaults to **15 items per page**.",
-        query: z.object({
-          expense: z.string().optional().meta({ example: "pães" }),
-          category: z.string().optional().meta({ example: "alimentação" }),
-          from: z.coerce.date().optional().meta({ example: firstDayMonth }),
-          // .transform((val) => (val ? new Date(val) : undefined)),
-          to: z.coerce.date().optional().meta({ example: today }),
-          // .transform((val) => (val ? new Date(val) : undefined)),
-          pageIndex: z.coerce.number().meta({ example: 0 }),
-        }),
+        query: getExpenseQuerySchema,
         response: {
           200: z
             .object({
