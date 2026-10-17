@@ -13,6 +13,7 @@ import { register } from "./register-controller";
 import { update } from "./update-controller";
 import dayjs from "dayjs";
 import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
+import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   const today = dayjs().format("YYYY-MM-DDTHH:mm:ss");
@@ -263,38 +264,51 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Updates an existing expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `409` if the category is already in use by the expense.",
         query: z.object({
-          id: z.string(),
+          id: z.string().meta({ example: "01a131f5-d211..." }),
         }),
-        body: z.object({
-          title: z.string(),
-          enterprise: z.string(),
-          description: z.string(),
-          cnpj: z.string(),
-          source: z.string(),
-          price: z.number(),
-          card_last_digits: z.string(),
-        }),
+        body: patchExpenseBodySchema,
         response: {
           200: z
             .object({
-              title: z.string().nullable(),
-              enterprise: z.string().nullable(),
-              description: z.string().nullable().nullable(),
-              cnpj: z.string().nullable().nullable(),
-              source: z.string().nullable().nullable(),
-              price: z.coerce.number().nullable(),
-              card_last_digits: z.string().min(1).max(4).nullable(),
-              category_id: z.string().nullable(),
+              title: z.string().nullable().meta({ example: "pães" }),
+              enterprise: z
+                .string()
+                .nullable()
+                .meta({ example: "mercado ceifa" }),
+              description: z
+                .string()
+                .nullable()
+                .meta({ example: "pães frescos." }),
+              cnpj: z
+                .string()
+                .nullable()
+                .nullable()
+                .meta({ example: "12.345.678/0001-99" }),
+              source: z
+                .string()
+                .nullable()
+                .meta({ example: "Embu das Artes / São Paulo" }),
+              price: z.coerce.number().nullable().meta({ example: 10.52 }),
+              card_last_digits: z
+                .string()
+                .min(1)
+                .max(4)
+                .nullable()
+                .meta({ example: "1408" }),
+              category_id: z
+                .string()
+                .nullable()
+                .meta({ example: "01a12dd6-dc15..." }),
             })
             .describe("Expense update with successful."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resour not found." }),
             })
             .describe("Rosource not found."),
           409: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Category already in use." }),
             })
             .describe("Category already in use."),
         },

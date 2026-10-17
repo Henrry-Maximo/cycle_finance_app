@@ -35,7 +35,6 @@ export async function update(req: FastifyRequest, reply: FastifyReply) {
   } = updateExpensesBodySchema.parse(req.body);
 
   try {
-    console.log("here: ", price);
     const updateExpensesUseCase = MakeUpdateExpensesUseCase();
 
     const { expense } = await updateExpensesUseCase.execute({
