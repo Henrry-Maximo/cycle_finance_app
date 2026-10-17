@@ -14,6 +14,7 @@ import { update } from "./update-controller";
 import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
 import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
 import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
+import { firstDayMonth, today } from "@/lib/date-current";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -103,8 +104,8 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Returns aggregated metrics for the authenticated user: total and count of expenses for the **current day** and **current month**. Supports optional `from` and `to` date filters.",
         query: z.object({
-          from: z.string().optional(),
-          to: z.string().optional(),
+          from: z.string().optional().meta({ example: today }),
+          to: z.string().optional().meta({ example: firstDayMonth }),
         }),
         response: {
           200: z
@@ -117,7 +118,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             .describe("Get metrics from user."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "User not found." }),
             })
             .describe("User not found."),
         },

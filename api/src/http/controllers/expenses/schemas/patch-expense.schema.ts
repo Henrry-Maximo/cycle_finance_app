@@ -1,5 +1,9 @@
 import z from "zod";
 
+export const updateExpensesQuerySchema = z.object({
+  id: z.string(),
+});
+
 export const patchExpenseBodySchema = z.object({
   title: z.string().meta({ example: "pães" }),
   enterprise: z.string().meta({ example: "mercado ceifa" }),
@@ -8,4 +12,5 @@ export const patchExpenseBodySchema = z.object({
   source: z.string().meta({ example: "Embu das Artes / São Paulo" }),
   price: z.number().meta({ example: 10.52 }),
   card_last_digits: z.string().meta({ example: "4108" }),
+  category_id: z.string().meta({ example: "01a131f5-d211..." }),
 });

@@ -1,26 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { CategoryAlreadyInUseError } from "@/use-cases/errors/category-already-in-use-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { MakeUpdateExpensesUseCase } from "@/use-cases/factories/make-update-expenses-use-case";
+import {
+  patchExpenseBodySchema,
+  updateExpensesQuerySchema,
+} from "./schemas/patch-expense.schema";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
-  const updateExpensesQuerySchema = z.object({
-    id: z.string(),
-  });
-
-  const updateExpensesBodySchema = z.object({
-    title: z.string().nullable().default(null),
-    enterprise: z.string().nullable().default(null),
-    description: z.string().nullable().default(null),
-    cnpj: z.string().nullable().default(null),
-    source: z.string().nullable().default(null),
-    price: z.coerce.number().nullable().default(null),
-    card_last_digits: z.string().min(1).max(4).nullable().default(null),
-    category_id: z.string().nullable().default(null),
-  });
-
   const { id } = updateExpensesQuerySchema.parse(req.query);
 
   const {
@@ -32,7 +20,7 @@ export async function update(req: FastifyRequest, reply: FastifyReply) {
     source,
     card_last_digits,
     category_id,
-  } = updateExpensesBodySchema.parse(req.body);
+  } = patchExpenseBodySchema.parse(req.body);
 
   try {
     const updateExpensesUseCase = MakeUpdateExpensesUseCase();
