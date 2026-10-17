@@ -16,6 +16,7 @@ import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
 import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
 import { firstDayMonth, today } from "@/lib/date-current";
 import { getExpensePeriodQuerySchema } from "./schemas/get-expense-period.schema";
+import { postExpenseAnalyzeBodySchema } from "./schemas/post-expenses-analyze.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -208,30 +209,34 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Uploads a receipt image (`JPEG` or `PNG`, max **5MB**) and uses **Gemini AI** to extract expense data such as title, amount, date, and category suggestions.",
         consumes: ["multipart/form-data"],
-        // response: {
-        //   200: {
-        //     type: "object",
-        //     required: ["suggestions"],
-        //     properties: {
-        //       suggestions: {
-        //         type: "object",
-        //         required: ["title", "amount", "date", "category"],
-        //         properties: {
-        //           title: { type: "string" },
-        //           amount: { type: "number" },
-        //           date: { type: "string" },
-        //           category: { type: "string" },
-        //         },
-        //       },
-        //     },
-        //   },
-        //   400: {
-        //     type: "object",
-        //     properties: {
-        //       message: { type: "string" },
-        //     },
-        //   },
-        // },
+        body: postExpenseAnalyzeBodySchema,
+        response: {
+          200: z
+            .object({
+              title: z.string().meta({ example: "pães" }),
+              amount: z.number().meta({ example: 10.52 }),
+              date: z.string().meta({ example: today }),
+              category: z.string().meta({ example: "Alimentação" }),
+            })
+            .describe("Receipt analyzed with successfully."),
+          400: z
+            .object({
+              message: z.string().meta({ example: "Invalid file type." }),
+            })
+            .describe("Invalid file type."),
+          503: z
+            .object({
+              message: z
+                .string()
+                .meta({ example: "External service unavailable." }),
+            })
+            .describe("External service unavailable."),
+          429: z
+            .object({
+              message: z.string().meta({ example: "Too many requests." }),
+            })
+            .describe("Too many requests."),
+        },
       },
     },
     analyzeReceiptController,
