@@ -15,6 +15,7 @@ import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
 import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
 import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
 import { firstDayMonth, today } from "@/lib/date-current";
+import { getExpensePeriodQuerySchema } from "./schemas/get-expense-period.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -141,16 +142,13 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "List expenses grouped by date",
         description:
           "Returns expenses aggregated by date with the total amount per day. Useful for rendering time-series charts. Supports optional `from` and `to` date filters.",
-        querystring: z.object({
-          from: z.string().optional(),
-          to: z.string().optional(),
-        }),
+        query: getExpensePeriodQuerySchema,
         response: {
           200: z
             .object({
               expenses: z.array(
                 z.object({
-                  date: z.string(),
+                  date: z.string().meta({ example: today }),
                   value: z.number(),
                 }),
               ),
@@ -158,7 +156,7 @@ export async function expensesRoutes(app: FastifyInstance) {
             .describe("Fetch expenses grouped by date from user."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "User not found." }),
             })
             .describe("User not found."),
         },
