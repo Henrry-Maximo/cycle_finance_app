@@ -332,18 +332,18 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Permanently deletes an expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `401` if the expense belongs to another user.",
         query: z.object({
-          id: z.string(),
+          id: z.string().meta({ example: "01a131f5-d211..." }),
         }),
         response: {
-          201: z.null().describe("Delete a expense."),
+          201: z.null().describe("Delete a expense.").meta({ example: {} }),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Expense not found." }),
             })
             .describe("Expense not found."),
           401: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Not authorized." }),
             })
             .describe("Not authorized."),
         },
