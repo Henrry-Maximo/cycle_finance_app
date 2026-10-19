@@ -3,10 +3,10 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeDeleteExpenseUseCase } from "@/use-cases/factories/make-delete-expense-use-case";
-import { deleteExpenseQuerySchema } from "./schemas/delete-expense.schema";
+import { deleteExpenseParamsSchema } from "./schemas/delete-expense.schema";
 
 export async function deleteExpense(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = deleteExpenseQuerySchema.parse(req.query);
+  const { id } = deleteExpenseParamsSchema.parse(req.params);
 
   try {
     const deleteExpensesUseCase = makeDeleteExpenseUseCase();

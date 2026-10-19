@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const deleteExpenseQuerySchema = z.object({
+export const deleteExpenseParamsSchema = z.object({
   id: z.string().meta({ example: "01a131f5-d211..." }),
 });
 

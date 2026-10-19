@@ -36,7 +36,7 @@ import {
   getExpenseMetricsResponseSchema,
 } from "./schemas/get-expense-metrics.schema";
 import {
-  deleteExpenseQuerySchema,
+  deleteExpenseParamsSchema,
   deleteExpenseResponseSchema,
 } from "./schemas/delete-expense.schema";
 
@@ -171,7 +171,7 @@ export async function expensesRoutes(app: FastifyInstance) {
   );
 
   app.delete(
-    "/expenses",
+    "/expenses/:id",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
@@ -184,7 +184,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Delete an expense",
         description:
           "Permanently deletes an expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `401` if the expense belongs to another user.",
-        query: deleteExpenseQuerySchema,
+        params: deleteExpenseParamsSchema,
         response: deleteExpenseResponseSchema,
       },
     },
