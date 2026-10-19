@@ -39,7 +39,7 @@ export class PrismaCategoriesRespository implements CategoriesRepository {
     perPage: number,
   ) {
     const categories = await prisma.category.findMany({
-      skip: (pageIndex - 1) * perPage,
+      skip: pageIndex * perPage,
       take: perPage,
       where: {
         user_id: {

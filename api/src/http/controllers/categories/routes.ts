@@ -9,6 +9,7 @@ import { fetchCategoriesGroupedByTotal } from "./fetch-categories-grouped-by-tot
 import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
+import { getCategoryQuerySchema } from "./schemas/get-category.schema";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -24,26 +25,33 @@ export async function categoriesRoutes(app: FastifyInstance) {
         ],
         tags: ["Categories"],
         summary: "List user categories",
-        description: "Returns a paginated list of all categories owned by the authenticated user. Supports optional `query` filter by name. Defaults to **15 items per page**.",
-        query: z.object({
-          query: z.string().optional().nullable(),
-          page: z.coerce.number().default(1),
-        }),
+        description:
+          "Returns a paginated list of all categories owned by the authenticated user. Supports optional `query` filter by name. Defaults to **15 items per page**.",
+        query: getCategoryQuerySchema,
         response: {
-          200: z.object({
-            categories: z.array(
-              z.object({
-                id: z.string(),
-                title: z.string(),
-                description: z.string().nullable(),
-                created_at: z.date(),
-                user_id: z.string(),
-              }),
-            ),
-          }),
+          200: z
+            .object({
+              categories: z.array(
+                z.object({
+                  id: z.string().meta({ example: "286171c3-85a1..." }),
+                  title: z.string().meta({ example: "Alimentação" }),
+                  description: z
+                    .string()
+                    .nullable()
+                    .meta({ example: "Custo com pães e derivados." }),
+                  created_at: z.date().meta({
+                    example: "2023-01-01T12:00:00.000Z",
+                  }),
+                  user_id: z.string().meta({ example: "355171c3-85a1..." }),
+                }),
+              ),
+            })
+            .describe("Fetch categories from user."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({
+                example: "User not found.",
+              }),
             })
             .describe("User not found."),
         },
@@ -64,7 +72,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
         ],
         tags: ["Categories"],
         summary: "Register a new category",
-        description: "Creates a new expense category for the authenticated user. Each user is limited to **15 categories**. Returns `409` if a category with the same title already exists, and `429` if the limit has been reached.",
+        description:
+          "Creates a new expense category for the authenticated user. Each user is limited to **15 categories**. Returns `409` if a category with the same title already exists, and `429` if the limit has been reached.",
         body: z.object({
           title: z.string(),
           description: z.string(),
@@ -104,7 +113,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
         ],
         tags: ["Categories"],
         summary: "List categories grouped by total",
-        description: "Returns all categories for the authenticated user aggregated with the total amount spent and the number of expenses per category. Useful for rendering category distribution charts.",
+        description:
+          "Returns all categories for the authenticated user aggregated with the total amount spent and the number of expenses per category. Useful for rendering category distribution charts.",
         response: {
           200: z
             .array(
@@ -138,7 +148,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
         ],
         tags: ["Categories"],
         summary: "Delete a category",
-        description: "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
+        description:
+          "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
         query: z.object({
           id: z.string(),
         }),
@@ -183,7 +194,8 @@ export async function categoriesRoutes(app: FastifyInstance) {
         ],
         tags: ["Categories"],
         summary: "Update a category",
-        description: "Updates the title or description of an existing category. Only the owner of the category can perform this action.",
+        description:
+          "Updates the title or description of an existing category. Only the owner of the category can perform this action.",
         response: {
           200: z
             .object({

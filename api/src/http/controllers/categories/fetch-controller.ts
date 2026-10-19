@@ -1,19 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeGetCategoriesUseCase } from "@/use-cases/factories/make-fetch-categories-use-case";
+import { getCategoryQuerySchema } from "./schemas/get-category.schema";
 
 export async function fetchCategories(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const searchCategoriesSchema = z.object({
-    query: z.string().optional().nullable(),
-    page: z.coerce.number().default(1),
-  });
-
-  const { query, page } = searchCategoriesSchema.parse(req.query);
+  const { query, page } = getCategoryQuerySchema.parse(req.query);
 
   try {
     const fetchCategoriesUseCase = makeGetCategoriesUseCase();

@@ -32,8 +32,8 @@ export class FetchCategoriesUseCase {
   async execute({
     userId,
     categoryName = "",
-    pageIndex = 1,
-    perPage = 15,
+    pageIndex = 0,
+    perPage = 10,
   }: FetchCategoriesUseCaseRequest): Promise<FetchCategoriesUseCaseResponse> {
     const user = await this.usersRepository.findById(userId);
 
