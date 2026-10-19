@@ -1,18 +1,14 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeRequestResetPassword } from "@/use-cases/factories/make-request-reset-password-use-case";
+import { postResetPasswordRequestBodySchema } from "./schemas/post-reset-password-request.schema";
 
 export async function requestResetPasswordTokens(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const authenticateBodySchema = z.object({
-    email: z.email(),
-  });
-
-  const { email } = authenticateBodySchema.parse(req.body);
+  const { email } = postResetPasswordRequestBodySchema.parse(req.body);
 
   try {
     const requestResetPasswordUseCase = makeRequestResetPassword();

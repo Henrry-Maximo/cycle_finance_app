@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeGetMetricsUserUseCase } from "@/use-cases/factories/make-get-metrics-user-use-case";
-
-const querySchema = z.object({
-  from: z.string().optional(),
-  to: z.string().optional(),
-});
+import { getExpenseMetricsQuerySchema } from "./schemas/get-expense-metrics.schema";
 
 export async function getMeticsUser(req: FastifyRequest, reply: FastifyReply) {
-  const { from, to } = querySchema.parse(req.query);
+  const { from, to } = getExpenseMetricsQuerySchema.parse(req.query);
 
   try {
     const getMetricsUserUseCase = makeGetMetricsUserUseCase();

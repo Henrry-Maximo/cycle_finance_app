@@ -4,13 +4,10 @@ import z from "zod";
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeDeleteExpenseUseCase } from "@/use-cases/factories/make-delete-expense-use-case";
+import { deleteExpenseQuerySchema } from "./schemas/delete-expense.schema";
 
 export async function deleteExpense(req: FastifyRequest, reply: FastifyReply) {
-  const deleteExpensesSchema = z.object({
-    id: z.string(),
-  });
-
-  const { id } = deleteExpensesSchema.parse(req.query);
+  const { id } = deleteExpenseQuerySchema.parse(req.query);
 
   try {
     const deleteExpensesUseCase = makeDeleteExpenseUseCase();

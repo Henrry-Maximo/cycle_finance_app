@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { InvalidCredentialsError } from "@/use-cases/errors/invalid-credentials-error";
 import { makeAuthenticateRegisterUseCase } from "@/use-cases/factories/make-authenticate-use-case";
+import { authenticateSessionsBodySchema } from "./schemas/authenticate-sessions.schema";
 
 export async function authenticate(req: FastifyRequest, reply: FastifyReply) {
-  const authenticateBodySchema = z.object({
-    email: z.email(),
-    password: z.string().min(6).max(22),
-  });
-
-  const { email, password } = authenticateBodySchema.parse(req.body);
+  const { email, password } = authenticateSessionsBodySchema.parse(req.body);
 
   try {
     const authenticateUseCase = makeAuthenticateRegisterUseCase();

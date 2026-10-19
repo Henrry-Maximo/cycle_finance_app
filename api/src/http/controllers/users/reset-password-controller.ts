@@ -5,16 +5,17 @@ import { ResetPasswordTokenInvalid } from "@/use-cases/errors/reset-password-tok
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { ReusingPasswordsIsNotAllowedError } from "@/use-cases/errors/reusing-passwords-is-not-allowed-error";
 import { makeResetPassword } from "@/use-cases/factories/make-reset-password-use-case";
+import {
+  postResetPasswordBodySchema,
+  postResetPasswordQuerySchema,
+} from "./schemas/post-reset-password.schema";
 
 export async function resetPasswordTokens(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const querySchema = z.object({ token: z.string() });
-  const bodySchema = z.object({ password: z.string() });
-
-  const { token } = querySchema.parse(req.query);
-  const { password } = bodySchema.parse(req.body);
+  const { token } = postResetPasswordQuerySchema.parse(req.query);
+  const { password } = postResetPasswordBodySchema.parse(req.body);
 
   try {
     const resetPasswordUseCase = makeResetPassword();

@@ -1,23 +1,13 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { UserAlreadyExistsError } from "@/use-cases/errors/user-already-exists-error";
 import { makeRegisterUseCase } from "@/use-cases/factories/make-register-use-case";
+import { registerUsersBodySchema } from "./schemas/register-users.schema";
 
 export async function register(req: FastifyRequest, reply: FastifyReply) {
-  const registerUsersSchema = z.object({
-    username: z.string().min(1).max(38),
-    email: z.email(),
-    password: z.string().min(6).max(22),
-  });
-
-  const { username, email, password } = registerUsersSchema.parse(req.body);
+  const { username, email, password } = registerUsersBodySchema.parse(req.body);
 
   try {
-    // const usersRepository = new PrismaUsersRepository();
-    // const registerUseCase = new RegisterUseCase(usersRepository);
-
-    // função make que serve apenas para instanciação
     const registerUseCase = makeRegisterUseCase();
 
     await registerUseCase.execute({

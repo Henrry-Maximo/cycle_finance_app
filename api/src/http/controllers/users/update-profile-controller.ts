@@ -1,16 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeUpdateUserProfileUseCase } from "@/use-cases/factories/make-update-user-profile-use-case";
+import { patchProfileBodySchema } from "./schemas/patch-profile.schema";
 
 export async function updateProfile(req: FastifyRequest, reply: FastifyReply) {
-  const updateUserProfileBodySchema = z.object({
-    username: z.string().min(1).max(38).nullable(),
-    email: z.email().nullable(),
-  });
-
-  const { username, email } = updateUserProfileBodySchema.parse(req.body);
+  const { username, email } = patchProfileBodySchema.parse(req.body);
 
   try {
     const updateUserProfileUseCase = makeUpdateUserProfileUseCase();

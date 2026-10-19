@@ -1,22 +1,12 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFetchExpensesUseCase } from "@/use-cases/factories/make-fetch-expenses-use-case";
+import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
 
 export async function fetchExpenses(req: FastifyRequest, reply: FastifyReply) {
-  const searchExpensesQuerySchema = z.object({
-    expense: z.string().optional(),
-    category: z.string().optional(),
-    from: z.coerce.date().optional(),
-    // .transform((val) => (val ? new Date(val) : undefined)),
-    to: z.coerce.date().optional(),
-    // .transform((val) => (val ? new Date(val) : undefined)),
-    pageIndex: z.coerce.number().optional(),
-  });
-
   const { expense, category, from, to, pageIndex } =
-    searchExpensesQuerySchema.parse(req.query);
+    getExpenseQuerySchema.parse(req.query);
 
   try {
     const fetchExpensesUseCase = makeFetchExpensesUseCase();

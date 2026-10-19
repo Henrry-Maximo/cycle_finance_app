@@ -3,23 +3,13 @@ import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFetchExpensesGroupedByDateUseCase } from "@/use-cases/factories/make-fetch-expenses-grouped-by-date-use-case";
+import { getExpensePeriodQuerySchema } from "./schemas/get-expense-period.schema";
 
 export async function fetchExpensesGroupedByDate(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const expensesQuerySchema = z.object({
-    from: z
-      .string()
-      .optional()
-      .transform((val) => (val ? new Date(val) : null)),
-    to: z
-      .string()
-      .optional()
-      .transform((val) => (val ? new Date(val) : null)),
-  });
-
-  const { from, to } = expensesQuerySchema.parse(req.query);
+  const { from, to } = getExpensePeriodQuerySchema.parse(req.query);
 
   try {
     const fetchExpensesGroupedByDateUseCase =

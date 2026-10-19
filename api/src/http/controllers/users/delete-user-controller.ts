@@ -1,15 +1,11 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { makeDeleteUserUseCase } from "@/use-cases/factories/make-delete-profile-use-case";
+import { deleteUsersParamsSchema } from "./schemas/delete-users.schema";
 
 export async function deleteUser(req: FastifyRequest, reply: FastifyReply) {
-  const deleteUserParamsSchema = z.object({
-    id: z.uuid(),
-  });
-
-  const { id } = deleteUserParamsSchema.parse(req.params);
+  const { id } = deleteUsersParamsSchema.parse(req.params);
 
   try {
     const deleteUserUseCase = makeDeleteUserUseCase();

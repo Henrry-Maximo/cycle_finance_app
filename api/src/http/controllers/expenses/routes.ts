@@ -1,5 +1,4 @@
 import { FastifyInstance } from "fastify";
-import z from "zod";
 
 import { rateLimiter } from "@/http/middlewares/rate-limiter";
 import { verifyJWT } from "@/http/middlewares/verify-jwt";
@@ -11,12 +10,35 @@ import { fetchExpenses } from "./fetch-user-expenses-history-controller";
 import { getMeticsUser } from "./get-user-metrics-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
-import { registerExpenseBodySchema } from "./schemas/register-expense.schema";
-import { patchExpenseBodySchema } from "./schemas/patch-expense.schema";
-import { getExpenseQuerySchema } from "./schemas/get-expense.schema";
-import { firstDayMonth, today } from "@/lib/date-current";
-import { getExpensePeriodQuerySchema } from "./schemas/get-expense-period.schema";
-import { postExpenseAnalyzeBodySchema } from "./schemas/post-expenses-analyze.schema";
+import {
+  registerExpenseBodySchema,
+  registerExpenseResponseSchema,
+} from "./schemas/register-expense.schema";
+import {
+  patchExpenseBodySchema,
+  patchExpenseResponseSchema,
+  updateExpensesQuerySchema,
+} from "./schemas/patch-expense.schema";
+import {
+  getExpenseQuerySchema,
+  getExpenseResponseSchema,
+} from "./schemas/get-expense.schema";
+import {
+  getExpensePeriodQuerySchema,
+  getExpensePeriodResponseSchema,
+} from "./schemas/get-expense-period.schema";
+import {
+  postExpenseAnalyzeBodySchema,
+  postExpenseAnalyzeResponseSchema,
+} from "./schemas/post-expenses-analyze.schema";
+import {
+  getExpenseMetricsQuerySchema,
+  getExpenseMetricsResponseSchema,
+} from "./schemas/get-expense-metrics.schema";
+import {
+  deleteExpenseQuerySchema,
+  deleteExpenseResponseSchema,
+} from "./schemas/delete-expense.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -35,57 +57,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Returns a paginated list of all expenses for the authenticated user. Supports optional filters: `expense` (name), `category` (name), `from` and `to` (date range). Defaults to **15 items per page**.",
         query: getExpenseQuerySchema,
-        response: {
-          200: z
-            .object({
-              expenses: z.array(
-                z.object({
-                  id: z
-                    .string()
-                    .meta({ example: "01a131f5-d211-76fb-a1eb-14c9d2af3651" }),
-                  title: z.string().meta({ example: "pães" }),
-                  description: z
-                    .string()
-                    .nullable()
-                    .meta({ example: "pães frescos." }),
-                  created_at: z
-                    .date()
-                    .meta({ example: "2026-10-12T21:12:36.113Z" }),
-                  user_id: z
-                    .string()
-                    .meta({ example: "019ff822-f98c-75a9-a4ae-ffead3c49987" }),
-                  enterprise: z
-                    .string()
-                    .meta({ example: "Padaria Bela Vista" }),
-                  cnpj: z
-                    .string()
-                    .nullable()
-                    .meta({ example: "12.345.678/0001-99" }),
-                  source: z
-                    .string()
-                    .nullable()
-                    .meta({ example: "Embu das Artes / São Paulo" }),
-                  price: z.number().meta({ example: 8.5 }),
-                  card_last_digits: z.string().meta({ example: "4108" }),
-                  category_id: z
-                    .string()
-                    .meta({ example: "01a12dd6-dc15-742e-8e18-2c46820112bf" }),
-                }),
-              ),
-              meta: z.object({
-                pageIndex: z.number(),
-                perPage: z.number().meta({ example: 10 }),
-                totalCount: z.number(),
-                totalPages: z.number(),
-              }),
-            })
-            .describe("Fetch expenses."),
-          404: z
-            .object({
-              message: z.string().meta({ example: "User not found." }),
-            })
-            .describe("User not found, occurs when not authenticate in API."),
-        },
+        response: getExpenseResponseSchema,
       },
     },
     fetchExpenses,
@@ -105,25 +77,8 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Get expense metrics",
         description:
           "Returns aggregated metrics for the authenticated user: total and count of expenses for the **current day** and **current month**. Supports optional `from` and `to` date filters.",
-        query: z.object({
-          from: z.string().optional().meta({ example: today }),
-          to: z.string().optional().meta({ example: firstDayMonth }),
-        }),
-        response: {
-          200: z
-            .object({
-              count_expenses_day: z.number(),
-              total_expenses_day: z.number(),
-              count_expenses_month: z.number(),
-              total_expenses_month: z.number(),
-            })
-            .describe("Get metrics from user."),
-          404: z
-            .object({
-              message: z.string().meta({ example: "User not found." }),
-            })
-            .describe("User not found."),
-        },
+        query: getExpenseMetricsQuerySchema,
+        response: getExpenseMetricsResponseSchema,
       },
     },
     getMeticsUser,
@@ -144,23 +99,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Returns expenses aggregated by date with the total amount per day. Useful for rendering time-series charts. Supports optional `from` and `to` date filters.",
         query: getExpensePeriodQuerySchema,
-        response: {
-          200: z
-            .object({
-              expenses: z.array(
-                z.object({
-                  date: z.string().meta({ example: today }),
-                  value: z.number(),
-                }),
-              ),
-            })
-            .describe("Fetch expenses grouped by date from user."),
-          404: z
-            .object({
-              message: z.string().meta({ example: "User not found." }),
-            })
-            .describe("User not found."),
-        },
+        response: getExpensePeriodResponseSchema,
       },
     },
     fetchExpensesGroupedByDate,
@@ -181,14 +120,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Creates a new expense linked to the authenticated user and a valid category owned by them. Returns `404` if the user or category is not found.",
         body: registerExpenseBodySchema,
-        response: {
-          201: z.null().describe("Create new a expense."),
-          404: z
-            .object({
-              message: z.string().meta({ example: "Resource not found." }),
-            })
-            .describe("User or category not found."),
-        },
+        response: registerExpenseResponseSchema,
       },
     },
     register,
@@ -210,33 +142,7 @@ export async function expensesRoutes(app: FastifyInstance) {
           "Uploads a receipt image (`JPEG` or `PNG`, max **5MB**) and uses **Gemini AI** to extract expense data such as title, amount, date, and category suggestions.",
         consumes: ["multipart/form-data"],
         body: postExpenseAnalyzeBodySchema,
-        response: {
-          200: z
-            .object({
-              title: z.string().meta({ example: "pães" }),
-              amount: z.number().meta({ example: 10.52 }),
-              date: z.string().meta({ example: today }),
-              category: z.string().meta({ example: "Alimentação" }),
-            })
-            .describe("Receipt analyzed with successfully."),
-          400: z
-            .object({
-              message: z.string().meta({ example: "Invalid file type." }),
-            })
-            .describe("Invalid file type."),
-          503: z
-            .object({
-              message: z
-                .string()
-                .meta({ example: "External service unavailable." }),
-            })
-            .describe("External service unavailable."),
-          429: z
-            .object({
-              message: z.string().meta({ example: "Too many requests." }),
-            })
-            .describe("Too many requests."),
-        },
+        response: postExpenseAnalyzeResponseSchema,
       },
     },
     analyzeReceiptController,
@@ -256,55 +162,9 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Update an expense",
         description:
           "Updates an existing expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `409` if the category is already in use by the expense.",
-        query: z.object({
-          id: z.string().meta({ example: "01a131f5-d211..." }),
-        }),
+        query: updateExpensesQuerySchema,
         body: patchExpenseBodySchema,
-        response: {
-          200: z
-            .object({
-              title: z.string().nullable().meta({ example: "pães" }),
-              enterprise: z
-                .string()
-                .nullable()
-                .meta({ example: "mercado ceifa" }),
-              description: z
-                .string()
-                .nullable()
-                .meta({ example: "pães frescos." }),
-              cnpj: z
-                .string()
-                .nullable()
-                .nullable()
-                .meta({ example: "12.345.678/0001-99" }),
-              source: z
-                .string()
-                .nullable()
-                .meta({ example: "Embu das Artes / São Paulo" }),
-              price: z.coerce.number().nullable().meta({ example: 10.52 }),
-              card_last_digits: z
-                .string()
-                .min(1)
-                .max(4)
-                .nullable()
-                .meta({ example: "1408" }),
-              category_id: z
-                .string()
-                .nullable()
-                .meta({ example: "01a12dd6-dc15..." }),
-            })
-            .describe("Expense update with successful."),
-          404: z
-            .object({
-              message: z.string().meta({ example: "Resour not found." }),
-            })
-            .describe("Rosource not found."),
-          409: z
-            .object({
-              message: z.string().meta({ example: "Category already in use." }),
-            })
-            .describe("Category already in use."),
-        },
+        response: patchExpenseResponseSchema,
       },
     },
     update,
@@ -324,22 +184,8 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Delete an expense",
         description:
           "Permanently deletes an expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `401` if the expense belongs to another user.",
-        query: z.object({
-          id: z.string().meta({ example: "01a131f5-d211..." }),
-        }),
-        response: {
-          201: z.null().describe("Delete a expense.").meta({ example: {} }),
-          404: z
-            .object({
-              message: z.string().meta({ example: "Expense not found." }),
-            })
-            .describe("Expense not found."),
-          401: z
-            .object({
-              message: z.string().meta({ example: "Not authorized." }),
-            })
-            .describe("Not authorized."),
-        },
+        query: deleteExpenseQuerySchema,
+        response: deleteExpenseResponseSchema,
       },
     },
     deleteExpense,

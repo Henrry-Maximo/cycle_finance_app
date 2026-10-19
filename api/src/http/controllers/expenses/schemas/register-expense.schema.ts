@@ -14,3 +14,12 @@ export const registerExpenseBodySchema = z.object({
     .string()
     .meta({ example: "01a12dd6-dc15-742e-8e18-2c46820112bf" }),
 });
+
+export const registerExpenseResponseSchema = {
+  201: z.null().describe("Create new a expense."),
+  404: z
+    .object({
+      message: z.string().meta({ example: "Resource not found." }),
+    })
+    .describe("User or category not found."),
+};
