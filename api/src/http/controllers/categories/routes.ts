@@ -10,6 +10,7 @@ import { fetchCategories } from "./fetch-controller";
 import { register } from "./register-controller";
 import { update } from "./update-controller";
 import { getCategoryQuerySchema } from "./schemas/get-category.schema";
+import { postCategoryBodySchema } from "./schemas/post-category.schema";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -74,25 +75,26 @@ export async function categoriesRoutes(app: FastifyInstance) {
         summary: "Register a new category",
         description:
           "Creates a new expense category for the authenticated user. Each user is limited to **15 categories**. Returns `409` if a category with the same title already exists, and `429` if the limit has been reached.",
-        body: z.object({
-          title: z.string(),
-          description: z.string(),
-        }),
+        body: postCategoryBodySchema,
         response: {
-          201: z.null().describe("Category created."),
+          201: z.null().meta({ example: {} }).describe("Category created."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({
+                example: "User not found.",
+              }),
             })
             .describe("User not found."),
           429: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Category limit reached." }),
             })
             .describe("Category limit reached."),
           409: z
             .object({
-              message: z.string(),
+              message: z.string().meta({
+                example: "Category already exists.",
+              }),
             })
             .describe("Category already exists."),
         },
