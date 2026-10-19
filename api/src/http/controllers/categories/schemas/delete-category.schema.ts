@@ -5,7 +5,7 @@ export const deleteCategoryQuerySchema = z.object({
 });
 
 export const deleteCategoryResponseSchema = {
-  201: z.null().meta({ example: {} }).describe("Delete a category."),
+  204: z.object().meta({ example: {} }).describe("An delete was category."),
   404: z
     .object({
       message: z.string().meta({ example: "Category not found." }),

@@ -29,7 +29,11 @@ export const postResetPasswordResponseSchema = {
       message: z.string().meta({ example: "Reset password token invalid." }),
     })
     .describe("Reset password token invalid."),
-  422: z.object({
-    messge: z.string().meta({ example: "Reusing passwords is not allowed." }),
-  }),
+  422: z
+    .object({
+      message: z
+        .string()
+        .meta({ example: "Reusing passwords is not allowed." }),
+    })
+    .describe("Reusing passwords is not allowed."),
 };

@@ -42,9 +42,9 @@ export const patchExpenseResponseSchema = {
     .describe("Expense update with successful."),
   404: z
     .object({
-      message: z.string().meta({ example: "Resour not found." }),
+      message: z.string().meta({ example: "Resource not found." }),
     })
-    .describe("Rosource not found."),
+    .describe("Resource not found."),
   409: z
     .object({
       message: z.string().meta({ example: "Category already in use." }),

@@ -5,7 +5,7 @@ export const deleteExpenseQuerySchema = z.object({
 });
 
 export const deleteExpenseResponseSchema = {
-  201: z.object({}).describe("Delete a expense.").meta({ example: {} }),
+  204: z.object({}).describe("An expense was deleted.").meta({ example: {} }),
   404: z
     .object({
       message: z.string().meta({ example: "Expense not found." }),
