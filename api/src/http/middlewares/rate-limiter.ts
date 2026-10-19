@@ -2,7 +2,7 @@ import { FastifyReply, FastifyRequest } from "fastify";
 
 import { limiter } from "@/lib/redis";
 
-export async function rateLimiter(req: FastifyRequest, reply: FastifyReply) {
+export async function rateLimiter(req: FastifyRequest, _: FastifyReply) {
   try {
     await limiter.consume(req.ip);
   } catch (err) {

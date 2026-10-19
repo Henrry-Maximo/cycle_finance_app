@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";

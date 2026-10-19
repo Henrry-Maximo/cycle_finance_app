@@ -7,7 +7,7 @@ export async function audit(req: FastifyRequest, _: FastifyReply) {
       role: req.user.role,
     });
   }
-  
+
   req.log.info(
     {
       action: "API_REQUEST",

@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeFetchExpensesGroupedByDateUseCase } from "@/use-cases/factories/make-fetch-expenses-grouped-by-date-use-case";

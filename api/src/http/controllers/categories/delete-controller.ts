@@ -1,5 +1,4 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import z from "zod";
 
 import { CategoryIsLinkedExpenseError } from "@/use-cases/errors/category-is-linked-expense-error";
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
