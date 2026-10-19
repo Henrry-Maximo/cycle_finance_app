@@ -11,6 +11,7 @@ import { register } from "./register-controller";
 import { update } from "./update-controller";
 import { getCategoryQuerySchema } from "./schemas/get-category.schema";
 import { postCategoryBodySchema } from "./schemas/post-category.schema";
+import { deleteCategoryQuerySchema } from "./schemas/delete-category.schema";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -152,30 +153,33 @@ export async function categoriesRoutes(app: FastifyInstance) {
         summary: "Delete a category",
         description:
           "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
-        query: z.object({
-          id: z.string(),
-        }),
+        query: deleteCategoryQuerySchema,
         response: {
           200: z.object({
             categories: z.array(
               z.object({
-                id: z.string(),
-                title: z.string(),
-                description: z.string().nullable(),
-                created_at: z.date(),
-                user_id: z.string(),
+                id: z.string().meta({ example: "286171c3-85a1..." }),
+                title: z.string().meta({ example: "Alimentação" }),
+                description: z
+                  .string()
+                  .nullable()
+                  .meta({ example: "Custo com pães e derivados." }),
+                created_at: z
+                  .date()
+                  .meta({ example: "2023-01-01T12:00:00.000Z" }),
+                user_id: z.string().meta({ example: "355171c3-85a1..." }),
               }),
             ),
           }),
-          201: z.null().describe("Delete a category."),
+          201: z.null().meta({ example: {} }).describe("Delete a category."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Category not found." }),
             })
             .describe("Category not found."),
           401: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Not authorized." }),
             })
             .describe("Not authorized."),
         },
