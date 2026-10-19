@@ -48,7 +48,7 @@ export class InMemoryCategoriesRepository implements CategoriesRepository {
           return item.title.toLowerCase().includes(categoryName.toLowerCase());
         }
       })
-      .slice((pageIndex - 1) * perPage, pageIndex * perPage);
+      .slice(pageIndex * perPage, (pageIndex + 1) * perPage);
 
     return categories;
   }
