@@ -20,6 +20,9 @@ jobs:
         with:
           node-version: 20
 
+      - name: Update npm
+        run: npm install -g npm@latest
+
       - name: Install dependencies
         working-directory: api
         run: npm install
