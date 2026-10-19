@@ -1,0 +1,36 @@
+name: API Tests
+
+on:
+  push:
+    paths:
+      - 'api/**'
+  pull_request:
+    paths:
+      - 'api/**'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        working-directory: api
+        run: npm ci
+
+      - name: Run tests
+        working-directory: api
+        env:
+          NODE_ENV: test
+          JWT_SECRET: ci-secret
+          DATABASE_URL: postgresql://fake:fake@localhost:5432/fake
+          APP_URL: http://localhost:3333
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          GEMINI_API_KEY: fake-key
+        run: npm test
