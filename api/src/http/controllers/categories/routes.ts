@@ -12,6 +12,10 @@ import { update } from "./update-controller";
 import { getCategoryQuerySchema } from "./schemas/get-category.schema";
 import { postCategoryBodySchema } from "./schemas/post-category.schema";
 import { deleteCategoryQuerySchema } from "./schemas/delete-category.schema";
+import {
+  patchCategoryBodySchema,
+  patchCategoryQuerySchema,
+} from "./schemas/patch-category.schema";
 
 export async function categoriesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -191,18 +195,23 @@ export async function categoriesRoutes(app: FastifyInstance) {
         summary: "Update a category",
         description:
           "Updates the title or description of an existing category. Only the owner of the category can perform this action.",
+        query: patchCategoryQuerySchema,
+        body: patchCategoryBodySchema,
         response: {
           200: z
             .object({
-              title: z.string().nullable(),
-              description: z.string().nullable().nullable(),
+              title: z.string().nullable().meta({ example: "Alimentação" }),
+              description: z
+                .string()
+                .nullable()
+                .meta({ example: "Custo com pães e derivados." }),
             })
             .describe("Category update with successful."),
           404: z
             .object({
-              message: z.string(),
+              message: z.string().meta({ example: "Resource not found." }),
             })
-            .describe("Rosource not found."),
+            .describe("Resource not found."),
         },
       },
     },
