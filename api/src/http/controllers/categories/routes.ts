@@ -155,22 +155,6 @@ export async function categoriesRoutes(app: FastifyInstance) {
           "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
         query: deleteCategoryQuerySchema,
         response: {
-          200: z.object({
-            categories: z.array(
-              z.object({
-                id: z.string().meta({ example: "286171c3-85a1..." }),
-                title: z.string().meta({ example: "Alimentação" }),
-                description: z
-                  .string()
-                  .nullable()
-                  .meta({ example: "Custo com pães e derivados." }),
-                created_at: z
-                  .date()
-                  .meta({ example: "2023-01-01T12:00:00.000Z" }),
-                user_id: z.string().meta({ example: "355171c3-85a1..." }),
-              }),
-            ),
-          }),
           201: z.null().meta({ example: {} }).describe("Delete a category."),
           404: z
             .object({
@@ -182,6 +166,11 @@ export async function categoriesRoutes(app: FastifyInstance) {
               message: z.string().meta({ example: "Not authorized." }),
             })
             .describe("Not authorized."),
+          409: z
+            .object({
+              message: z.string().meta({ example: "Category already in use." }),
+            })
+            .describe("Category already in use."),
         },
       },
     },
