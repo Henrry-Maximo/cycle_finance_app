@@ -58,8 +58,8 @@ export function UpdateExpenseDialog() {
       });
 
       // console.log(data.price);
+      // console.log(isPending);
 
-      console.log(isPending);
       await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
       toast.success('Despesa atualizada com sucesso!');
       setIsOpen(false);

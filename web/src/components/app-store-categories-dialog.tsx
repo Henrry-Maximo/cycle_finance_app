@@ -39,7 +39,10 @@ import { DeleteCategoryContext } from '@/contexts/delete-category-context';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const storeCategoriesSchema = z.object({
-  title: z.string().min(1, 'O título deve ter mais que 1 caracter.').max(28, 'O título deve ter menos que 28 caracteres.'),
+  title: z
+    .string()
+    .min(1, 'O título deve ter mais que 1 caracter.')
+    .max(28, 'O título deve ter menos que 28 caracteres.'),
   description: z.string().max(240).optional(),
 });
 
@@ -72,6 +75,7 @@ export function StoreCategoriesDialog() {
     try {
       await deleteCategoryUserFn(id);
       await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
+
       toast.success('A categoria foi apagada com sucesso!');
     } catch {
       toast.error('Error ao apagar a categoria.');
@@ -84,6 +88,7 @@ export function StoreCategoriesDialog() {
         title: data.title,
         description: data.description,
       });
+
       await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
       toast.success('Categoria cadastrada com sucesso.');
     } catch {
@@ -120,13 +125,12 @@ export function StoreCategoriesDialog() {
                   <span className="text-xs text-red-500">
                     {errors.title.message}
                   </span>
-                ) :
+                ) : (
                   <p className="text-muted-foreground text-xs">
                     Preencha com o nome da categoria que deseja utilizar no
                     cadastro das despesas.
                   </p>
-                }
-
+                )}
               </div>
             </div>
 
@@ -207,7 +211,11 @@ export function StoreCategoriesDialog() {
                         {category.title}
                       </TableCell>
                       <TableCell className="max-w-md wrap-break-word whitespace-normal">
-                        {category.description ? category.description : (<span className='text-gray-400'>Sem descrição.</span>)}
+                        {category.description ? (
+                          category.description
+                        ) : (
+                          <span className="text-gray-400">Sem descrição.</span>
+                        )}
                       </TableCell>
                       <TableCell className="text-muted-foreground flex flex-col">
                         <span className="font-light">
@@ -230,7 +238,7 @@ export function StoreCategoriesDialog() {
                                 variant="ghost"
                                 size="default"
                                 className="cursor-pointer"
-                              // onClick={() => handleDeleteCategory(category.id)}
+                                // onClick={() => handleDeleteCategory(category.id)}
                               >
                                 <TrashIcon className="dark: h-3 w-3 text-rose-500 dark:text-rose-400" />
                                 <span className="sr-only">Excluir</span>
