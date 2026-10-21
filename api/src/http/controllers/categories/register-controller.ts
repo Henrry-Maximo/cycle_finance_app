@@ -25,7 +25,7 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
     }
 
     if (err instanceof CategoryLimitReachedError) {
-      return reply.status(429).send({ message: err.message });
+      return reply.status(403).send({ message: err.message });
     }
 
     if (err instanceof CategoryAlreadyExistsError) {

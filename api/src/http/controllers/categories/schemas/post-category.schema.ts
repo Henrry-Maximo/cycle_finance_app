@@ -14,7 +14,7 @@ export const postCategoryResponseSchema = {
       }),
     })
     .describe("User not found."),
-  429: z
+  403: z
     .object({
       message: z.string().meta({ example: "Category limit reached." }),
     })
