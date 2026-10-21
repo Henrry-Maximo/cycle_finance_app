@@ -78,7 +78,10 @@
 - [x] Os testes unitários devem ter cobertura de 100% (coverage);
 - [x] Deve ser possível realizar o upload nos seguintes formatos: JPEG, PNG;
 - [x] O sistema deve implementar refresh token para renovação de autenticação;
-- [x] Invalidar o JWT ao deletar a conta do usuário.
+- [x] Invalidar o JWT ao deletar a conta do usuário;
+- [x] Rotas HTTPs com status code adequável swagger;
+- [x] Descrição de objetivos de cada rota swagger;
+- [x] Especificar se dado é query/parameter na rota swagger;
 
 ### Regras de Negócio (RN)
 
