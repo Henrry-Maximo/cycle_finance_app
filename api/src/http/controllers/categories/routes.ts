@@ -17,12 +17,11 @@ import {
   postCategoryResponseSchema,
 } from "./schemas/post-category.schema";
 import {
-  deleteCategoryQuerySchema,
-  deleteCategoryResponseSchema,
+  deleteCategoryParamsSchema, deleteCategoryResponseSchema
 } from "./schemas/delete-category.schema";
 import {
   patchCategoryBodySchema,
-  patchCategoryQuerySchema,
+  patchCategoryParamsSchema,
   patchCategoryResponseSchema,
 } from "./schemas/patch-category.schema";
 import { getCategoriesPeriodResponseSchema } from "./schemas/get-categories-period.schema";
@@ -92,7 +91,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
   );
 
   app.delete(
-    "/categories",
+    "/categories/:id",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
@@ -105,7 +104,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
         summary: "Delete a category",
         description:
           "Permanently deletes a category identified by the `id` query parameter. Only the owner can delete it. Returns `401` if the category belongs to another user. **Cannot delete a category that has expenses linked to it.**",
-        query: deleteCategoryQuerySchema,
+        params: deleteCategoryParamsSchema,
         response: deleteCategoryResponseSchema,
       },
     },
@@ -113,7 +112,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
   );
 
   app.patch(
-    "/categories",
+    "/categories/:id",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
@@ -126,7 +125,7 @@ export async function categoriesRoutes(app: FastifyInstance) {
         summary: "Update a category",
         description:
           "Updates the title or description of an existing category. Only the owner of the category can perform this action.",
-        query: patchCategoryQuerySchema,
+        params: patchCategoryParamsSchema,
         body: patchCategoryBodySchema,
         response: patchCategoryResponseSchema,
       },

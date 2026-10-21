@@ -27,7 +27,7 @@ import {
 } from "./schemas/post-reset-password-request.schema";
 import {
   postResetPasswordBodySchema,
-  postResetPasswordQuerySchema,
+  postResetPasswordParamsSchema,
   postResetPasswordResponseSchema,
 } from "./schemas/post-reset-password.schema";
 import {
@@ -96,7 +96,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
   );
 
   app.post(
-    "/reset-password",
+    "/reset-password/:id",
     {
       preHandler: [rateLimiter],
       schema: {
@@ -104,7 +104,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
         summary: "Reset user password",
         description:
           "Resets the user password using a valid reset token passed as a query parameter. Returns `401` if the token is expired or already used. The new password cannot be the same as the previous one.",
-        query: postResetPasswordQuerySchema,
+        params: postResetPasswordParamsSchema,
         body: postResetPasswordBodySchema,
         response: postResetPasswordResponseSchema,
       },

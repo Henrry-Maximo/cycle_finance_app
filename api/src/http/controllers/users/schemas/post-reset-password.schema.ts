@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const postResetPasswordQuerySchema = z.object({
+export const postResetPasswordParamsSchema = z.object({
   token: z.string().meta({ example: "eyJhbGciOiJIUzI..." }),
 });
 

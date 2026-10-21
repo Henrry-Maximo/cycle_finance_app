@@ -4,10 +4,10 @@ import { CategoryIsLinkedExpenseError } from "@/use-cases/errors/category-is-lin
 import { NotAuthorizedError } from "@/use-cases/errors/not-authorized-error";
 import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-error";
 import { makeDeleteCategoryUseCase } from "@/use-cases/factories/make-delete-category-use-case";
-import { deleteCategoryQuerySchema } from "./schemas/delete-category.schema";
+import { deleteCategoryParamsSchema } from "./schemas/delete-category.schema";
 
 export async function deleteCategory(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = deleteCategoryQuerySchema.parse(req.query);
+  const { id } = deleteCategoryParamsSchema.parse(req.query);
 
   try {
     const deleteCategoriesUseCase = makeDeleteCategoryUseCase();

@@ -6,14 +6,14 @@ import { ReusingPasswordsIsNotAllowedError } from "@/use-cases/errors/reusing-pa
 import { makeResetPassword } from "@/use-cases/factories/make-reset-password-use-case";
 import {
   postResetPasswordBodySchema,
-  postResetPasswordQuerySchema,
+  postResetPasswordParamsSchema,
 } from "./schemas/post-reset-password.schema";
 
 export async function resetPasswordTokens(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const { token } = postResetPasswordQuerySchema.parse(req.query);
+  const { token } = postResetPasswordParamsSchema.parse(req.query);
   const { password } = postResetPasswordBodySchema.parse(req.body);
 
   try {

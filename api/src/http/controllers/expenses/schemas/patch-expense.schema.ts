@@ -1,6 +1,6 @@
 import z from "zod";
 
-export const updateExpensesQuerySchema = z.object({
+export const updateExpensesParamsSchema = z.object({
   id: z.string().meta({ example: "01a131f5-d211..." }),
 });
 

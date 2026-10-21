@@ -17,7 +17,7 @@ import {
 import {
   patchExpenseBodySchema,
   patchExpenseResponseSchema,
-  updateExpensesQuerySchema,
+  updateExpensesParamsSchema,
 } from "./schemas/patch-expense.schema";
 import {
   getExpenseQuerySchema,
@@ -149,7 +149,7 @@ export async function expensesRoutes(app: FastifyInstance) {
   );
 
   app.patch(
-    "/expenses",
+    "/expenses/:id",
     {
       preHandler: [verifyJWT, rateLimiter],
       schema: {
@@ -162,7 +162,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         summary: "Update an expense",
         description:
           "Updates an existing expense identified by the `id` query parameter. Only the owner of the expense can perform this action. Returns `409` if the category is already in use by the expense.",
-        query: updateExpensesQuerySchema,
+        params: updateExpensesParamsSchema,
         body: patchExpenseBodySchema,
         response: patchExpenseResponseSchema,
       },

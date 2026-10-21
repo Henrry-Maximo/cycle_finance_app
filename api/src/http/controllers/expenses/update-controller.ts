@@ -5,11 +5,11 @@ import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-err
 import { MakeUpdateExpensesUseCase } from "@/use-cases/factories/make-update-expenses-use-case";
 import {
   patchExpenseBodySchema,
-  updateExpensesQuerySchema,
+  updateExpensesParamsSchema,
 } from "./schemas/patch-expense.schema";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = updateExpensesQuerySchema.parse(req.query);
+  const { id } = updateExpensesParamsSchema.parse(req.query);
 
   const {
     title,

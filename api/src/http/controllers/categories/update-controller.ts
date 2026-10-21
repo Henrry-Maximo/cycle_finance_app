@@ -4,11 +4,11 @@ import { ResourceNotFoundError } from "@/use-cases/errors/resource-not-found-err
 import { MakeUpdateCategoriesUseCase } from "@/use-cases/factories/make-update-categories-use-case";
 import {
   patchCategoryBodySchema,
-  patchCategoryQuerySchema,
+  patchCategoryParamsSchema,
 } from "./schemas/patch-category.schema";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = patchCategoryQuerySchema.parse(req.query);
+  const { id } = patchCategoryParamsSchema.parse(req.query);
   const { title, description } = patchCategoryBodySchema.parse(req.body);
 
   try {
