@@ -9,18 +9,18 @@ export async function registerCategory({
   title,
   description,
 }: RegisterCategoryBody) {
-  try {
-    const response = await api.post('/categories', {
-      title,
-      description,
-    });
+  const response = await api.post('/categories', {
+    title,
+    description,
+  });
 
-    if (response.status !== 201) {
-      throw new Error('Não foi possível cadastrar a categoria.');
-    }
-
-    return { message: 'Categoria cadastrada com sucesso!' };
-  } catch {
-    throw new Error('Houve um problema com o cadastro da categoria.');
+  if (response.status == 403) {
+    throw new Error('O limite de cadastro de categorias foi alcançado.');
   }
+
+  if (response.status !== 201 && response.status !== 403) {
+    throw new Error('Não foi possível cadastrar a categoria.');
+  }
+
+  return { message: 'Categoria cadastrada com sucesso!' };
 }

@@ -37,6 +37,7 @@ import { Separator } from './ui/separator';
 import { DeleteCategoriesDialog } from './app-delete-category-dialog';
 import { DeleteCategoryContext } from '@/contexts/delete-category-context';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { api } from '@/lib/axios';
 
 const storeCategoriesSchema = z.object({
   title: z
@@ -91,7 +92,8 @@ export function StoreCategoriesDialog() {
 
       await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
       toast.success('Categoria cadastrada com sucesso.');
-    } catch {
+    } catch (err) {
+      console.log(err);
       toast.error('Erro ao cadastrar categoria.');
     }
   }
