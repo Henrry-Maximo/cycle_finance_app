@@ -8,7 +8,7 @@ import {
 } from "./schemas/patch-category.schema";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = patchCategoryParamsSchema.parse(req.query);
+  const { id } = patchCategoryParamsSchema.parse(req.params);
   const { title, description } = patchCategoryBodySchema.parse(req.body);
 
   try {

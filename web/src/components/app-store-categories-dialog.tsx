@@ -37,7 +37,6 @@ import { Separator } from './ui/separator';
 import { DeleteCategoriesDialog } from './app-delete-category-dialog';
 import { DeleteCategoryContext } from '@/contexts/delete-category-context';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { api } from '@/lib/axios';
 
 const storeCategoriesSchema = z.object({
   title: z

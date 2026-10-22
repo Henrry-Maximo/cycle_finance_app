@@ -17,7 +17,8 @@ import {
   postCategoryResponseSchema,
 } from "./schemas/post-category.schema";
 import {
-  deleteCategoryParamsSchema, deleteCategoryResponseSchema
+  deleteCategoryParamsSchema,
+  deleteCategoryResponseSchema,
 } from "./schemas/delete-category.schema";
 import {
   patchCategoryBodySchema,

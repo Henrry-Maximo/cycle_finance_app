@@ -13,7 +13,7 @@ export async function resetPasswordTokens(
   req: FastifyRequest,
   reply: FastifyReply,
 ) {
-  const { token } = postResetPasswordParamsSchema.parse(req.query);
+  const { token } = postResetPasswordParamsSchema.parse(req.params);
   const { password } = postResetPasswordBodySchema.parse(req.body);
 
   try {

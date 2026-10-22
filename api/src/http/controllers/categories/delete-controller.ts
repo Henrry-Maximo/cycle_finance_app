@@ -7,7 +7,7 @@ import { makeDeleteCategoryUseCase } from "@/use-cases/factories/make-delete-cat
 import { deleteCategoryParamsSchema } from "./schemas/delete-category.schema";
 
 export async function deleteCategory(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = deleteCategoryParamsSchema.parse(req.query);
+  const { id } = deleteCategoryParamsSchema.parse(req.params);
 
   try {
     const deleteCategoriesUseCase = makeDeleteCategoryUseCase();

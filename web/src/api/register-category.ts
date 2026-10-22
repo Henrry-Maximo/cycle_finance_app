@@ -18,6 +18,10 @@ export async function registerCategory({
     throw new Error('O limite de cadastro de categorias foi alcançado.');
   }
 
+  if (response.status === 409) {
+    throw new Error('A categoria já existe.');
+  }
+
   if (response.status !== 201 && response.status !== 403) {
     throw new Error('Não foi possível cadastrar a categoria.');
   }

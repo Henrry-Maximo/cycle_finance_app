@@ -2,7 +2,7 @@ import { api } from '@/lib/axios';
 
 export async function deleteCategoryUser(id: string) {
   try {
-    const response = await api.delete(`/categories?id=${id}`);
+    const response = await api.delete(`/categories/${id}`);
 
     if (response.status === 404) {
       throw new Error('Não foi possível localizar a categoria.');

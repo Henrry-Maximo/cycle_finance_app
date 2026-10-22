@@ -9,7 +9,7 @@ import {
 } from "./schemas/patch-expense.schema";
 
 export async function update(req: FastifyRequest, reply: FastifyReply) {
-  const { id } = updateExpensesParamsSchema.parse(req.query);
+  const { id } = updateExpensesParamsSchema.parse(req.params);
 
   const {
     title,
