@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/select';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DateFormPicker } from '@/components/ui/date-form-picker';
+import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
@@ -80,7 +81,11 @@ export interface GetCategoriesUserForm {
   categories: Category[];
 }
 
-export function ExpenseForm() {
+type Props = {
+  data: ExpenseAnalyzeResponse;
+};
+
+export function ExpenseForm({ data }: Props) {
   const {
     register,
     handleSubmit,
@@ -143,6 +148,7 @@ export function ExpenseForm() {
               id="title"
               type="text"
               placeholder="Digite o nome do produto(s)"
+              value={data.title}
               disabled={isSubmitting}
             />
             {errors.title && (
@@ -184,7 +190,10 @@ export function ExpenseForm() {
               name="created_at"
               control={control}
               render={({ field: { value, onChange } }) => (
-                <DateFormPicker value={value} onDateChange={onChange} />
+                <DateFormPicker
+                  value={data.date ?? value}
+                  onDateChange={onChange}
+                />
               )}
             />
             {errors.created_at && (
@@ -232,6 +241,7 @@ export function ExpenseForm() {
             <Input
               {...register('cnpj')}
               id="cnpj"
+              value={data.cpfOrCNPJ}
               placeholder="Digite o CNPJ da empresa"
               type="text"
               disabled={isSubmitting}
@@ -288,6 +298,7 @@ export function ExpenseForm() {
                 {...register('price')}
                 id="price"
                 type="text"
+                value={data.amount.toFixed(2)}
                 className="pl-8"
                 placeholder="0,00"
                 disabled={isSubmitting}

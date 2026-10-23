@@ -3,9 +3,13 @@ import { Helmet } from 'react-helmet-async';
 
 import { ExpenseForm } from './expense-form';
 import { UploadFileForm } from './upload-file-form';
+import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
 
 export function Scan() {
-  const [isSubmitFileUpload] = useState(true);
+  const [isSubmitFileUpload, setIsSubmitFileUpload] = useState(false);
+  const [extracted, setExtracted] = useState<ExpenseAnalyzeResponse | null>(
+    null,
+  );
 
   return (
     <>
@@ -21,7 +25,16 @@ export function Scan() {
         )}
       </div>
 
-      {isSubmitFileUpload ? <ExpenseForm /> : <UploadFileForm />}
+      {isSubmitFileUpload && extracted ? (
+        <ExpenseForm data={extracted} />
+      ) : (
+        <UploadFileForm
+          onSuccess={(data) => {
+            setExtracted(data);
+            setIsSubmitFileUpload(true);
+          }}
+        />
+      )}
     </>
   );
 }

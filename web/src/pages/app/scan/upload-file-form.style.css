@@ -1,0 +1,21 @@
+@keyframes borders {
+  0% {
+    border-color: #0060dd;
+  }
+
+  33% {
+    border-color: #ff007f;
+  }
+
+  66% {
+    border-color: #00ffcc;
+  }
+
+  100% {
+    border-color: #0060dd;
+  }
+}
+
+.border-animation {
+  animation: borders 4s linear infinite;
+}

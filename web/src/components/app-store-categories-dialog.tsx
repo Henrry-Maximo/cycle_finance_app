@@ -91,9 +91,10 @@ export function StoreCategoriesDialog() {
 
       await queryClient.invalidateQueries({ queryKey: ['user-categories'] });
       toast.success('Categoria cadastrada com sucesso.');
-    } catch (err) {
+    } catch (err: any) {
       // console.log(err.response);
-      toast.error('Erro ao cadastrar categoria.');
+      const errorMessage = err?.message || 'Erro ao cadastrar categoria.';
+      toast.error(errorMessage);
     }
   }
 
