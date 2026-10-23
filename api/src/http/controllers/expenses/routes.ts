@@ -28,10 +28,6 @@ import {
   getExpensePeriodResponseSchema,
 } from "./schemas/get-expense-period.schema";
 import {
-  postExpenseAnalyzeBodySchema,
-  postExpenseAnalyzeResponseSchema,
-} from "./schemas/post-expenses-analyze.schema";
-import {
   getExpenseMetricsQuerySchema,
   getExpenseMetricsResponseSchema,
 } from "./schemas/get-expense-metrics.schema";
@@ -39,6 +35,7 @@ import {
   deleteExpenseParamsSchema,
   deleteExpenseResponseSchema,
 } from "./schemas/delete-expense.schema";
+import { postExpenseAnalyzeResponseSchema } from "./schemas/post-expenses-analyze.schema";
 
 export async function expensesRoutes(app: FastifyInstance) {
   /* Authenticated */
@@ -141,7 +138,7 @@ export async function expensesRoutes(app: FastifyInstance) {
         description:
           "Uploads a receipt image (`JPEG` or `PNG`, max **5MB**) and uses **Gemini AI** to extract expense data such as title, amount, date, and category suggestions.",
         consumes: ["multipart/form-data"],
-        body: postExpenseAnalyzeBodySchema,
+        // body: postExpenseAnalyzeBodySchema,
         response: postExpenseAnalyzeResponseSchema,
       },
     },

@@ -20,14 +20,17 @@ export async function ExpenseAnalyze({
   file,
 }: ExpenseAnalyzeRequest): Promise<ExpenseAnalyzeResponse> {
   try {
+    const formData = new FormData();
+    formData.append('receipt', file);
+
     const response = await api.post<ExpenseAnalyzeResponse>(
-      '/expnses/analyze',
-      { file },
+      '/expenses/analyze',
+      formData,
     );
 
-    if (response.status != 200) {
-      throw new Error('Não foi possível realizar a leitura do comprovante.');
-    }
+    // if (response.status != 200) {
+    //   throw new Error('Não foi possível realizar a leitura do comprovante.');
+    // }
 
     const { extracted } = response.data;
     return { extracted };
