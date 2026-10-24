@@ -8,7 +8,7 @@ interface RegisterExpenseBody {
   source: string;
   price: number;
   card_last_digits: string;
-  created_at?: string | undefined;
+  created_at: string | null;
   category_id: string;
 }
 

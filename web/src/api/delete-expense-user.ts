@@ -2,7 +2,7 @@ import { api } from '@/lib/axios';
 
 export async function deleteExpenseUser(id: string) {
   try {
-    const response = await api.delete(`/expenses?id=${id}`);
+    const response = await api.delete(`/expenses/${id}`);
 
     if (response.status === 404) {
       throw new Error('Não foi possível localizar a despesa.');

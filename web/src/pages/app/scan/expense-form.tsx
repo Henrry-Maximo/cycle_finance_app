@@ -49,7 +49,7 @@ const registerExpenseForm = z.object({
     .transform((val) => {
       const cleanValue = val
         .replace(/R\$\s?/, '')
-        .replace(/\./g, '')
+        // .replace(/\./g, '')
         .replace(',', '.')
         .trim();
 
@@ -87,10 +87,10 @@ type Props = {
 
 export function ExpenseForm({ data }: Props) {
   const {
+    reset,
+    control,
     register,
     handleSubmit,
-    control,
-    reset,
     formState: { isSubmitting, errors },
   } = useForm<RegisterExpenseFormInput, unknown, RegisterExpenseFormOutput>({
     resolver: zodResolver(registerExpenseForm),
@@ -118,7 +118,7 @@ export function ExpenseForm({ data }: Props) {
         source: data.source,
         price: data.price,
         card_last_digits: data.card_last_digits,
-        ...(data.created_at && { created_at: data.created_at }),
+        created_at: data.created_at ?? null,
         category_id: data.category_id,
       });
 
@@ -188,11 +188,8 @@ export function ExpenseForm({ data }: Props) {
             <Controller
               name="created_at"
               control={control}
-              render={({ field: { value, onChange } }) => (
-                <DateFormPicker
-                  value={data.date ?? value}
-                  onDateChange={onChange}
-                />
+              render={({ field: { onChange } }) => (
+                <DateFormPicker value={data.date} onDateChange={onChange} />
               )}
             />
             {errors.created_at && (
