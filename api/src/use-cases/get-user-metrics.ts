@@ -40,6 +40,7 @@ export class GetUserMetricsUseCase {
     const toEndDate = to
       ? to
       : new Date(today.getFullYear(), today.getMonth() + 1, 0);
+
     const expenses = await this.expensesRepository.findManyByUserIdInPeriod(
       userId,
       fromStartDate,
@@ -52,11 +53,11 @@ export class GetUserMetricsUseCase {
     let count_expenses_day = 0; // total number on day
 
     for (const expense of expenses) {
-      total_expenses_month += expense.price / 100;
+      total_expenses_month += expense.price;
       count_expenses_month += 1;
 
       if (expense.created_at.toDateString() === today.toDateString()) {
-        total_expenses_day += expense.price / 100;
+        total_expenses_day += expense.price;
         count_expenses_day += 1;
       }
     }

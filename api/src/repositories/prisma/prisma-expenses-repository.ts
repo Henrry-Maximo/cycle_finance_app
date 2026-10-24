@@ -103,7 +103,7 @@ export class PrismaExpensesRepository implements ExpensesRepository {
   }
 
   async findManyByUserIdInPeriod(userId: string, from: Date, to: Date) {
-    const expenses = await prisma.expense.findMany({
+    const expensesList = await prisma.expense.findMany({
       where: {
         user_id: userId,
         created_at: {
@@ -111,6 +111,13 @@ export class PrismaExpensesRepository implements ExpensesRepository {
           lte: to,
         },
       },
+    });
+
+    const expenses = expensesList.map((expense) => {
+      return {
+        ...expense,
+        price: expense.price / 100,
+      };
     });
 
     return expenses;
