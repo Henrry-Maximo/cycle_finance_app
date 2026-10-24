@@ -4,13 +4,12 @@ export interface AnalyzeReceiptRequest {
 }
 
 export interface AnalyzeReceiptResponse {
-  title: string;
-  amount: number;
   date: string;
+  store: string;
   cpfOrCNPJ: string;
-  transactionId: string;
-  city: string;
-  state: string;
+  stateOrCity: string;
+  amount: number;
+  code: string;
 }
 
 export interface ReceiptAnalyzerProvider {

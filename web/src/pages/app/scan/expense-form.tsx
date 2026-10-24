@@ -60,7 +60,7 @@ const registerExpenseForm = z.object({
   card_last_digits: z
     .string()
     .min(1, 'O digíto do cartão deve ter mais que 1 caracter.')
-    .max(3, 'O digíto do cartão deve ter no máximo 3 caracteres.'),
+    .max(4, 'O digíto do cartão deve ter no máximo 4 caracteres.'),
   created_at: z.string().optional(),
   category_id: z.string().min(1, 'Uma categoria deve ser selecionada.'),
 });
@@ -148,7 +148,6 @@ export function ExpenseForm({ data }: Props) {
               id="title"
               type="text"
               placeholder="Digite o nome do produto(s)"
-              value={data.title}
               disabled={isSubmitting}
             />
             {errors.title && (
@@ -217,6 +216,7 @@ export function ExpenseForm({ data }: Props) {
             <Input
               id="enterprise"
               type="text"
+              value={data.store}
               placeholder="Digite o nome da empresa"
               {...register('enterprise')}
               disabled={isSubmitting}
@@ -269,6 +269,7 @@ export function ExpenseForm({ data }: Props) {
               {...register('source')}
               id="source"
               type="text"
+              value={data.stateOrCity}
               placeholder="Digite o estado e a cidade"
               disabled={isSubmitting}
             />
@@ -325,6 +326,7 @@ export function ExpenseForm({ data }: Props) {
               {...register('card_last_digits')}
               id="cart"
               type="number"
+              value={data.code}
               placeholder="Digite os últimos 3 dígitos"
               disabled={isSubmitting}
             />

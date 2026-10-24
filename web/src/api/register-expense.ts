@@ -24,7 +24,6 @@ export async function registerExpense({
   category_id,
 }: RegisterExpenseBody) {
   try {
-    console.log(created_at);
     const response = await api.post('/expenses', {
       title,
       enterprise,

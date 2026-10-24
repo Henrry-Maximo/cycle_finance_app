@@ -21,11 +21,15 @@ export const postExpenseAnalyzeBodySchema = z.object({
 export const postExpenseAnalyzeResponseSchema = {
   200: z
     .object({
-      title: z.string().optional().meta({ example: "pães" }),
-      amount: z.number().optional().meta({ example: 10.52 }),
       date: z.string().optional().meta({ example: today }),
-      transactionId: z.string().optional().meta({ example: "21481329287482" }),
+      store: z.string().optional().meta({ example: "Mercado Ceifa" }),
       cpfOrCNPJ: z.string().optional().meta({ example: "69.034.668/0001-56" }),
+      stateOrCity: z
+        .string()
+        .optional()
+        .meta({ example: "São Paulo/Embu das Artes" }),
+      amount: z.number().optional().meta({ example: 10.52 }),
+      code: z.string().optional().meta({ example: "4102" }),
     })
     .describe("Receipt analyzed with successfully."),
   400: z

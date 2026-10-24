@@ -31,25 +31,46 @@ export class GeminiReceiptAnalyzerProvider implements ReceiptAnalyzerProvider {
 
     try {
       const response = await this.ai.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-3.5-flash-lite",
         contents: [
           imagePart,
-          "Extraia o título do estabelecimento ou nome do proprietário, valor total em decimal, data no formato YYYY-MM-DD, CPF OU CNPJ, os quatro digitos do cartão, cidade e estado. Entenda que alguns comprovantes são diferentes de outros. Ou seja, pode ter ou não as informações acima.",
+          `
+          Extraia TODOS os campos abaixo do comprovante. Sempre retorne os 6 campos.
+
+            - date: data no formato YYYY-MM-DD
+            - store: nome do estabelecimento (ex: NOVA VISTA ALEGRE)
+            - cpfOrCNPJ: CPF ou CNPJ
+            - stateOrCity: cidade e/ou UF (ex: EMBU DAS ARTES/SP)
+            - amount: valor total em decimal com ponto (ex: 24.98)
+            - code: últimos 4 dígitos do cartão (ex: 7105)
+
+            Regras:
+            - Campo não encontrado ou ilegível → string vazia ""
+            - amount não encontrado → 0
+            - Não omita nenhum campo do JSON
+            - Não invente dados
+          `,
         ],
         config: {
           responseMimeType: "application/json",
           responseSchema: {
             type: "OBJECT",
             properties: {
-              title: { type: "STRING" },
-              amount: { type: "NUMBER" },
               date: { type: "STRING" },
+              store: { type: "STRING" },
               cpfOrCNPJ: { type: "STRING" },
-              transactionId: { type: "STRING" },
-              city: { type: "STRING" },
-              state: { type: "STRING" },
+              stateOrCity: { type: "STRING" },
+              amount: { type: "NUMBER" },
+              code: { type: "STRING" },
             },
-            required: ["title", "amount", "date", "transactionId"],
+            required: [
+              "date",
+              "store",
+              "cpfOrCNPJ",
+              "stateOrCity",
+              "amount",
+              "code",
+            ],
           },
         },
       });

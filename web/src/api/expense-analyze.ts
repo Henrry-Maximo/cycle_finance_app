@@ -5,13 +5,12 @@ interface ExpenseAnalyzeRequest {
 }
 
 export interface ExpenseAnalyzeResponse {
-  title: string;
-  amount: number;
   date: string;
-  transactionId: string;
-  city: string;
+  store: string;
   cpfOrCNPJ: string;
-  state: string;
+  stateOrCity: string;
+  amount: number;
+  code: string;
 }
 
 export async function ExpenseAnalyze({
