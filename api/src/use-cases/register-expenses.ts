@@ -14,7 +14,7 @@ interface RegisterExpensesUseCaseRequest {
   source: string | null;
   price: number;
   card_last_digits: string;
-  createdAt?: Date | string;
+  created_at: Date;
   user_id: string;
   category_id: string;
 }
@@ -38,7 +38,7 @@ export class RegisterExpensesUseCase {
     source,
     price,
     card_last_digits,
-    createdAt,
+    created_at,
     user_id,
     category_id,
   }: RegisterExpensesUseCaseRequest): Promise<RegisterExpensesUseCaseResponse> {
@@ -62,7 +62,7 @@ export class RegisterExpensesUseCase {
       source,
       price,
       card_last_digits,
-      ...(createdAt && { created_at: createdAt }),
+      created_at,
       user: {
         connect: {
           id: user.id,

@@ -9,14 +9,14 @@ export const registerExpenseBodySchema = z.object({
   source: z.string().nullable().meta({ example: "Embu das Artes / São Paulo" }),
   price: z.coerce.number().meta({ example: 10.52 }),
   card_last_digits: z.string().min(1).max(4).meta({ example: "4108" }),
-  created_at: z.string().optional().meta({ example: today }),
+  created_at: z.coerce.date().meta({ example: today }),
   category_id: z
     .string()
     .meta({ example: "01a12dd6-dc15-742e-8e18-2c46820112bf" }),
 });
 
 export const registerExpenseResponseSchema = {
-  201: z.null().describe("Create new a expense."),
+  201: z.object({}).meta({ example: {} }).describe("Create new a expense."),
   404: z
     .object({
       message: z.string().meta({ example: "Resource not found." }),

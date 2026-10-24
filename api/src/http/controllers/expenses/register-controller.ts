@@ -28,7 +28,7 @@ export async function register(req: FastifyRequest, reply: FastifyReply) {
       source,
       price,
       card_last_digits,
-      ...(created_at && { createdAt: created_at }),
+      created_at,
       category_id,
       user_id: req.user.sub,
     });
