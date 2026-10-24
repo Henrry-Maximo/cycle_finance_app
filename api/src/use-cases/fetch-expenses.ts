@@ -60,9 +60,9 @@ export class FetchExpensesUseCase {
       categoryName,
     );
 
-    expenses.forEach((expense) => {
-      expense.price = expense.price / 100;
-    });
+    // expenses.forEach((expense) => {
+    //   expense.price = expense.price / 100;
+    // });
 
     const totalCount = await this.expensesRepository.countByUserId(
       userId,

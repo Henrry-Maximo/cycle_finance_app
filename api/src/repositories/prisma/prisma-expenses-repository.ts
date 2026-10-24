@@ -6,11 +6,19 @@ import { ExpensesRepository } from "../expenses-repository";
 
 export class PrismaExpensesRepository implements ExpensesRepository {
   async create(data: ExpenseCreateInput) {
+    const { price, ...rest } = data;
+
     const expense = await prisma.expense.create({
-      data,
+      data: {
+        ...rest,
+        price: Math.round(price * 100),
+      },
     });
 
-    return expense;
+    return {
+      ...expense,
+      price: expense.price / 100,
+    };
   }
 
   async findById(id: string) {

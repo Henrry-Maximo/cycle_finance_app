@@ -54,14 +54,13 @@ export class RegisterExpensesUseCase {
       throw new ResourceNotFoundError();
     }
 
-    const priceConvertInteger = price * 100;
     const expense = await this.expensesRepository.create({
       title,
       description,
       enterprise,
       cnpj,
       source,
-      price: priceConvertInteger,
+      price,
       card_last_digits,
       ...(createdAt && { created_at: createdAt }),
       user: {
@@ -76,6 +75,6 @@ export class RegisterExpensesUseCase {
       },
     });
 
-    return { expense: { ...expense, price: expense.price / 100 } };
+    return { expense };
   }
 }
