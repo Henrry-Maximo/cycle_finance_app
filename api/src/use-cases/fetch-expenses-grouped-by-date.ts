@@ -39,7 +39,7 @@ export class FetchExpensesGroupedByDateUseCase {
     const fromStartDate =
       from ?? new Date(now.getFullYear(), now.getMonth(), 1);
     const toEndDate =
-      to ?? new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59); // 1 -> avan�a um m�s, 0 -> volta 1 dia a partir do dia 1, horas/minutos/segundos
+      to ?? new Date(now.getFullYear(), now.getMonth() + 1, 0, 23, 59, 59); // 1 -> avança um mês, 0 -> volta 1 dia a partir do dia 1, horas/minutos/segundos
 
     const expensesList = await this.expensesRepository.findManyByUserIdInPeriod(
       userId,
@@ -57,8 +57,8 @@ export class FetchExpensesGroupedByDateUseCase {
         const day = String(expense.created_at.getDate()).padStart(2, "0");
         const date = `${year}-${month}-${day}`;
 
-        expensesByDate[date] =
-          (expensesByDate[date] ?? 0) + expense.price / 100;
+        expensesByDate[date] = (expensesByDate[date] ?? 0) + expense.price;
+
         return expensesByDate;
       },
       {},
