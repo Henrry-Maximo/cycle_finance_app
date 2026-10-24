@@ -19,6 +19,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { DateFormPicker } from '@/components/ui/date-form-picker';
 import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
+import { queryClient } from '@/lib/react-query';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
@@ -120,6 +121,10 @@ export function ExpenseForm({ data }: Props) {
         card_last_digits: data.card_last_digits,
         created_at: data.created_at ?? null,
         category_id: data.category_id,
+      });
+
+      await queryClient.invalidateQueries({
+        queryKey: ['metrics', 'user-expenses'],
       });
 
       reset();

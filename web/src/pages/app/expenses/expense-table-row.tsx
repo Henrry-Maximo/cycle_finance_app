@@ -47,7 +47,9 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   async function handleDeleteExpense() {
     try {
       await deleteExpenseUserFn(expense.id);
-      await queryClient.invalidateQueries({ queryKey: ['user-expenses'] });
+      await queryClient.invalidateQueries({
+        queryKey: ['metrics', 'user-expenses'],
+      });
       toast.success('A despesa foi apagada com sucesso!');
     } catch {
       toast.error('Error ao apagar a despesa.');
