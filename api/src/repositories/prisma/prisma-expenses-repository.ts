@@ -136,11 +136,15 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     id: string,
     data: Omit<Prisma.ExpenseUpdateInput, "id" | "user" | "created_at">,
   ) {
+    const { price, ...rest } = data;
     const expense = await prisma.expense.update({
       where: {
         id,
       },
-      data,
+      data: {
+        ...rest,
+        ...(price && { price: Math.round(Number(price)) * 100 }),
+      },
     });
 
     return expense;
