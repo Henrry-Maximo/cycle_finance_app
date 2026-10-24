@@ -3,7 +3,8 @@ import { CategoriesRepository } from "@/repositories/categories-repository";
 import { ExpensesRepository } from "@/repositories/expenses-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 
-import { ResourceNotFoundError } from "./errors/resource-not-found-error";
+import { CategoryNotFoundError } from "./errors/category-not-found-error";
+import { UserNotIdentifiedError } from "./errors/user-not-identifier-error";
 
 interface RegisterExpensesUseCaseRequest {
   id?: string;
@@ -45,13 +46,13 @@ export class RegisterExpensesUseCase {
     const user = await this.usersRepository.findById(user_id);
 
     if (!user) {
-      throw new ResourceNotFoundError();
+      throw new UserNotIdentifiedError();
     }
 
     const category = await this.categoriesRepository.findById(category_id);
 
     if (!category || category.user_id !== user.id) {
-      throw new ResourceNotFoundError();
+      throw new CategoryNotFoundError();
     }
 
     const expense = await this.expensesRepository.create({

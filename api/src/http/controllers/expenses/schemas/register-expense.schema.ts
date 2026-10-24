@@ -19,7 +19,17 @@ export const registerExpenseResponseSchema = {
   201: z.object({}).meta({ example: {} }).describe("Create new a expense."),
   404: z
     .object({
-      message: z.string().meta({ example: "Resource not found." }),
+      message: z.string(),
+    })
+    .meta({
+      examples: [
+        {
+          message: "User not found.",
+        },
+        {
+          message: "Category not found.",
+        },
+      ],
     })
     .describe("User or category not found."),
 };
