@@ -35,19 +35,20 @@ export class FetchCategoriesGroupedByTotalUseCase {
     const expenses =
       await this.expensesRepository.findManyByUserIdGrouped(userId);
 
+    // relaciona categorias com despesas gerando insight sobre cada categoria
     const categoriesWithTotals = categoriesList.map((category) => {
-      const expensesOfCategory = expenses.filter((expense) => {
+      const expensesFromCategory = expenses.filter((expense) => {
         return expense.category_id === category.id;
       });
 
-      const total = expensesOfCategory.reduce(
-        (acc, current) => acc + current.price / 100,
+      const total = expensesFromCategory.reduce(
+        (acc, current) => acc + current.price,
         0,
       );
 
       return {
         name: category.title,
-        count: expensesOfCategory.length,
+        count: expensesFromCategory.length,
         total,
       };
     });
