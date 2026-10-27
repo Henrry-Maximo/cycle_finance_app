@@ -16,7 +16,7 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
       description: data.description ?? null,
       cnpj: data.cnpj ?? null,
       source: data.source ?? null,
-      price: data.price,
+      price: Math.round(data.price * 100),
       card_last_digits: data.card_last_digits,
       created_at: data.created_at ? new Date(data.created_at) : new Date(),
       user_id: data.user.connect!.id!,
@@ -37,11 +37,18 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
   }
 
   async findManyByUserIdGrouped(id: string): Promise<Expense[]> {
-    const expenses = this.items.filter((item) => {
-      if (item.user_id !== id) return false;
+    const expenses = this.items
+      .filter((item) => {
+        if (item.user_id !== id) return false;
 
-      return true;
-    });
+        return true;
+      })
+      .map((expense) => {
+        return {
+          ...expense,
+          price: expense.price / 100,
+        };
+      });
 
     return expenses;
   }

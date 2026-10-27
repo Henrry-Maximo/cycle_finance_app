@@ -57,7 +57,7 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10 * 100,
+      price: 10,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -78,7 +78,7 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 20 * 100,
+      price: 20,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -99,7 +99,7 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 10.6 * 100,
+      price: 10.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -120,7 +120,7 @@ describe("Fetch User Categories Grouped By Total Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 30.6 * 100,
+      price: 30.6,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
