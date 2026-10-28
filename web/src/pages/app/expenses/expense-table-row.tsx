@@ -43,6 +43,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   const { mutateAsync: deleteExpenseUserFn, isPending } = useMutation({
     mutationFn: deleteExpenseUser,
   });
+  console.log(expense);
 
   async function handleDeleteExpense() {
     try {
@@ -55,6 +56,15 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
       toast.error('Error ao apagar a despesa.');
     }
   }
+
+  // const formattedDate = new Date(expense.created_at).toLocaleDateString(
+  //   'pt-BR',
+  //   {
+  //     year: 'numeric',
+  //     month: '2-digit',
+  //     day: '2-digit',
+  //   },
+  // );
 
   return (
     <TableRow>
@@ -97,7 +107,15 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
       {/* <TableCell>São Paulo/Embu das Artes</TableCell> */}
       <TableCell className="text-muted-foreground flex flex-col">
         <span className="font-light">
-          {format(expense.created_at, 'dd/MM/yyyy')}
+          {expense.created_at.toString()}
+          {/* {new Date(expense.created_at).toLocaleDateString('pt-BR', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+          })} */}
+          {/* {format(expense.created_at, 'dd/MM/yyyy', {
+            locale: ptBR,
+          })} */}
         </span>
         <span className="font-semibold">
           {formatDistanceToNow(expense.created_at, {
