@@ -51,7 +51,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 2 * 100,
+      price: 2,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -72,7 +72,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 3 * 100,
+      price: 3,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -93,7 +93,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 2 * 100,
+      price: 2,
       card_last_digits: "2343",
       created_at: new Date(),
       user: {
@@ -125,7 +125,7 @@ describe("Get User Metrics Use Case", () => {
       description: "Café da manhã",
       cnpj: "123.242.324.23/24",
       source: "Embu das Artes / São Paulo",
-      price: 2 * 100,
+      price: 2,
       card_last_digits: "2343",
       created_at: date,
       user: {
