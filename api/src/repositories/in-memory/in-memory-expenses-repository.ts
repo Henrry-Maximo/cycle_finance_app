@@ -25,7 +25,10 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
     this.items.push(expense);
 
-    return expense;
+    return {
+      ...expense,
+      price: expense.price / 100,
+    };
   }
 
   async findById(id: string) {
