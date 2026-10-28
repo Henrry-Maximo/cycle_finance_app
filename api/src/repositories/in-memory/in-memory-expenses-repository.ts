@@ -94,12 +94,19 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
   }
 
   async findManyByUserIdInPeriod(userId: string, from: Date, to: Date) {
-    const expenses = this.items.filter(
-      (item) =>
-        item.user_id === userId &&
-        item.created_at >= from &&
-        item.created_at <= to,
-    );
+    const expenses = this.items
+      .filter(
+        (item) =>
+          item.user_id === userId &&
+          item.created_at >= from &&
+          item.created_at <= to,
+      )
+      .map((item) => {
+        return {
+          ...item,
+          price: Math.round(item.price) / 100,
+        };
+      });
 
     return expenses;
   }
