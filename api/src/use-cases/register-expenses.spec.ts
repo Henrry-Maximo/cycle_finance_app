@@ -7,6 +7,8 @@ import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-user
 
 import { ResourceNotFoundError } from "./errors/resource-not-found-error";
 import { RegisterExpensesUseCase } from "./register-expenses";
+import { UserNotIdentifiedError } from "./errors/user-not-identifier-error";
+import { CategoryNotFoundError } from "./errors/category-not-found-error";
 
 let usersRepository: InMemoryUsersRepository;
 let expensesRepository: InMemoryExpensesRepository;
@@ -78,7 +80,7 @@ describe("Register Expenses Use Case", () => {
         user_id: "user-id",
         category_id: "category-id",
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    ).rejects.toBeInstanceOf(UserNotIdentifiedError);
   });
 
   it("should not be able to register expense if category not exists", async () => {
@@ -101,7 +103,7 @@ describe("Register Expenses Use Case", () => {
         user_id: userCreated.id,
         category_id: "category-id",
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    ).rejects.toBeInstanceOf(CategoryNotFoundError);
   });
 
   it("should not be able to register expense if category no belong of user", async () => {
@@ -142,6 +144,6 @@ describe("Register Expenses Use Case", () => {
         user_id: unauthorizedUser.id,
         category_id: targetCategory.id,
       }),
-    ).rejects.toBeInstanceOf(ResourceNotFoundError);
+    ).rejects.toBeInstanceOf(CategoryNotFoundError);
   });
 });
