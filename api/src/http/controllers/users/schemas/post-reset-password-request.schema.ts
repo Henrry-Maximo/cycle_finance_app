@@ -6,13 +6,7 @@ export const postResetPasswordRequestBodySchema = z.object({
 });
 
 export const postResetPasswordRequestResponseSchema = {
-  200: z
-    .object({
-      url: z.string().meta({
-        example: `${env.APP_URL}/reset-password?token=eyJhbGciOiJIUzI...`,
-      }),
-    })
-    .describe("URL for reset password."),
+  200: z.object({}).meta({ example: {} }).describe("URL for reset password."),
   404: z
     .object({
       message: z.string().meta({ example: "Resource not found." }),

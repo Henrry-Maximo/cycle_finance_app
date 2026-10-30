@@ -13,8 +13,8 @@ interface sendEmailProps {
   content: string;
 }
 
-export function sendEmail({ email, subject, content }: sendEmailProps) {
-  return resend.emails.send({
+export async function sendEmail({ email, subject, content }: sendEmailProps) {
+  await resend.emails.send({
     from: "onboarding@resend.dev",
     to: email,
     subject,
