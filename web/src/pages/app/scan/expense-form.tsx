@@ -96,6 +96,12 @@ export function ExpenseForm({ data }: Props) {
   } = useForm<RegisterExpenseFormInput, unknown, RegisterExpenseFormOutput>({
     resolver: zodResolver(registerExpenseForm),
     defaultValues: {
+      enterprise: data.store,
+      cnpj: data.cpfOrCNPJ,
+      source: data.stateOrCity,
+      price: data.amount.toFixed(2),
+      card_last_digits: data.code.toString(),
+      created_at: data.date,
       category_id: '',
     },
   });
@@ -193,8 +199,8 @@ export function ExpenseForm({ data }: Props) {
             <Controller
               name="created_at"
               control={control}
-              render={({ field: { onChange } }) => (
-                <DateFormPicker value={data.date} onDateChange={onChange} />
+              render={({ field: { value, onChange } }) => (
+                <DateFormPicker value={value} onDateChange={onChange} />
               )}
             />
             {errors.created_at && (
@@ -218,7 +224,7 @@ export function ExpenseForm({ data }: Props) {
             <Input
               id="enterprise"
               type="text"
-              value={data.store}
+              // value={data.store}
               placeholder="Digite o nome da empresa"
               {...register('enterprise')}
               disabled={isSubmitting}
@@ -243,7 +249,7 @@ export function ExpenseForm({ data }: Props) {
             <Input
               {...register('cnpj')}
               id="cnpj"
-              value={data.cpfOrCNPJ}
+              // value={data.cpfOrCNPJ}
               placeholder="Digite o CNPJ da empresa"
               type="text"
               disabled={isSubmitting}
@@ -271,7 +277,7 @@ export function ExpenseForm({ data }: Props) {
               {...register('source')}
               id="source"
               type="text"
-              value={data.stateOrCity}
+              // value={data.stateOrCity}
               placeholder="Digite o estado e a cidade"
               disabled={isSubmitting}
             />
@@ -301,7 +307,7 @@ export function ExpenseForm({ data }: Props) {
                 {...register('price')}
                 id="price"
                 type="text"
-                value={data.amount.toFixed(2)}
+                // value={data.amount.toFixed(2)}
                 className="pl-8"
                 placeholder="0,00"
                 disabled={isSubmitting}
@@ -328,7 +334,7 @@ export function ExpenseForm({ data }: Props) {
               {...register('card_last_digits')}
               id="cart"
               type="number"
-              value={data.code}
+              // value={data.code}
               placeholder="Digite os últimos 3 dígitos"
               disabled={isSubmitting}
             />
