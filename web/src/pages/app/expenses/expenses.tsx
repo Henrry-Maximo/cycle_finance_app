@@ -18,13 +18,7 @@ import { useSearchParams } from 'react-router-dom';
 import z from 'zod';
 import { useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import {
-  FaceMaskIcon,
-  File,
-  FolderIcon,
-  MoneyIcon,
-  ReceiptIcon,
-} from '@phosphor-icons/react';
+import { ReceiptIcon } from '@phosphor-icons/react';
 
 export function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
