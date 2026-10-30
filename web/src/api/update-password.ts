@@ -10,7 +10,7 @@ export async function updatePassword({
   token,
 }: UpdatePassword): Promise<void> {
   try {
-    const { status } = await api.post(`/reset-password?token=${token}`, {
+    const { status } = await api.post(`/reset-password/${token}`, {
       password,
     });
 

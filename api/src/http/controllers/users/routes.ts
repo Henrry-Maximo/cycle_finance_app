@@ -96,7 +96,7 @@ export async function usersRoutes(app: FastifyTypedInstance) {
   );
 
   app.post(
-    "/reset-password/:id",
+    "/reset-password/:token",
     {
       preHandler: [rateLimiter],
       schema: {

@@ -48,6 +48,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   async function handleDeleteExpense() {
     try {
       await deleteExpenseUserFn(expense.id);
+
       await queryClient.invalidateQueries({
         queryKey: ['metrics', 'user-expenses'],
       });
