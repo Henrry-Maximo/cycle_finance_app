@@ -55,7 +55,7 @@ export class RegisterExpensesUseCase {
       throw new CategoryNotFoundError();
     }
 
-    console.log(created_at);
+    // console.log(created_at);
 
     const expense = await this.expensesRepository.create({
       title,

@@ -18,6 +18,13 @@ import { useSearchParams } from 'react-router-dom';
 import z from 'zod';
 import { useEffect } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import {
+  FaceMaskIcon,
+  File,
+  FolderIcon,
+  MoneyIcon,
+  ReceiptIcon,
+} from '@phosphor-icons/react';
 
 export function Expenses() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -31,7 +38,7 @@ export function Expenses() {
     .transform((page) => page - 1)
     .parse(searchParams.get('page') ?? '1');
 
-  const { data: result } = useQuery({
+  const { data: result, isLoading } = useQuery({
     queryKey: ['user-expenses', pageIndex, expenseId, expenseName, category], // incluir paramêtro pra atualização
     queryFn: () =>
       getExpensesUser({
@@ -41,6 +48,8 @@ export function Expenses() {
         category: category === 'all' ? null : category,
       }),
   });
+
+  console.log(isLoading);
 
   function handlePaginate(pageIndex: number) {
     setSearchParams((url) => {
@@ -100,19 +109,35 @@ export function Expenses() {
               </TableHeader>
 
               <TableBody>
-                {result ?
-                  result.expenses.map((expense) => {
+                {isLoading ? (
+                  Array.from({ length: 10 }).map((_, i) => {
                     return (
-                      <ExpenseTableRow key={expense.id} expense={expense} />
-                    );
-                  }) : (
-                    Array.from({ length: 10 }).map((_, i) => (
                       <TableRow key={i}>
                         <TableCell colSpan={9}>
                           <Skeleton className="h-8 w-full" />
                         </TableCell>
-                      </TableRow>))
-                  )}
+                      </TableRow>
+                    );
+                  })
+                ) : result?.expenses && result.expenses.length > 0 ? (
+                  result.expenses.map((expense) => {
+                    return (
+                      <ExpenseTableRow key={expense.id} expense={expense} />
+                    );
+                  })
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={9}>
+                      <div className="flex h-24 flex-col items-center justify-center gap-2">
+                        <ReceiptIcon className="text-muted-foreground h-8 w-8" />
+                        <h2 className="text-muted-foreground">
+                          Nenhuma despesa cadastrada.
+                        </h2>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                )}
+
                 {/* {Array.from({ length: 10 }).map((_, i) => {
                   return <ExpenseTableRow key={i} />;
                 })} */}

@@ -107,15 +107,15 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
       {/* <TableCell>São Paulo/Embu das Artes</TableCell> */}
       <TableCell className="text-muted-foreground flex flex-col">
         <span className="font-light">
-          {expense.created_at.toString()}
+          {/* {expense.created_at.toString()} */}
           {/* {new Date(expense.created_at).toLocaleDateString('pt-BR', {
             year: 'numeric',
             month: '2-digit',
             day: '2-digit',
           })} */}
-          {/* {format(expense.created_at, 'dd/MM/yyyy', {
+          {format(expense.created_at, 'dd/MM/yyyy HH:mm', {
             locale: ptBR,
-          })} */}
+          })}
         </span>
         <span className="font-semibold">
           {formatDistanceToNow(expense.created_at, {
