@@ -37,7 +37,7 @@ export class GeminiReceiptAnalyzerProvider implements ReceiptAnalyzerProvider {
           `
           Extraia TODOS os campos abaixo do comprovante. Sempre retorne os 6 campos.
 
-            - date: data no formato YYYY-MM-DD
+            - date: data no formato YYYY-MM-DDTHH:mm:ss.SSSZ
             - store: nome do estabelecimento (ex: NOVA VISTA ALEGRE)
             - cpfOrCNPJ: CPF ou CNPJ
             - stateOrCity: cidade e/ou UF (ex: EMBU DAS ARTES/SP)

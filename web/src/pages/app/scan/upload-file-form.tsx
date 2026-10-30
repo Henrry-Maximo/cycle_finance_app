@@ -49,6 +49,8 @@ export function UploadFileForm({ onSuccess }: Props) {
       file: data.file,
     });
 
+    console.log(extracted.date);
+
     onSuccess(extracted);
   }
 

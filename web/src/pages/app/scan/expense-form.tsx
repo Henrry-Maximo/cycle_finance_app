@@ -128,6 +128,7 @@ export function ExpenseForm({ data }: Props) {
         created_at: data.created_at ?? null,
         category_id: data.category_id,
       });
+      console.log(data.created_at);
 
       await queryClient.invalidateQueries({
         queryKey: ['metrics', 'user-expenses'],
