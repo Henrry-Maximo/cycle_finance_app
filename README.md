@@ -130,11 +130,13 @@
 - [x] Validação de campo vazio no cadastro de categorias;
 - [x] Loading para o gráfico de gasto no período;
 - [x] Loading para o gráfico de categorias populares;
+- [x] Implementar resend para envio de email;
+- [x] Upload de comprovante (imagem - arquivo) via form;
 - [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
 - [ ] Permitir cadastrar data manualmente na despesa;
 - [ ] Personalizar alerta do checkbox (browser);
-- [ ] Implementar resend para envio de email;
-- [x] Upload de comprovante (imagem - arquivo) via form;
+- [ ] Adicionar verificador de autenticação para redicionar para home;
+- [ ] Verificar atualizações de informações de acordo com ações.
 
 ### Cobertura dos Testes Unitários
 
