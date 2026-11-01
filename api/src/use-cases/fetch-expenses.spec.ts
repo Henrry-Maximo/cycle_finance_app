@@ -225,7 +225,9 @@ describe("Fetch User Expenses History Use Case", () => {
       });
     }
 
-    const today = new Date();
+    const today = new Date(
+      new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
+    );
     const { expenses } = await sut.execute({
       userId: userCreated.id,
       pageIndex: 0,
