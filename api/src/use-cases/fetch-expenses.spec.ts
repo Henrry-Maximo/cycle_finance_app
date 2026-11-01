@@ -225,16 +225,14 @@ describe("Fetch User Expenses History Use Case", () => {
       });
     }
 
-    const today = new Date(
-      new Date().toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" }),
-    );
+    const today = new Date();
     const { expenses } = await sut.execute({
       userId: userCreated.id,
       pageIndex: 0,
       expenseName: "Salsicha",
       from: new Date(today.getFullYear(), today.getMonth(), 1),
       to: new Date(today.getFullYear(), today.getMonth() + 1, 0),
-    });
+    }); 
 
     expect(expenses).toHaveLength(10);
   });
