@@ -55,7 +55,7 @@ export function Settings() {
               <CardContent className="space-y-4">
                 <div className="grid gap-2">
                   <Label htmlFor="name">Nome</Label>
-                  <Input id="name" defaultValue={profile?.name} />
+                  <Input id="name" disabled defaultValue={profile?.name} />
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="email">E-mail</Label>
@@ -66,7 +66,7 @@ export function Settings() {
                     defaultValue={profile?.email}
                   />
                 </div>
-                <Button variant="outline" className="w-fit">
+                <Button variant="outline" disabled className="w-fit">
                   Atualizar perfil
                 </Button>
               </CardContent>
@@ -89,7 +89,7 @@ export function Settings() {
                   <Input id="new-pass" type="password" />
                 </div>
               </div>
-              <Button variant="outline" className="w-fit">
+              <Button variant="outline" disabled className="w-fit">
                 Alterar senha
               </Button>
             </CardContent>
@@ -114,7 +114,7 @@ export function Settings() {
                 Sua chave é usada apenas para leitura de documentos via OCR.
               </p>
             </div>
-            <Button variant="secondary" className="w-fit">
+            <Button variant="secondary" disabled className="w-fit">
               Salvar chave de API
             </Button>
           </CardContent>
