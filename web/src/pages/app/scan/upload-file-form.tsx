@@ -49,8 +49,6 @@ export function UploadFileForm({ onSuccess }: Props) {
       file: data.file,
     });
 
-    console.log(extracted.date);
-
     onSuccess(extracted);
   }
 
@@ -75,10 +73,10 @@ export function UploadFileForm({ onSuccess }: Props) {
       </header>
 
       <form
-        className="flex flex-col gap-6"
+        className="flex w-full flex-col items-center justify-center gap-6"
         onSubmit={handleSubmit(handleFileUpload)}
       >
-        <label className="bg-accent flex w-full max-w-sm flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-8 py-8 text-white shadow-sm transition-all hover:cursor-pointer hover:border-blue-600 hover:bg-blue-50/50 hover:text-blue-600 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-blue-500 dark:hover:bg-zinc-800">
+        <label className="bg-accent flex w-42 flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-slate-300 px-8 py-8 text-white shadow-sm transition-all hover:cursor-pointer hover:border-blue-600 hover:bg-blue-50/50 hover:text-blue-600 active:scale-[0.98] dark:border-zinc-700 dark:bg-zinc-900 dark:hover:border-blue-500 dark:hover:bg-zinc-800">
           <input
             {...fileRegistration}
             type="file"
@@ -103,26 +101,29 @@ export function UploadFileForm({ onSuccess }: Props) {
           <img
             src={previewUrl}
             alt="Preview"
-            className="border-animation"
+            // className="border-animation"
+            className="h-24 w-24 rounded-full border-2 border-blue-600"
             style={{
-              width: '100%',
-              maxHeight: '200px',
+              // width: '100%',
+              // maxHeight: '200px',
               objectFit: 'cover',
-              borderRadius: '8px',
-              border: '3px solid',
+              // borderRadius: '8px',
+              // border: '3px solid',
             }}
           />
         )}
 
         {errors.file && <div>Erro: {errors.file.message}</div>}
 
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="text-foreground h-11 w-full bg-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-200 hover:text-blue-700 active:scale-[0.98] dark:bg-zinc-900 dark:hover:border-blue-800"
-        >
-          Enviar para Análise
-        </Button>
+        {previewUrl && (
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="text-foreground h-11 w-full max-w-sm bg-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-200 hover:text-blue-700 active:scale-[0.98] dark:bg-zinc-900 dark:hover:border-blue-800"
+          >
+            Enviar para Análise
+          </Button>
+        )}
       </form>
     </div>
   );
