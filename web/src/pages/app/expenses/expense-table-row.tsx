@@ -39,17 +39,18 @@ export interface ExpenseTableRowProps {
 export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
   const queryClient = useQueryClient();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenDialogDelete, setIsOpenDialogDelete] = useState(false);
 
   const { mutateAsync: deleteExpenseUserFn, isPending } = useMutation({
     mutationFn: deleteExpenseUser,
   });
-  console.log(expense);
 
   async function handleDeleteExpense() {
     try {
       await deleteExpenseUserFn(expense.id);
+      setIsOpenDialogDelete(false);
 
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ['metrics', 'user-expenses'],
       });
       toast.success('A despesa foi apagada com sucesso!');
@@ -149,7 +150,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
       </UpdateExpenseContext.Provider>
 
       <DeleteExpenseContext.Provider value={{ handleDeleteExpense, isPending }}>
-        <Dialog>
+        <Dialog open={isOpenDialogDelete} onOpenChange={setIsOpenDialogDelete}>
           <DialogTrigger asChild>
             <TableCell>
               <Button variant="ghost" size="default" className="cursor-pointer">
