@@ -73,12 +73,12 @@ export function Expenses() {
     <>
       <Helmet title="Despesas" />
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-1 flex-col gap-4">
         <h1 className="text-3xl font-bold tracking-tight">Despesas</h1>
-        <div className="space-y-2.5">
+        <div className="flex flex-1 flex-col space-y-2.5">
           <ExpenseTableFilters />
 
-          <div className="rounded-md border">
+          <div className="flex-1 rounded-md border">
             <Table>
               <TableHeader>
                 <TableRow>

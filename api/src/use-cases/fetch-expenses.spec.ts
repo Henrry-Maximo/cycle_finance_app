@@ -232,7 +232,7 @@ describe("Fetch User Expenses History Use Case", () => {
       expenseName: "Salsicha",
       from: new Date(today.getFullYear(), today.getMonth(), 1),
       to: new Date(today.getFullYear(), today.getMonth() + 1, 0),
-    }); 
+      }); 
 
     expect(expenses).toHaveLength(10);
   });
