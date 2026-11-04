@@ -45,7 +45,6 @@ export async function getExpensesUser({
       category,
     },
   });
-  console.log(response);
 
   return response.data;
 }

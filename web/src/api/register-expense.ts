@@ -36,8 +36,6 @@ export async function registerExpense({
       category_id,
     });
 
-    console.log(created_at);
-
     if (response.status !== 201) {
       throw new Error('Não foi possível cadastrar a despesa');
     }

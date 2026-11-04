@@ -30,8 +30,9 @@ export function Header() {
     try {
       logoutFn(); // it request in the back for remove cookie
       addCurrentTokenSession(''); // delete token
-      toast.success('Sessão encerrada.');
+
       navigate(`/sign-in`);
+      toast.success('Sessão encerrada.');
     } catch {
       toast.error('Error ao encerrar sessão do usuário.');
     }

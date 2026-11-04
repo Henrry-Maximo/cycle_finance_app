@@ -20,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { DateFormPicker } from '@/components/ui/date-form-picker';
 import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
 import { queryClient } from '@/lib/react-query';
+import { useNavigate } from 'react-router-dom';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
@@ -87,6 +88,7 @@ type Props = {
 };
 
 export function ExpenseForm({ data }: Props) {
+  const navigate = useNavigate();
   const {
     reset,
     control,
@@ -128,13 +130,13 @@ export function ExpenseForm({ data }: Props) {
         created_at: data.created_at ?? null,
         category_id: data.category_id,
       });
-      console.log(data.created_at);
 
-      await queryClient.invalidateQueries({
+      queryClient.invalidateQueries({
         queryKey: ['metrics', 'user-expenses'],
       });
 
       reset();
+      navigate(`/expenses`);
       toast.success(message);
     } catch {
       toast.error('Erro ao cadastrar despesa.');
