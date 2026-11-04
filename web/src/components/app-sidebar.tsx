@@ -1,4 +1,10 @@
-import { TagIcon, UserCircleIcon } from '@phosphor-icons/react';
+import {
+  LaptopIcon,
+  ScanIcon,
+  TableIcon,
+  TagIcon,
+  UserCircleIcon,
+} from '@phosphor-icons/react';
 import { useQuery } from '@tanstack/react-query';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -23,8 +29,10 @@ import { StoreCategoriesDialog } from './app-store-categories-dialog';
 import logoDark from '@/assets/logo_dark.png';
 import logoWhite from '@/assets/logo_white.png';
 import { useTheme } from './theme/theme-provider';
+import { useNavigate } from 'react-router-dom';
 
 export function AppSidebar() {
+  const navigate = useNavigate();
   const { theme } = useTheme();
   const currentLogo = theme === 'dark' ? logoDark : logoWhite;
 
@@ -76,6 +84,39 @@ export function AppSidebar() {
                     </Button>
                   </SidebarMenuButton>
                 </DialogTrigger>
+
+                <SidebarMenuButton>
+                  <Button
+                    variant="ghost"
+                    className="w-full cursor-pointer justify-start"
+                    onClick={() => navigate('/dashboard')}
+                  >
+                    <LaptopIcon className="mr-2 h-4 w-4" />
+                    <span>Dashboard</span>
+                  </Button>
+                </SidebarMenuButton>
+
+                <SidebarMenuButton>
+                  <Button
+                    variant="ghost"
+                    className="w-full cursor-pointer justify-start"
+                    onClick={() => navigate('/dashboard')}
+                  >
+                    <TableIcon className="mr-2 h-4 w-4" />
+                    <span>Despesas</span>
+                  </Button>
+                </SidebarMenuButton>
+
+                <SidebarMenuButton>
+                  <Button
+                    variant="ghost"
+                    className="w-full cursor-pointer justify-start"
+                    onClick={() => navigate('/dashboard')}
+                  >
+                    <ScanIcon className="mr-2 h-4 w-4" />
+                    <span>Escanear</span>
+                  </Button>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
 
@@ -107,7 +148,7 @@ export function AppSidebar() {
                   <Skeleton className="h-4 w-32" />
                 ) : (
                   <>
-                    <span className="hidden transition-colors duration-300 md:block md:text-xs md:font-medium">
+                    <span className="transition-colors duration-300 md:block md:text-xs md:font-medium">
                       {profile?.name
                         .split('-')
                         .map(

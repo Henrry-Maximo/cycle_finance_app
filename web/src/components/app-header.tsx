@@ -40,7 +40,7 @@ export function Header() {
 
   return (
     <header className="flex h-24 w-full flex-row items-center justify-between border-b px-4 sm:px-12">
-      <div className="hidden h-full items-center justify-center gap-12 lg:flex">
+      <div className="flex h-full items-center justify-center gap-12 lg:flex">
         <div className="flex items-center justify-center gap-4">
           <SidebarTrigger className="cursor-pointer" />
 
@@ -56,7 +56,7 @@ export function Header() {
         </div>
       </div>
 
-      <nav className="flex items-center space-x-4 lg:space-x-6">
+      <nav className="hidden md:flex md:items-center md:space-x-6">
         <NavLink to="/" title="Navega para a página dashboard">
           <LaptopIcon className="h-5 w-5 transition-colors duration-300 group-hover:text-blue-600" />
           <span className="hidden text-sm font-medium transition-colors duration-300 group-hover:text-blue-600 md:block">
