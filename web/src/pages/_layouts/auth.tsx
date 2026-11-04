@@ -42,9 +42,9 @@ export function AuthLayout() {
                 Desenvolvimento (Fase Alpha)
               </p>
               <p className="text-muted-foreground mt-1 text-center text-xs">
-                Este é um ambiente de testes. Os dados cadastrados aqui podem
-                ser limpos ou apagados a qualquer momento devido a manutenções
-                no banco de dados.
+                Aplicação em fase alpha. Algumas funcionalidades ainda estão em
+                processo de desenvolvimento, porém o essencial para cadastro e
+                análise de despesas já está disponível.
               </p>
               <div className="mt-3 w-full">
                 <div className="mb-1 flex justify-between text-xs text-zinc-500">
