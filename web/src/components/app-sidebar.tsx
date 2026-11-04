@@ -89,7 +89,7 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/')}
                   >
                     <LaptopIcon className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
@@ -100,7 +100,7 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/expenses')}
                   >
                     <TableIcon className="mr-2 h-4 w-4" />
                     <span>Despesas</span>
@@ -111,7 +111,7 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/dashboard')}
+                    onClick={() => navigate('/scan')}
                   >
                     <ScanIcon className="mr-2 h-4 w-4" />
                     <span>Escanear</span>
