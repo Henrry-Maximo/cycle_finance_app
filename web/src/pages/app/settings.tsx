@@ -14,6 +14,8 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Dialog, DialogTrigger } from '@/components/ui/dialog';
+import { DeleteMyAccountDialog } from '@/components/app-delete-my-account';
 
 export function Settings() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
@@ -66,9 +68,20 @@ export function Settings() {
                     defaultValue={profile?.email}
                   />
                 </div>
-                <Button variant="outline" disabled className="w-fit">
-                  Atualizar perfil
-                </Button>
+                <div className="flex justify-between gap-2">
+                  <Button variant="outline" disabled className="w-fit">
+                    Atualizar perfil
+                  </Button>
+                  <Dialog>
+                    <DialogTrigger>
+                      <Button variant="destructive" className="w-fit">
+                        Apagar minha conta
+                      </Button>
+                    </DialogTrigger>
+
+                    <DeleteMyAccountDialog />
+                  </Dialog>
+                </div>
               </CardContent>
             )}
           </Card>
