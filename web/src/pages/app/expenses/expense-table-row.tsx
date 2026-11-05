@@ -55,7 +55,7 @@ export function ExpenseTableRow({ expense }: ExpenseTableRowProps) {
       });
       toast.success('A despesa foi apagada com sucesso!');
     } catch {
-      toast.error('Error ao apagar a despesa.');
+      toast.error('Erro ao apagar a despesa.');
     }
   }
 

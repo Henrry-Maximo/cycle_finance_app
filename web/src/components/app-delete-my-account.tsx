@@ -13,7 +13,7 @@ import { useDeleteMyAccount } from '@/contexts/delete-my-account-context';
 
 export function DeleteMyAccountDialog() {
   const { handleDeleteMyAccount, isPending } = useDeleteMyAccount();
-
+  
   return (
     <DialogContent className="sm:max-w-sm">
       <DialogHeader>

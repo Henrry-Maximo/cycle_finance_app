@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Helmet } from 'react-helmet-async';
 
 import { getProfileUser } from '@/api/get-profile-user';
@@ -16,6 +16,9 @@ import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { DeleteMyAccountDialog } from '@/components/app-delete-my-account';
+import { DeleteMyAccountContext } from '@/contexts/delete-my-account-context';
+import { toast } from 'sonner';
+import { deleteMyAccount } from '@/api/delete-my-account';
 
 export function Settings() {
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
@@ -23,6 +26,20 @@ export function Settings() {
     queryFn: getProfileUser,
     staleTime: Infinity,
   });
+
+  const { mutateAsync: deleteMyAccountFn, isPending } = useMutation({
+    mutationFn: deleteMyAccount,
+  });
+
+  async function handleDeleteMyAccount() {
+    try {
+      await deleteMyAccountFn(profile?.id && null);
+
+      toast.success('O usuário foi excluído com sucesso!');
+    } catch {
+      toast.error('Erro ao excluir usuário. Tente novamente!');
+    }
+  }
 
   return (
     <>
@@ -72,15 +89,19 @@ export function Settings() {
                   <Button variant="outline" disabled className="w-fit">
                     Atualizar perfil
                   </Button>
-                  <Dialog>
-                    <DialogTrigger>
-                      <Button variant="destructive" className="w-fit">
-                        Apagar minha conta
-                      </Button>
-                    </DialogTrigger>
+                  <DeleteMyAccountContext.Provider
+                    value={{ handleDeleteMyAccount, isPending }}
+                  >
+                    <Dialog>
+                      <DialogTrigger>
+                        <Button variant="destructive" className="w-fit">
+                          Apagar minha conta
+                        </Button>
+                      </DialogTrigger>
 
-                    <DeleteMyAccountDialog />
-                  </Dialog>
+                      <DeleteMyAccountDialog />
+                    </Dialog>
+                  </DeleteMyAccountContext.Provider>
                 </div>
               </CardContent>
             )}
