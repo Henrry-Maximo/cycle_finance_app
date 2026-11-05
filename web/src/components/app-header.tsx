@@ -15,6 +15,7 @@ import { useTheme } from './theme/theme-provider';
 import { ThemeToggle } from './theme/theme-toggle';
 import { Separator } from './ui/separator';
 import { SidebarTrigger } from './ui/sidebar';
+import { queryClient } from '@/lib/react-query';
 
 export function Header() {
   const { addCurrentTokenSession } = useContext(AuthenticationContext);
@@ -30,6 +31,10 @@ export function Header() {
     try {
       logoutFn(); // it request in the back for remove cookie
       addCurrentTokenSession(''); // delete token
+
+      queryClient.invalidateQueries({
+        queryKey: ['profile'],
+      });
 
       navigate(`/sign-in`);
       toast.success('Sessão encerrada.');

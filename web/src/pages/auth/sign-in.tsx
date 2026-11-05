@@ -14,6 +14,7 @@ import { Field, FieldLabel } from '@/components/ui/field';
 import { Input } from '@/components/ui/input';
 import { AuthenticationContext } from '@/contexts/authentication-context';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { queryClient } from '@/lib/react-query';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const signInForm = z.object({
@@ -60,6 +61,10 @@ export function SignIn() {
       });
 
       addCurrentTokenSession(token);
+
+      queryClient.invalidateQueries({
+        queryKey: ['profile'],
+      });
       // console.log(token);
 
       // localStorage.setItem('cycle_finance_api', token);

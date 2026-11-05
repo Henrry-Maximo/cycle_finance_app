@@ -32,8 +32,13 @@ export function Settings() {
   });
 
   async function handleDeleteMyAccount() {
+    if (!profile?.id) {
+      toast.success('Perfil não encontrado.');
+      return;
+    }
+
     try {
-      await deleteMyAccountFn(profile?.id && null);
+      await deleteMyAccountFn(profile.id);
 
       toast.success('O usuário foi excluído com sucesso!');
     } catch {
