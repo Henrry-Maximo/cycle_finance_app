@@ -69,7 +69,7 @@ export function SignIn() {
 
       // localStorage.setItem('cycle_finance_api', token);
       // console.log(data);
-      // throw new Error('');
+      // throw new Error(''); 
       // await new Promise((resolve) => setTimeout(resolve, 2000));
 
       toast.success('Usuário autenticado com sucesso.');

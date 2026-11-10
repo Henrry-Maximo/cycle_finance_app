@@ -73,18 +73,6 @@ export function AppSidebar() {
           <SidebarGroup>
             <SidebarMenu>
               <SidebarMenuItem>
-                <DialogTrigger asChild>
-                  <SidebarMenuButton>
-                    <Button
-                      variant="ghost"
-                      className="w-full cursor-pointer justify-start"
-                    >
-                      <TagIcon className="mr-2 h-4 w-4" />
-                      <span>Categorias</span>
-                    </Button>
-                  </SidebarMenuButton>
-                </DialogTrigger>
-
                 <SidebarMenuButton>
                   <Button
                     variant="ghost"
@@ -117,6 +105,18 @@ export function AppSidebar() {
                     <span>Escanear</span>
                   </Button>
                 </SidebarMenuButton>
+
+                <DialogTrigger asChild>
+                  <SidebarMenuButton>
+                    <Button
+                      variant="ghost"
+                      className="w-full cursor-pointer justify-start"
+                    >
+                      <TagIcon className="mr-2 h-4 w-4" />
+                      <span>Categorias</span>
+                    </Button>
+                  </SidebarMenuButton>
+                </DialogTrigger>
               </SidebarMenuItem>
             </SidebarMenu>
 
