@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Cycle Finance API Docs</title>
+
+    <link rel="icon" type="image/png" href="/public/logo.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/swagger-assets/swagger-ui.css" />
+    <link rel="stylesheet" href="/public/swagger-theme.css" />
+  </head>
+  <body>
+    <header class="lib84-header">
+      <video autoplay muted loop playsinline class="bg-video">
+        <source src="/public/bg.mp4" type="video/mp4" />
+      </video>
+      <img src="/public/logo.png" alt="Cycle Finance" />
+      <span>Cycle Finance API Docs</span>
+    </header>
+
+    <div id="swagger-ui"></div>
+
+    <script src="/swagger-assets/swagger-ui-bundle.js"></script>
+    <script src="/public/transition.js"></script>
+    <script>
+      window.onload = () => {
+        window.ui = SwaggerUIBundle({
+          url: "/openapi.json",
+          dom_id: "#swagger-ui",
+          presets: [SwaggerUIBundle.presets.apis],
+          layout: "BaseLayout",
+          docExpansion: "list",
+          deepLinking: true,
+          defaultModelsExpandDepth: 1,
+          displayRequestDuration: true,
+          filter: true,
+          syntaxHighlight: { theme: "arta" },
+          tagsSorter: "alpha",
+          operationsSorter: (a, b) => {
+            const order = { get: 0, post: 1, put: 2, patch: 3, delete: 4 };
+            return (
+              (order[a.get("method")] ?? 99) - (order[b.get("method")] ?? 99)
+            );
+          },
+        });
+      };
+    </script>
+  </body>
+</html>

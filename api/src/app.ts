@@ -3,7 +3,8 @@ import { fastifyCors } from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import fastifyMultipart from "@fastify/multipart";
 import fastifySwagger from "@fastify/swagger";
-import fastifySwaggerUi from "@fastify/swagger-ui";
+import fastifyStatic from "@fastify/static";
+import swaggerUiDist from "swagger-ui-dist";
 import fastify, { FastifyError, FastifyReply, FastifyRequest } from "fastify";
 import {
   jsonSchemaTransform,
@@ -14,10 +15,10 @@ import {
 import { RateLimiterRes } from "rate-limiter-flexible";
 import z, { ZodError } from "zod";
 
-import { readFileSync } from "node:fs";
-import path from "node:path";
 import { env } from "./env";
 import { appRoutes } from "./http/routes";
+import path from "node:path";
+import { readFileSync } from "node:fs";
 
 export const app = fastify({
   logger:
@@ -57,12 +58,16 @@ app.register(fastifyCors, {
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 });
 
+const description = readFileSync(
+  path.join(process.cwd(), "public", "api-description.md"),
+  "utf-8",
+);
+
 await app.register(fastifySwagger, {
   openapi: {
     info: {
       title: "Cycle Finance API",
-      description:
-        "Cycle Finance is a financial management system that allows users to record expenses manually or by capturing receipts using their device camera. \nThe API provides expense tracking, categorization, analytics by day/month/year, JWT authentication with refresh token support, role-based access control (RBAC), and AI-powered receipt scanning via Gemini.",
+      description,
       version: "1.0.0",
       contact: {
         name: "Henrique Maximo",
@@ -104,36 +109,55 @@ await app.register(fastifySwagger, {
   transform: jsonSchemaTransform,
 });
 
-app.register(fastifySwaggerUi, {
-  routePrefix: "/docs",
-  uiConfig: {
-    docExpansion: "list",
-    deepLinking: true,
-    defaultModelsExpandDepth: 1,
-    displayRequestDuration: true,
-    filter: true,
-    syntaxHighlight: {
-      theme: "arta",
-    },
-  },
-  logo: {
-    type: "image/png",
-    content: readFileSync(
-      path.join(process.cwd(), "src", "public", "logo.png"),
-    ),
-  },
-  theme: {
-    title: "Cycle Finance API Docs",
-    css: [
-      {
-        filename: "theme.css",
-        content: readFileSync(
-          path.join(process.cwd(), "src", "public", "swagger-theme.css"),
-          "utf-8",
-        ),
-      },
-    ],
-  },
+// app.register(fastifySwaggerUi, {
+//   routePrefix: "/docs-default",
+//   uiConfig: {
+//     docExpansion: "list",
+//     deepLinking: true,
+//     defaultModelsExpandDepth: 1,
+//     displayRequestDuration: true,
+//     filter: true,
+//     syntaxHighlight: {
+//       theme: "arta",
+//     },
+//   },
+//   logo: {
+//     type: "image/png",
+//     content: readFileSync(path.join(process.cwd(), "public", "logo.png")),
+//   },
+//   theme: {
+//     title: "Cycle Finance API Docs",
+//     css: [
+//       {
+//         filename: "theme.css",
+//         content: readFileSync(
+//           path.join(process.cwd(), "public", "swagger-theme.css"),
+//           "utf-8",
+//         ),
+//       },
+//     ],
+//   },
+// });
+
+// Swagger UI (js/css)
+app.register(fastifyStatic, {
+  root: swaggerUiDist.getAbsoluteFSPath(),
+  prefix: "/swagger-assets/",
+  decorateReply: false,
+});
+
+// registro dos arquivos de personalização do swagger
+app.register(fastifyStatic, {
+  root: path.join(process.cwd(), "public"),
+  prefix: "/public/",
+});
+
+// esconder a rota
+app.get("/openapi.json", { schema: { hide: true } }, async () => app.swagger());
+
+// disponibilizar o acesso ao swagger personalizado
+app.get("/docs", { schema: { hide: true } }, async (_req, reply) => {
+  return reply.sendFile("docs.html"); // relativo à pasta public
 });
 
 app.register(appRoutes);
