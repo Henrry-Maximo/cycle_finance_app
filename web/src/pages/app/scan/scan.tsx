@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { ExpenseForm } from './expense-form';
 import { UploadFileForm } from './upload-file-form';
 import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
+import { Button } from '@/components/ui/button';
+import { format } from 'date-fns';
 
 export function Scan() {
   const [isSubmitFileUpload, setIsSubmitFileUpload] = useState(false);
@@ -35,6 +37,27 @@ export function Scan() {
           }}
         />
       )}
+
+      <div className="flex w-full items-center justify-center">
+        <Button
+          type="button"
+          variant="secondary"
+          className="h-8 w-full cursor-pointer hover:border-2 hover:border-blue-500 md:w-auto"
+          onClick={() => {
+            setExtracted({
+              store: '',
+              cpfOrCNPJ: '',
+              stateOrCity: '',
+              amount: 0,
+              code: '',
+              date: format(new Date(), 'HH:mm:ss'),
+            });
+            setIsSubmitFileUpload(true);
+          }}
+        >
+          CADASTRO MANUAL
+        </Button>
+      </div>
     </>
   );
 }
