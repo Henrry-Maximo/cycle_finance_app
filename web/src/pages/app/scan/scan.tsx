@@ -5,7 +5,6 @@ import { ExpenseForm } from './expense-form';
 import { UploadFileForm } from './upload-file-form';
 import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
 import { Button } from '@/components/ui/button';
-import { format } from 'date-fns';
 
 export function Scan() {
   const [isSubmitFileUpload, setIsSubmitFileUpload] = useState(false);
@@ -50,7 +49,7 @@ export function Scan() {
               stateOrCity: '',
               amount: 0,
               code: '',
-              date: format(new Date(), 'HH:mm:ss'),
+              date: new Date().toISOString(),
             });
             setIsSubmitFileUpload(true);
           }}
