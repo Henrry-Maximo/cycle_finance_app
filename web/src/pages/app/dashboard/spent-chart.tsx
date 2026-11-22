@@ -94,13 +94,19 @@ export function SpentChart() {
               />
 
               <CartesianGrid vertical={false} className="stroke-muted" />
-              <Tooltip />
+              <Tooltip
+                // labelStyle={{
+                //   color: '#000000',
+                //   fontWeight: 'bold',
+                // }}
+                labelClassName="text-zinc-950 font-semibold"
+              />
 
               <Line
                 type="linear"
                 strokeWidth={2}
                 dataKey="value"
-                name="valor"
+                name="R$"
                 stroke={colors.blue['500']}
               />
             </LineChart>
