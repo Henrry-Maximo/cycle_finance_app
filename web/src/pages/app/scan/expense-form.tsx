@@ -21,6 +21,7 @@ import { DateFormPicker } from '@/components/ui/date-form-picker';
 import type { ExpenseAnalyzeResponse } from '@/api/expense-analyze';
 import { queryClient } from '@/lib/react-query';
 import { useNavigate } from 'react-router-dom';
+import type { Dispatch, SetStateAction } from 'react';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const registerExpenseForm = z.object({
@@ -85,9 +86,10 @@ export interface GetCategoriesUserForm {
 
 type Props = {
   data: ExpenseAnalyzeResponse;
+  setIsSubmitFileUpload: Dispatch<SetStateAction<boolean>>;
 };
 
-export function ExpenseForm({ data }: Props) {
+export function ExpenseForm({ data, setIsSubmitFileUpload }: Props) {
   const navigate = useNavigate();
   const {
     reset,
@@ -146,7 +148,7 @@ export function ExpenseForm({ data }: Props) {
   return (
     <div className="flex items-center justify-center">
       <form
-        className="flex flex-col items-center justify-center py-4"
+        className="flex flex-col items-center justify-center pt-4"
         onSubmit={handleSubmit(handleRegisterExpense)}
       >
         <Card className="grid w-full grid-cols-3 gap-8 px-4">
@@ -410,17 +412,17 @@ export function ExpenseForm({ data }: Props) {
         </Card>
 
         <div className="mt-8 flex flex-col items-center justify-center gap-4">
-          <div className="flex flex-col items-center justify-center gap-2 md:grid md:grid-cols-2">
+          <div className="flex w-full items-center justify-center gap-2">
             <Button
               type="submit"
               // disabled={isSubmitting}
-              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
+              className="h-11 w-60 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
             >
               Cadastrar Despesa
             </Button>
             <Button
-              className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
-              disabled
+              className="h-11 w-60 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
+              onClick={() => setIsSubmitFileUpload(false)}
             >
               Analisar Comprovante Novamente
             </Button>
