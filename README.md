@@ -133,7 +133,7 @@
 - [x] Implementar resend para envio de email;
 - [x] Upload de comprovante (imagem - arquivo) via form;
 - [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
-- [ ] Permitir cadastrar data manualmente na despesa;
+- [x] Permitir cadastrar data manualmente na despesa;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Adicionar verificador de autenticação para redicionar para home;
 - [ ] Verificar atualizações de informações de acordo com ações.
