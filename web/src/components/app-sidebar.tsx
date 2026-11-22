@@ -18,6 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarTrigger,
+  useSidebar,
 } from '@/components/ui/sidebar';
 
 import { Button } from './ui/button';
@@ -32,6 +33,7 @@ import { useTheme } from './theme/theme-provider';
 import { useNavigate } from 'react-router-dom';
 
 export function AppSidebar() {
+  const sidebar = useSidebar();
   const navigate = useNavigate();
   const { theme } = useTheme();
   const currentLogo = theme === 'dark' ? logoDark : logoWhite;
@@ -77,7 +79,10 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/')}
+                    onClick={() => {
+                      navigate('/');
+                      sidebar.setOpen(false);
+                    }}
                   >
                     <LaptopIcon className="mr-2 h-4 w-4" />
                     <span>Dashboard</span>
@@ -88,7 +93,10 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/expenses')}
+                    onClick={() => {
+                      navigate('/expenses');
+                      sidebar.setOpen(false);
+                    }}
                   >
                     <TableIcon className="mr-2 h-4 w-4" />
                     <span>Despesas</span>
@@ -99,7 +107,10 @@ export function AppSidebar() {
                   <Button
                     variant="ghost"
                     className="w-full cursor-pointer justify-start"
-                    onClick={() => navigate('/scan')}
+                    onClick={() => {
+                      navigate('/scan');
+                      sidebar.setOpen(false);
+                    }}
                   >
                     <ScanIcon className="mr-2 h-4 w-4" />
                     <span>Escanear</span>
