@@ -30,6 +30,7 @@ export function Scan() {
             <ExpenseForm
               data={extracted}
               setIsSubmitFileUpload={setIsSubmitFileUpload}
+              setExtracted={setExtracted}
             />
 
             {/* <Button

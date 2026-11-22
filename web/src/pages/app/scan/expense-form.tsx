@@ -87,9 +87,14 @@ export interface GetCategoriesUserForm {
 type Props = {
   data: ExpenseAnalyzeResponse;
   setIsSubmitFileUpload: Dispatch<SetStateAction<boolean>>;
+  setExtracted: Dispatch<SetStateAction<ExpenseAnalyzeResponse | null>>;
 };
 
-export function ExpenseForm({ data, setIsSubmitFileUpload }: Props) {
+export function ExpenseForm({
+  data,
+  setIsSubmitFileUpload,
+  setExtracted,
+}: Props) {
   const navigate = useNavigate();
   const {
     reset,
@@ -422,7 +427,10 @@ export function ExpenseForm({ data, setIsSubmitFileUpload }: Props) {
             </Button>
             <Button
               className="h-11 w-60 bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-400 active:scale-[0.98] sm:grid-cols-1 md:grid-cols-2"
-              onClick={() => setIsSubmitFileUpload(false)}
+              onClick={() => {
+                setIsSubmitFileUpload(false);
+                setExtracted(null);
+              }}
             >
               Analisar Comprovante Novamente
             </Button>
