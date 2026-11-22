@@ -102,7 +102,7 @@ export function UploadFileForm({ onSuccess }: Props) {
             src={previewUrl}
             alt="Preview"
             // className="border-animation"
-            className="h-24 w-24 rounded-full border-2 border-blue-600"
+            className="h-24 w-24 rounded-sm border-2"
             style={{
               // width: '100%',
               // maxHeight: '200px',
