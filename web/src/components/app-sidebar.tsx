@@ -31,12 +31,14 @@ import logoDark from '@/assets/logo_dark.png';
 import logoWhite from '@/assets/logo_white.png';
 import { useTheme } from './theme/theme-provider';
 import { useNavigate } from 'react-router-dom';
+import { env } from '@/env';
 
 export function AppSidebar() {
   const sidebar = useSidebar();
   const navigate = useNavigate();
   const { theme } = useTheme();
   const currentLogo = theme === 'dark' ? logoDark : logoWhite;
+  const platformVersion = env.VITE_API_VERSION;
 
   const { data: profile, isLoading: isLoadingProfile } = useQuery({
     queryKey: ['profile'], // chave identificadora da requisição (assim utiliza o cache)
@@ -179,7 +181,7 @@ export function AppSidebar() {
           <footer className="flex justify-between">
             <p className="text-xs text-zinc-600">Cycle Finance.</p>
             <p className="text-xs text-zinc-600">
-              © {new Date().getFullYear()}
+              © {new Date().getFullYear()}, {platformVersion}
             </p>
           </footer>
         </SidebarFooter>
