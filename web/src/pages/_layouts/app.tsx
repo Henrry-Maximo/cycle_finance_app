@@ -33,7 +33,7 @@ export function AppContent() {
 
 export function AppLayout() {
   return (
-    <SidebarProvider className="flex flex-col" defaultOpen={false}>
+    <SidebarProvider className="flex flex-col" defaultOpen={false} >
       <AppContent />
     </SidebarProvider>
   );
