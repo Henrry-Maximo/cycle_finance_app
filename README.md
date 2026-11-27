@@ -133,6 +133,7 @@
 - [x] Implementar resend para envio de email;
 - [x] Upload de comprovante (imagem - arquivo) via form;
 - [x] Permitir cadastrar data manualmente na despesa;
+- [x] Adiciona link para página de apresentação do serviço;
 - [ ] Adicionar relógio visual no dashboard;
 - [ ] Ajustar responsividade dos componentes;
 - [ ] Corrigir filtros na pesquisa de despesas;
