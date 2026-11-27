@@ -132,8 +132,13 @@
 - [x] Loading para o gráfico de categorias populares;
 - [x] Implementar resend para envio de email;
 - [x] Upload de comprovante (imagem - arquivo) via form;
-- [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
 - [x] Permitir cadastrar data manualmente na despesa;
+- [ ] Adicionar relógio visual no dashboard;
+- [ ] Ajustar responsividade dos componentes;
+- [ ] Corrigir filtros na pesquisa de despesas;
+- [ ] Contruír ladingpage de apresentação do produto;
+- [ ] Adicionar versão da plataforma na interface e API;
+- [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
 - [ ] Personalizar alerta do checkbox (browser);
 - [ ] Adicionar verificador de autenticação para redicionar para home;
 - [ ] Verificar atualizações de informações de acordo com ações.
