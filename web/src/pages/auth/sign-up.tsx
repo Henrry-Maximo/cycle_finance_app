@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TermsLicense } from '../app/terms-license';
+import { isAxiosError, type AxiosError } from 'axios';
 
 const signUpForm = z.object({
   username: z
@@ -53,7 +54,7 @@ export function SignUp() {
 
   async function handleSignIn(data: SignUpForm) {
     try {
-      const { message } = await registerUserFn({
+      await registerUserFn({
         username: data.username,
         email: data.email,
         password: data.password,
@@ -63,16 +64,33 @@ export function SignUp() {
       // throw new Error('');
       // await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      toast.success(message, {
+      toast.success('Usuário cadastrado com sucesso!', {
         // action: {
         //   label: 'Register',
         //   onClick: () => navigate(`sign-in?email=${data.email}`),
         // },
       });
 
-      navigate(`/sign-in?email=${data.email}`);
-    } catch {
-      toast.error('Error ao cadastrar usuário.');
+      // encodeURIComponent evita que caracteres como "+" sejam lidos como espaço na query string
+      navigate(`/sign-in?email=${encodeURIComponent(data.email)}`);
+    } catch (error) {
+      if (isAxiosError(error) && error.response) {
+        if (error.response.status === 409) {
+          return toast.error(
+            'Não foi possível concluir o cadastro. Se você já tem uma conta, faça login ou use "Esqueceu a senha?".',
+          );
+        }
+
+        if (error.response.status === 429) {
+          return toast.error(
+            'Muitas tentativas. Aguarde um pouco e tente de novo.',
+          );
+        }
+
+        return toast.error('Verifique os dados informados.');
+      }
+
+      toast.error('Erro ao cadastrar usuário.');
     }
   }
 
@@ -191,7 +209,7 @@ export function SignUp() {
             </Button>
 
             <Dialog>
-              <Field orientation="horizontal" className='flex gap-4'>
+              <Field orientation="horizontal" className="flex gap-4">
                 <Checkbox
                   className="dark:border-accent cursor-pointer dark:border-2"
                   id="terms-checkbox"
@@ -201,13 +219,12 @@ export function SignUp() {
                 />
                 <Label
                   htmlFor="terms-checkbox"
-                  className="flex-wrap text-accent-foreground cursor-pointer text-xs leading-normal gap-0"
+                  className="text-accent-foreground cursor-pointer flex-wrap gap-0 text-xs leading-normal"
                 >
-                  Ao continuar, você concorda com nossos 
+                  Ao continuar, você concorda com nossos
                   <DialogTrigger>
-                    <span className="text-blue-600 cursor-pointer hover:underline">
-                      termos de serviços e
-                    política de privacidade
+                    <span className="cursor-pointer text-blue-600 hover:underline">
+                      termos de serviços e política de privacidade
                     </span>
                   </DialogTrigger>
                   .

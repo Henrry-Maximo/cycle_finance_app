@@ -134,6 +134,7 @@
 - [x] Upload de comprovante (imagem - arquivo) via form;
 - [x] Permitir cadastrar data manualmente na despesa;
 - [x] Adiciona link para página de apresentação do serviço;
+- [x] Mensagem genérica no cadastro de conta, pra não informar que existe;
 - [ ] Adicionar relógio visual no dashboard;
 - [ ] Ajustar responsividade dos componentes;
 - [ ] Corrigir filtros na pesquisa de despesas;
