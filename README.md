@@ -135,10 +135,10 @@
 - [x] Permitir cadastrar data manualmente na despesa;
 - [x] Adiciona link para página de apresentação do serviço;
 - [x] Mensagem genérica no cadastro de conta, pra não informar que existe;
+- [x] Contruír ladingpage de apresentação do produto;
 - [ ] Adicionar relógio visual no dashboard;
 - [ ] Ajustar responsividade dos componentes;
 - [ ] Corrigir filtros na pesquisa de despesas;
-- [ ] Contruír ladingpage de apresentação do produto;
 - [ ] Adicionar versão da plataforma na interface e API;
 - [ ] Exibir mensagem de erro ao tentar recadastrar categoria;
 - [ ] Personalizar alerta do checkbox (browser);

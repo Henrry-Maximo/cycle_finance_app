@@ -16,7 +16,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TermsLicense } from '../app/terms-license';
-import { isAxiosError, type AxiosError } from 'axios';
+import { isAxiosError } from 'axios';
 
 const signUpForm = z.object({
   username: z
