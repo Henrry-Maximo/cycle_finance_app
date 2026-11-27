@@ -15,6 +15,7 @@ import { SignUp } from './pages/auth/sign-up';
 import { ProtectedRoute } from './ProtectedRoute';
 import { TermsLicenseApi } from './pages/app/terms-license-api';
 import { ServiceLayout } from './pages/_layouts/service';
+import { Content } from './pages/landing/content';
 
 export const router = createBrowserRouter([
   {
@@ -69,8 +70,14 @@ export const router = createBrowserRouter([
     ],
   },
   {
-    path: 'home',
-    element: <ServiceLayout />
+    path: '',
+    element: <ServiceLayout />,
+    children: [
+      {
+        path: '/home',
+        element: <Content />
+      }
+    ]
   },
   {
     path: 'terms-of-api',
