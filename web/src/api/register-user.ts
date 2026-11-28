@@ -11,8 +11,14 @@ export async function registerUser({
   username,
   email,
   password,
+  captchaToken,
 }: RegisterUserBody) {
-  const response = await api.post('/users', { username, email, password });
+  const response = await api.post('/users', {
+    username,
+    email,
+    password,
+    captchaToken,
+  });
 
   return response.data;
 }

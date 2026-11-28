@@ -14,6 +14,7 @@ const envSchema = z.object({
   GEMINI_API_KEY: z.string(),
   MAX_FILE_SIZE_MB: z.coerce.number().default(5),
   RESEND_API_KEY: z.string().optional(),
+  RECAPTCHA_SECRET_KEY: z.string(),
 });
 
 // [safeParse]: efetua validação dos dados

@@ -4,6 +4,7 @@ export const registerUsersBodySchema = z.object({
   username: z.string().max(38).meta({ example: "johndoe" }),
   email: z.email().meta({ example: "email@example.com" }),
   password: z.string().min(6).max(22).meta({ example: "a_secure_password" }),
+  captchaToken: z.string(),
 });
 
 export const registerUsersResponseSchema = {
