@@ -4,6 +4,7 @@ export interface RegisterUserBody {
   username: string;
   email: string;
   password: string;
+  captchaToken: string;
 }
 
 export async function registerUser({

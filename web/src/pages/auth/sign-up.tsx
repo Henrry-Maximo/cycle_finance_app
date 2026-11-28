@@ -1,7 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { EyeIcon, EyeSlashIcon } from '@phosphor-icons/react';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -41,6 +41,7 @@ const signUpForm = z.object({
 type SignUpForm = z.infer<typeof signUpForm>;
 
 export function SignUp() {
+  const recaptchaRef = useRef<ReCAPTCHA>(null);
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
@@ -62,6 +63,7 @@ export function SignUp() {
         username: data.username,
         email: data.email,
         password: data.password,
+        captchaToken: captchaToken!,
       });
 
       // console.log(data);
@@ -75,9 +77,15 @@ export function SignUp() {
         // },
       });
 
+      setCaptchaToken(null); //  limpa o token guardado no seu estado. Assim o botão volta a ficar desabilitado
+      recaptchaRef.current?.reset(); // manda o próprio checkbox do reCAPTCHA voltar ao estado original, desmarcado
+
       // encodeURIComponent evita que caracteres como "+" sejam lidos como espaço na query string
       navigate(`/sign-in?email=${encodeURIComponent(data.email)}`);
     } catch (error) {
+      setCaptchaToken(null);
+      recaptchaRef.current?.reset();
+
       if (isAxiosError(error) && error.response) {
         if (error.response.status === 409) {
           return toast.error(
@@ -206,7 +214,7 @@ export function SignUp() {
 
             <Button
               className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
-              disabled={isSubmitting && !captchaToken}
+              disabled={isSubmitting || !captchaToken}
               type="submit"
             >
               Cadastrar conta
@@ -240,6 +248,7 @@ export function SignUp() {
 
             <div className="flex w-full items-center justify-center">
               <ReCAPTCHA
+                ref={recaptchaRef}
                 sitekey={env.VITE_RECAPTCHA_SITE_KEY}
                 onChange={(token) => setCaptchaToken(token)}
                 onExpired={() => setCaptchaToken(null)}
