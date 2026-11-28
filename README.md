@@ -82,6 +82,7 @@
 - [x] Rotas HTTPs com status code adequável swagger;
 - [x] Descrição de objetivos de cada rota swagger;
 - [x] Especificar se dado é query/parameter na rota swagger;
+- [ ] É permitido cadastrar até 3 usuários por IP em uma 1 hora; 
 
 ### Regras de Negócio (RN)
 
@@ -136,6 +137,7 @@
 - [x] Adiciona link para página de apresentação do serviço;
 - [x] Mensagem genérica no cadastro de conta, pra não informar que existe;
 - [x] Contruír ladingpage de apresentação do produto;
+- [ ] Adicionar recaptcha na tela de cadastro de usuários para evitar bot;
 - [ ] Adicionar relógio visual no dashboard;
 - [ ] Ajustar responsividade dos componentes;
 - [ ] Corrigir filtros na pesquisa de despesas;

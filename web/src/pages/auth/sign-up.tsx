@@ -8,6 +8,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
 import z from 'zod';
 
+import ReCAPTCHA from 'react-google-recaptcha';
+
 import { registerUser } from '@/api/register-user';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -17,6 +19,7 @@ import { Label } from '@/components/ui/label';
 import { Dialog, DialogTrigger } from '@/components/ui/dialog';
 import { TermsLicense } from '../app/terms-license';
 import { isAxiosError } from 'axios';
+import { env } from '@/env';
 
 const signUpForm = z.object({
   username: z
@@ -38,6 +41,7 @@ const signUpForm = z.object({
 type SignUpForm = z.infer<typeof signUpForm>;
 
 export function SignUp() {
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
   const {
@@ -202,7 +206,7 @@ export function SignUp() {
 
             <Button
               className="h-11 w-full bg-zinc-900 text-white shadow-sm transition-all hover:cursor-pointer hover:border-2 hover:border-blue-600 hover:bg-zinc-800 hover:text-blue-500 active:scale-[0.98] dark:hover:border-blue-800 dark:hover:text-blue-600"
-              disabled={isSubmitting}
+              disabled={isSubmitting && !captchaToken}
               type="submit"
             >
               Cadastrar conta
@@ -233,6 +237,14 @@ export function SignUp() {
 
               <TermsLicense />
             </Dialog>
+
+            <div className="flex w-full items-center justify-center">
+              <ReCAPTCHA
+                sitekey={env.VITE_RECAPTCHA_SITE_KEY}
+                onChange={(token) => setCaptchaToken(token)}
+                onExpired={() => setCaptchaToken(null)}
+              />
+            </div>
           </form>
 
           <footer className="text-center">
