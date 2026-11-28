@@ -12,6 +12,12 @@ enum Role {
   ADMIN
 }
 
+enum Plan {
+  BASIC
+  STANDARD
+  PREMIUM
+}
+
 model User {
   id            String @id @default(uuid(7)) @db.Uuid
   name          String
@@ -19,6 +25,7 @@ model User {
   password_hash String
 
   role Role @default(MEMBER)
+  plan Plan @default(BASIC)
 
   terms_accepted_at DateTime @default(now())
   terms_version     String   @default("1.0")
