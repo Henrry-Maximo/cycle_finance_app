@@ -163,7 +163,7 @@ app.get("/docs", { schema: { hide: true } }, async (_req, reply) => {
 app.register(appRoutes);
 
 app.setErrorHandler(
-  (error: FastifyError, _: FastifyRequest, reply: FastifyReply) => {
+  (error: FastifyError, req: FastifyRequest, reply: FastifyReply) => {
     if (error instanceof ZodError) {
       return reply
         .status(400)
@@ -183,6 +183,7 @@ app.setErrorHandler(
     }
 
     // erro desconhecido
+    req.log.error(error);
     return reply.status(500).send({ message: "Internal server error." });
   },
 );
